@@ -2,11 +2,14 @@
 
 Gerencie suas transações financeiras com praticidade! Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End) utilizando tecnologias modernas e foco em acessibilidade, componentização e boas práticas de desenvolvimento.
 
+**Figma:** [Bytebank](https://www.figma.com/design/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264)
+
 ---
 
 ## 🚀 Stack utilizada
 
 - [**Next.js (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack
+- [**NextAuth**](https://next-auth.js.org/) – Autenticação e autorização
 - [**TypeScript**](https://www.typescriptlang.org/) – Tipagem estática e segurança no código
 - [**Tailwind CSS**](https://tailwindcss.com/) – Estilização utilitária e responsiva
 - [**Headless UI**](https://headlessui.com/) – Componentes acessíveis e sem estilo
@@ -24,9 +27,8 @@ Gerencie suas transações financeiras com praticidade! Aplicação desenvolvida
 | Branch         | Finalidade                                               |
 |----------------|----------------------------------------------------------|
 | `main`         | Produção (deploy da aplicação principal)                 |
-| `dev`          | Desenvolvimento principal                                |
 | `storybook`    | Deploy da documentação de componentes com Storybook      |
-| `feature/*`    | Features específicas isoladas (ex: `feature/create-user`)|
+| `dev`          | Desenvolvimento principal                                |
 
 ---
 
@@ -75,6 +77,8 @@ Instale as dependências
 npm install
 ```
 
+### 📄 Configurando variáveis de ambiente
+
 Crie um arquivo `.env.local` com a URL do MongoDB Atlas
 
 ```bash
@@ -86,6 +90,9 @@ Adicione a variável de ambiente no arquivo `.env.local`
 ```bash
 # Substitua <user> e <password> pelos dados do seu banco de dados
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/bytebank
+
+# Secret para autenticação
+NEXTAUTH_SECRET=your_secret
 ```
 
 ### 🏃‍♂️ Executando o projeto

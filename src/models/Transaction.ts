@@ -1,8 +1,14 @@
-import { Schema, model, models, Document } from 'mongoose';
+import { Document, Schema, model, models } from 'mongoose';
+
+// Define the type for the transaction type options
+const TypeOptions = ['deposit', 'transfer', 'withdrawal'] as const;
+
+// Define the type for the transaction type options
+export type TransactionTypeOptions = typeof TypeOptions[number];
 
 // Define the interface for the Transaction document
 export interface TransactionType extends Document {
-  type: 'deposit' | 'transfer' | 'withdrawal';
+  type: TransactionTypeOptions;
   amount: number;
   date: Date;
   description?: string;
@@ -13,7 +19,7 @@ const TransactionSchema = new Schema<TransactionType>(
   {
     type: {
       type: String,
-      enum: ['deposit', 'transfer', 'withdrawal'],
+      enum: TypeOptions,
       required: true,
     },
     amount: {
@@ -29,7 +35,7 @@ const TransactionSchema = new Schema<TransactionType>(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // Automatically add createdAt and updatedAt fields
   }
 );
 
