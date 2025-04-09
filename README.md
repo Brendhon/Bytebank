@@ -30,16 +30,23 @@ Gerencie suas transações financeiras com praticidade! Aplicação desenvolvida
 
 ---
 
-## ✨ Funcionalidades
+### 💡 **Funcionalidades Principais (pelas telas)**
 
-- Visualização do saldo atual
-- Listagem de transações
-- Criação de novas transações
-- Edição e exclusão
-- Interface responsiva
-- Validação com Zod
-- Acessibilidade com Headless UI
-- Documentação visual via Storybook
+1. **Login/Cadastro**
+   - Acesso seguro à plataforma.
+   - Cadastro de novos usuários com dados básicos.
+
+2. **Home (Dashboard)**
+   - Visão geral do saldo disponível, entradas, saídas e investimentos.
+   - Gráficos e cards com indicadores financeiros.
+
+3. **Investimentos**
+   - Visualização e gerenciamento de ativos financeiros.
+   - Registro de novos investimentos.
+   - Acompanhamento de rentabilidade e evolução.
+
+4. **Cadastro de Dados Financeiros**
+   - Inclusão de entradas, saídas, investimentos, etc.
 
 ---
 
