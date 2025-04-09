@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💸 Bytebank
 
-## Getting Started
+Gerencie suas transações financeiras com praticidade! Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End) utilizando tecnologias modernas e foco em acessibilidade, componentização e boas práticas de desenvolvimento.
 
-First, run the development server:
+---
+
+## 🚀 Stack utilizada
+
+- [**Next.js (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack
+- [**TypeScript**](https://www.typescriptlang.org/) – Tipagem estática e segurança no código
+- [**Tailwind CSS**](https://tailwindcss.com/) – Estilização utilitária e responsiva
+- [**Headless UI**](https://headlessui.com/) – Componentes acessíveis e sem estilo
+- [**Lucide Icons**](https://lucide.dev/) – Ícones leves e modernos
+- [**MongoDB Atlas**](https://www.mongodb.com/atlas/database) + [**Mongoose**](https://mongoosejs.com/) – Banco de dados NoSQL e ORM
+- [**React Hook Form**](https://react-hook-form.com/) + [**Zod**](https://zod.dev/) – Manipulação e validação de formulários
+- [**Storybook**](https://storybook.js.org/) – Documentação visual e testes isolados de UI
+- [**Vercel**](https://vercel.com/) – Deploy automatizado
+- [**GitHub**](https://github.com/) – Versionamento de código e organização de branches
+
+---
+
+## 📁 Estrutura de Branches
+
+| Branch         | Finalidade                                               |
+|----------------|----------------------------------------------------------|
+| `main`         | Produção (deploy da aplicação principal)                 |
+| `dev`          | Desenvolvimento principal                                |
+| `storybook`    | Deploy da documentação de componentes com Storybook      |
+| `feature/*`    | Features específicas isoladas (ex: `feature/create-user`)|
+
+---
+
+## ✨ Funcionalidades
+
+- Visualização do saldo atual
+- Listagem de transações
+- Criação de novas transações
+- Edição e exclusão
+- Interface responsiva
+- Validação com Zod
+- Acessibilidade com Headless UI
+- Documentação visual via Storybook
+
+---
+
+## 📦 Como rodar o projeto
+
+### 💡 Pré-requisitos
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+**[Git](https://git-scm.com)** e **[Node.js](https://nodejs.org/en/)**.<br> 
+
+Clone o repositório do projeto
+
+```bash
+git clone https://github.com/Brendhon/Bytebank.git
+```
+
+Acesse a pasta do projeto
+
+```bash
+cd Bytebank
+```
+
+Instale as dependências
+
+```bash
+npm install
+```
+
+Crie um arquivo `.env.local` com a URL do MongoDB Atlas
+
+```bash
+touch .env.local
+```
+
+Adicione a variável de ambiente no arquivo `.env.local`
+
+```bash
+# Substitua <user> e <password> pelos dados do seu banco de dados
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/bytebank
+```
+
+### 🏃‍♂️ Executando o projeto
+
+Para rodar o projeto em modo de desenvolvimento, execute o seguinte comando:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse o projeto em seu navegador: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 📦 Executando o Storybook
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Para rodar o Storybook, execute o seguinte comando:
 
-## Learn More
+```bash
+npm run storybook
+```
 
-To learn more about Next.js, take a look at the following resources:
+Acesse o Storybook em seu navegador: [http://localhost:6006](http://localhost:6006)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👥 Autor
+<img style="border-radius: 20%;" src="https://avatars1.githubusercontent.com/u/52840078?s=400&u=67bc81db89b5abf12cf592e0c610426afd3a02f4&v=4" width="120px;" alt="autor"/><br>
+**Brendhon Moreira**
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[![Linkedin Badge](https://img.shields.io/badge/-Brendhon-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/brendhon-moreira)](https://www.linkedin.com/in/brendhon-moreira)
+[![Gmail Badge](https://img.shields.io/badge/-brendhon.e.c.m@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:brendhon.e.c.m@gmail.com)](mailto:brendhon.e.c.m@gmail.com)
+---
