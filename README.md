@@ -1,6 +1,6 @@
 # 💸 Bytebank
 
-Gerencie suas transações financeiras com praticidade! Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End) utilizando tecnologias modernas e foco em acessibilidade, componentização e boas práticas de desenvolvimento.
+Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que simula um site bancário simples. Permite cadastro de transações financeiras, visualização de extrato detalhado e acesso a serviços financeiros, com foco em acessibilidade, componentização e boas práticas de desenvolvimento.
 
 **Figma:** [Bytebank](https://www.figma.com/design/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264)
 
@@ -24,11 +24,11 @@ Gerencie suas transações financeiras com praticidade! Aplicação desenvolvida
 
 ## 📁 Estrutura de Branches
 
-| Branch         | Finalidade                                               |
-|----------------|----------------------------------------------------------|
-| `main`         | Produção (deploy da aplicação principal)                 |
-| `storybook`    | Deploy da documentação de componentes com Storybook      |
-| `dev`          | Desenvolvimento principal                                |
+| Branch      | Finalidade                                          |
+| ----------- | --------------------------------------------------- |
+| `main`      | Produção (deploy da aplicação principal)            |
+| `storybook` | Deploy da documentação de componentes com Storybook |
+| `dev`       | Desenvolvimento principal                           |
 
 ---
 
@@ -39,16 +39,18 @@ Gerencie suas transações financeiras com praticidade! Aplicação desenvolvida
    - Cadastro de novos usuários com dados básicos.
 
 2. **Home (Dashboard)**
-   - Visão geral do saldo disponível, entradas, saídas e investimentos.
-   - Gráficos e cards com indicadores financeiros.
+   - Visão geral do saldo disponível, entradas e saídas.
+   - Cadastro de novas transações financeiras.
+   - Acesso ao extrato detalhado (onde poderá excluir ou editar transações).
 
-3. **Investimentos**
-   - Visualização e gerenciamento de ativos financeiros.
-   - Registro de novos investimentos.
-   - Acompanhamento de rentabilidade e evolução.
+3. **Serviços**
+   - Visão geral do saldo disponível, entradas e saídas.
+   - Acesso a serviços financeiros;
+   - Acesso ao extrato detalhado (onde poderá excluir ou editar transações).
 
-4. **Cadastro de Dados Financeiros**
-   - Inclusão de entradas, saídas, investimentos, etc.
+4. **Configurações**
+   - Configuração de dados pessoais e preferências.
+   - Alteração de senha.
 
 ---
 

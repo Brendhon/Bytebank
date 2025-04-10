@@ -1,7 +1,7 @@
 import { Document, Schema, model, models } from 'mongoose';
 
 // Define the type for the transaction type options
-const TypeOptions = ['deposit', 'transfer', 'withdrawal'] as const;
+const TypeOptions = ['deposit', 'transfer', 'withdrawal', 'payment'] as const;
 
 // Define the type for the transaction type options
 export type TransactionTypeOptions = typeof TypeOptions[number];
