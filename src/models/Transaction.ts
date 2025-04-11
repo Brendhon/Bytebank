@@ -10,8 +10,8 @@ export type TransactionTypeOptions = typeof TypeOptions[number];
 export interface TransactionType extends Document {
   type: TransactionTypeOptions;
   amount: number;
-  date: Date;
-  description?: string;
+  date: string;
+  alias?: string;
 }
 
 // Define the schema for the Transaction model
@@ -27,10 +27,10 @@ const TransactionSchema = new Schema<TransactionType>(
       required: true,
     },
     date: {
-      type: Date,
-      default: Date.now,
+      type: String,
+      required: true,
     },
-    description: {
+    alias: {
       type: String,
     },
   },
