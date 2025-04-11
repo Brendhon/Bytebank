@@ -16,9 +16,8 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 - [**Lucide Icons**](https://lucide.dev/) – Ícones leves e modernos
 - [**MongoDB Atlas**](https://www.mongodb.com/atlas/database) + [**Mongoose**](https://mongoosejs.com/) – Banco de dados NoSQL e ORM
 - [**React Hook Form**](https://react-hook-form.com/) + [**Zod**](https://zod.dev/) – Manipulação e validação de formulários
-- [**Storybook**](https://storybook.js.org/) – Documentação visual e testes isolados de UI
+- [**Storybook**](https://storybook.js.org/) – Documentação visual
 - [**Vercel**](https://vercel.com/) – Deploy automatizado
-- [**GitHub**](https://github.com/) – Versionamento de código e organização de branches
 
 ---
 
@@ -32,23 +31,27 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ---
 
-### 💡 **Funcionalidades Principais (pelas telas)**
+### 💡 **Funcionalidades (pelas telas)**
 
 1. **Login/Cadastro**
    - Acesso seguro à plataforma.
-   - Cadastro de novos usuários com dados básicos.
+   - Cadastro de novos usuários com dados básicos (nome, e-mail, senha).
 
-2. **Home (Dashboard)**
+2. **Dashboard**
    - Visão geral do saldo disponível, entradas e saídas.
-   - Cadastro de novas transações financeiras.
-   - Acesso ao extrato detalhado (onde poderá excluir ou editar transações).
+   - Cards com informações financeiras.
 
-3. **Serviços**
-   - Visão geral do saldo disponível, entradas e saídas.
-   - Acesso a serviços financeiros;
-   - Acesso ao extrato detalhado (onde poderá excluir ou editar transações).
+3. **Transações**
+   - Histórico de transações.
+   - Cadastro de novas transações (entrada/saída).
+   - Edição e exclusão de transações.
 
-4. **Configurações**
+4. **Meus Cartões**
+   - Listagem de cartões cadastrados.
+   - Ação para visualizar detalhes do cartão.
+   - Ação para bloquear/desbloquear cartão.
+
+5. **Configurações**
    - Configuração de dados pessoais e preferências.
    - Alteração de senha.
 
