@@ -23,6 +23,8 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 - [**Storybook**](https://storybook.js.org/) – Documentação visual
 - [**Vercel**](https://vercel.com/) – Deploy automatizado
 
+> Veja o arquivo  **[package.json](https://github.com/Brendhon/Bytebank/blob/main/package.json)**
+
 ---
 
 ## 📁 Estrutura de Branches
