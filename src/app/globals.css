@@ -43,7 +43,7 @@ html {
 }
 
 header {
-  @apply px-7 flex justify-between items-center;
+  @apply px-6 flex justify-between items-center;
   @apply text-sm text-white;
   @apply bg-dark;
   @apply min-h-18;
@@ -54,11 +54,11 @@ nav {
 }
 
 main {
-  @apply flex-1 p-7 w-full;
+  @apply flex-1 p-6 w-full;
 }
 
 footer {
-  @apply p-7 flex justify-between items-center;
+  @apply p-6 flex justify-between items-center;
   @apply text-sm text-white;
   @apply bg-dark;
 }
@@ -72,5 +72,37 @@ footer {
 
   .content {
     @apply flex-1 flex flex-row;
+  }
+
+  .text-14 {
+    @apply text-sm font-normal;
+  }
+
+  .text-16 {
+    @apply text-base font-normal;
+  }
+
+  .text-16-bold {
+    @apply text-base font-bold;
+  }
+
+  .text-16-semi {
+    @apply text-base font-semibold;
+  }
+
+  .text-20 {
+    @apply text-xl font-normal;
+  }
+
+  .text-20-bold {
+    @apply text-xl font-bold;
+  }
+
+  .text-24 {
+    @apply text-2xl font-normal;
+  }
+
+  .text-24-bold {
+    @apply text-2xl font-bold;
   }
 }
