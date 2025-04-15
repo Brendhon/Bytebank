@@ -2,6 +2,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { ButtonVariant } from '@/types/ui';
+import { Button } from '@headlessui/react';
 
 // Button variants - Defines different styles for the button component
 // using class-variance-authority (cva) for variant management 
@@ -44,8 +45,8 @@ export default ({
   ...props
 }: ButtonProps) => {
   return (
-    <button className={cn(buttonVariants({ variant }), className)} {...props}>
+    <Button className={cn(buttonVariants({ variant }), className)} {...props}>
       {children}
-    </button>
+    </Button>
   );
 }
