@@ -30,8 +30,8 @@ export const buttonVariants = cva(
   }
 );
 
-// Button props - Combines HTML button attributes with custom variants and children 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+// Button props - Combines HTML button attributes with custom variants and children
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   children: ReactNode;
   className?: string;

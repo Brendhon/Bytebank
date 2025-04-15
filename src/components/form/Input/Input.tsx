@@ -1,15 +1,16 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { InputTypes } from '@/types/ui';
 import { Field, Input, InputProps, Label, } from '@headlessui/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { cloneElement, isValidElement, ReactElement, ReactNode, useState } from 'react';
 
-type Props = InputProps & {
+interface Props extends InputProps {
   label: string;
   error?: string;
   icon?: ReactNode;
-  type?: ('text' | 'email' | 'password' | 'number');
+  type?: InputTypes;
   onIconClick?: () => void;
 };
 

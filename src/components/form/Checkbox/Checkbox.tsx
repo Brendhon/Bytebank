@@ -1,11 +1,10 @@
 import { cn } from '@/lib/utils';
 import { Checkbox, CheckboxProps, Field, Label } from '@headlessui/react';
 import { Check } from 'lucide-react';
-
-type Props = CheckboxProps & {
-  label: string
-  error?: string
-  checked?: boolean
+interface Props extends CheckboxProps {
+  label: string;
+  error?: string;
+  checked?: boolean;
 };
 
 export default ({ label, error, className, ...props }: Props) => {

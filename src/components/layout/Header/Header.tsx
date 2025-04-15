@@ -5,13 +5,13 @@ import { Button } from '@/components/ui';
 import { UserIcon } from 'lucide-react';
 import { HeaderVariant } from '@/types/ui';
 
-type HeaderProps = {
+interface HeaderProps {
   variant: HeaderVariant;
   userName?: string; // Usado apenas se variant === 'user'
   onOpenAccount?: () => void;
   onLogin?: () => void;
   onProfileClick?: () => void;
-};
+}
 
 export default ({
   variant,
