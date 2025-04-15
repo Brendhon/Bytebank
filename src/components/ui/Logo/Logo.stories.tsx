@@ -14,6 +14,9 @@ const meta: Meta<typeof Logo> = {
       control: { type: 'text' },
     },
   },
+  args: {
+    size: 'md',
+  },
 };
 
 export default meta;
