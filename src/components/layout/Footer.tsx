@@ -2,16 +2,16 @@ import { Logo } from "@/components/ui";
 import { ReactNode } from "react";
 
 // Define the FooterContent component
-function Content({ children }: { children: ReactNode }) {
+const Content = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex flex-col gap-3">
       {children}
     </div>
   );
-}
+};
 
 // Define the Footer component
-export default function Footer() {
+export default () => {
   return (
     <footer>
       <Content>
@@ -25,4 +25,4 @@ export default function Footer() {
       </Content>
     </footer>
   );
-}
+};
