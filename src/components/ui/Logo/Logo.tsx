@@ -7,11 +7,11 @@ type LogoProps = {
 };
 
 const sizeClasses = {
-  sm: '16',
-  md: '32',
-  lg: '42',
+  sm: 'w-16',
+  md: 'w-32',
+  lg: 'w-42',
 };
 
 export default ({ size = 'md', className }: LogoProps) => {
-  return <LogoSvg className={`w-${sizeClasses[size]} h-auto ${className || ''}`} />;
+  return <LogoSvg className={`${sizeClasses[size]} h-auto ${className || ''}`} />;
 };
