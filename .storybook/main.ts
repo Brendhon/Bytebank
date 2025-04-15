@@ -20,7 +20,7 @@ const config: StorybookConfig = {
     "options": {}
   },
   "staticDirs": [
-    "../public"
+    "./public"
   ],
   webpackFinal(config) {
     // Grab the existing rule that handles SVG imports
