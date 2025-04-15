@@ -1,5 +1,6 @@
 'use client';
 
+import { Input } from "@/components/form";
 import { Footer, Header, Modal } from "@/components/layout";
 import { useState } from "react";
 
@@ -8,7 +9,7 @@ export default function Home() {
 
   return (
     <>
-      <Header variant="guest"/>
+      <Header variant="guest" />
 
       <div className="content">
         <nav>
@@ -20,6 +21,12 @@ export default function Home() {
         </nav>
 
         <main>
+          <Input
+            label="name"
+            error="Dado incorreto. Revise e digite novamente."
+            type="password"
+          />
+
           <button onClick={() => setIsOpen(true)} className="btn">
             Abrir Modal
           </button>
@@ -30,7 +37,7 @@ export default function Home() {
             onSubmit={() => console.log("Submit")}
             btnVariantSubmit='blue'
             title="Nova Transação">
-              Pokemon
+            Pokemon
           </Modal>
 
 
