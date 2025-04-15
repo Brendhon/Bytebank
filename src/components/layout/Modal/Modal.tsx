@@ -4,21 +4,19 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@
 import { Fragment, ReactNode } from 'react';
 import { Button } from '../../ui';
 import { ButtonVariant } from '@/types/ui';
+import { GeneralModalProps } from '@/types/modal';
 
-type ModalProps = {
+interface ModalProps extends GeneralModalProps {
   // General
-  isOpen: boolean;
+  title?: string;
   children: ReactNode;
 
-  // Title
-  title?: string;
-
   // Actions
-  onClose: () => void;
   onSubmit: () => void;
   btnTextCancel?: string;
   btnTextSubmit?: string;
   btnVariantSubmit?: ButtonVariant;
+  className?: string;
 };
 
 export default ({
@@ -27,6 +25,7 @@ export default ({
   title,
   children,
   onSubmit,
+  className = '',
   btnTextSubmit = 'Confirmar',
   btnTextCancel = 'Cancelar',
   btnVariantSubmit = 'blue'
@@ -47,7 +46,7 @@ export default ({
         </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center px-4 py-8 text-center">
+          <div className="flex min-h-full items-center justify-center px-4 py-8 text-left">
             <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
@@ -66,7 +65,9 @@ export default ({
                 )}
 
                 {/* Children */}
-                <div className="flex">{children}</div>
+                <div className={`flex justify-start flex-col gap-4 ${className}`}>
+                  {children}
+                </div>
 
                 {/* Actions */}
                 <div className="flex items-center justify-center gap-8">
@@ -74,7 +75,7 @@ export default ({
                     {btnTextCancel}
                   </Button>
 
-                  <Button onClick={onSubmit} variant={btnVariantSubmit}>
+                  <Button type='submit' onClick={onSubmit} variant={btnVariantSubmit}>
                     {btnTextSubmit}
                   </Button>
                 </div>
