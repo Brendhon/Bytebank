@@ -1,21 +1,18 @@
-import { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import Logo from './Logo';
 
 const meta: Meta<typeof Logo> = {
-  // title: 'UI/Logo', // Uncomment this line if you want to specify a custom title for the story
   component: Logo,
   tags: ['autodocs'],
   argTypes: {
+    variant: {
+      control: 'select',
+      options: ['full', 'icon'],
+    },
     size: {
-      control: { type: 'select' },
+      control: 'select',
       options: ['sm', 'md', 'lg'],
     },
-    className: {
-      control: { type: 'text' },
-    },
-  },
-  args: {
-    size: 'md',
   },
 };
 
@@ -23,20 +20,54 @@ export default meta;
 
 type Story = StoryObj<typeof Logo>;
 
-export const Small: Story = {
+// Default
+export const Default: Story = {
   args: {
-    size: 'sm',
-  },
-};
-
-export const Medium: Story = {
-  args: {
+    variant: 'full',
     size: 'md',
   },
 };
 
-export const Large: Story = {
+// Full variant stories
+export const FullSmall: Story = {
   args: {
+    variant: 'full',
+    size: 'sm',
+  },
+};
+
+export const FullMedium: Story = {
+  args: {
+    variant: 'full',
+    size: 'md',
+  },
+};
+
+export const FullLarge: Story = {
+  args: {
+    variant: 'full',
+    size: 'lg',
+  },
+};
+
+// Icon variant stories
+export const IconSmall: Story = {
+  args: {
+    variant: 'icon',
+    size: 'sm',
+  },
+};
+
+export const IconMedium: Story = {
+  args: {
+    variant: 'icon',
+    size: 'md',
+  },
+};
+
+export const IconLarge: Story = {
+  args: {
+    variant: 'icon',
     size: 'lg',
   },
 };

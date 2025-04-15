@@ -1,6 +1,6 @@
 'use client';
 
-import { Footer, Modal } from "@/components/layout";
+import { Footer, Header, Modal } from "@/components/layout";
 import { useState } from "react";
 
 export default function Home() {
@@ -8,9 +8,7 @@ export default function Home() {
 
   return (
     <>
-      <header>
-        header
-      </header>
+      <Header variant="guest"/>
 
       <div className="content">
         <nav>
