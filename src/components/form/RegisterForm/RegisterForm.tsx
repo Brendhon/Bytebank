@@ -10,11 +10,16 @@ import { Modal } from '@/components/layout';
 import { GeneralModalProps } from '@/types/modal';
 import { Mail } from 'lucide-react';
 
-export default ({ isOpen, onClose }: GeneralModalProps) => {
+interface Props extends GeneralModalProps {
+  defaultValues?: RegisterFormData;
+}
+
+export default ({ isOpen, onClose, defaultValues }: Props) => {
   const { control, register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       acceptPrivacy: false,
+      ...(defaultValues || {})
     },
   });
 

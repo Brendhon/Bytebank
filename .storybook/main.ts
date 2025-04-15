@@ -13,14 +13,16 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@chromatic-com/storybook",
-    "@storybook/experimental-addon-test"
+    "@storybook/experimental-addon-test",
+    "@storybook/addon-a11y",
+    "msw-storybook-addon",
   ],
   "framework": {
     "name": "@storybook/nextjs",
     "options": {}
   },
   "staticDirs": [
-    "./public"
+    "../public"
   ],
   webpackFinal(config) {
     // Grab the existing rule that handles SVG imports

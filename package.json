@@ -13,6 +13,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.1",
     "@hookform/resolvers": "^5.0.1",
+    "@storybook/addon-a11y": "^8.6.12",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "lucide-react": "^0.487.0",
@@ -47,6 +48,8 @@
     "eslint-config-next": "15.2.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-storybook": "^0.12.0",
+    "msw": "^2.7.4",
+    "msw-storybook-addon": "^2.0.4",
     "playwright": "^1.51.1",
     "storybook": "^8.6.12",
     "tailwindcss": "^4",
@@ -56,6 +59,11 @@
   "eslintConfig": {
     "extends": [
       "plugin:storybook/recommended"
+    ]
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
     ]
   }
 }
