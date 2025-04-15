@@ -3,7 +3,11 @@ import { StorybookConfig } from '@storybook/nextjs';
 const config: StorybookConfig = {
   "stories": [
     "../src/**/*.mdx",
-    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    {
+      directory: '../src/components', // Specify the directory for component stories
+      titlePrefix: 'Components', // Prefix for the story titles
+    },
   ],
   "addons": [
     "@storybook/addon-essentials",

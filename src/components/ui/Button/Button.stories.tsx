@@ -7,7 +7,6 @@ type Story = StoryObj<typeof Button>;
 
 // Meta configuration for Storybook documentation of the Button component.
 const meta: Meta<typeof Button> = {
-  title: 'UI/Button', // Title of the story in Storybook
   component: Button, // The component being documented
   tags: ['autodocs'], // Tags for documentation generation
   argTypes: { // Controls for the component's props in Storybook

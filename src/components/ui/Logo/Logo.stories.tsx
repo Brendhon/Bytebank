@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import Logo from './Logo';
 
 const meta: Meta<typeof Logo> = {
-  title: 'UI/Logo',
+  // title: 'UI/Logo', // Uncomment this line if you want to specify a custom title for the story
   component: Logo,
   tags: ['autodocs'],
   argTypes: {
