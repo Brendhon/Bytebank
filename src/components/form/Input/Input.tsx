@@ -1,11 +1,11 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Field, Input, Label, } from '@headlessui/react';
+import { Field, Input, InputProps, Label, } from '@headlessui/react';
 import { Eye, EyeOff } from 'lucide-react';
-import { InputHTMLAttributes, ReactNode, useState } from 'react';
+import { cloneElement, isValidElement, ReactElement, ReactNode, useState } from 'react';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type Props = InputProps & {
   label: string;
   error?: string;
   icon?: ReactNode;
@@ -21,7 +21,7 @@ export default ({
   type,
   onIconClick,
   ...props
-}: InputProps) => {
+}: Props) => {
   // Check if the input is a password
   const isPassword = type === 'password';
 
@@ -33,7 +33,7 @@ export default ({
 
   // Default icon class
   const iconClass = cn(
-    'absolute right-2 text-blue',
+    'size-5 text-blue',
     (onIconClick || isPassword) && 'cursor-pointer hover:text-dark'
   );
 
@@ -52,8 +52,8 @@ export default ({
           <Input
             type={inputType}
             className={cn(
-              'rounded-sm w-full bg-white border border-gray px-4 py-2 text-[var(--dark)] outline-none transition-all focus:border-[var(--green)] focus:ring-1 focus:ring-[var(--green)] text-14',
-              error && 'border-[var(--red)] focus:ring-[var(--red)] focus:border-[var(--red)]',
+              'rounded-sm w-full bg-white border border-gray px-4 py-2 text-dark outline-none transition-all focus:border-green focus:ring-1 focus:ring-green text-14',
+              error && 'border-red focus:ring-red focus:border-red',
               (icon || isPassword) && 'pr-10',
               className
             )}
@@ -63,26 +63,31 @@ export default ({
           {/* Custom Icon */}
           {icon && !isPassword && (
             <span
-              className={iconClass}
+              className="absolute right-2"
               onClick={onIconClick}
             >
-              {icon}
+              {
+                // Add default icon class
+                isValidElement(icon)
+                  ? cloneElement(icon as ReactElement<{ className?: string }>, { className: iconClass })
+                  : icon
+              }
             </span>
           )}
 
           {/* Password eye toggle */}
           {isPassword && (
             <span
-              className={iconClass}
+              className="absolute right-2"
               onClick={() => setShowPassword((prev) => !prev)}>
-              {showPassword ? <EyeOff /> : <Eye />}
+              {showPassword ? <EyeOff className={iconClass} /> : <Eye className={iconClass} />}
             </span>
           )}
         </div>
       </Field>
 
       {/* Error */}
-      {error && <span className="text-14 text-[var(--red)]">{error}</span>}
+      {error && <span className="text-14 text-red">{error}</span>}
     </div>
 
   );

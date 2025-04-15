@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { Mail } from 'lucide-react';
 import Input from './Input';
-import { Mail, Lock } from 'lucide-react';
 
 const meta: Meta<typeof Input> = {
   component: Input,
@@ -29,7 +29,7 @@ export const Default: Story = {};
 
 export const WithIcon: Story = {
   args: {
-    icon: <Mail className="w-4 h-4" />,
+    icon: <Mail />,
   },
 };
 
