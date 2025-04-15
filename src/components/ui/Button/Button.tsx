@@ -14,14 +14,14 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        dark: 'bg-[var(--dark)] hover:bg-[var(--dark-gray)]',
-        blue: 'bg-[var(--blue)] hover:bg-[var(--dark)]',
-        green: 'bg-[var(--green)] hover:bg-[var(--blue)]',
-        orange: 'bg-[var(--orange)] hover:bg-[var(--dark)]',
+        dark: 'bg-dark hover:bg-dark-gray',
+        blue: 'bg-blue hover:bg-dark',
+        green: 'bg-green hover:bg-blue',
+        orange: 'bg-orange hover:bg-dark',
         outlineGreen:
-          'bg-transparent border-2 border-[var(--green)] text-[var(--green)] hover:bg-[var(--green)] hover:text-white',
+          'bg-transparent border-2 border-green text-green hover:bg-green hover:text-white',
         outlineOrange:
-          'bg-transparent border-2 border-[var(--orange)] text-[var(--orange)] hover:bg-[var(--orange)] hover:text-white',
+          'bg-transparent border-2 border-orange text-orange hover:bg-orange hover:text-white',
       },
     },
     defaultVariants: {

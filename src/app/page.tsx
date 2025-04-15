@@ -1,7 +1,7 @@
 'use client';
 
-import { Input } from "@/components/form";
-import { Footer, Header, Modal } from "@/components/layout";
+import { RegisterForm } from "@/components/form";
+import { Footer, Header } from "@/components/layout";
 import { useState } from "react";
 
 export default function Home() {
@@ -9,7 +9,11 @@ export default function Home() {
 
   return (
     <>
-      <Header variant="guest" />
+      <Header
+        variant="guest"
+        onOpenAccount={() => setIsOpen(true)}
+        onLogin={() => alert("Já tenho conta")}
+      />
 
       <div className="content">
         <nav>
@@ -21,24 +25,9 @@ export default function Home() {
         </nav>
 
         <main>
-          <Input
-            label="name"
-            error="Dado incorreto. Revise e digite novamente."
-            type="password"
-          />
 
-          <button onClick={() => setIsOpen(true)} className="btn">
-            Abrir Modal
-          </button>
 
-          <Modal
-            isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
-            onSubmit={() => console.log("Submit")}
-            btnVariantSubmit='blue'
-            title="Nova Transação">
-            Pokemon
-          </Modal>
+          <RegisterForm isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
 
         </main>
