@@ -5,6 +5,10 @@ import { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   const isAuthPage = request.nextUrl.pathname.startsWith('/home');
+  const isAPI = request.nextUrl.pathname.startsWith('/api');
+
+  // Allow the request to proceed if it's an API route
+  if (isAPI) return NextResponse.next();
 
   // Redirect unauthenticated users to the home page unless they're already there
   if (!token && !isAuthPage) {

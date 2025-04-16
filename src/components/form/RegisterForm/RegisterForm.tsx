@@ -1,16 +1,16 @@
 'use client';
 
+import { Modal } from '@/components/layout';
+import { Illustration } from '@/components/ui';
 import { RegisterFormData, registerSchema } from '@/schemas';
+import { registerUser } from '@/services/user';
+import { GeneralModalProps } from '@/types/modal';
 import { Fieldset, Legend } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Mail } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import Checkbox from '../Checkbox/Checkbox';
 import Input from '../Input/Input';
-import { Modal } from '@/components/layout';
-import { GeneralModalProps } from '@/types/modal';
-import { Mail } from 'lucide-react';
-import Image from 'next/image';
-import { Illustration } from '@/components/ui';
 
 interface Props extends GeneralModalProps {
   defaultValues?: RegisterFormData;
@@ -25,8 +25,13 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
     },
   });
 
-  const onSubmit = (data: RegisterFormData) => {
-    console.log('Dados enviados:', data);
+  const onSubmit = async (data: RegisterFormData) => {
+    await registerUser({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      acceptPrivacy: true
+    })
   };
 
   return (

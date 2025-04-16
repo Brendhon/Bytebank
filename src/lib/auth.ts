@@ -16,14 +16,11 @@ export const authOptions: NextAuthOptions = {
         // Connect to the database
         await connectToDatabase();
 
-        // Check if the user exists in the database
+        // Get the user data
         const user = await User.findOne({ email: credentials?.email });
 
-        // Check if the password is correct
-        const passwordValid = await bcrypt.compare(
-          credentials?.password || '',
-          user?.password || ''
-        );
+        // If the user exists and the password is valid
+        const passwordValid = await bcrypt.compare(credentials?.password || '', user?.password || '');
 
         // If the user exists and the password is valid
         return user && passwordValid ? { id: user._id, name: user.name, email: user.email } : null;

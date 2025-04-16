@@ -39,7 +39,7 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ### 💡 **Funcionalidades (pelas telas)**
 
-1. **Login/Cadastro**
+1. **Home (Login/Cadastro)**
    - Acesso seguro à plataforma.
    - Cadastro de novos usuários com dados básicos (nome, e-mail, senha).
 

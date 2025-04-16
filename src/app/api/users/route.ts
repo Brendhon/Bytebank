@@ -1,5 +1,6 @@
 import { connectToDatabase } from '@/lib/mongoose';
 import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 
 /**
  * Handles GET requests to retrieve all User records.
@@ -29,8 +30,11 @@ export async function POST(req: Request) {
   // Parse the request body as JSON
   const data = await req.json();
 
+  // Hash the password using bcrypt
+  const password = await bcrypt.hash(data.password, 10);
+
   // Create a new User record in the database
-  const user = await User.create(data);
+  const user = await User.create({ ...data, password });
 
   // Return a success response with the created User
   return Response.json(user);

@@ -5,6 +5,7 @@ export interface UserType extends Document {
   name: string;
   email: string;
   password: string;
+  acceptPrivacy: boolean;
 }
 
 // Define the User schema
@@ -13,6 +14,7 @@ const UserSchema = new Schema(
     name: String,
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    acceptPrivacy: { type: Boolean, required: true },
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields
