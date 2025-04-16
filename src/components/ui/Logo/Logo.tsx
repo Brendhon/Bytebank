@@ -1,4 +1,3 @@
-// components/ui/Logo/index.tsx
 import LogoSvg from '@/assets/logo.svg';
 import IconSvg from '@/assets/icon.svg';
 

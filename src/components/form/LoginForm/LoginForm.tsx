@@ -9,6 +9,7 @@ import { Mail } from 'lucide-react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import Input from '../Input/Input';
+import { Illustration } from '@/components/ui';
 
 interface Props extends GeneralModalProps {
   defaultValues?: LoginFormData;
@@ -36,9 +37,8 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
       btnVariantSubmit='green'>
 
       <Fieldset className="flex flex-col gap-4">
-        <div className="hidden flex flex-col items-center sm:flex">
-          <Image alt='Register Illustration' width={300} height={300} src='./illustrations/login.svg' />
-        </div>
+        <Illustration src='login.svg' />
+        
         <Legend className="text-20-bold text-dark text-center">
           Login
         </Legend>

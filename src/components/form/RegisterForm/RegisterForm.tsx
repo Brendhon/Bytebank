@@ -10,6 +10,7 @@ import { Modal } from '@/components/layout';
 import { GeneralModalProps } from '@/types/modal';
 import { Mail } from 'lucide-react';
 import Image from 'next/image';
+import { Illustration } from '@/components/ui';
 
 interface Props extends GeneralModalProps {
   defaultValues?: RegisterFormData;
@@ -37,9 +38,7 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
       btnVariantSubmit='orange'>
 
       <Fieldset className="flex flex-col gap-4">
-        <div className="hidden flex flex-col items-center sm:flex">
-          <Image alt='Register Illustration' width={300} height={300} src='./illustrations/register.svg' />
-        </div>
+        <Illustration src='register.svg' />
         <Legend className="text-20-bold text-dark text-center">
           Preencha os campos abaixo para criar sua conta corrente!
         </Legend>
