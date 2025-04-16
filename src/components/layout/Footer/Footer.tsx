@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 // Define the FooterContent component
 const Content = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       {children}
     </div>
   );
@@ -15,7 +15,7 @@ export default () => {
   return (
     <footer>
       <Content>
-        <strong>Contato</strong>
+        <strong className="text-base">Contato</strong>
         <span>0800 004 250 08</span>
         <span>meajuda@bytebank.com.br</span>
       </Content>

@@ -78,6 +78,10 @@ footer {
     @apply text-sm font-normal;
   }
 
+  .text-14-semi {
+    @apply text-sm font-semibold;
+  }
+
   .text-16 {
     @apply text-base font-normal;
   }
