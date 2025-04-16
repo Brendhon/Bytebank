@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
+import Providers from "@/components/Providers";
+import { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ReactNode } from "react";
 import "./globals.css";
 
 // Import the Inter font from Google Fonts
@@ -11,15 +13,13 @@ export const metadata: Metadata = {
   description: "A simple banking app",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
