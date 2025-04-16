@@ -12,10 +12,10 @@ export default ({ className = '', src, width = 400 }: Props) => {
   return (
     <div className={cn("hidden flex-col items-center sm:flex", className)}>
       <Image
-        alt='Register Illustration'
+        alt='Illustration'
         width={width}
         height={width}
-        src={`./illustrations/${src}`}
+        src={`/illustrations/${src}`}
         className={cn("h-auto object-contain", `w-[${width}px]`)}
       />
     </div>

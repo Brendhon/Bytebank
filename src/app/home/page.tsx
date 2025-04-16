@@ -1,7 +1,7 @@
 'use client';
 
 import { LoginForm, RegisterForm } from "@/components/form";
-import { Footer, Header } from "@/components/layout";
+import { BenefitsSection, Footer, Header } from "@/components/layout";
 import { useState } from "react";
 
 export default () => {
@@ -19,6 +19,7 @@ export default () => {
 
       {/* Content */}
       <main>
+        <BenefitsSection />
       </main>
 
       {/* Footer */}

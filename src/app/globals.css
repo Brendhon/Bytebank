@@ -43,7 +43,7 @@ html {
 }
 
 header {
-  @apply px-6 flex justify-between items-center;
+  @apply px-6 flex justify-center items-center sm:justify-between;
   @apply text-sm text-white;
   @apply bg-dark;
   @apply min-h-18;

@@ -1,9 +1,9 @@
 'use client';
 
-import { Logo } from '@/components/ui';
-import { Button } from '@/components/ui';
-import { UserIcon } from 'lucide-react';
+import { Button, Logo } from '@/components/ui';
+import { cn } from '@/lib/utils';
 import { HeaderVariant } from '@/types/ui';
+import { UserIcon } from 'lucide-react';
 
 interface HeaderProps {
   variant: HeaderVariant;
@@ -22,7 +22,7 @@ export default ({
 }: HeaderProps) => {
   return (
     <header>
-      <Logo variant='icon' className={variant === 'guest' ? 'text-green' : 'text-orange'} />
+      <Logo variant='icon' className={cn(variant === 'guest' ? 'text-green' : 'text-orange', 'hidden sm:flex')} />
 
       {variant === 'guest' ? (
         <div className="flex gap-6">
