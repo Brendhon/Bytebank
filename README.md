@@ -104,6 +104,9 @@ MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/bytebank
 
 # Secret para autenticação
 NEXTAUTH_SECRET=your_secret
+
+# URL do site
+NEXTAUTH_URL=http://localhost:3000
 ```
 
 ### 🏃‍♂️ Executando o projeto
