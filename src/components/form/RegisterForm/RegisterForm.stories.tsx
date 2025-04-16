@@ -19,7 +19,7 @@ const Template = (args: any) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <button onClick={() => setIsOpen(true)}>Abrir Formulário</button>
+      <button onClick={() => setIsOpen(true)}>Click aqui para abrir</button>
       <RegisterForm
         {...args}
         isOpen={isOpen}
@@ -29,26 +29,29 @@ const Template = (args: any) => {
   );
 };
 
-export const Default: Story = {
-  render: Template,
-  args: {},
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('https://your-restful-endpoint/', () => {
-          return HttpResponse.json({});
-        }),
-      ],
-    },
+const parameters = {
+  msw: {
+    handlers: [
+      http.get('https://your-restful-endpoint/', () => {
+        return HttpResponse.json({});
+      }),
+    ],
   },
 };
 
+export const Default: Story = {
+  parameters,
+  render: Template,
+  args: {},
+};
+
 export const WithErrors: Story = {
+  parameters,
   render: (args) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
       <>
-        <button onClick={() => setIsOpen(true)}>Abrir</button>
+        <button onClick={() => setIsOpen(true)}>Click aqui para abrir</button>
         <RegisterForm
           {...args}
           isOpen={isOpen}
@@ -68,11 +71,12 @@ export const WithErrors: Story = {
 };
 
 export const Filled: Story = {
+  parameters,
   render: (args) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
       <>
-        <button onClick={() => setIsOpen(true)}>Abrir</button>
+        <button onClick={() => setIsOpen(true)}>Click aqui para abrir</button>
         <RegisterForm
           {...args}
           isOpen={isOpen}

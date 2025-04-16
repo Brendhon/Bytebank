@@ -56,7 +56,7 @@ export default ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <DialogPanel className="w-full max-w-md transform overflow-hidden card transition-all flex flex-col gap-8">
+              <DialogPanel className="transform overflow-hidden card transition-all flex flex-col gap-8">
                 {/* Title */}
                 {title && (
                   <DialogTitle as="h2" className="text-24-bold text-dark-gray flex">
@@ -70,7 +70,7 @@ export default ({
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-center gap-8">
+                <div className="flex items-center justify-center gap-8 md:flex-row flex-col">
                   <Button onClick={onClose} variant='dark'>
                     {btnTextCancel}
                   </Button>
