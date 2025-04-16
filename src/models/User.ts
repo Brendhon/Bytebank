@@ -1,12 +1,8 @@
+import { IUser } from '@/types/user';
 import { Document, Schema, model, models } from 'mongoose';
 
 // Define the interface for the User document
-export interface UserType extends Document {
-  name: string;
-  email: string;
-  password: string;
-  acceptPrivacy: boolean;
-}
+export interface UserType extends Document, Omit<IUser, 'id'> {}
 
 // Define the User schema
 const UserSchema = new Schema(
