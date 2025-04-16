@@ -37,7 +37,7 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
       btnVariantSubmit='orange'>
 
       <Fieldset className="flex flex-col gap-4">
-        <div className="hidden flex flex-col items-center md:flex">
+        <div className="hidden flex flex-col items-center sm:flex">
           <Image alt='Register Illustration' width={300} height={300} src='./illustrations/register.svg' />
         </div>
         <Legend className="text-20-bold text-dark text-center">

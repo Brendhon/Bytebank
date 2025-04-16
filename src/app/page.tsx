@@ -1,20 +1,23 @@
 'use client';
 
-import { RegisterForm } from "@/components/form";
+import { LoginForm, RegisterForm } from "@/components/form";
 import { Footer, Header } from "@/components/layout";
 import { useState } from "react";
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
     <>
+      {/* Header */}
       <Header
         variant="guest"
-        onOpenAccount={() => setIsOpen(true)}
-        onLogin={() => alert("Já tenho conta")}
+        onOpenAccount={() => setIsRegisterOpen(true)}
+        onLogin={() => setIsLoginOpen(true)}
       />
 
+      {/* Content */}
       <div className="content">
         <nav>
           <ul>
@@ -25,17 +28,17 @@ export default function Home() {
         </nav>
 
         <main>
-
-
-          <RegisterForm isOpen={isOpen} onClose={() => setIsOpen(false)} />
-
-
         </main>
 
       </div>
 
 
+      {/* Footer */}
       <Footer />
+
+      {/* Modais */}
+      <RegisterForm isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
+      <LoginForm isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>
   );
 }

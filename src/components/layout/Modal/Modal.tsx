@@ -70,7 +70,7 @@ export default ({
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-center gap-8 md:flex-row flex-col">
+                <div className="flex items-center justify-center gap-8 sm:flex-row flex-col">
                   <Button onClick={onClose} variant='dark'>
                     {btnTextCancel}
                   </Button>
