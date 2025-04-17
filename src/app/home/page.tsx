@@ -37,7 +37,7 @@ export default () => {
       setIsLoginOpen(false);
 
       // Redirect to the dashboard
-      setTimeout(() => router.push('/dashboard'), 2000);
+      router.push('/dashboard');
     } else {
       // Log failed
       console.error('Login failed:', response?.error);

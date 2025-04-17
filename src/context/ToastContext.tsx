@@ -37,12 +37,12 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
   }
 
   // Show success toast
-  const showSuccessToast = ({ message, duration = 4000 }: SimpleToast) => {
+  const showSuccessToast = ({ message, duration = 3000 }: SimpleToast) => {
     showToast({ message, variant: 'success', duration });
   };
 
   // Show error toast
-  const showErrorToast = ({ message, duration = 4000 }: SimpleToast) => {
+  const showErrorToast = ({ message, duration = 3000 }: SimpleToast) => {
     showToast({ message, variant: 'error', duration });
   };
 
