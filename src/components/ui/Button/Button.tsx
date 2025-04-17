@@ -11,7 +11,7 @@ import { ButtonVariant } from '@/types/ui';
 // It provides a way to define different styles based on the variant prop passed to the Button component.
 // The cva function takes a base class name and an object with variants and their corresponding styles.
 export const buttonVariants = cva(
-  'w-[150px] h-[40px] rounded-sm relative text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer text-sm font-semibold flex items-center justify-center',
+  'w-[150px] h-[40px] rounded-sm relative text-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer text-sm font-semibold flex items-center justify-center',
   {
     variants: {
       variant: {
