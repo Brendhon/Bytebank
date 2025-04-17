@@ -1,8 +1,8 @@
-// src/context/ToastContext.tsx
 'use client';
+
 import { Toast } from '@/components/ui';
 import { IToast } from '@/types/ui';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 
 // Define the type for the toast object
 interface SimpleToast extends Pick<IToast, 'message' | 'duration'> { }
@@ -15,7 +15,7 @@ type ToastContextType = {
 };
 
 // Create the context
-const ToastContext = createContext<ToastContextType | null>(null);
+export const ToastContext = createContext<ToastContextType | null>(null);
 
 // Provider component that wraps your app
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
@@ -65,16 +65,4 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
       </div>
     </ToastContext.Provider>
   );
-};
-
-// Hook to use the toast context
-export const useToast = () => {
-  // Get the context
-  const ctx = useContext(ToastContext);
-
-  // If the context is not available, throw an error
-  if (!ctx) throw new Error('useToast must be inside ToastProvider');
-
-  // Return the context
-  return ctx;
 };

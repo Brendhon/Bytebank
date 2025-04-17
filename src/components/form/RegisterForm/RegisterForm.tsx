@@ -1,8 +1,8 @@
 'use client';
 
-import { useToast } from '@/app/context/ToastContext';
 import { Modal } from '@/components/layout';
 import { Illustration } from '@/components/ui';
+import { useToast } from '@/hooks';
 import { RegisterFormData, registerSchema } from '@/schemas';
 import { registerUser } from '@/services/user';
 import { GeneralModalProps } from '@/types/modal';
