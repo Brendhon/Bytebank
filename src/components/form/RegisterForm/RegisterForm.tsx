@@ -2,11 +2,8 @@
 
 import { Modal } from '@/components/layout';
 import { Illustration } from '@/components/ui';
-import { useToast } from '@/hooks';
 import { RegisterFormData, registerSchema } from '@/schemas';
-import { registerUser } from '@/services/user';
 import { GeneralModalProps } from '@/types/modal';
-import { IUser } from '@/types/user';
 import { Fieldset, Legend } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
@@ -14,12 +11,7 @@ import { Controller, useForm } from 'react-hook-form';
 import Checkbox from '../Checkbox/Checkbox';
 import Input from '../Input/Input';
 
-interface Props extends GeneralModalProps {
-  defaultValues?: RegisterFormData;
-}
-
-export default ({ isOpen, onClose, defaultValues }: Props) => {
-  const { showSuccessToast, showErrorToast } = useToast();
+export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<RegisterFormData>) => {
   const { control, register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -27,26 +19,6 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
       ...(defaultValues || {})
     },
   });
-
-  const onSubmit = async (formData: RegisterFormData) => {
-    // Form user data
-    const data: IUser = {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      acceptPrivacy: formData.acceptPrivacy
-    }
-
-    // Register user
-    try {
-      await registerUser(data);
-      showSuccessToast({ message: 'Conta criada com sucesso!' });
-      onClose();
-    } catch (error: any) {
-      showErrorToast({ message: error.message || 'Erro ao criar conta' });
-      console.error(error);
-    }
-  };
 
   return (
     <Modal

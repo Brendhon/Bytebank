@@ -11,8 +11,7 @@ interface ModalProps extends GeneralModalProps {
   title?: string;
   children: ReactNode;
 
-  // Actions
-  onSubmit: () => void | Promise<void>;
+  // Actions;
   btnTextCancel?: string;
   btnTextSubmit?: string;
   btnVariantSubmit?: ButtonVariant;

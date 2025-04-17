@@ -35,6 +35,7 @@ const Template = (args: any) => {
         {...args}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        onSubmit={() => alert('Cadastro realizado com sucesso!')}
       />
     </>
   );
