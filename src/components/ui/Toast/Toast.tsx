@@ -45,7 +45,7 @@ export default ({
 
   // Set className based on variant
   const className = cn(
-    'fixed bottom-24 right-4 z-50 h-12 flex gap-3 rounded-sm p-3 shadow-lg text-white min-w-[250px] flex-row justify-between items-center',
+    'fixed top-25 right-4 z-50 h-12 flex gap-3 rounded-sm p-3 shadow-lg text-white min-w-[250px] flex-row justify-between items-center',
     {
       'bg-green': variant === 'success',
       'bg-red': variant === 'error',
