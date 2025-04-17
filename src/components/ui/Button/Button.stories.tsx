@@ -6,31 +6,32 @@ type Story = StoryObj<typeof Button>;
 
 // Meta configuration for Storybook documentation of the Button component.
 const meta: Meta<typeof Button> = {
-  component: Button, // The component being documented
-  tags: ['autodocs'], // Tags for documentation generation
-  argTypes: { // Controls for the component's props in Storybook
+  component: Button,
+  tags: ['autodocs'],
+  argTypes: {
     variant: {
       control: 'select',
       options: ['blue', 'green', 'orange', 'dark', 'outlineGreen', 'outlineOrange'], // Options for the variant prop
     },
     disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
     children: { control: 'text' },
   },
   args: {
-    variant: 'blue', // Default variant for the button
-    children: 'Button Label', // Default label for the button
-    disabled: false, // Default disabled state
-    onClick: () => alert('Button clicked!'), // Default click handler
+    variant: 'blue',
+    children: 'Button Label',
+    disabled: false,
+    loading: false,
+    onClick: () => alert('Button clicked!'),
   },
 };
 
-// Export the meta configuration for the Button component
 export default meta;
 
-// Define the default story for the Button component
+// Default story
 export const Default: Story = {};
 
-// Define additional stories for different button variants
+// Button Variants
 export const Blue: Story = {
   args: { variant: 'blue', children: 'Blue', onClick: () => alert('Blue button clicked!') },
 };
@@ -57,4 +58,12 @@ export const Dark: Story = {
 
 export const Disabled: Story = {
   args: { variant: 'dark', disabled: true, children: 'Disabled' },
+};
+
+export const Loading: Story = {
+  args: {
+    variant: 'blue',
+    loading: true,
+    children: 'Carregando...',
+  },
 };

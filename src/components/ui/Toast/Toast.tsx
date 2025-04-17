@@ -1,10 +1,10 @@
 'use client';
 
-import { Button, Transition } from '@headlessui/react';
-import { CheckCircle, Info, XCircle, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
 import { IToast } from '@/types/ui';
+import { Button, Transition } from '@headlessui/react';
+import { CheckCircle, Info, X, XCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface Props extends IToast {
   show?: boolean;

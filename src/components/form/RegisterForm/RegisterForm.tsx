@@ -28,7 +28,7 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
     },
   });
 
-  const onSubmit = (formData: RegisterFormData) => {
+  const onSubmit = async (formData: RegisterFormData) => {
     // Form user data
     const data: IUser = {
       name: formData.name,
@@ -38,22 +38,15 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
     }
 
     // Register user
-    registerUser(data)
-      .then(() => handleSuccess())
-      .catch(({ message }) => handleError(message));
+    try {
+      await registerUser(data);
+      showSuccessToast({ message: 'Conta criada com sucesso!' });
+      onClose();
+    } catch (error: any) {
+      showErrorToast({ message: error.message || 'Erro ao criar conta' });
+      console.error(error);
+    }
   };
-
-  // Handle success
-  const handleSuccess = () => {
-    showSuccessToast({ message: 'Conta criada com sucesso!' });
-    onClose();
-  }
-
-  // Handle error
-  const handleError = (message: string) => {
-    showErrorToast({ message });
-    console.error(message);
-  }
 
   return (
     <Modal

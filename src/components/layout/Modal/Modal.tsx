@@ -1,10 +1,10 @@
 'use client';
 
-import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
-import { Fragment, ReactNode } from 'react';
-import { Button } from '../../ui';
-import { ButtonVariant } from '@/types/ui';
 import { GeneralModalProps } from '@/types/modal';
+import { ButtonVariant } from '@/types/ui';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
+import { Fragment, ReactNode, useState } from 'react';
+import { Button } from '../../ui';
 
 interface ModalProps extends GeneralModalProps {
   // General
@@ -12,7 +12,7 @@ interface ModalProps extends GeneralModalProps {
   children: ReactNode;
 
   // Actions
-  onSubmit: () => void;
+  onSubmit: () => void | Promise<void>;
   btnTextCancel?: string;
   btnTextSubmit?: string;
   btnVariantSubmit?: ButtonVariant;
@@ -30,6 +30,16 @@ export default ({
   btnTextCancel = 'Cancelar',
   btnVariantSubmit = 'blue'
 }: ModalProps) => {
+  // Loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Handle submit
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    await onSubmit();
+    setIsLoading(false);
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-40" onClose={onClose}>
@@ -75,7 +85,7 @@ export default ({
                     {btnTextCancel}
                   </Button>
 
-                  <Button type='submit' onClick={onSubmit} variant={btnVariantSubmit}>
+                  <Button type='submit' onClick={handleSubmit} variant={btnVariantSubmit} loading={isLoading}>
                     {btnTextSubmit}
                   </Button>
                 </div>

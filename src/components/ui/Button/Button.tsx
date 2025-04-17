@@ -1,8 +1,9 @@
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
-import { ButtonVariant } from '@/types/ui';
 import { Button } from '@headlessui/react';
+import { Loader2 } from 'lucide-react';
+import { ButtonVariant } from '@/types/ui';
 
 // Button variants - Defines different styles for the button component
 // using class-variance-authority (cva) for variant management 
@@ -10,7 +11,7 @@ import { Button } from '@headlessui/react';
 // It provides a way to define different styles based on the variant prop passed to the Button component.
 // The cva function takes a base class name and an object with variants and their corresponding styles.
 export const buttonVariants = cva(
-  'w-[150px] h-[40px] rounded-sm text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer text-sm font-semibold',
+  'w-[150px] h-[40px] rounded-sm relative text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer text-sm font-semibold flex items-center justify-center',
   {
     variants: {
       variant: {
@@ -30,23 +31,30 @@ export const buttonVariants = cva(
   }
 );
 
-// Button props - Combines HTML button attributes with custom variants and children
+// Button props
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   children: ReactNode;
   className?: string;
-};
+  loading?: boolean;
+}
 
 // Button component - A reusable button component that accepts variant and children props
 export default ({
   className,
   variant,
   children,
+  loading = false,
+  disabled,
   ...props
 }: ButtonProps) => {
   return (
-    <Button className={cn(buttonVariants({ variant }), className)} {...props}>
-      {children}
+    <Button
+      className={cn(buttonVariants({ variant }), className)}
+      disabled={disabled || loading}
+      {...props}>
+      <span className={cn({ 'opacity-0': loading })}>{children}</span>
+      {loading && <Loader2 className="animate-spin text-white absolute flex items-center justify-center" />}
     </Button>
   );
 }

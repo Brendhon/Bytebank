@@ -1,8 +1,8 @@
+import { ToastProvider } from '@/context';
 import { Meta, StoryObj } from '@storybook/react';
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { useState } from 'react';
 import RegisterForm from './RegisterForm';
-import { ToastProvider } from '@/context';
 
 const meta: Meta<typeof RegisterForm> = {
   component: RegisterForm,
@@ -45,7 +45,13 @@ const Template = (args: any) => {
 const parameters = {
   msw: {
     handlers: [
-      http.post('/api/users', () => HttpResponse.json({})),
+      http.post('/api/users', async () => {
+        // Simulate a delay for the request - 2 seconds
+        await delay(2000);
+
+        // Simulate a successful response
+        return HttpResponse.json({ message: 'Usuário criado com sucesso' })
+      }),
     ],
   },
 };
