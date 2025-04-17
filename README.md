@@ -107,6 +107,9 @@ NEXTAUTH_SECRET=your_secret
 
 # URL do site
 NEXTAUTH_URL=http://localhost:3000
+
+# URL do Storybook
+NEXT_PUBLIC_STORYBOOK_URL=http://localhost:6006
 ```
 
 ### 🏃‍♂️ Executando o projeto

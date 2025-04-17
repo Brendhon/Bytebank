@@ -21,6 +21,6 @@ export const User: Story = {
   args: {
     variant: 'user',
     userName: 'Joana da Silva Oliveira',
-    onProfileClick: () => alert('Perfil')
+    onNavigate: (path) => alert(`Mock navigate to: ${path}`),
   }
 };

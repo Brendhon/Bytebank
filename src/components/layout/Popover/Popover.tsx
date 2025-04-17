@@ -15,8 +15,10 @@ export default ({ className, pButton, children }: Props) => {
   );
 
   return (
-    <Popover className={`relative ${className || ''}`}>
-      <PopoverButton>{pButton}</PopoverButton>
+    <Popover className="relative">
+      <PopoverButton className="outline-none focus:outline-none">
+        {pButton}
+      </PopoverButton>
       <PopoverPanel anchor="bottom end" className={newClass}>
         {children}
       </PopoverPanel>
