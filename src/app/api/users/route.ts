@@ -30,12 +30,18 @@ export async function POST(req: Request) {
   // Parse the request body as JSON
   const data = await req.json();
 
+  // Check if user already exists
+  const user = await User.findOne({ email: data.email });
+
+  // If user exists, return an error response and code 
+  if (user) return new Response('Usuário já cadastrado na plataforma', { status: 409 });
+
   // Hash the password using bcrypt
   const password = await bcrypt.hash(data.password, 10);
 
   // Create a new User record in the database
-  const user = await User.create({ ...data, password });
+  const result = await User.create({ ...data, password });
 
   // Return a success response with the created User
-  return Response.json(user);
+  return Response.json(result);
 }

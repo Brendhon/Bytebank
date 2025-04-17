@@ -1,10 +1,12 @@
 'use client';
 
+import { useToast } from '@/app/context/ToastContext';
 import { Modal } from '@/components/layout';
 import { Illustration } from '@/components/ui';
 import { RegisterFormData, registerSchema } from '@/schemas';
 import { registerUser } from '@/services/user';
 import { GeneralModalProps } from '@/types/modal';
+import { IUser } from '@/types/user';
 import { Fieldset, Legend } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
@@ -17,6 +19,7 @@ interface Props extends GeneralModalProps {
 }
 
 export default ({ isOpen, onClose, defaultValues }: Props) => {
+  const { showSuccessToast, showErrorToast } = useToast();
   const { control, register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -25,14 +28,32 @@ export default ({ isOpen, onClose, defaultValues }: Props) => {
     },
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
-    await registerUser({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      acceptPrivacy: true
-    })
+  const onSubmit = (formData: RegisterFormData) => {
+    // Form user data
+    const data: IUser = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      acceptPrivacy: formData.acceptPrivacy
+    }
+
+    // Register user
+    registerUser(data)
+      .then(() => handleSuccess())
+      .catch(({ message }) => handleError(message));
   };
+
+  // Handle success
+  const handleSuccess = () => {
+    showSuccessToast({ message: 'Conta criada com sucesso!' });
+    onClose();
+  }
+
+  // Handle error
+  const handleError = (message: string) => {
+    showErrorToast({ message });
+    console.error(message);
+  }
 
   return (
     <Modal

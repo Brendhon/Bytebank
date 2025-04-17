@@ -2,6 +2,7 @@ import Providers from "@/components/Providers";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ReactNode } from "react";
+import { ToastProvider } from "./context/ToastContext";
 import "./globals.css";
 
 // Import the Inter font from Google Fonts
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          {children}
+          <ToastProvider>
+            {children}
+          </ToastProvider>
         </Providers>
       </body>
     </html>

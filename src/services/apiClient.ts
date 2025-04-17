@@ -18,7 +18,8 @@ export async function request<T>(
 
   // Analyze the response
   if (!response.ok) {
-    throw new Error(`Error fetching ${url}: ${response.statusText}`);
+    const message = await response.text();
+    throw new Error(message || 'Erro ao realizar tarefa, tente novamente');
   }
 
   // Parse the response
