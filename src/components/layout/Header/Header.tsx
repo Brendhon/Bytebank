@@ -3,6 +3,7 @@
 import { Button, Logo } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { HeaderVariant } from '@/types/ui';
+import { Button as HButton } from '@headlessui/react';
 import { UserIcon } from 'lucide-react';
 
 interface HeaderProps {
@@ -36,12 +37,12 @@ export default ({
       ) : (
         <div className="flex items-center gap-6">
           <span className="text-white">{userName}</span>
-          <button
+          <HButton
             onClick={onProfileClick}
-            className="rounded-full border border-orange p-2 text-orange"
+            className="rounded-full border border-orange p-2 text-orange cursor-pointer hover:bg-orange/30 transition-all duration-200 ease-in-out"
           >
             <UserIcon size={20} />
-          </button>
+          </HButton>
         </div>
       )}
     </header>

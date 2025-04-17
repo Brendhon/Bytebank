@@ -1,20 +1,18 @@
 'use client';
 
-import { LoginForm, RegisterForm } from "@/components/form";
 import { Footer, Header } from "@/components/layout";
-import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default () => {
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  // Get session data
+  const session = useSession();
 
   return (
     <>
       {/* Header */}
       <Header
-        variant="guest"
-        onOpenAccount={() => setIsRegisterOpen(true)}
-        onLogin={() => setIsLoginOpen(true)}
+        variant="user"
+        userName={session?.data?.user?.name || ''}
       />
 
       {/* Content */}
@@ -24,10 +22,6 @@ export default () => {
 
       {/* Footer */}
       <Footer />
-
-      {/* Modais */}
-      <RegisterForm isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
-      <LoginForm isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>
   );
 };
