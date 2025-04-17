@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { http, HttpResponse } from 'msw';
 import { useState } from 'react';
 import RegisterForm from './RegisterForm';
+import { ToastProvider } from '@/context';
 
 const meta: Meta<typeof RegisterForm> = {
   component: RegisterForm,
@@ -9,6 +10,13 @@ const meta: Meta<typeof RegisterForm> = {
   parameters: {
     layout: 'centered',
   },
+  decorators: [
+    (Story) => (
+      <ToastProvider>
+        <Story />
+      </ToastProvider>
+    ),
+  ],
 };
 
 // Export the meta object to be used in Storybook
@@ -37,9 +45,7 @@ const Template = (args: any) => {
 const parameters = {
   msw: {
     handlers: [
-      http.get('https://your-restful-endpoint/', () => {
-        return HttpResponse.json({});
-      }),
+      http.post('/api/users', () => HttpResponse.json({})),
     ],
   },
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { Transition } from '@headlessui/react';
+import { Button, Transition } from '@headlessui/react';
 import { CheckCircle, Info, XCircle, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -66,9 +66,9 @@ export default ({
       <div className={className}>
         <div>{icons[variant]}</div>
         <p className="text-14 flex-1">{message}</p>
-        <button onClick={handleClose} className="ml-2">
+        <Button onClick={handleClose} className="ml-2">
           <X className="w-4 h-4 cursor-pointer" />
-        </button>
+        </Button>
       </div>
     </Transition>
   );
