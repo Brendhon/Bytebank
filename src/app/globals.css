@@ -54,7 +54,7 @@ nav {
 }
 
 main {
-  @apply flex-1 p-6 w-full;
+  @apply flex-1 p-6 w-full flex justify-center;
 }
 
 footer {

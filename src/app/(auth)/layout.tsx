@@ -1,10 +1,15 @@
 'use client';
 
-import { Footer, Header } from "@/components/layout";
+import { Footer, Header, NavMenu } from "@/components/layout";
+import { NavItemLabel } from "@/components/layout/NavMenu/NavMenu";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { ReactNode } from "react";
 
-export default () => {
+export default ({ children }: { children: ReactNode }) => {
+  // Get the current pathname
+  const pathname = usePathname() as NavItemLabel;
+
   // Get session data
   const session = useSession();
 
@@ -28,10 +33,13 @@ export default () => {
         onNavigate={handleNavigation}
       />
 
-      {/* Content */}
-      <main>
-        Dashboard
-      </main>
+      <div className="content">
+        {/* Sidebar */}
+        <NavMenu current={pathname} onNavigation={handleNavigation} />
+
+        {/* Content */}
+        <main>{children}</main>
+      </div>
 
       {/* Footer */}
       <Footer />
