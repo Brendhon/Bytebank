@@ -45,7 +45,7 @@ export default ({
 
   // Set className based on variant
   const className = cn(
-    'fixed bottom-24 right-4 z-50 flex gap-3 rounded-md px-4 py-3 shadow-lg text-white min-w-[250px] flex-row justify-between items-center',
+    'fixed bottom-24 right-4 z-50 h-12 flex gap-3 rounded-sm p-3 shadow-lg text-white min-w-[250px] flex-row justify-between items-center',
     {
       'bg-green': variant === 'success',
       'bg-red': variant === 'error',
@@ -65,7 +65,7 @@ export default ({
     >
       <div className={className}>
         <div>{icons[variant]}</div>
-        <p className="text-sm flex-1">{message}</p>
+        <p className="text-14 flex-1">{message}</p>
         <button onClick={handleClose} className="ml-2">
           <X className="w-4 h-4 cursor-pointer" />
         </button>
