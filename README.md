@@ -99,7 +99,7 @@ touch .env.local
 Adicione a variável de ambiente no arquivo `.env.local`
 
 ```bash
-# Substitua <user> e <password> pelos dados do seu banco de dados
+# Substitua pela sua URL do MongoDB Atlas mas mantenha o nome do banco de dados - bytebank
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/bytebank
 
 # Secret para autenticação
