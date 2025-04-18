@@ -25,11 +25,18 @@ export default ({ className, pButton, children }: Props) => {
 
       <PopoverPanel anchor="bottom end" className={newClass}>
         {({ close }) =>
-          <div onClick={() => close()}>
+          <div
+            onClick={() => close()}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') close();
+            }}
+          >
             {children}
           </div>
         }
       </PopoverPanel>
     </Popover>
   );
-}
+};
