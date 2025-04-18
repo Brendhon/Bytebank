@@ -1,5 +1,6 @@
 'use client';
 
+import FigmaSvg from '@/assets/figma.svg';
 import { Button, Logo } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { HeaderVariant } from '@/types/ui';
@@ -39,6 +40,12 @@ export default ({
   // Popover content
   const content = (
     <ul className="flex flex-col gap-2 justify-center items-center">
+      {/* Storybook */}
+      <li className={liClass} onClick={() => handleNavigation(process.env.NEXT_PUBLIC_FIGMA_URL || '')}>
+        <FigmaSvg size={20} className="inline mr-2" />
+        Figma
+      </li>
+
       {/* Storybook */}
       <li className={liClass} onClick={() => handleNavigation(process.env.NEXT_PUBLIC_STORYBOOK_URL || '')}>
         <FileCode size={20} className="inline mr-2" />

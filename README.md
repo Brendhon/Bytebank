@@ -107,10 +107,19 @@ NEXTAUTH_SECRET=your_secret
 
 # URL do site
 NEXTAUTH_URL=http://localhost:3000
+```
 
+No menu de perfil do usuário, também é possível acessar diretamente o Storybook e o Figma da aplicação. Para que esses links funcionem corretamente, é necessário adicionar as seguintes variáveis de ambiente no arquivo `.env.local`:
+
+```bash
 # URL do Storybook
 NEXT_PUBLIC_STORYBOOK_URL=http://localhost:6006
+
+# URL do Figma
+NEXT_PUBLIC_FIGMA_URL=https://www.figma.com/file/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264
 ```
+
+Certifique-se de substituir as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
 
 ### 🏃‍♂️ Executando o projeto
 
