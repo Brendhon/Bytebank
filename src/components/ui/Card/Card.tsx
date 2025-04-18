@@ -1,4 +1,5 @@
-import { cn } from '@/lib/utils';
+import { formatCurrency } from '@/lib/formatter';
+import { cn, isNumber } from '@/lib/utils';
 import { CardProps } from '@/types/ui';
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
@@ -32,24 +33,12 @@ export default ({
   value,
   label = 'Pagamentos',
 }: CardProps) => {
-  // Check if value is a number
-  const isValueNumber = (value: number | undefined): value is number => typeof value === 'number' && !isNaN(value);
-
-  // Format value to a money string
-  const formatValue = (value: number): string => {
-    return Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-      currencyDisplay: 'symbol',
-    }).format(value);
-  };
-
   return (
     <div className={cn(cardVariants({ variant }), className)}>
       {
         // Check if value is a number and format it, otherwise show a loader
-        isValueNumber(value)
-          ? <span className="text-20-bold">{formatValue(value)}</span>
+        isNumber(value)
+          ? <span className="text-20-bold">{formatCurrency(value)}</span>
           : <Loader2 className="animate-spin text-white" size={40} />
       }
       <span className="text-14">{label}</span>

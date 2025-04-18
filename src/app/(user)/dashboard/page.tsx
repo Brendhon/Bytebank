@@ -1,6 +1,7 @@
 'use client';
 
 import { MovementsSection } from "@/components/layout";
+import { WelcomeCard } from "@/components/ui";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -12,7 +13,13 @@ export default () => {
   const router = useRouter();
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
+      <WelcomeCard 
+        name={session?.data?.user?.name || "Usuário"}
+        balance={30000.45}
+        showBalance={true}
+        date={new Date()}
+      />
       <MovementsSection 
         data={[
           { label: "Pagamentos", value: 24000.45, variant: "dark" },
@@ -21,6 +28,6 @@ export default () => {
           { label: "Saque", variant: "green" },
         ]}
       />
-    </>
+    </div>
   );
 };
