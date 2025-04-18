@@ -142,6 +142,18 @@ Acesse o Storybook em seu navegador: [http://localhost:6006](http://localhost:60
 
 ---
 
+## 👀 Observações
+
+- **Deploys separados na Vercel**: 
+  - O projeto do **Storybook** está disponível em [https://bytebank-storybook.vercel.app/](https://bytebank-storybook.vercel.app/).
+  - A aplicação web está disponível em [https://bytebank-web.vercel.app/home](https://bytebank-web.vercel.app/home).
+
+- **Headless UI**: Utilizado para criar componentes acessíveis e sem estilo, permitindo total personalização da interface e garantindo conformidade com padrões de acessibilidade.
+
+- **React Hook Form**: Implementado para manipulação e validação de formulários, proporcionando uma experiência de usuário fluida e intuitiva.
+
+---
+
 ## 👥 Autor
 <img style="border-radius: 20%;" src="https://avatars1.githubusercontent.com/u/52840078?s=400&u=67bc81db89b5abf12cf592e0c610426afd3a02f4&v=4" width="120px;" alt="autor"/><br>
 **Brendhon Moreira**
