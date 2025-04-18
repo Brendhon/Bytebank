@@ -24,10 +24,10 @@ export type NavItemLabel = typeof navItems[number]['href'];
 interface Props {
   className?: string;
   current: NavItemLabel;
-  onNavigation: (href: string) => void;
+  onNavigate?: (href: string) => void;
 }
 
-export default ({ current, onNavigation, className = '' }: Props) => {
+export default ({ current, onNavigate, className = '' }: Props) => {
   // Check if the current tab is active
   const isActive = (value: string) => current === value;
 
@@ -43,7 +43,7 @@ export default ({ current, onNavigation, className = '' }: Props) => {
             key={href}>
             <Button
               type="button"
-              onClick={() => onNavigation(href)}
+              onClick={() => onNavigate?.(href)}
               className={cn(
                 'flex items-center w-full gap-2 px-2 py-2 rounded-md text-left transition-colors cursor-pointer',
                 color(href),

@@ -64,7 +64,6 @@ footer {
 }
 
 @layer components {
-
   .card {
     @apply bg-light-gray rounded-sm p-7 shadow-sm;
     @apply text-dark;    
@@ -72,6 +71,14 @@ footer {
 
   .content {
     @apply flex-1 flex flex-row;
+  }
+
+  .popover-trigger {
+    @apply text-orange cursor-pointer hover:bg-orange/30 transition-all duration-200 ease-in-out outline-none focus:outline-none;
+  }
+
+  .popover-li {
+    @apply hover:text-orange cursor-pointer p-2 w-full;
   }
 
   .text-14 {

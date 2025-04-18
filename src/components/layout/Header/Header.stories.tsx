@@ -2,7 +2,14 @@ import Header from './Header';
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Header> = {
-  component: Header
+  component: Header,
+  tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['user', 'guest'],
+    },
+  }
 };
 
 export default meta;
@@ -22,5 +29,6 @@ export const User: Story = {
     variant: 'user',
     userName: 'Joana da Silva Oliveira',
     onNavigate: (path) => alert(`Mock navigate to: ${path}`),
+    onLogout: () => alert('Logout'),
   }
 };

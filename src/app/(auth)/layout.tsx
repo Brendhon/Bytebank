@@ -2,7 +2,7 @@
 
 import { Footer, Header, NavMenu } from "@/components/layout";
 import { NavItemLabel } from "@/components/layout/NavMenu/NavMenu";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 
@@ -32,11 +32,12 @@ export default ({ children }: { children: ReactNode }) => {
         userName={session?.data?.user?.name || ''}
         onNavigate={handleNavigation}
         pathname={pathname}
+        onLogout={() => signOut()}
       />
 
       <div className="content">
         {/* Sidebar */}
-        <NavMenu className="hidden md:flex" current={pathname} onNavigation={handleNavigation} />
+        <NavMenu className="hidden md:flex" current={pathname} onNavigate={handleNavigation} />
 
         {/* Content */}
         <main>{children}</main>

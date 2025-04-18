@@ -22,6 +22,6 @@ export const Default: Story = {
   render: Template,
   args: {
     current: '/dashboard' as NavItemLabel,
-    onNavigation: (href: string) => alert(`Navigate to: ${href}`),
+    onNavigate: (href: string) => alert(`Navigate to: ${href}`),
   },
 };
