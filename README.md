@@ -32,7 +32,6 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 | Branch      | Finalidade                                          |
 | ----------- | --------------------------------------------------- |
 | `main`      | Produção (deploy da aplicação principal)            |
-| `storybook` | Deploy da documentação de componentes com Storybook |
 | `dev`       | Desenvolvimento principal                           |
 
 ---
