@@ -5,7 +5,7 @@ import { IToast } from '@/types/ui';
 import { createContext, ReactNode, useState } from 'react';
 
 // Define the type for the toast object
-interface SimpleToast extends Pick<IToast, 'message' | 'duration'> { }
+type SimpleToast = Pick<IToast, 'message' | 'duration'>;
 
 // Define what our context will expose
 type ToastContextType = {

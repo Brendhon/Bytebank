@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { InputTypes } from '@/types/ui';
-import { Field, Input, InputProps, Label, } from '@headlessui/react';
+import { Button, Field, Input, InputProps, Label, } from '@headlessui/react';
 import { Eye, EyeOff } from 'lucide-react';
 import { cloneElement, isValidElement, ReactElement, ReactNode, useState } from 'react';
 
@@ -63,26 +63,23 @@ export default ({
 
           {/* Custom Icon */}
           {icon && !isPassword && (
-            <span
-              className="absolute right-2"
-              onClick={onIconClick}
-            >
+            <Button className="absolute right-2" onClick={onIconClick}>
               {
                 // Add default icon class
                 isValidElement(icon)
                   ? cloneElement(icon as ReactElement<{ className?: string }>, { className: iconClass })
                   : icon
               }
-            </span>
+            </Button>
           )}
 
           {/* Password eye toggle */}
           {isPassword && (
-            <span
+            <Button
               className="absolute right-2"
               onClick={() => setShowPassword((prev) => !prev)}>
               {showPassword ? <EyeOff className={iconClass} /> : <Eye className={iconClass} />}
-            </span>
+            </Button>
           )}
         </div>
       </Field>

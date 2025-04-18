@@ -19,7 +19,7 @@ export default ({ children }: { children: ReactNode }) => {
   // Function to redirect to Storybook
   const handleNavigation = (link: string) => {
     // Check if the link is external or internal
-    link?.startsWith('http')
+    return link?.startsWith('http')
       ? window.open(link, '_blank')
       : router.push(link || '/');
   };

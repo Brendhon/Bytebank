@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { IToast } from '@/types/ui';
 import { Button, Transition } from '@headlessui/react';
 import { CheckCircle, Info, X, XCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface Props extends IToast {
   show?: boolean;
@@ -24,23 +24,25 @@ export default ({
   onClose,
   duration = 0, // Default to 0 (no auto close)
 }: Props) => {
+  // State to control the visibility of the toast
   const [isVisible, setIsVisible] = useState(show);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsVisible(false);
     onClose?.();
-  };
+  }, [onClose]);
 
   // Auto close after duration
   useEffect(() => {
+    // If the toast is not visible or duration is 0, do nothing
     if (!isVisible || duration === 0) return;
 
-    const timeout = setTimeout(() => {
-      handleClose();
-    }, duration);
+    // Set a timeout to close the toast after the specified duration
+    const timeout = setTimeout(() => handleClose(), duration);
 
+    // Clear the timeout if the component unmounts or if isVisible changes
     return () => clearTimeout(timeout);
-  }, [isVisible, duration]);
+  }, [isVisible, duration, handleClose]);
 
 
   // Set className based on variant

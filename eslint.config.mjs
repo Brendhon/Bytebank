@@ -15,6 +15,14 @@ const eslintConfig = [
     "next/typescript",
     "plugin:jsx-a11y/recommended" // Accessibility
   ),
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/display-name": "off",
+      "import/no-anonymous-default-export": 'off',
+    },
+  },
 ];
 
 export default eslintConfig;

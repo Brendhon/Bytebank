@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
 
 export default async () => {
-  await getServerSession(authOptions)
+  return await getServerSession(authOptions)
     ? redirect('/dashboard')
     : redirect('/home');
 };
