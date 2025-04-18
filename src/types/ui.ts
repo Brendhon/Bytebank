@@ -14,3 +14,10 @@ export interface IToast {
   variant: 'success' | 'error' | 'info';
   duration?: number
 };
+
+export interface CardProps {
+  variant?: CardVariant;
+  label?: string;
+  value?: number;
+  className?: string;
+}

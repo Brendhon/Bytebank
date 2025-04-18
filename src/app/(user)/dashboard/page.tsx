@@ -1,5 +1,6 @@
 'use client';
 
+import { MovementsSection } from "@/components/layout";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -12,7 +13,14 @@ export default () => {
 
   return (
     <>
-      Dashboard
+      <MovementsSection 
+        data={[
+          { label: "Pagamentos", value: 24000.45, variant: "dark" },
+          { label: "Depósitos", value: 24000.45, variant: "blue" },
+          { label: "Transferências", value: 24000.45, variant: "orange" },
+          { label: "Saque", variant: "green" },
+        ]}
+      />
     </>
   );
 };

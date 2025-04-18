@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { CardVariant } from '@/types/ui';
+import { CardProps } from '@/types/ui';
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 
@@ -25,21 +25,13 @@ export const cardVariants = cva(
   }
 );
 
-// Button props
-interface Props {
-  variant?: CardVariant;
-  label?: string;
-  value?: number;
-  className?: string;
-}
-
 // Button component - A reusable button component that accepts variant and children props
 export default ({
   variant,
   className,
   value,
   label = 'Pagamentos',
-}: Props) => {
+}: CardProps) => {
   // Check if value is a number
   const isValueNumber = (value: number | undefined): value is number => typeof value === 'number' && !isNaN(value);
 

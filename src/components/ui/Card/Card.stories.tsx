@@ -29,23 +29,21 @@ export const Default: Story = {};
 
 // Card Variants
 export const Blue: Story = {
-  args: { variant: 'blue', label: 'Depósitos', value: 24000},
+  args: { variant: 'blue', label: 'Depósitos', value: 24000 },
 };
 
 export const Green: Story = {
-  args: { variant: 'green', label: 'Saques', value: 12000},
+  args: { variant: 'green', label: 'Saques', value: 12000 },
 };
 
 export const Orange: Story = {
-  args: { variant: 'orange', label: 'Transferências', value: 6000.45},
+  args: { variant: 'orange', label: 'Transferências', value: 6000.45 },
 };
 
 export const Dark: Story = {
-  args: { variant: 'dark', label: 'Pagamentos', value: 24000},
+  args: { variant: 'dark', label: 'Pagamentos', value: 24000 },
 };
 
 export const Loading: Story = {
-  args: {
-    variant: 'dark',
-  },
+  args: { variant: 'dark' },
 };
