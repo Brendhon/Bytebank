@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors */
+  --blue: #004D61;
+  --orange: #FF5031;
+  --light-green: #E4EDE3;
+  --light-gray: #F9F9F9;
+  --gray: #8B8B8B;
+  --red: #BF1313;
+  --green: #47A138;
+  --dark: #212121;
+  --dark-gray: #444444;
+  --white: #FFFFFF;
+
+  /* Linear Background */
+  --linear-background: linear-gradient(180deg, var(--light-green) 50%, var(--white) 100%);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Colors */
+  --color-blue: var(--blue);
+  --color-orange: var(--orange);
+  --color-light-green: var(--light-green);
+  --color-light-gray: var(--light-gray);
+  --color-gray: var(--gray);
+  --color-red: var(--red);
+  --color-green: var(--green);
+  --color-dark: var(--dark);
+  --color-dark-gray: var(--dark-gray);
+  --color-white: var(--white);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--linear-background);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  @apply h-full;
+}
+
+header {
+  @apply px-6 flex items-center;
+  @apply text-sm text-white;
+  @apply bg-dark;
+  @apply min-h-18;
+}
+
+nav {
+  @apply bg-white w-[200px] p-4 text-dark-gray;
+}
+
+main {
+  @apply flex-1 p-6 w-full flex justify-center;
+}
+
+footer {
+  @apply p-6 flex flex-col gap-6 justify-between items-start sm:flex-row sm:items-center;
+  @apply text-sm text-white;
+  @apply bg-dark;
+}
+
+@layer components {
+  .card {
+    @apply bg-light-gray rounded-sm p-7 shadow-sm;
+    @apply text-dark;    
+  }
+
+  .content {
+    @apply flex-1 flex flex-row;
+  }
+
+  .popover-trigger {
+    @apply text-orange cursor-pointer hover:bg-orange/30 transition-all duration-200 ease-in-out outline-none focus:outline-none;
+  }
+
+  .popover-li {
+    @apply hover:text-orange cursor-pointer p-2 w-full;
+  }
+
+  .text-14 {
+    @apply text-sm font-normal;
+  }
+
+  .text-14-semi {
+    @apply text-sm font-semibold;
+  }
+
+  .text-16 {
+    @apply text-base font-normal;
+  }
+
+  .text-16-bold {
+    @apply text-base font-bold;
+  }
+
+  .text-16-semi {
+    @apply text-base font-semibold;
+  }
+
+  .text-20 {
+    @apply text-xl font-normal;
+  }
+
+  .text-20-bold {
+    @apply text-xl font-bold;
+  }
+
+  .text-24 {
+    @apply text-2xl font-normal;
+  }
+
+  .text-24-bold {
+    @apply text-2xl font-bold;
+  }
 }
