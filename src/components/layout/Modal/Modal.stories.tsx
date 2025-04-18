@@ -19,49 +19,57 @@ type Story = StoryObj<typeof Modal>;
 // This story demonstrates the Modal component with a title and a confirmation message.
 export const Default: Story = {
   render: () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const DefaultComponent = () => {
+      const [isOpen, setIsOpen] = useState(false);
 
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Abrir Modal</Button>
+      return (
+        <>
+          <Button onClick={() => setIsOpen(true)}>Abrir Modal</Button>
 
-        <Modal
-          isOpen={isOpen}
-          title="Confirmação"
-          onClose={() => setIsOpen(false)}
-          onSubmit={() => {
-            alert('Ação confirmada');
-            setIsOpen(false);
-          }}
-          btnVariantSubmit="outlineOrange"
-        >
-          <p className="text-gray-700">Você tem certeza que deseja continuar com esta ação?</p>
-        </Modal>
-      </>
-    );
+          <Modal
+            isOpen={isOpen}
+            title="Confirmação"
+            onClose={() => setIsOpen(false)}
+            onSubmit={() => {
+              alert('Ação confirmada');
+              setIsOpen(false);
+            }}
+            btnVariantSubmit="outlineOrange"
+          >
+            <p className="text-gray-700">Você tem certeza que deseja continuar com esta ação?</p>
+          </Modal>
+        </>
+      );
+    };
+
+    return <DefaultComponent />;
   },
 };
 
-// This story demonstrates the Modal component without a title.
 export const WithoutTitle: Story = {
   render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <>
-        <Button onClick={() => setIsOpen(true)}>Abrir Modal</Button>
-        <Modal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          onSubmit={() => {
-            alert('Ação confirmada');
-            setIsOpen(false);
-          }}
-          btnTextSubmit="Sim"
-          btnTextCancel="Não"
-        >
-          <p>Deseja salvar as alterações?</p>
-        </Modal>
-      </>
-    );
+    const WithoutTitleComponent = () => {
+      const [isOpen, setIsOpen] = useState(false);
+
+      return (
+        <>
+          <Button onClick={() => setIsOpen(true)}>Abrir Modal</Button>
+          <Modal
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            onSubmit={() => {
+              alert('Ação confirmada');
+              setIsOpen(false);
+            }}
+            btnTextSubmit="Sim"
+            btnTextCancel="Não"
+          >
+            <p>Deseja salvar as alterações?</p>
+          </Modal>
+        </>
+      );
+    };
+
+    return <WithoutTitleComponent />;
   },
 };

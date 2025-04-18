@@ -2,7 +2,7 @@ import { IUser } from '@/types/user';
 import { Document, Schema, model, models } from 'mongoose';
 
 // Define the interface for the User document 
-export interface UserType extends Exclude<Document, IUser> {}
+type UserType = Exclude<Document, IUser>;
 
 // Define the User schema
 const UserSchema = new Schema(
