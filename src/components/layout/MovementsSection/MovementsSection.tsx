@@ -15,7 +15,7 @@ export default ({ data }: Props) => {
       <h2 className="text-20-bold text-dark-gray mb-6">Movimentações</h2>
 
       {/* Cards */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-center mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
           {data.map(({ label, value, variant }) => (
             <Card

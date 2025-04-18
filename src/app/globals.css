@@ -33,6 +33,8 @@
 
 body {
   background: var(--linear-background);
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
