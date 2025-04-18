@@ -3,11 +3,7 @@ import User from '@/models/User';
 import { IUser } from '@/types/user';
 import { NextResponse } from 'next/server';
 
-interface Params {
-  params: {
-    id: string;
-  };
-}
+interface Params { params: Promise<{ id: string }> }
 
 // DELETE /api/users/:id
 export async function DELETE(req: Request, { params }: Params) {
@@ -15,7 +11,7 @@ export async function DELETE(req: Request, { params }: Params) {
   await connectToDatabase();
 
   // Get id from params
-  const { id } = params;
+  const { id } = await params;
 
   // Check if id is valid
   const deletedUser = await User.findByIdAndDelete<IUser>(id);
@@ -30,7 +26,7 @@ export async function PUT(req: Request, { params }: Params) {
   await connectToDatabase();
 
   // Get id from params
-  const { id } = params;
+  const { id } = await params;
 
   // Parse the request body as JSON
   const data = await req.json();
@@ -48,7 +44,7 @@ export async function GET(req: Request, { params }: Params) {
   await connectToDatabase();
 
   // Get id from params
-  const { id } = params;
+  const { id } = await params;
 
   // Get the User record from the database
   const user = await User.findById<IUser>(id);
