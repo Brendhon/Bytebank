@@ -78,7 +78,7 @@ footer {
   }
 
   .popover-li {
-    @apply hover:text-orange cursor-pointer p-2 w-full;
+    @apply hover:text-orange cursor-pointer p-2 w-full text-left;
   }
 
   .text-14 {

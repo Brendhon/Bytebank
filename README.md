@@ -32,7 +32,6 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 | Branch      | Finalidade                                          |
 | ----------- | --------------------------------------------------- |
 | `main`      | Produção (deploy da aplicação principal)            |
-| `storybook` | Deploy da documentação de componentes com Storybook |
 | `dev`       | Desenvolvimento principal                           |
 
 ---
@@ -140,6 +139,18 @@ npm run storybook
 ```
 
 Acesse o Storybook em seu navegador: [http://localhost:6006](http://localhost:6006)
+
+---
+
+## 👀 Observações
+
+- **Deploys separados na Vercel**: 
+  - O projeto do **Storybook** está disponível em [https://bytebank-storybook.vercel.app/](https://bytebank-storybook.vercel.app/).
+  - A aplicação web está disponível em [https://bytebank-web.vercel.app/home](https://bytebank-web.vercel.app/home).
+
+- **Headless UI**: Utilizado para criar componentes acessíveis e sem estilo, permitindo total personalização da interface e garantindo conformidade com padrões de acessibilidade.
+
+- **React Hook Form**: Implementado para manipulação e validação de formulários, proporcionando uma experiência de usuário fluida e intuitiva.
 
 ---
 

@@ -1,16 +1,16 @@
 'use client';
 
 import { LoginForm, RegisterForm } from "@/components/form";
-import { BenefitsSection, Footer, Header } from "@/components/layout";
+import { Footer, Header } from "@/components/layout";
 import { useToast } from "@/hooks";
 import { LoginFormData, RegisterFormData } from "@/schemas";
 import { registerUser } from "@/services/user";
 import { IUser } from "@/types/user";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-export default () => {
+export default ({ children }: { children: ReactNode }) => {
   // State to manage modals
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -86,7 +86,7 @@ export default () => {
 
       {/* Content */}
       <main>
-        <BenefitsSection />
+        {children}
       </main>
 
       {/* Footer */}
