@@ -1,7 +1,10 @@
 import { buttonVariants } from '@/components/ui/Button/Button';
+import { cardVariants } from '@/components/ui/Card/Card';
 import { VariantProps } from 'class-variance-authority';
 
 export type ButtonVariant = VariantProps<typeof buttonVariants>['variant'];
+
+export type CardVariant = VariantProps<typeof cardVariants>['variant'];
 
 export type InputTypes = 'text' | 'email' | 'password' | 'number';
 
