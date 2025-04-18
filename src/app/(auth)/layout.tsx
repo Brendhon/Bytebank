@@ -31,11 +31,12 @@ export default ({ children }: { children: ReactNode }) => {
         variant="user"
         userName={session?.data?.user?.name || ''}
         onNavigate={handleNavigation}
+        pathname={pathname}
       />
 
       <div className="content">
         {/* Sidebar */}
-        <NavMenu current={pathname} onNavigation={handleNavigation} />
+        <NavMenu className="hidden md:flex" current={pathname} onNavigation={handleNavigation} />
 
         {/* Content */}
         <main>{children}</main>

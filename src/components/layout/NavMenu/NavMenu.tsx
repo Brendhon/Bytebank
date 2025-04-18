@@ -22,11 +22,12 @@ export type NavItemLabel = typeof navItems[number]['href'];
 
 // Set interface for the props
 interface Props {
+  className?: string;
   current: NavItemLabel;
   onNavigation: (href: string) => void;
 }
 
-export default ({ current, onNavigation }: Props) => {
+export default ({ current, onNavigation, className = '' }: Props) => {
   // Check if the current tab is active
   const isActive = (value: string) => current === value;
 
@@ -35,7 +36,7 @@ export default ({ current, onNavigation }: Props) => {
 
   // Render the navigation items
   return (
-    <nav>
+    <nav className={className}>
       <ul className="flex flex-col gap-3">
         {navItems.map(({ label, href, icon: Icon }) => (
           <li className='hover:opacity-70'

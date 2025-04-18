@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
+import { Popover, PopoverBackdrop, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 export default ({ className, pButton, children }: Props) => {
   const newClass = cn(
-    'w-full flex flex-col md:w-[200px] bg-white shadow-lg text-dark-gray rounded-sm p-4',
+    'w-full flex flex-col w-[200px] bg-white shadow-lg text-dark-gray rounded-sm',
     className,
   );
 
@@ -19,8 +19,16 @@ export default ({ className, pButton, children }: Props) => {
       <PopoverButton className="outline-none focus:outline-none">
         {pButton}
       </PopoverButton>
+
+      {/* Backdrop to close the popover when clicking outside - https://github.com/tailwindlabs/headlessui/discussions/2731) */}
+      <PopoverBackdrop className="fixed inset-0 bg-transparent" />
+
       <PopoverPanel anchor="bottom end" className={newClass}>
-        {children}
+        {({ close }) =>
+          <div onClick={() => close()}>
+            {children}
+          </div>
+        }
       </PopoverPanel>
     </Popover>
   );
