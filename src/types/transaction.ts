@@ -1,4 +1,4 @@
-// Enum  for transaction types
+// Enums
 export enum TransactionDesc {
   deposit = 'Depósito',
   transfer = 'Transferência',
@@ -6,12 +6,21 @@ export enum TransactionDesc {
   payment = 'Pagamento',
 }
 
-export type TransactionDescKey = keyof typeof TransactionDesc;
+export enum TransactionType {
+  outflow = 'Saída',
+  inflow = 'Entrada',
+}
 
+// Types
+export type TransactionDescKey = keyof typeof TransactionDesc;
+export type TransactionTypeKey = keyof typeof TransactionType;
+
+// Interface for transaction
 export interface ITransaction {
   id?: string
   date: string
   alias?: string
+  type: TransactionTypeKey
   desc: TransactionDescKey
   value: number
 }

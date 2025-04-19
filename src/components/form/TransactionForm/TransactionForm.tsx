@@ -4,7 +4,7 @@ import { Modal } from '@/components/layout'
 import { Illustration } from '@/components/ui'
 import { TransactionFormData, transactionSchema } from '@/schemas'
 import { GeneralModalProps } from '@/types/modal'
-import { ITransaction, TransactionDesc } from '@/types/transaction'
+import { ITransaction, TransactionDesc, TransactionType } from '@/types/transaction'
 import { Fieldset, Legend } from '@headlessui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CalendarIcon, PiggyBank } from 'lucide-react'
@@ -17,6 +17,7 @@ const defaultTransaction: ITransaction = {
   desc: 'deposit',
   alias: '',
   value: 0,
+  type: 'inflow',
   date: new Date().toLocaleDateString('pt-BR', {
     year: 'numeric',
     month: '2-digit',
@@ -44,8 +45,9 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
     Object.entries(values).forEach(([key, val]) => setValue(key as keyof TransactionFormData, val))
   }, [defaultValues, setValue])
 
-  // Form type options by enum TransactionDesc
+  // Form type options by enum
   const descOptions = Object.entries(TransactionDesc).map(([key, value]) => ({ label: value, value: key }))
+  const typeOptions = Object.entries(TransactionType).map(([key, value]) => ({ label: value, value: key }))
 
   // Render the form
   return (
@@ -63,21 +65,29 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
             {isEditing ? 'Editar transação' : 'Nova transação'}
           </Legend>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Input
-              label="Alias (opcional)"
-              placeholder="Digite um apelido para a transação"
-              type="email"
-              {...register('alias')}
-              error={errors.alias?.message}
-            />
+          <Input
+            label="Alias (opcional)"
+            placeholder="Digite um apelido para a transação"
+            type="email"
+            {...register('alias')}
+            error={errors.alias?.message}
+          />
 
+          <div className="grid grid-cols-2 gap-4">
             <Select
               label="Descrição"
               placeholder="Descrição"
               error={errors.desc?.message}
               options={descOptions}
               {...register('desc')}
+            />
+
+            <Select
+              label="Tipo"
+              placeholder="Tipo"
+              error={errors.type?.message}
+              options={typeOptions}
+              {...register('type')}
             />
           </div>
 

@@ -1,4 +1,4 @@
-import { ITransaction, TransactionDesc } from '@/types/transaction';
+import { ITransaction, TransactionDesc, TransactionType } from '@/types/transaction';
 import { Document, Schema, model, models } from 'mongoose';
 
 // Define the interface for the Transaction document
@@ -10,6 +10,11 @@ const TransactionSchema = new Schema<SchemaType>(
     desc: {
       type: String,
       enum: Object.keys(TransactionDesc),
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: Object.keys(TransactionType),
       required: true,
     },
     value: {

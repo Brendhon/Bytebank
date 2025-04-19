@@ -44,6 +44,7 @@ export const WithErrors: Story = {
   args: {
     defaultValues: {
       desc: 'transfer',
+      type: 'outflow',
       alias: '',
       value: -100,
       date: '',
@@ -56,6 +57,7 @@ export const Edit: Story = {
   render: Template,
   args: {
     defaultValues: {
+      type: 'inflow',
       desc: 'payment',
       alias: 'Salário',
       value: 5000,

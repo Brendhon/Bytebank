@@ -25,10 +25,17 @@ export default ({
   const renderType = (key: TransactionDescKey) => TransactionDesc[key]
 
   // Define render to value
-  const renderValue = (value: number) => {
+  const renderValue = (data: ITransaction) => {
+    // Destructure the data
+    const { value, type } = data
+
+    // Check if the type is outflow
+    const isOutflow = type === 'outflow'
+    
+    // Check if the value is negative
     return (
-      <span className={cn('font-semibold', value < 0 ? 'text-red' : 'text-green')}>
-        {value < 0 ? '- ' : ''}
+      <span className={cn('font-semibold', isOutflow ? 'text-red' : 'text-green')}>
+        {isOutflow ? '- ' : ''}
         {formatCurrency(Math.abs(value))}
       </span>
     )
@@ -72,7 +79,7 @@ export default ({
     {
       label: 'Valor',
       accessor: 'value',
-      render: (value) => renderValue(value),
+      render: (_v, _row) => renderValue(_row),
     },
     {
       label: 'Ações',
