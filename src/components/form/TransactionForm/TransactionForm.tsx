@@ -4,6 +4,7 @@ import { Modal } from '@/components/layout'
 import { Illustration } from '@/components/ui'
 import { TransactionFormData, transactionSchema } from '@/schemas'
 import { GeneralModalProps } from '@/types/modal'
+import { ITransaction, TransactionDesc } from '@/types/transaction'
 import { Fieldset, Legend } from '@headlessui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CalendarIcon, PiggyBank } from 'lucide-react'
@@ -11,13 +12,16 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Input from '../Input/Input'
 import Select from '../Select/Select'
-import { Transaction } from '@/types/transaction'
 
-const defaultTransaction: Transaction = {
-  type: 'deposit',
+const defaultTransaction: ITransaction = {
+  desc: 'deposit',
   alias: '',
   value: 0,
-  date: '',
+  date: new Date().toLocaleDateString('pt-BR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }),
 }
 
 export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<TransactionFormData>) => {
@@ -40,6 +44,10 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
     Object.entries(values).forEach(([key, val]) => setValue(key as keyof TransactionFormData, val))
   }, [defaultValues, setValue])
 
+  // Form type options by enum TransactionDesc
+  const descOptions = Object.entries(TransactionDesc).map(([key, value]) => ({ label: value, value: key }))
+
+  // Render the form
   return (
     <>
       <Modal
@@ -55,26 +63,23 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
             {isEditing ? 'Editar transação' : 'Nova transação'}
           </Legend>
 
-          <Select
-            label="Tipo"
-            placeholder="Tipo de transferência"
-            error={errors.type?.message}
-            options={[
-              { value: 'deposit', label: 'Depósito' },
-              { value: 'transfer', label: 'Transferência' },
-              { value: 'payment', label: 'Pagamento' },
-              { value: 'withdrawal', label: 'Saque' },
-            ]}
-            {...register('type')}
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <Input
+              label="Alias (opcional)"
+              placeholder="Digite um apelido para a transação"
+              type="email"
+              {...register('alias')}
+              error={errors.alias?.message}
+            />
 
-          <Input
-            label="Alias (opcional)"
-            placeholder="Digite um apelido para a transação"
-            type="email"
-            {...register('alias')}
-            error={errors.alias?.message}
-          />
+            <Select
+              label="Descrição"
+              placeholder="Descrição"
+              error={errors.desc?.message}
+              options={descOptions}
+              {...register('desc')}
+            />
+          </div>
 
           <div className="grid grid-cols-2 gap-4">
             <Input

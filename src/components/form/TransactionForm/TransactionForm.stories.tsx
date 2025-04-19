@@ -43,7 +43,7 @@ export const WithErrors: Story = {
   render: Template,
   args: {
     defaultValues: {
-      type: 'transfer',
+      desc: 'transfer',
       alias: '',
       value: -100,
       date: '',
@@ -56,7 +56,7 @@ export const Edit: Story = {
   render: Template,
   args: {
     defaultValues: {
-      type: 'payment',
+      desc: 'payment',
       alias: 'Salário',
       value: 5000,
       date: '2023-10-01',

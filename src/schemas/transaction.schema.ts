@@ -1,10 +1,10 @@
-import { TransactionType, TransactionTypeKey } from '@/types/transaction';
+import { TransactionDesc, TransactionDescKey } from '@/types/transaction';
 import { z } from 'zod';
 
-const transactionTypeKeys = Object.keys(TransactionType) as [TransactionTypeKey, ...Array<TransactionTypeKey>];
+const TransactionDescKeys = Object.keys(TransactionDesc) as [TransactionDescKey, ...Array<TransactionDescKey>];
 
 export const transactionSchema = z.object({
-  type: z.enum(transactionTypeKeys, {
+  desc: z.enum(TransactionDescKeys, {
     errorMap: () => ({ message: 'Selecione um tipo' }),
   }),
   alias: z.string().optional(),

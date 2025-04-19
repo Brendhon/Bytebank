@@ -3,16 +3,16 @@
 import { Button } from '@/components/ui'
 import { formatCurrency } from '@/lib/formatter'
 import { cn } from '@/lib/utils'
-import { Transaction, TransactionType, TransactionTypeKey } from '@/types/transaction'
+import { ITransaction, TransactionDesc, TransactionDescKey } from '@/types/transaction'
 import { TableColumn } from '@/types/ui'
 import { Pencil, Trash } from 'lucide-react'
 import Table from '../Table/Table'
 
 interface TransactionTableProps {
-  transactions: Transaction[]
+  transactions: ITransaction[]
   pageSize?: number
-  onEdit?: (data: Transaction) => void
-  onDelete?: (data: Transaction) => void
+  onEdit?: (data: ITransaction) => void
+  onDelete?: (data: ITransaction) => void
 }
 
 export default ({
@@ -22,7 +22,7 @@ export default ({
   onDelete,
 }: TransactionTableProps) => {
   // Define render to type
-  const renderType = (key: TransactionTypeKey) => TransactionType[key]
+  const renderType = (key: TransactionDescKey) => TransactionDesc[key]
 
   // Define render to value
   const renderValue = (value: number) => {
@@ -35,7 +35,7 @@ export default ({
   }
 
   // Define the render to actions
-  const renderActions = (data: Transaction) => {
+  const renderActions = (data: ITransaction) => {
     // Define the className for the buttons
     const buttonClassName = 'w-6 h-6 rounded-full'
     return (
@@ -55,7 +55,7 @@ export default ({
   }
 
   // Define the columns for the table
-  const columns: TableColumn<Transaction>[] = [
+  const columns: TableColumn<ITransaction>[] = [
     {
       label: 'Data',
       accessor: 'date',
@@ -65,8 +65,8 @@ export default ({
       accessor: 'alias',
     },
     {
-      label: 'Tipo',
-      accessor: 'type',
+      label: 'Descrição',
+      accessor: 'desc',
       render: (type) => renderType(type),
     },
     {
