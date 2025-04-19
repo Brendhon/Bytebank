@@ -36,7 +36,7 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
 
   // Sync value if defaultValues change (useful if props are updated externally)
   useEffect(() => {
-    const values: TransactionFormData = defaultValues || defaultTransaction;
+    const values = defaultValues || defaultTransaction;
     Object.entries(values).forEach(([key, val]) => setValue(key as keyof TransactionFormData, val))
   }, [defaultValues, setValue])
 
@@ -88,10 +88,10 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
 
             <Input
               label="Data"
-              placeholder="Selecione uma data"
+              placeholder='dd/mm/yyyy'
               error={errors.date?.message}
               icon={<CalendarIcon />}
-              type="text"
+              type="date"
               {...register('date')}
             />
           </div>

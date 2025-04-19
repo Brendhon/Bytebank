@@ -7,7 +7,7 @@ export type ButtonVariant = VariantProps<typeof buttonVariants>['variant'];
 
 export type CardVariant = VariantProps<typeof cardVariants>['variant'];
 
-export type InputTypes = 'text' | 'email' | 'password' | 'number';
+export type InputTypes = 'text' | 'email' | 'password' | 'number' | 'date';
 
 export interface IToast {
   id?: string;

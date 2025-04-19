@@ -8,7 +8,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     type: {
       control: 'select',
-      options: ['text', 'email', 'password'],
+      options: ['text', 'email', 'password', 'date'],
     },
     label: { control: 'text' },
     placeholder: { control: 'text' },
@@ -53,5 +53,13 @@ export const PasswordWithError: Story = {
     placeholder: '••••••••',
     type: 'password',
     error: 'Senha inválida',
+  },
+};
+
+export const DateInput: Story = {
+  args: {
+    label: 'Data de Nascimento',
+    placeholder: 'dd/mm/yyyy',
+    type: 'date',
   },
 };
