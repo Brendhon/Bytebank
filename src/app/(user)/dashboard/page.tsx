@@ -3,14 +3,10 @@
 import { WelcomeCard } from "@/components/cards";
 import { MovementsSection } from "@/components/layout";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 export default () => {
   // Get session data
   const session = useSession();
-
-  // Use router to navigate
-  const router = useRouter();
 
   return (
     <section className="flex flex-col gap-4">

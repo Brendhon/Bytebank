@@ -12,10 +12,7 @@ export default () => {
         Que tal voltar e tentar novamente?
       </p>
 
-      <a
-        href='/home'
-        className="button button-orange"
-        >
+      <a href='/home' className="button button-orange">
         Voltar ao início
       </a>
 
