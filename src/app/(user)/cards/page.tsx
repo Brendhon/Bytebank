@@ -1,18 +1,25 @@
-'use client';
+import { CreditCardSession } from "@/components/cards";
+import { getServerSession } from "next-auth";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
-export default () => {
+export default async () => {
   // Get session data
-  const session = useSession();
+  const session = await getServerSession();
 
-  // Use router to navigate
-  const router = useRouter();
-  
+  // Render the component
   return (
-    <>
-      Cards
-    </>
+    <CreditCardSession
+      digital={{
+        number: "1234 5678 9012 3456",
+        name: session?.user?.name || "Usuário",
+        expiration: "12/25",
+        cvv: "123",
+      }}
+      physical={{
+        number: "1234 5678 9012 3456",
+        name: session?.user?.name || "Usuário",
+        expiration: "12/25",
+        cvv: "123",
+      }}
+    />
   );
 };
