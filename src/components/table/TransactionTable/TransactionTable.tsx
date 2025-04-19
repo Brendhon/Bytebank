@@ -1,4 +1,3 @@
-// src/components/TransactionTable/TransactionTable.tsx
 'use client'
 
 import { Button } from '@/components/ui'
@@ -12,8 +11,8 @@ import Table from '../Table/Table'
 interface TransactionTableProps {
   transactions: Transaction[]
   pageSize?: number
-  onEdit?: (index: number) => void
-  onDelete?: (index: number) => void
+  onEdit?: (data: Transaction) => void
+  onDelete?: (data: Transaction) => void
 }
 
 export default ({
@@ -36,18 +35,19 @@ export default ({
   }
 
   // Define the render to actions
-  const renderActions = (index: number) => {
+  const renderActions = (data: Transaction) => {
+    // Define the className for the buttons
     const buttonClassName = 'w-6 h-6 rounded-full'
     return (
       <div className="flex gap-2">
         <Button
           className={buttonClassName}
-          onClick={() => onEdit?.(index)}>
+          onClick={() => onEdit?.(data)}>
           <Pencil size={12} />
         </Button>
         <Button
           className={buttonClassName}
-          onClick={() => onDelete?.(index)}>
+          onClick={() => onDelete?.(data)}>
           <Trash size={12} />
         </Button>
       </div>
@@ -77,7 +77,7 @@ export default ({
     {
       label: 'Ações',
       accessor: 'value', // não importa o campo, pois usamos render
-      render: (_v, _row, rowIndex) => renderActions(rowIndex),
+      render: (_v, _row) => renderActions(_row),
     },
   ]
 

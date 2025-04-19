@@ -9,6 +9,7 @@ export enum TransactionType {
 export type TransactionTypeKey = keyof typeof TransactionType
 
 export interface Transaction {
+  id?: string
   date: string
   alias?: string
   type: TransactionTypeKey
