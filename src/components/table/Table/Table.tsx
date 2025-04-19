@@ -2,7 +2,7 @@
 
 import { TableColumn } from '@/types/ui'
 import { useMemo, useState } from 'react'
-import { Paginator } from '../Paginator/Paginator'
+import Paginator from '../Paginator/Paginator'
 
 type GenericTableProps<T> = {
   data: T[]
@@ -10,11 +10,11 @@ type GenericTableProps<T> = {
   pageSize?: number // default: 10 - If omitted, no pagination
 }
 
-export default function GenericTable<T>({
+export default <T,>({
   data,
   columns,
   pageSize = 10,
-}: GenericTableProps<T>) {
+}: GenericTableProps<T>) => {
   // State to manage the current page
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -42,7 +42,7 @@ export default function GenericTable<T>({
               {columns.map((col, idx) => (
                 <th
                   key={idx}
-                  className="text-16-semi py-2 px-5 text-dark text-left"
+                  className="text-16-semi py-2 px-12 text-dark text-left"
                 >
                   {col.label}
                 </th>
@@ -59,7 +59,7 @@ export default function GenericTable<T>({
                 {columns.map((col, colIndex) => (
                   <td
                     key={colIndex}
-                    className="py-3 px-5 text-14 text-dark"
+                    className="py-4 px-12 text-14 text-dark"
                   >
                     {col.render
                       ? col.render(row[col.accessor], row, rowIndex)
@@ -70,7 +70,6 @@ export default function GenericTable<T>({
             ))}
           </tbody>
         </table>
-
       </div>
 
       {/* Render the paginator only if pageSize is defined and totalPages > 1 */}

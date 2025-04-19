@@ -8,7 +8,7 @@ type PaginatorProps = {
   onPageChange: (page: number) => void;
 };
 
-export const Paginator = ({ currentPage, totalPages, onPageChange }: PaginatorProps) => {
+export default ({ currentPage, totalPages, onPageChange }: PaginatorProps) => {
   // Function to generate the pages array with ellipses
   const generatePages = () => {
     // Initialize an array to store the pages or ellipsis
