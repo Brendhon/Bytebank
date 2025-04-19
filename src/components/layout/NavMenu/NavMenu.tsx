@@ -1,9 +1,10 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { NavItemLabel, navItems } from '@/types/nav';
+import { NavItemLabel } from '@/types/nav';
 import { Button } from '@headlessui/react';
 import clsx from 'clsx';
+import { BadgeDollarSign, CreditCard, LayoutDashboard, Settings } from 'lucide-react';
 
 // Set interface for the props
 interface Props {
@@ -11,6 +12,13 @@ interface Props {
   current: NavItemLabel;
   onNavigate?: (href: string) => void;
 }
+
+export const navItems = [
+  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { label: 'Transações', href: '/transactions', icon: BadgeDollarSign },
+  { label: 'Meus Cartões', href: '/cards', icon: CreditCard },
+  { label: 'Configurações', href: '/settings', icon: Settings },
+] as const;
 
 export default ({ current, onNavigate, className = '' }: Props) => {
   // Check if the current tab is active

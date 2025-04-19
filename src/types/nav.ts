@@ -1,11 +1,4 @@
-import { BadgeDollarSign, CreditCard, LayoutDashboard, Settings } from "lucide-react";
+import { navItems } from "@/components/layout/NavMenu/NavMenu";
 
-export const navItems = [
-  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Transações', href: '/transactions', icon: BadgeDollarSign },
-  { label: 'Meus Cartões', href: '/cards', icon: CreditCard },
-  { label: 'Configurações', href: '/settings', icon: Settings },
-] as const;
-
-// Gera o tipo com base nas labels
+// This type is used to define the possible values for the href property in the navItems array.
 export type NavItemLabel = typeof navItems[number]['href'];
