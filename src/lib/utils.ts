@@ -9,4 +9,4 @@ import { twMerge } from 'tailwind-merge';
 export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
 
 // Check if value is a number
-export const isNumber = (value: number | undefined): value is number => typeof value === 'number' && !isNaN(value);
+export const isNumber = (value: any): value is number => typeof value === 'number' && !isNaN(value);
