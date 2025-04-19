@@ -1,6 +1,7 @@
 'use client';
 
 import { TransactionForm } from "@/components/form";
+import { Modal } from "@/components/layout";
 import { TransactionTable } from "@/components/table";
 import { Button } from "@/components/ui";
 import { sortByDate } from "@/lib/utils";
@@ -27,6 +28,7 @@ const sampleData: ITransaction[] = [
 export default () => {
   // User state for open/close modal
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   // User state for selecting transaction
   const [selected, setSelected] = useState<ITransaction>();
@@ -51,7 +53,8 @@ export default () => {
 
   // Define the delete function
   const openDelete = (data: ITransaction) => {
-    console.log('Delete transaction at index:', data);
+    setSelected(data);
+    setIsDeleteOpen(true);
   }
 
   // OnSubmit function
@@ -77,6 +80,21 @@ export default () => {
       // Set the new transaction
       updateTransactions([...transactions, newTransaction]);
     }
+  }
+
+  // Handle delete
+  const handleDelete = () => {
+    // Log
+    console.log('Delete transaction:', selected);
+
+    // Close the modal
+    setIsDeleteOpen(false);
+
+    // Remove the transaction
+    const updatedTransactions = transactions.filter((value) => value.id != selected?.id);
+
+    // Set the updated transactions
+    updateTransactions(updatedTransactions);
   }
 
   return (
@@ -105,6 +123,18 @@ export default () => {
         onSubmit={handleSubmit}
         defaultValues={selected}
       />
+
+      <Modal
+        isOpen={isDeleteOpen}
+        title="Você está prestes a excluir esta transação"
+        onClose={() => setIsDeleteOpen(false)}
+        onSubmit={handleDelete}
+        btnVariantSubmit="outlineOrange"
+      >
+        <p className="text-dark max-w-[450px] text-center md:text-left">
+          Esta ação removerá permanentemente a transação do seu histórico. Tem certeza de que deseja continuar?
+        </p>
+      </Modal>
     </>
   );
 };
