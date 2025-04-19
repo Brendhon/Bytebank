@@ -1,4 +1,5 @@
 import { ClassValue, clsx } from 'clsx';
+import { DefaultSession, Session } from 'next-auth';
 import { twMerge } from 'tailwind-merge';
 
 /**
@@ -24,4 +25,16 @@ export const sortByDate = <T>(arr: T[], dateKey: keyof T) => {
     const dateB = parseDate(b[dateKey] as unknown as string);
     return dateB.getTime() - dateA.getTime(); // Descending order
   });
+};
+
+// Get field from session
+export const getFieldFromSession = (session: Session | null, field: string): string => {
+  // Check if session is loading
+  const user = session?.user;
+
+  // Check if session is loading or not authenticated
+  if (!user) return '';
+
+  // Check if field exists in user object
+  return field in user ? (user[field as keyof typeof user] || '') : '';
 };
