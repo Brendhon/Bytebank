@@ -49,6 +49,9 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
   const descOptions = Object.entries(TransactionDesc).map(([key, value]) => ({ label: value, value: key }))
   const typeOptions = Object.entries(TransactionType).map(([key, value]) => ({ label: value, value: key }))
 
+  // Class to row container
+  const rowClassName = 'grid gap-4 grid-cols-1 md:grid-cols-2'
+
   // Render the form
   return (
     <>
@@ -73,7 +76,7 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
             error={errors.alias?.message}
           />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className={rowClassName}>
             <Select
               label="Descrição"
               placeholder="Descrição"
@@ -91,7 +94,7 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className={rowClassName}>
             <Input
               label="Valor"
               placeholder="Digite o valor da transação"
