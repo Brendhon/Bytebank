@@ -9,16 +9,16 @@ export default async () => {
   return (
     <CreditCardSession
       digital={{
-        number: "1234 5678 9012 3456",
         name: session?.user?.name || "Usuário",
+        number: "1234 5678 9012 3456",
         expiration: "12/25",
         cvv: "123",
       }}
       physical={{
-        number: "1234 5678 9012 3456",
         name: session?.user?.name || "Usuário",
-        expiration: "12/25",
-        cvv: "123",
+        number: "5532 6475 8570 4251",
+        expiration: "03/25",
+        cvv: "514",
       }}
     />
   );

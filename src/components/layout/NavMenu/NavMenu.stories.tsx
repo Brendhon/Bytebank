@@ -1,5 +1,6 @@
+import { NavItemLabel } from '@/types/nav';
 import { Meta, StoryObj } from '@storybook/react';
-import NavMenu, { NavItemLabel } from './NavMenu';
+import NavMenu from './NavMenu';
 
 const meta: Meta<typeof NavMenu> = {
   component: NavMenu,

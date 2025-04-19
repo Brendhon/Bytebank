@@ -1,6 +1,6 @@
-import { NavItemLabel } from '../../NavMenu/NavMenu';
-import MenuPopover from './MenuPopover';
+import { NavItemLabel } from '@/types/nav';
 import { Meta, StoryObj } from '@storybook/react';
+import MenuPopover from './MenuPopover';
 
 const meta: Meta<typeof MenuPopover> = {
   component: MenuPopover,

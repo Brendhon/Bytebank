@@ -1,4 +1,4 @@
-import { NavItemLabel } from "@/components/layout/NavMenu/NavMenu";
+import { NavItemLabel } from "./nav";
 
 export type HeaderVariant = 'guest' | 'user';
 

@@ -1,24 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { NavItemLabel, navItems } from '@/types/nav';
 import { Button } from '@headlessui/react';
 import clsx from 'clsx';
-import {
-  CreditCard,
-  BadgeDollarSign,
-  LayoutDashboard,
-  Settings
-} from 'lucide-react';
-
-const navItems = [
-  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Transações', href: '/transactions', icon: BadgeDollarSign },
-  { label: 'Meus Cartões', href: '/cards', icon: CreditCard },
-  { label: 'Configurações', href: '/settings', icon: Settings },
-] as const;
-
-// Gera o tipo com base nas labels
-export type NavItemLabel = typeof navItems[number]['href'];
 
 // Set interface for the props
 interface Props {
