@@ -4,7 +4,8 @@ import { cn } from '@/lib/utils';
 import { NavItemLabel } from '@/types/nav';
 import { Button } from '@headlessui/react';
 import clsx from 'clsx';
-import { BadgeDollarSign, CreditCard, LayoutDashboard, Settings } from 'lucide-react';
+import { BadgeDollarSign, CreditCard, LayoutDashboard, Loader2, Settings } from 'lucide-react';
+import { useEffect, useState, useTransition } from 'react';
 
 // Set interface for the props
 interface Props {
@@ -21,6 +22,22 @@ export const navItems = [
 ] as const;
 
 export default ({ current, onNavigate, className = '' }: Props) => {
+  // State to manage the pending navigation
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  // When the transition ends, clear the pendingHref
+  useEffect(() => {
+    if (!isPending) setPendingHref(null);
+  }, [isPending]);
+
+  const handleClick = (href: string) => {
+    // mark this item as “pending”
+    setPendingHref(href);
+    // trigger navigation within a transition
+    startTransition(() => onNavigate?.(href));
+  };
+
   // Check if the current tab is active
   const isActive = (value: string) => current === value;
 
@@ -36,13 +53,16 @@ export default ({ current, onNavigate, className = '' }: Props) => {
             key={href}>
             <Button
               type="button"
-              onClick={() => onNavigate?.(href)}
+              onClick={() => handleClick(href)}
               className={cn(
                 'flex items-center w-full gap-2 px-2 py-2 rounded-md text-left transition-colors cursor-pointer',
                 color(href),
               )}
             >
-              <Icon size={20} className={color(href)} />
+              {isPending && pendingHref === href
+                ? <Loader2 size={20} className="animate-spin" />
+                : <Icon size={20} className={color(href)} />
+              }
               <span>{label}</span>
             </Button>
           </li>
