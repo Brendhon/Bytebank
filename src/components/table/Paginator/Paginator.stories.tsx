@@ -12,7 +12,7 @@ export default meta;
 type Story = StoryObj<typeof Paginator>;
 
 export const Default: Story = {
-  render: () => {
+  render: function DefaultStory() {
     const [currentPage, setCurrentPage] = useState(2);
 
     return (
@@ -28,7 +28,7 @@ export const Default: Story = {
 };
 
 export const WithEllipsis: Story = {
-  render: () => {
+  render: function WithEllipsisStory() {
     const [currentPage, setCurrentPage] = useState(1);
 
     return (

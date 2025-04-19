@@ -44,8 +44,8 @@ const sampleData: Transaction[] = [
 
 export const Default: Story = {
   args: {
-    transactions: sampleData,
     pageSize: 10,
+    transactions: sampleData,
     onEdit: () => alert('edit transaction'),
     onDelete: () => alert('delete transaction'),
   },
