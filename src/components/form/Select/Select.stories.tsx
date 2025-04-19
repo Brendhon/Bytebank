@@ -35,3 +35,10 @@ export const WithCustomOptions: Story = {
     ],
   },
 }
+
+// Disable the default export
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+}

@@ -63,3 +63,10 @@ export const DateInput: Story = {
     type: 'date',
   },
 };
+
+// Disable the default export
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+};
