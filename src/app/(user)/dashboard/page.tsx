@@ -13,14 +13,14 @@ export default () => {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col gap-4">
-      <WelcomeCard 
+    <section className="flex flex-col gap-4">
+      <WelcomeCard
         name={session?.data?.user?.name || "Usuário"}
         balance={30000.45}
         showBalance={true}
         date={new Date()}
       />
-      <MovementsSection 
+      <MovementsSection
         data={[
           { label: "Pagamentos", value: 24000.45, variant: "dark" },
           { label: "Depósitos", value: 24000.45, variant: "blue" },
@@ -28,6 +28,6 @@ export default () => {
           { label: "Saque", variant: "green" },
         ]}
       />
-    </div>
+    </section>
   );
 };

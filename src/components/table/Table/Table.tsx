@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { TableColumn } from '@/types/ui'
 import { useMemo, useState } from 'react'
 import Paginator from '../Paginator/Paginator'
@@ -33,16 +34,19 @@ export default <T,>({
     return data.slice(start, start + pageSize)
   }, [data, currentPage, pageSize])
 
+  // Default className for the cell
+  const cellClassName = 'px-8 w-[200px] h-[50px] text-dark text-left'
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="overflow-x-auto bg-white border border-gray rounded-sm min-w-[600px]">
+      <div className="overflow-x-auto bg-white border border-gray rounded-sm">
         <table className="w-full">
           <thead className="bg-light-green border-b border-gray">
             <tr>
               {columns.map((col, idx) => (
                 <th
                   key={idx}
-                  className="text-16-semi py-2 px-12 text-dark text-left"
+                  className={cn(cellClassName, "text-16-semi h-[40px]")}
                 >
                   {col.label}
                 </th>
@@ -59,7 +63,7 @@ export default <T,>({
                 {columns.map((col, colIndex) => (
                   <td
                     key={colIndex}
-                    className="py-4 px-12 text-14 text-dark"
+                    className={cn(cellClassName , "text-14")}
                   >
                     {col.render
                       ? col.render(row[col.accessor], row, rowIndex)

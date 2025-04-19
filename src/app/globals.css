@@ -56,7 +56,7 @@ nav {
 }
 
 main {
-  @apply flex-1 p-6 w-full flex justify-center;
+  @apply p-6 overflow-x-auto w-auto inline-block m-auto;
 }
 
 footer {
