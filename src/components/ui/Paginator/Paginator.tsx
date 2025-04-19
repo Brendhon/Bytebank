@@ -58,13 +58,13 @@ export const Paginator = ({ currentPage, totalPages, onPageChange }: PaginatorPr
   // Function to determine the class name for each page button
   const pagesClassName = (page: number | string) => {
     return cn(
-      "w-7 h-7 cursor-pointer disabled:cursor-not-allowed hover:opacity-70 transition-opacity duration-200",
+      "w-7 h-7 text-gray cursor-pointer disabled:cursor-not-allowed hover:opacity-70 transition-opacity duration-200",
       currentPage === page && "bg-blue text-white rounded-sm"
     )
   };
 
   // Arrow buttons class name
-  const arrowClassName = "px-2 cursor-pointer disabled:cursor-not-allowed hover:opacity-70 transition-opacity duration-200";
+  const arrowClassName = "px-2 text-gray cursor-pointer disabled:cursor-not-allowed hover:opacity-70 transition-opacity duration-200";
 
   // Render the paginator component
   return (
