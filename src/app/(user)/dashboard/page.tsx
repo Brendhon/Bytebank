@@ -1,7 +1,7 @@
 'use client';
 
+import { WelcomeCard } from "@/components/cards";
 import { MovementsSection } from "@/components/layout";
-import { WelcomeCard } from "@/components/ui";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 

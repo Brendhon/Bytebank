@@ -1,5 +1,5 @@
 import { buttonVariants } from '@/components/ui/Button/Button';
-import { cardVariants } from '@/components/ui/Card/Card';
+import { cardVariants } from '@/components/cards/Card/Card';
 import { VariantProps } from 'class-variance-authority';
 import { ReactNode } from 'react';
 
@@ -22,8 +22,19 @@ export interface CardProps {
   value?: number;
   className?: string;
 }
+
 export interface TableColumn<T = void> {
   label: string;
   accessor: keyof T;
   render?: (value: any, row: T, index: number) => ReactNode;
 }
+
+export interface CreditCardProps  {
+  variant: "physical" | "digital";
+  showInfo: boolean;
+  blocked: boolean;
+  name: string;
+  number?: string;
+  expiration?: string;
+  cvv?: string;
+};

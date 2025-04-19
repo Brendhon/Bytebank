@@ -1,6 +1,6 @@
 'use client'
 
-import { Card } from "@/components/ui"
+import { Card } from "@/components/cards"
 import { CardProps, CardVariant } from "@/types/ui"
 
 interface Props {
