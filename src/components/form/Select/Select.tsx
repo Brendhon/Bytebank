@@ -32,6 +32,7 @@ export default ({
             className={cn(
               'block w-full appearance-none rounded-sm bg-white border border-gray px-4 py-1.5 text-sm/6 text-dark',
               'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 focus:ring-1 focus:ring-green text-14',
+              'disabled:cursor-not-allowed disabled:opacity-70',
               error && 'border-red focus:ring-red focus:border-red',
             )}
             {...props}

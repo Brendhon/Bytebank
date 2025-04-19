@@ -46,6 +46,7 @@ export default ({
   const inputClass = cn(
     'rounded-sm w-full bg-white border border-gray px-4 py-2 text-dark outline-none transition-all focus:border-green focus:ring-1 focus:ring-green text-14',
     error && 'border-red focus:ring-red focus:border-red',
+    'disabled:cursor-not-allowed disabled:opacity-70',
     (icon || isPassword) && 'pr-10',
     className
   );
