@@ -1,4 +1,4 @@
-import { clsx, ClassValue } from 'clsx';
+import { ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 /**
@@ -7,3 +7,6 @@ import { twMerge } from 'tailwind-merge';
  * @returns {string} - Merged class names
  */
 export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
+
+// Check if value is a number
+export const isNumber = (value: any): value is number => typeof value === 'number' && !isNaN(value);

@@ -16,6 +16,7 @@
     "@storybook/addon-a11y": "^8.6.12",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.487.0",
     "mongoose": "^8.13.2",
     "next": "15.2.5",
