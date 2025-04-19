@@ -1,5 +1,11 @@
 import { cn } from "@/lib/utils";
-import { CreditCardProps } from "@/types/ui";
+import { ICreditCard } from "@/types/ui";
+
+export interface CreditCardProps extends ICreditCard   {
+  variant: "physical" | "digital";
+  showInfo: boolean;
+  blocked: boolean;
+};
 
 export default ({
   variant,

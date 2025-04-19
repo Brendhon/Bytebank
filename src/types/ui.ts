@@ -35,9 +35,3 @@ export interface ICreditCard  {
   expiration?: string;
   cvv?: string;
 }
-
-export interface CreditCardProps extends ICreditCard   {
-  variant: "physical" | "digital";
-  showInfo: boolean;
-  blocked: boolean;
-};
