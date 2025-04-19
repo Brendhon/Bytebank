@@ -10,6 +10,15 @@ import { CalendarIcon, PiggyBank } from 'lucide-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Input from '../Input/Input'
+import Select from '../Select/Select'
+import { Transaction } from '@/types/transaction'
+
+const defaultTransaction: Transaction = {
+  type: 'deposit',
+  alias: '',
+  value: 0,
+  date: '',
+}
 
 export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<TransactionFormData>) => {
   // Check if defaultValues are provided
@@ -20,21 +29,15 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
   const { register, handleSubmit, setValue, formState: { errors }, } = useForm<TransactionFormData>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      type: '',
-      alias: '',
-      value: 0,
-      date: '',
+      ...defaultTransaction,
       ...defaultValues,
     },
   })
 
   // Sync value if defaultValues change (useful if props are updated externally)
   useEffect(() => {
-    if (defaultValues) {
-      Object.entries(defaultValues).forEach(([key, val]) => {
-        setValue(key as keyof TransactionFormData, val as any)
-      })
-    }
+    const values: TransactionFormData = defaultValues || defaultTransaction;
+    Object.entries(values).forEach(([key, val]) => setValue(key as keyof TransactionFormData, val))
   }, [defaultValues, setValue])
 
   return (
@@ -52,12 +55,18 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
             {isEditing ? 'Editar transação' : 'Nova transação'}
           </Legend>
 
-          {/* <Input
-            label="Nome"
-            placeholder="Digite seu nome completo"
-            {...register('name')}
-            error={errors.name?.message}
-          /> */}
+          <Select
+            label="Tipo"
+            placeholder="Tipo de transferência"
+            error={errors.type?.message}
+            options={[
+              { value: 'deposit', label: 'Depósito' },
+              { value: 'transfer', label: 'Transferência' },
+              { value: 'payment', label: 'Pagamento' },
+              { value: 'withdrawal', label: 'Saque' },
+            ]}
+            {...register('type')}
+          />
 
           <Input
             label="Alias (opcional)"
@@ -74,7 +83,7 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
               error={errors.value?.message}
               icon={<PiggyBank />}
               type="number"
-              {...register('value')}
+              {...register('value', { valueAsNumber: true })}
             />
 
             <Input

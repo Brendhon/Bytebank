@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui'
 import { formatCurrency } from '@/lib/formatter'
 import { cn } from '@/lib/utils'
-import { Transaction } from '@/types/transaction'
+import { Transaction, TransactionType, TransactionTypeKey } from '@/types/transaction'
 import { TableColumn } from '@/types/ui'
 import { Pencil, Trash } from 'lucide-react'
 import Table from '../Table/Table'
@@ -22,6 +22,9 @@ export default ({
   onEdit,
   onDelete,
 }: TransactionTableProps) => {
+  // Define render to type
+  const renderType = (key: TransactionTypeKey) => TransactionType[key]
+
   // Define render to value
   const renderValue = (value: number) => {
     return (
@@ -64,6 +67,7 @@ export default ({
     {
       label: 'Tipo',
       accessor: 'type',
+      render: (type) => renderType(type),
     },
     {
       label: 'Valor',

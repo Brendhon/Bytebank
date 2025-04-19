@@ -1,0 +1,37 @@
+import { Meta, StoryObj } from '@storybook/react'
+import Select from './Select'
+
+const meta: Meta<typeof Select> = {
+  component: Select,
+  tags: ['autodocs'],
+  args: {
+    label: 'Tipo de transferência',
+    placeholder: 'Selecione um tipo',
+    options: [
+      { label: 'PIX', value: 'pix' },
+      { label: 'TED', value: 'ted' },
+      { label: 'DOC', value: 'doc' },
+    ],
+  },
+}
+
+export default meta
+
+type Story = StoryObj<typeof Select>
+
+export const Default: Story = {}
+
+export const WithError: Story = {
+  args: {
+    error: 'Esse campo é obrigatório',
+  },
+}
+
+export const WithCustomOptions: Story = {
+  args: {
+    options: [
+      { value: 'entrada', label: 'Entrada' },
+      { value: 'saida', label: 'Saída' },
+    ],
+  },
+}
