@@ -4,15 +4,22 @@
 export async function request<T>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   url: string,
-  body?: unknown | T
+  body?: unknown | T,
+  isAuth = true,
 ): Promise<T> {
+  // Form header
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    'X-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+  };
 
-   // Create the request
+  // Check if the request is authenticated
+  if (!isAuth) delete headers['X-api-key'];
+
+  // Create the request
   const response = await fetch(url, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: body ? JSON.stringify(body) : undefined,
   });
 

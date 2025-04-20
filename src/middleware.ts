@@ -3,25 +3,33 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  // Get the token from the request
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-  const isAuthPage = request.nextUrl.pathname.startsWith('/home');
-  const isAPI = request.nextUrl.pathname.startsWith('/api');
 
-  // Allow the request to proceed if it's an API route
-  if (isAPI) return NextResponse.next();
+  // Get path from the request
+  const { pathname } = request.nextUrl;
 
-  // Redirect unauthenticated users to the home page unless they're already there
-  if (!token && !isAuthPage) {
-    return NextResponse.redirect(new URL('/home', request.url));
+  // Check if the request is for a a
+  const isAuthPage = pathname.startsWith('/home');
+  const isAPI = pathname.startsWith('/api');
+
+  switch (true) {
+    // Check if the request is an internal API request
+    case isAPI:
+      return NextResponse.next();
+
+    // Check if the user is authenticated and trying to access the login page
+    case !token && !isAuthPage:
+      return NextResponse.redirect(new URL('/home', request.url));
+
+    // Check if the user is authenticated and trying to access the dashboard page
+    case token && isAuthPage:
+      return NextResponse.redirect(new URL('/dashboard', request.url));
+
+    // Check if the user is authenticated and trying to access the login page
+    default:
+      return NextResponse.next();
   }
-
-  // Redirect authenticated users away from the auth page to the dashboard
-  if (token && isAuthPage) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
-  }
-
-  // Proceed with the request as intended
-  return NextResponse.next();
 }
 
 /**

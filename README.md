@@ -29,10 +29,10 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ## 📁 Estrutura de Branches
 
-| Branch      | Finalidade                                          |
-| ----------- | --------------------------------------------------- |
-| `main`      | Produção (deploy da aplicação principal)            |
-| `dev`       | Desenvolvimento principal                           |
+| Branch | Finalidade                               |
+| ------ | ---------------------------------------- |
+| `main` | Produção (deploy da aplicação principal) |
+| `dev`  | Desenvolvimento principal                |
 
 ---
 
@@ -117,6 +117,23 @@ NEXT_PUBLIC_FIGMA_URL=https://www.figma.com/file/E9UFSc9LUXlL88hIvIcuLd/Modelo-F
 # URL do GitHub
 NEXT_PUBLIC_GITHUB_URL=https://github.com/Brendhon/Bytebank
 ```
+
+4. Segurança das APIs:
+
+Uma chave de autenticação é utilizada para proteger os endpoints da API contra acessos não autorizados. Essa chave é automaticamente incluída nas requisições realizadas pelo front-end, garantindo que apenas chamadas legítimas da aplicação possam acessar os endpoints protegidos. Isso impede que ferramentas externas, como Postman ou bots, realizem requisições diretamente à API.
+
+Para configurar a chave de autenticação, adicione a seguinte variável de ambiente no arquivo `.env.local`:
+
+```bash
+NEXT_PUBLIC_API_KEY=sua_chave_api
+```
+
+> **🔐 Dica de segurança:**  
+> Gere uma chave segura usando o comando abaixo no terminal:  
+> ```bash
+> openssl rand -hex 32
+> ```  
+> Copie o valor gerado e use como `NEXT_PUBLIC_API_KEY`.
 
 > **Nota:** Substitua as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
 
