@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 
 interface AccountFormProps extends FormProps<AccountFormData> {
-  onDelete: () => Promise<void>;
+  onDelete: (password: string) => Promise<void>;
 }
 
 export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
@@ -21,6 +21,9 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
 
   // State loadings
   const [loadingSubmit, setLoadingSubmit] = useState(false);
+
+  // State for password input in modal
+  const [password, setPassword] = useState('');
 
   // State to form
   const { register, handleSubmit, formState: { errors } } = useForm<AccountFormData>({
@@ -36,7 +39,7 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
     setIsDeleteOpen(false);
 
     // Call onDelete function
-    await onDelete();
+    await onDelete(password);
   };
 
   // Handle submit
@@ -74,6 +77,7 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
           label="Email"
           placeholder="Digite seu email"
           type="email"
+          disabled={true}
           icon={<Mail />}
           {...register('email')}
           error={errors.email?.message}
@@ -127,10 +131,20 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
         onClose={() => setIsDeleteOpen(false)}
         onSubmit={handleDelete}
         btnVariantSubmit="outlineOrange"
+        isSubmitDisabled={password.length < 6}
       >
         <p className="text-dark max-w-[450px] text-center md:text-left">
           Esta ação removerá permanentemente sua conta e todos os dados associados a ela. Tem certeza de que deseja continuar?
         </p>
+
+        <Input
+          label="Confirme com sua senha"
+          placeholder="Digite sua senha"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          error={!!password && password.length < 6 ? 'Senha inválida' : undefined}
+        />
       </Modal>
     </section>
   );

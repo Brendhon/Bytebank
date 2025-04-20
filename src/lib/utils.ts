@@ -38,3 +38,14 @@ export const getFieldFromSession = (session: Session | null, field: string): str
   // Check if field exists in user object
   return field in user ? (user[field as keyof typeof user] || '') : '';
 };
+
+/**
+ * Removes empty fields from an object
+ * @param {T} obj - The object to clean
+ * @returns {Partial<T>} - The cleaned object
+ */
+export const removeEmptyFields = <T extends Record<string, any>>(obj: T): Partial<T> => {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, value]) => value !== '' && value !== undefined && value !== null)
+  ) as Partial<T>;
+};
