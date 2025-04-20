@@ -22,7 +22,7 @@ export default ({ children }: { children: ReactNode }) => {
   const { showSuccessToast, showErrorToast } = useToast();
 
   // Function to handle login submission
-  const onLoginSubmit = async (data: LoginFormData) => {
+  const onLoginSubmit = async (data: LoginFormData, hideToast = false) => {
     const response = await signIn('credentials', {
       redirect: false, // Avoid redirecting
       email: data.email,
@@ -30,8 +30,8 @@ export default ({ children }: { children: ReactNode }) => {
     });
 
     if (response?.ok) {
-      // Log successful
-      showSuccessToast({ message: 'Login realizado com sucesso!' });
+      // Show success toast
+      if (!hideToast) showSuccessToast({ message: 'Login realizado com sucesso!' });
 
       // Close the modal
       setIsLoginOpen(false);
@@ -66,6 +66,12 @@ export default ({ children }: { children: ReactNode }) => {
 
       // Close the modal
       setIsRegisterOpen(false);
+
+      // Make the login modal open
+      await onLoginSubmit({
+        email: formData.email,
+        password: formData.password,
+      }, true);
     } catch (error: any) {
       // Show error toast
       showErrorToast({ message: error.message || 'Erro ao criar conta' });

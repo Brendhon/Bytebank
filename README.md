@@ -105,7 +105,7 @@ NEXTAUTH_SECRET=sua_chave_secreta
 NEXTAUTH_URL=http://localhost:3000
 ```
 
-3. Para habilitar links diretos para o Storybook e o Figma no menu de perfil do usuário, adicione também as seguintes variáveis de ambiente:
+3. Para habilitar links diretos para o Storybook, Figma e Github no menu de perfil do usuário, adicione também as seguintes variáveis de ambiente:
 
 ```bash
 # URL do Storybook
@@ -113,6 +113,9 @@ NEXT_PUBLIC_STORYBOOK_URL=http://localhost:6006
 
 # URL do Figma
 NEXT_PUBLIC_FIGMA_URL=https://www.figma.com/file/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264
+
+# URL do GitHub
+NEXT_PUBLIC_GITHUB_URL=https://github.com/Brendhon/Bytebank
 ```
 
 > **Nota:** Substitua as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
