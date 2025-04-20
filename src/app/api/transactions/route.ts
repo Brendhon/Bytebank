@@ -1,5 +1,7 @@
+import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api';
 import { connectToDatabase } from '@/lib/mongoose';
 import Transaction from '@/models/Transaction';
+import { ITransaction } from '@/types/transaction';
 
 /**
  * Handles GET requests to retrieve all transaction records.
@@ -7,14 +9,21 @@ import Transaction from '@/models/Transaction';
  * @returns A response object containing the transaction data in JSON format
  */
 export async function GET(req: Request) {
-  // Check if the request method is GET
-  await connectToDatabase();
+  try {
+    // Check if the request is authenticated
+    isReqAuthenticated(req);
 
-  // Fetch all transactions from the database
-  const transactions = await Transaction.find();
+    // Check if the request method is GET
+    await connectToDatabase();
 
-  // Check if there are no transactions
-  return Response.json(transactions);
+    // Fetch all transactions from the database
+    const transactions = await Transaction.find();
+
+    // Check if there are no transactions
+    return handleSuccessResponse<ITransaction[]>(transactions);
+  } catch (error) {
+    return handleErrorResponse(error, 'Erro ao buscar transações');
+  }
 }
 
 /**
@@ -23,55 +32,22 @@ export async function GET(req: Request) {
  * @returns A response object indicating the success or failure of the operation
  */
 export async function POST(req: Request) {
-  // Check if the request method is POST
-  await connectToDatabase();
+  try {
+    // Check if the request is authenticated
+    isReqAuthenticated(req);
 
-  // Parse the request body as JSON
-  const data = await req.json();
+    // Check if the request method is POST
+    await connectToDatabase();
 
-  // Create a new transaction record in the database
-  const transaction = await Transaction.create(data);
+    // Parse the request body as JSON
+    const data = await req.json();
 
-  // Return a success response with the created transaction
-  return Response.json(transaction);
-}
+    // Create a new transaction record in the database
+    const transaction = await Transaction.create(data);
 
-/**
- * Handles DELETE requests to delete a transaction record by ID.
- * @param {Request} req - The incoming HTTP request.
- * @returns A response object indicating the success or failure of the operation
- */
-export async function DELETE(req: Request) {
-  // Check if the request method is DELETE
-  await connectToDatabase();
-
-  // Parse the request body as JSON
-  const { id } = await req.json();
-
-  // Delete the transaction record by ID
-  const transaction = await Transaction.findByIdAndDelete(id);
-
-  // Return a success response with the deleted transaction
-  return Response.json(transaction);
-}
-
-/**
- * Handles PUT requests to update a transaction record by ID.
- * @param {Request} req - The incoming HTTP request.
- * @returns A response object indicating the success or failure of the operation
- */
-export async function PUT(req: Request) {
-  // Check if the request method is PUT
-  await connectToDatabase();
-
-  // Parse the request body as JSON
-  const { id, ...data } = await req.json();
-
-  // Update the transaction record by ID
-  const transaction = await Transaction.findByIdAndUpdate(id, data, {
-    new: true,
-  });
-
-  // Return a success response with the updated transaction
-  return Response.json(transaction);
+    // Return a success response with the created transaction
+    return handleSuccessResponse<ITransaction>(transaction);
+  } catch (error) {
+    return handleErrorResponse(error, 'Erro ao buscar transação');
+  }
 }

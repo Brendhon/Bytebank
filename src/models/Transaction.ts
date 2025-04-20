@@ -1,12 +1,19 @@
 import { ITransaction, TransactionDesc, TransactionType } from '@/types/transaction';
-import { Document, Schema, model, models } from 'mongoose';
+import { Document, Schema, Types, model, models } from 'mongoose';
 
-// Define the interface for the Transaction document
-type SchemaType = Document & ITransaction;
+// Define the interface for the Transaction document (overriding the user field)
+type SchemaType = Document & Omit<ITransaction, 'user'> & {
+  user: Types.ObjectId;
+};
 
 // Define the schema for the Transaction model
 const TransactionSchema = new Schema<SchemaType>(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',       // MongoDB reference to the User model
+      required: true,
+    },
     desc: {
       type: String,
       enum: Object.keys(TransactionDesc),
@@ -33,6 +40,9 @@ const TransactionSchema = new Schema<SchemaType>(
     timestamps: true, // Automatically add createdAt and updatedAt fields
   }
 );
+
+// Create an index on the user and date fields for better query performance
+TransactionSchema.index({ user: 1, date: -1 });
 
 // Get the model from the models object or create a new one if it doesn't exist
 // This is useful for avoiding "OverwriteModelError" when using hot reloading in development

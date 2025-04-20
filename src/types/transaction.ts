@@ -17,10 +17,11 @@ export type TransactionTypeKey = keyof typeof TransactionType;
 
 // Interface for transaction
 export interface ITransaction {
-  id?: string
+  _id?: string
   date: string
   alias?: string
   type: TransactionTypeKey
   desc: TransactionDescKey
   value: number
+  user: string
 }
