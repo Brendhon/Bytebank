@@ -52,7 +52,7 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
    - Cadastro de novos usuários com dados básicos (nome, e-mail, senha).
 
 2. **Dashboard**
-   - Visão geral do saldo disponível, entradas e saídas.
+   - Visão geral do saldo disponível.
    - Cards com informações financeiras.
 
 3. **Transações**
@@ -60,10 +60,11 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
    - Cadastro de novas transações (entrada/saída).
    - Edição e exclusão de transações.
 
-4. **Meus Cartões**
-   - Listagem de cartões cadastrados.
-   - Ação para visualizar detalhes do cartão.
-   - Ação para bloquear/desbloquear cartão.
+4. **Meus Cartões**  
+  - Exibição de uma lista de cartões previamente cadastrados.  
+  - Opção para visualizar informações detalhadas de cada cartão.  
+  - Funcionalidade para bloquear ou desbloquear cartões diretamente na interface.  
+  - Página projetada como exemplo de renderização no lado do servidor utilizando dados estáticos.  
 
 5. **Configurações**
    - Configuração de dados pessoais.
