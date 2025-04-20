@@ -135,6 +135,13 @@ NEXT_PUBLIC_API_KEY=sua_chave_api
 > ```  
 > Copie o valor gerado e use como `NEXT_PUBLIC_API_KEY`.
 
+> **⚠️ Aviso Importante:**
+> Esta abordagem de segurança (utilizar uma API_KEY pública no front-end para autenticar chamadas internas) não é recomendada para aplicações em produção, pois o valor da variável pode ser exposto e facilmente acessado.
+> 
+> Em um ambiente de produção, recomenda-se implementar uma autenticação mais robusta, como OAuth ou JWT (JSON Web Tokens), para proteger os endpoints da API e garantir a segurança dos dados do usuário.
+> 
+> No entanto, por se tratar de um projeto de estudo, optou-se por esta solução simplificada para fins didáticos.
+
 > **Nota:** Substitua as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
 
 Certifique-se de salvar o arquivo após realizar as alterações.
