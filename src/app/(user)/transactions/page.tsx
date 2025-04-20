@@ -124,13 +124,18 @@ export default () => {
         </div>
       </section>
 
-      <TransactionForm
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onSubmit={handleSubmit}
-        defaultValues={selected}
-      />
+      {/* Modal for creating/editing transactions */}
+      {
+        isOpen &&
+        <TransactionForm
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          onSubmit={handleSubmit}
+          defaultValues={selected}
+        />
+      }
 
+      {/* Modal for deleting transactions */}
       <Modal
         isOpen={isDeleteOpen}
         title="Você está prestes a excluir esta transação"
