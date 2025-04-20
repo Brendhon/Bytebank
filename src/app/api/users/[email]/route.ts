@@ -1,12 +1,14 @@
 import { connectToDatabase } from '@/lib/mongoose';
 import User from '@/models/User';
 import { IUser } from '@/types/user';
+import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
 interface Params { params: Promise<{ email: string }> }
 
 // DELETE /api/users/:email
 export async function DELETE(req: Request, { params }: Params) {
+  // Connect to the database
   await connectToDatabase();
 
   // Get email from params
@@ -21,6 +23,7 @@ export async function DELETE(req: Request, { params }: Params) {
 
 // PUT /api/users/:email
 export async function PUT(req: Request, { params }: Params) {
+  // Connect to the database
   await connectToDatabase();
 
   // Get email from params
@@ -28,6 +31,9 @@ export async function PUT(req: Request, { params }: Params) {
 
   // Parse the request body as JSON
   const data = await req.json();
+
+  // Hash the password using bcrypt
+  if (data.password) data.password = await bcrypt.hash(data.password, 10);
 
   // Update the User record in the database
   const user = await User.findOneAndUpdate<IUser>({ email }, data, { new: true });
@@ -38,6 +44,7 @@ export async function PUT(req: Request, { params }: Params) {
 
 // GET /api/users/:email
 export async function GET(req: Request, { params }: Params) {
+  // Connect to the database
   await connectToDatabase();
 
   // Get email from params
