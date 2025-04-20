@@ -2,6 +2,7 @@ import { getUserIdFromQuery, handleErrorResponse, handleSuccessResponse, isReqAu
 import { connectToDatabase } from "@/lib/mongoose";
 import Transaction from "@/models/Transaction";
 import { TransactionDescKey } from "@/types/transaction";
+import { Types } from "mongoose";
 
 export async function GET(req: Request) {
   try {
@@ -16,7 +17,7 @@ export async function GET(req: Request) {
 
     // Aggregate transactions by userId
     const agg = await Transaction.aggregate([
-      { $match: { user: userId } },
+      { $match: { user: new Types.ObjectId(userId) } }, // Convert userId to ObjectId
       {
         $group: {
           _id: "$desc", // TransactionDesc
