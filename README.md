@@ -10,6 +10,15 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ---
 
+## 📄 Desafio Original
+O documento contendo os requisitos e objetivos do desafio original da pós-tech está disponível para consulta:
+
+📌 [**POSTECH - Front-end - Tech Challenge - Fase 1**](https://bytebank-web.vercel.app/challenge.pdf)
+
+Esse arquivo resume o escopo funcional e visual proposto para o projeto, com base no modelo de design fornecido e funcionalidades essenciais que deveriam ser implementadas.
+
+---
+
 ## 🚀 Stack utilizada
 
 - [**Next.js (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack
