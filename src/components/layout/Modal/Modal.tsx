@@ -15,6 +15,7 @@ interface ModalProps extends GeneralModalProps {
   btnTextCancel?: string;
   btnTextSubmit?: string;
   btnVariantSubmit?: ButtonVariant;
+  isSubmitDisabled?: boolean;
   className?: string;
 };
 
@@ -27,7 +28,8 @@ export default ({
   className = '',
   btnTextSubmit = 'Confirmar',
   btnTextCancel = 'Cancelar',
-  btnVariantSubmit = 'blue'
+  btnVariantSubmit = 'blue',
+  isSubmitDisabled = false
 }: ModalProps) => {
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +86,7 @@ export default ({
                     {btnTextCancel}
                   </Button>
 
-                  <Button type='submit' onClick={handleSubmit} variant={btnVariantSubmit} loading={isLoading}>
+                  <Button type='submit' onClick={handleSubmit} variant={btnVariantSubmit} loading={isLoading} disabled={isSubmitDisabled}>
                     {btnTextSubmit}
                   </Button>
                 </div>

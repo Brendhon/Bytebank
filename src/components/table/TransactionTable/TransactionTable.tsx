@@ -1,19 +1,18 @@
-// src/components/TransactionTable/TransactionTable.tsx
 'use client'
 
 import { Button } from '@/components/ui'
 import { formatCurrency } from '@/lib/formatter'
 import { cn } from '@/lib/utils'
-import { Transaction } from '@/types/transaction'
+import { ITransaction, TransactionDesc, TransactionDescKey } from '@/types/transaction'
 import { TableColumn } from '@/types/ui'
 import { Pencil, Trash } from 'lucide-react'
 import Table from '../Table/Table'
 
 interface TransactionTableProps {
-  transactions: Transaction[]
+  transactions: ITransaction[]
   pageSize?: number
-  onEdit?: (index: number) => void
-  onDelete?: (index: number) => void
+  onEdit?: (data: ITransaction) => void
+  onDelete?: (data: ITransaction) => void
 }
 
 export default ({
@@ -22,29 +21,40 @@ export default ({
   onEdit,
   onDelete,
 }: TransactionTableProps) => {
+  // Define render to type
+  const renderType = (key: TransactionDescKey) => TransactionDesc[key]
+
   // Define render to value
-  const renderValue = (value: number) => {
+  const renderValue = (data: ITransaction) => {
+    // Destructure the data
+    const { value, type } = data
+
+    // Check if the type is outflow
+    const isOutflow = type === 'outflow'
+    
+    // Check if the value is negative
     return (
-      <span className={cn('font-semibold', value < 0 ? 'text-red' : 'text-green')}>
-        {value < 0 ? '- ' : ''}
+      <span className={cn('font-semibold', isOutflow ? 'text-red' : 'text-green')}>
+        {isOutflow ? '- ' : ''}
         {formatCurrency(Math.abs(value))}
       </span>
     )
   }
 
   // Define the render to actions
-  const renderActions = (index: number) => {
+  const renderActions = (data: ITransaction) => {
+    // Define the className for the buttons
     const buttonClassName = 'w-6 h-6 rounded-full'
     return (
       <div className="flex gap-2">
         <Button
           className={buttonClassName}
-          onClick={() => onEdit?.(index)}>
+          onClick={() => onEdit?.(data)}>
           <Pencil size={12} />
         </Button>
         <Button
           className={buttonClassName}
-          onClick={() => onDelete?.(index)}>
+          onClick={() => onDelete?.(data)}>
           <Trash size={12} />
         </Button>
       </div>
@@ -52,7 +62,7 @@ export default ({
   }
 
   // Define the columns for the table
-  const columns: TableColumn<Transaction>[] = [
+  const columns: TableColumn<ITransaction>[] = [
     {
       label: 'Data',
       accessor: 'date',
@@ -62,18 +72,19 @@ export default ({
       accessor: 'alias',
     },
     {
-      label: 'Tipo',
-      accessor: 'type',
+      label: 'Descrição',
+      accessor: 'desc',
+      render: (type) => renderType(type),
     },
     {
       label: 'Valor',
       accessor: 'value',
-      render: (value) => renderValue(value),
+      render: (_v, _row) => renderValue(_row),
     },
     {
       label: 'Ações',
       accessor: 'value', // não importa o campo, pois usamos render
-      render: (_v, _row, rowIndex) => renderActions(rowIndex),
+      render: (_v, _row) => renderActions(_row),
     },
   ]
 

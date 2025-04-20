@@ -1,7 +1,7 @@
 'use client';
 
 import { Footer, Header, NavMenu } from "@/components/layout";
-import { NavItemLabel } from "@/components/layout/NavMenu/NavMenu";
+import { NavItemLabel } from "@/types/nav";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";

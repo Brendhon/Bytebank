@@ -71,6 +71,36 @@ footer {
     @apply text-dark;    
   }
 
+  .button {
+    @apply w-[150px] h-[40px] rounded-sm relative transition-colors;
+    @apply disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer;
+    @apply text-white text-sm font-semibold flex items-center justify-center;
+  }
+
+  .button-dark {
+    @apply bg-dark hover:bg-dark-gray;
+  }
+
+  .button-blue {
+    @apply bg-blue hover:bg-dark;
+  }
+
+  .button-green {
+    @apply bg-green hover:bg-blue;
+  }
+
+  .button-orange {
+    @apply bg-orange hover:bg-dark;
+  }
+
+  .button-outline-green {
+    @apply bg-transparent border-2 border-green text-green hover:bg-green hover:text-white;
+  }
+
+  .button-outline-orange {
+    @apply bg-transparent border-2 border-orange text-orange hover:bg-orange hover:text-white;
+  }
+
   .content {
     @apply flex-1 flex flex-row;
   }

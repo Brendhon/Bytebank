@@ -1,5 +1,7 @@
+import { NavItemLabel } from '@/types/nav';
 import { Meta, StoryObj } from '@storybook/react';
-import NavMenu, { NavItemLabel } from './NavMenu';
+import { delay } from 'msw';
+import NavMenu from './NavMenu';
 
 const meta: Meta<typeof NavMenu> = {
   component: NavMenu,
@@ -23,5 +25,19 @@ export const Default: Story = {
   args: {
     current: '/dashboard' as NavItemLabel,
     onNavigate: (href: string) => alert(`Navigate to: ${href}`),
+  },
+};
+
+export const WithLoading: Story = {
+  render: Template,
+  args: {
+    current: '/transactions' as NavItemLabel,
+    onNavigate: async (href: string) => {
+      // Simulate a loading state
+      await delay(1000)
+
+      // Simulate a navigation
+      alert(`Navigate to: ${href}`);
+    },
   },
 };

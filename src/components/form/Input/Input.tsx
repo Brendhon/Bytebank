@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils';
 import { InputTypes } from '@/types/ui';
 import { Button, Field, Input, InputProps, Label, } from '@headlessui/react';
+import { InputMask } from '@react-input/mask';
 import { Eye, EyeOff } from 'lucide-react';
 import { cloneElement, isValidElement, ReactElement, ReactNode, useState } from 'react';
 
@@ -26,6 +27,9 @@ export default ({
   // Check if the input is a password
   const isPassword = type === 'password';
 
+  // Check if the input is a date
+  const isDate = type === 'date';
+
   // State to show/hide password
   const [showPassword, setShowPassword] = useState(false);
 
@@ -36,6 +40,15 @@ export default ({
   const iconClass = cn(
     'size-5 text-blue',
     (onIconClick || isPassword) && 'cursor-pointer hover:text-dark'
+  );
+
+  // Input class
+  const inputClass = cn(
+    'rounded-sm w-full bg-white border border-gray px-4 py-2 text-dark outline-none transition-all focus:border-green focus:ring-1 focus:ring-green text-14',
+    error && 'border-red focus:ring-red focus:border-red',
+    'disabled:cursor-not-allowed disabled:opacity-70',
+    (icon || isPassword) && 'pr-10',
+    className
   );
 
   // Render the input component
@@ -50,16 +63,23 @@ export default ({
         <div className='relative flex items-center w-full'>
 
           {/* Input */}
-          <Input
-            type={inputType}
-            className={cn(
-              'rounded-sm w-full bg-white border border-gray px-4 py-2 text-dark outline-none transition-all focus:border-green focus:ring-1 focus:ring-green text-14',
-              error && 'border-red focus:ring-red focus:border-red',
-              (icon || isPassword) && 'pr-10',
-              className
-            )}
-            {...props}
-          />
+          {isDate ? (
+            <InputMask
+              mask="dd/mm/yyyy"
+              className={inputClass}
+              replacement={{ d: /\d/, m: /\d/, y: /\d/ }}
+              showMask={false}
+              separate={true}
+              component="input"
+              {...props}
+            />
+          ) : (
+            <Input
+              type={inputType}
+              className={inputClass}
+              {...props}
+            />
+          )}
 
           {/* Custom Icon */}
           {icon && !isPassword && (

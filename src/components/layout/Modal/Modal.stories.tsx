@@ -36,7 +36,7 @@ export const Default: Story = {
             }}
             btnVariantSubmit="outlineOrange"
           >
-            <p className="text-gray-700">Você tem certeza que deseja continuar com esta ação?</p>
+            <p className="text-dark">Você tem certeza que deseja continuar com esta ação?</p>
           </Modal>
         </>
       );

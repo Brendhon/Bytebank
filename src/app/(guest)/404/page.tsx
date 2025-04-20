@@ -1,11 +1,6 @@
-'use client'
-
-import { Button, Illustration } from '@/components/ui'
-import { useRouter } from 'next/navigation'
+import { Illustration } from '@/components/ui'
 
 export default () => {
-  const router = useRouter()
-
   return (
     <div className="w-full text-center p-8 gap-6 flex flex-col items-center justify-center">
       <h1 className="text-24-bold text-dark">
@@ -17,12 +12,9 @@ export default () => {
         Que tal voltar e tentar novamente?
       </p>
 
-      <Button
-        variant="orange"
-        onClick={() => router.push('/home')}
-      >
+      <a href='/home' className="button button-orange">
         Voltar ao início
-      </Button>
+      </a>
 
       <div className="mt-6">
         <Illustration src="404.svg" className='flex' />
