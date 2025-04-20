@@ -61,10 +61,10 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
    - Edição e exclusão de transações.
 
 4. **Meus Cartões**  
-  - Exibição de uma lista de cartões previamente cadastrados.  
-  - Opção para visualizar informações detalhadas de cada cartão.  
-  - Funcionalidade para bloquear ou desbloquear cartões diretamente na interface.  
-  - Página projetada como exemplo de renderização no lado do servidor utilizando dados estáticos.  
+   - Exibição de uma lista de cartões previamente cadastrados.  
+   - Opção para visualizar informações detalhadas de cada cartão.  
+   - Funcionalidade para bloquear ou desbloquear cartões diretamente na interface.  
+   - Página projetada como exemplo de renderização no lado do servidor utilizando dados estáticos.  
 
 5. **Configurações**
    - Configuração de dados pessoais.
