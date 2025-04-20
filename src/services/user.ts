@@ -10,12 +10,6 @@ import { request } from "./apiClient";
  * @returns {Promise<IUser>} - The registered user data
  */
 export async function registerUser(data: IUser): Promise<IUser> {
-  // Check if email is valid
-  isEmailValid(data.email);
-
-  // Check if email is already registered
-  await isEmailRegistered(data.email);
-
   // Send request to API
   return request<IUser>('POST', '/api/users', data);
 }
@@ -102,20 +96,6 @@ async function validatePassword(email: string, plain: string): Promise<void> {
 
   // If the password is invalid, throw an error
   if (!isValid) throw new Error('Senha inválida');
-}
-
-/**
- * Check if email is already registered
- * @param {string} email - The email to check
- * @returns {Promise<void>} - True if email is already registered, false otherwise
- * @throws {Error} - Throws an error if the email is invalid
- */
-async function isEmailRegistered(email: string): Promise<void> {
-  // Connect to the database
-  const user = await getUserByEmail(email);
-
-  // Check if email is valid
-  if (!user) throw new Error('Email já cadastrado');
 }
 
 /**
