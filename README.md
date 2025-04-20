@@ -57,8 +57,9 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
    - Ação para bloquear/desbloquear cartão.
 
 5. **Configurações**
-   - Configuração de dados pessoais e preferências.
+   - Configuração de dados pessoais.
    - Alteração de senha.
+   - Exclusão de conta.
 
 ---
 
@@ -87,28 +88,24 @@ Instale as dependências
 npm install
 ```
 
-### 📄 Configurando variáveis de ambiente
+### 📄 Configuração das Variáveis de Ambiente
 
-Crie um arquivo `.env.local` com a URL do MongoDB Atlas
+1. Crie um arquivo `.env.local` na raiz do projeto.
 
-```bash
-touch .env.local
-```
-
-Adicione a variável de ambiente no arquivo `.env.local`
+2. Adicione as seguintes variáveis de ambiente no arquivo `.env.local`:
 
 ```bash
-# Substitua pela sua URL do MongoDB Atlas mas mantenha o nome do banco de dados - bytebank
+# Substitua <user> e <password> pelas credenciais do seu MongoDB Atlas, mantendo o nome do banco de dados como "bytebank".
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/bytebank
 
-# Secret para autenticação
-NEXTAUTH_SECRET=your_secret
+# Chave secreta para autenticação
+NEXTAUTH_SECRET=sua_chave_secreta
 
-# URL do site
+# URL base do site
 NEXTAUTH_URL=http://localhost:3000
 ```
 
-No menu de perfil do usuário, também é possível acessar diretamente o Storybook e o Figma da aplicação. Para que esses links funcionem corretamente, é necessário adicionar as seguintes variáveis de ambiente no arquivo `.env.local`:
+3. Para habilitar links diretos para o Storybook e o Figma no menu de perfil do usuário, adicione também as seguintes variáveis de ambiente:
 
 ```bash
 # URL do Storybook
@@ -118,7 +115,9 @@ NEXT_PUBLIC_STORYBOOK_URL=http://localhost:6006
 NEXT_PUBLIC_FIGMA_URL=https://www.figma.com/file/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264
 ```
 
-Certifique-se de substituir as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
+> **Nota:** Substitua as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
+
+Certifique-se de salvar o arquivo após realizar as alterações.
 
 ### 🏃‍♂️ Executando o projeto
 
