@@ -1,4 +1,4 @@
-import { ITransaction } from "@/types/transaction";
+import { ITransaction, TransactionSummary } from "@/types/transaction";
 import { request } from "./apiClient";
 
 /**
@@ -53,4 +53,14 @@ export async function deleteTransaction(id: string): Promise<ITransaction> {
  */
 export async function getTransactionById(id: string): Promise<ITransaction> {
   return request<ITransaction>('GET', getEndpoint(id));
+}
+
+/**
+ * Get summary of transactions.
+ * @param {string} userId - User ID for filtering transactions. Query param.
+ * @returns {Promise<TransactionSummary>} - Summary of transactions.
+ */
+export async function getTransactionSummary(userId: string): Promise<TransactionSummary> {
+  const path = getEndpoint('summary') + `?userId=${userId}`;
+  return request<TransactionSummary>('GET', path);
 }

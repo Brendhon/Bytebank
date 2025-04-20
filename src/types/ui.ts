@@ -2,6 +2,7 @@ import { buttonVariants } from '@/components/ui/Button/Button';
 import { cardVariants } from '@/components/cards/Card/Card';
 import { VariantProps } from 'class-variance-authority';
 import { ReactNode } from 'react';
+import { TransactionDescKey } from './transaction';
 
 export type ButtonVariant = VariantProps<typeof buttonVariants>['variant'];
 
@@ -17,6 +18,7 @@ export interface IToast {
 };
 
 export interface CardProps {
+  key: TransactionDescKey;
   variant?: CardVariant;
   label?: string;
   value?: number;
@@ -29,7 +31,7 @@ export interface TableColumn<T = void> {
   render?: (value: any, row: T, index: number) => ReactNode;
 }
 
-export interface ICreditCard  {
+export interface ICreditCard {
   name: string;
   number?: string;
   expiration?: string;

@@ -12,10 +12,10 @@ export default meta
 type Story = StoryObj<typeof MovementsSection>
 
 const sampleData: CardProps[] = [
-  { label: 'Pagamentos', value: 24000.45, variant: 'dark' },
-  { label: 'Depósitos', value: 24000.45, variant: 'blue' },
-  { label: 'Transferências', value: 24000.45, variant: 'orange' },
-  { label: 'Saque', variant: 'green' },
+  { key: 'payment', label: 'Pagamentos', value: 24000.45, variant: 'dark' },
+  { key: 'deposit', label: 'Depósitos', value: 24000.45, variant: 'blue' },
+  { key: 'transfer', label: 'Transferências', value: 24000.45, variant: 'orange' },
+  { key: 'withdrawal', label: 'Saque', variant: 'green' },
 ]
 
 export const Default: Story = {

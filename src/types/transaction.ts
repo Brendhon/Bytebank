@@ -23,5 +23,10 @@ export interface ITransaction {
   type: TransactionTypeKey
   desc: TransactionDescKey
   value: number
-  user: string
+  user?: string
+}
+
+export interface TransactionSummary {
+  balance:   number;
+  breakdown: Record<TransactionDescKey, number>;
 }
