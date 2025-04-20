@@ -17,9 +17,9 @@ export default ({ data }: Props) => {
       {/* Cards */}
       <div className="flex items-center justify-center mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-          {data.map(({ label, value, variant }) => (
+          {data.map(({ key, label, value, variant }) => (
             <Card
-              key={label}
+              key={key}
               label={label}
               value={value}
               variant={variant as CardVariant}

@@ -10,6 +10,15 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ---
 
+## 📄 Desafio Original
+O documento contendo os requisitos e objetivos do desafio original da pós-tech está disponível para consulta:
+
+📌 [**POSTECH - Front-end - Tech Challenge - Fase 1**](https://bytebank-web.vercel.app/challenge.pdf)
+
+Esse arquivo resume o escopo funcional e visual proposto para o projeto, com base no modelo de design fornecido e funcionalidades essenciais que deveriam ser implementadas.
+
+---
+
 ## 🚀 Stack utilizada
 
 - [**Next.js (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack
@@ -29,10 +38,10 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ## 📁 Estrutura de Branches
 
-| Branch      | Finalidade                                          |
-| ----------- | --------------------------------------------------- |
-| `main`      | Produção (deploy da aplicação principal)            |
-| `dev`       | Desenvolvimento principal                           |
+| Branch | Finalidade                               |
+| ------ | ---------------------------------------- |
+| `main` | Produção (deploy da aplicação principal) |
+| `dev`  | Desenvolvimento principal                |
 
 ---
 
@@ -118,6 +127,30 @@ NEXT_PUBLIC_FIGMA_URL=https://www.figma.com/file/E9UFSc9LUXlL88hIvIcuLd/Modelo-F
 NEXT_PUBLIC_GITHUB_URL=https://github.com/Brendhon/Bytebank
 ```
 
+4. Segurança das APIs:
+
+Uma chave de autenticação é utilizada para proteger os endpoints da API contra acessos não autorizados. Essa chave é automaticamente incluída nas requisições realizadas pelo front-end, garantindo que apenas chamadas legítimas da aplicação possam acessar os endpoints protegidos. Isso impede que ferramentas externas, como Postman ou bots, realizem requisições diretamente à API.
+
+Para configurar a chave de autenticação, adicione a seguinte variável de ambiente no arquivo `.env.local`:
+
+```bash
+NEXT_PUBLIC_API_KEY=sua_chave_api
+```
+
+> **🔐 Dica de segurança:**  
+> Gere uma chave segura usando o comando abaixo no terminal:  
+> ```bash
+> openssl rand -hex 32
+> ```  
+> Copie o valor gerado e use como `NEXT_PUBLIC_API_KEY`.
+
+> **⚠️ Aviso Importante:**
+> Esta abordagem de segurança (utilizar uma API_KEY pública no front-end para autenticar chamadas internas) não é recomendada para aplicações em produção, pois o valor da variável pode ser exposto e facilmente acessado.
+> 
+> Em um ambiente de produção, recomenda-se implementar uma autenticação mais robusta, como OAuth ou JWT (JSON Web Tokens), para proteger os endpoints da API e garantir a segurança dos dados do usuário.
+> 
+> No entanto, por se tratar de um projeto de estudo, optou-se por esta solução simplificada para fins didáticos.
+
 > **Nota:** Substitua as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
 
 Certifique-se de salvar o arquivo após realizar as alterações.
@@ -147,8 +180,8 @@ Acesse o Storybook em seu navegador: [http://localhost:6006](http://localhost:60
 ## 👀 Observações
 
 - **Deploys separados na Vercel**: 
-  - O projeto do **Storybook** está disponível em [https://bytebank-storybook.vercel.app/](https://bytebank-storybook.vercel.app/).
-  - A aplicação web está disponível em [https://bytebank-web.vercel.app/home](https://bytebank-web.vercel.app/home).
+  - A aplicação web está disponível em [https://bytebank-web.vercel.app](https://bytebank-web.vercel.app).
+  - O projeto do **Storybook** está disponível em [https://bytebank-storybook.vercel.app](https://bytebank-storybook.vercel.app).
 
 - **Headless UI**: Utilizado para criar componentes acessíveis e sem estilo, permitindo total personalização da interface e garantindo conformidade com padrões de acessibilidade.
 

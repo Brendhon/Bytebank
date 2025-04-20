@@ -1,6 +1,9 @@
+import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api';
 import { connectToDatabase } from '@/lib/mongoose';
 import User from '@/models/User';
+import { IUser } from '@/types/user';
 import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server';
 
 /**
  * Handles GET requests to retrieve all User records.
@@ -8,14 +11,21 @@ import bcrypt from 'bcryptjs';
  * @returns A response object containing the User data in JSON format
  */
 export async function GET(req: Request) {
-  // Check if the request method is GET
-  await connectToDatabase();
+  try {
+    // Check if the request is authenticated
+    isReqAuthenticated(req);
 
-  // Fetch all Users from the database
-  const users = await User.find();
+    // Check if the request method is GET
+    await connectToDatabase();
 
-  // Check if there are no Users
-  return Response.json(users);
+    // Fetch all Users from the database
+    const users = await User.find();
+
+    // Check if there are no Users
+    return handleSuccessResponse<IUser[]>(users);
+  } catch (error) {
+    return handleErrorResponse(error, 'Erro ao buscar usuários');
+  }
 }
 
 /**
@@ -24,24 +34,31 @@ export async function GET(req: Request) {
  * @returns A response object indicating the success or failure of the operation
  */
 export async function POST(req: Request) {
-  // Check if the request method is POST
-  await connectToDatabase();
+  try {
+    // Check if the request is authenticated
+    isReqAuthenticated(req);
 
-  // Parse the request body as JSON
-  const data = await req.json();
+    // Check if the request method is POST
+    await connectToDatabase();
 
-  // Check if user already exists
-  const user = await User.findOne({ email: data.email });
+    // Parse the request body as JSON
+    const data = await req.json();
 
-  // If user exists, return an error response and code 
-  if (user) return new Response('Usuário já cadastrado na plataforma', { status: 409 });
+    // Check if user already exists
+    const user = await User.findOne({ email: data.email });
 
-  // Hash the password using bcrypt
-  const password = await bcrypt.hash(data.password, 10);
+    // If user exists, throw an error
+    if (user) throw new Error('Usuário já cadastrado na plataforma', { cause: { status: 409 } });
 
-  // Create a new User record in the database
-  const result = await User.create({ ...data, password });
+    // Hash the password using bcrypt
+    const password = await bcrypt.hash(data.password, 10);
 
-  // Return a success response with the created User
-  return Response.json(result);
+    // Create a new User record in the database
+    const result = await User.create({ ...data, password });
+
+    // Return a success response with the created User
+    return handleSuccessResponse(result);
+  } catch (error) {
+    return handleErrorResponse(error, 'Erro ao criar usuário');
+  }
 }

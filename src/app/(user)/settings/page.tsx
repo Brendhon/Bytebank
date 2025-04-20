@@ -3,7 +3,7 @@
 import { AccountForm } from "@/components/form";
 import { useToast } from "@/hooks";
 import { AccountFormData } from "@/schemas";
-import { deleteUser, updateUser } from "@/services/user";
+import { deleteUser, updateUser } from "@/services/user.service";
 import { Loader2 } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";

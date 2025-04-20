@@ -4,6 +4,7 @@ import { TableColumn } from '@/types/ui';
 
 const meta: Meta<typeof Table> = {
   component: Table,
+  tags: ['autodocs'],
 };
 
 export default meta;
@@ -46,5 +47,18 @@ export const Default: Story = {
       { name: 'Vanessa', age: 43, city: 'Rio Branco' },
       { name: 'Leandro', age: 44, city: 'Porto Velho' },
     ],
+  },
+};
+
+// Without data
+export const WithoutData: Story = {
+  args: {
+    pageSize: 5,
+    columns: [
+      { label: 'Nome', accessor: 'name' },
+      { label: 'Idade', accessor: 'age' },
+      { label: 'Cidade', accessor: 'city' },
+    ] as TableColumn<any>[],
+    data: [],
   },
 };
