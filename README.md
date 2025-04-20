@@ -147,8 +147,8 @@ Acesse o Storybook em seu navegador: [http://localhost:6006](http://localhost:60
 ## 👀 Observações
 
 - **Deploys separados na Vercel**: 
-  - O projeto do **Storybook** está disponível em [https://bytebank-storybook.vercel.app/](https://bytebank-storybook.vercel.app/).
-  - A aplicação web está disponível em [https://bytebank-web.vercel.app/home](https://bytebank-web.vercel.app/home).
+  - A aplicação web está disponível em [https://bytebank-web.vercel.app](https://bytebank-web.vercel.app).
+  - O projeto do **Storybook** está disponível em [https://bytebank-storybook.vercel.app](https://bytebank-storybook.vercel.app).
 
 - **Headless UI**: Utilizado para criar componentes acessíveis e sem estilo, permitindo total personalização da interface e garantindo conformidade com padrões de acessibilidade.
 
