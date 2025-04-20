@@ -1,4 +1,4 @@
-import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from "@/lib/api";
+import { getUserIdFromQuery, handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from "@/lib/api";
 import { connectToDatabase } from "@/lib/mongoose";
 import Transaction from "@/models/Transaction";
 import { TransactionDescKey } from "@/types/transaction";
@@ -12,13 +12,7 @@ export async function GET(req: Request) {
     await connectToDatabase();
 
     // Get query parameters from the request
-    const { searchParams } = new URL(req.url);
-
-    // Extract userId from query parameters
-    const userId = searchParams.get("userId");
-
-    // Check if userId is provided
-    if (!userId) throw new Error("userId is required", { cause: { status: 400 } });
+    const userId = getUserIdFromQuery(req);
 
     // Aggregate transactions by userId
     const agg = await Transaction.aggregate([

@@ -3,11 +3,11 @@ import { request } from "./apiClient";
 
 /**
  * Form the endpoint for the API
- * @param {string} id - The id of the transaction
+ * @param {string} endpoint - The id of the transaction or endpoint
  * @returns {string} - The endpoint URL
  */
-function getEndpoint(id?: string | null | undefined): string {
-  return `/api/transactions${id ? `/${id}` : ''}`;
+function getEndpoint(endpoint?: string | null | undefined): string {
+  return `/api/transactions${endpoint ? `/${endpoint}` : ''}`;
 }
 
 /**
@@ -19,13 +19,6 @@ export async function createTransaction(data: ITransaction): Promise<ITransactio
   return request<ITransaction>('POST', getEndpoint(), data);
 }
 
-/**
- * Retrieves all user transactions.
- * @returns {Promise<ITransaction[]>} - List of transactions.
- */
-export async function getUserTransactions(): Promise<ITransaction[]> {
-  return request<ITransaction[]>('GET', getEndpoint());
-}
 
 /**
  * Updates an existing transaction.
@@ -53,6 +46,15 @@ export async function deleteTransaction(id: string): Promise<ITransaction> {
  */
 export async function getTransactionById(id: string): Promise<ITransaction> {
   return request<ITransaction>('GET', getEndpoint(id));
+}
+
+/**
+ * Retrieves all user transactions.
+ * @returns {Promise<ITransaction[]>} - List of transactions.
+ */
+export async function getUserTransactions(userId: string): Promise<ITransaction[]> {
+  const path = getEndpoint() + `?userId=${userId}`;
+  return request<ITransaction[]>('GET', path);
 }
 
 /**

@@ -1,4 +1,4 @@
-import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api';
+import { getUserIdFromQuery, handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api';
 import { connectToDatabase } from '@/lib/mongoose';
 import Transaction from '@/models/Transaction';
 import { ITransaction } from '@/types/transaction';
@@ -13,11 +13,14 @@ export async function GET(req: Request) {
     // Check if the request is authenticated
     isReqAuthenticated(req);
 
+    // Get query parameters from the request
+    const userId = getUserIdFromQuery(req);
+
     // Check if the request method is GET
     await connectToDatabase();
-
-    // Fetch all transactions from the database
-    const transactions = await Transaction.find();
+    
+    // Fetch all transactions for the user from the database
+    const transactions = await Transaction.find({ user: userId })
 
     // Check if there are no transactions
     return handleSuccessResponse<ITransaction[]>(transactions);
