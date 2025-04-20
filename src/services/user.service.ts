@@ -5,13 +5,22 @@ import bcrypt from "bcryptjs";
 import { request } from "./apiClient";
 
 /**
+ * Form the endpoint for the API
+ * @param {string} email - The email of the user
+ * @returns {string} - The endpoint URL
+ */
+function getEndpoint(email?: string | null | undefined): string {
+  return `/api/users${email ? `/${email}` : ''}`;
+}
+
+/**
  * Registers a new user by sending a POST request to the API.
  * @param {IUser} data - The user data to register
  * @returns {Promise<IUser>} - The registered user data
  */
 export async function registerUser(data: IUser): Promise<IUser> {
   // Send request to API
-  return request<IUser>('POST', '/api/users', data);
+  return request<IUser>('POST', getEndpoint(), data);
 }
 
 /**
@@ -19,7 +28,7 @@ export async function registerUser(data: IUser): Promise<IUser> {
  * @returns {Promise<IUser[]>} - An array of user data
  */
 export function getAllUsers(): Promise<IUser[]> {
-  return request<IUser[]>('GET', '/api/users');
+  return request<IUser[]>('GET', getEndpoint());
 }
 /**
  * Deletes a user by sending a DELETE request to the API.
@@ -34,7 +43,7 @@ export async function deleteUser(email: string | null | undefined, password: str
   await validatePassword(email!, password);
 
   // Send request to API
-  return request<IUser>('DELETE', `/api/users/${email}`);
+  return request<IUser>('DELETE', getEndpoint(email));
 }
 
 /**
@@ -61,7 +70,7 @@ export async function updateUser(email: string | null | undefined, data: Account
   const cleanedData = removeEmptyFields(data);
 
   // Send data to API
-  return request<IUser>('PUT', `/api/users/${email}`, cleanedData);
+  return request<IUser>('PUT', getEndpoint(email), cleanedData);
 }
 
 /**
@@ -74,7 +83,7 @@ export async function getUserByEmail(email: string | null | undefined): Promise<
   isEmailValid(email);
 
   // Send request to API
-  return request<IUser>('GET', `/api/users/${email}`);
+  return request<IUser>('GET', getEndpoint(email));
 }
 
 /**

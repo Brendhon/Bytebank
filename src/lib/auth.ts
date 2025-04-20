@@ -1,8 +1,8 @@
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { NextAuthOptions } from 'next-auth';
-import { connectToDatabase } from './mongoose';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { connectToDatabase } from './mongoose';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -34,6 +34,26 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
     maxAge: 24 * 60 * 60,      // Expires in 24h
     updateAge: 60 * 60,        // Update session every hour
+  },
+  callbacks: {
+    // 1) During the initial login, the user is populated → we assign the id to the token
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = (user as any).id;
+        token.email = (user as any).email;
+        token.name = (user as any).name;
+      }
+      return token;
+    },
+    // 2) Whenever the session is built, we return the id from the token
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        session.user.name = token.name as string;
+      }
+      return session;
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

@@ -4,7 +4,7 @@ import { LoginForm, RegisterForm } from "@/components/form";
 import { Footer, Header } from "@/components/layout";
 import { useToast } from "@/hooks";
 import { LoginFormData, RegisterFormData } from "@/schemas";
-import { registerUser } from "@/services/user";
+import { registerUser } from "@/services/user.service";
 import { IUser } from "@/types/user";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
