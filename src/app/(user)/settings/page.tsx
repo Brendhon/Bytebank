@@ -22,11 +22,16 @@ export default () => {
     setLoading(session.status === 'loading');
     setName(session.data?.user?.name || '');
     setEmail(session.data?.user?.email || '');
-  }, [session.status]);
+  }, [session.status, session.data]);
 
   // Handle submit
   const handleSubmit = async (data: AccountFormData) => {
     console.log(data);
+  }
+
+  // Handle delete
+  const handleDelete = async () => {
+    console.log('Delete account');
   }
 
   // Render component
@@ -44,6 +49,7 @@ export default () => {
               confirmPassword: '',
             }}
             onSubmit={handleSubmit}
+            onDelete={handleDelete}
           />
       }
     </>

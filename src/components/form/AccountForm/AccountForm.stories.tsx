@@ -23,5 +23,8 @@ export const Default: Story = {
     onSubmit: (data: AccountFormData) => {
       alert(`Dados enviados:\n${JSON.stringify(data, null, 2)}`);
     },
+    onDelete: async () => {
+      return Promise.resolve(alert('Conta deletada'));
+    },
   },
 };
