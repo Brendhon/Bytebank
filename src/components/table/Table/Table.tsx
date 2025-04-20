@@ -55,6 +55,18 @@ export default <T,>({
           </thead>
 
           <tbody>
+            {/* If no data is available, show a message */}
+            {data.length === 0 && (
+              <tr>
+                <td colSpan={columns.length} className="text-center py-4">
+                  <span className="text-gray">
+                    Nenhum dado encontrado
+                  </span>
+                </td>
+              </tr>
+            )}
+
+            {/* Render the rows */}
             {pagedData.map((row, rowIndex) => (
               <tr
                 key={rowIndex}
@@ -63,7 +75,7 @@ export default <T,>({
                 {columns.map((col, colIndex) => (
                   <td
                     key={colIndex}
-                    className={cn(cellClassName , "text-14")}
+                    className={cn(cellClassName, "text-14")}
                   >
                     {col.render
                       ? col.render(row[col.accessor], row, rowIndex)
