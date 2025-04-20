@@ -64,9 +64,7 @@ export default () => {
     data.user = userId;
 
     // Check if editing
-    selected
-      ? await handleEdit(data)
-      : await handleCreate(data);
+    return selected ? handleEdit(data) : handleCreate(data);
   }
 
   // Handle creation 
