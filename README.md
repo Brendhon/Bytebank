@@ -6,7 +6,10 @@
 
 Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que simula um site bancário simples. Permite cadastro de transações financeiras, visualização de extrato detalhado e acesso a serviços financeiros, com foco em acessibilidade, componentização e boas práticas de desenvolvimento.
 
-**Figma:** [Bytebank](https://www.figma.com/design/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264)
+**Figma:** [Bytebank Figma](https://www.figma.com/design/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264)
+**Storybook:** [Bytebank Storybook](https://bytebank-storybook.vercel.app/)
+**Deploy:** [Bytebank Web](https://bytebank-web.vercel.app/)
+**Vídeo de Demonstração:** [Bytebank Demo](https://bytebank-web.vercel.app/demo.pm4)
 
 ---
 
@@ -175,18 +178,6 @@ npm run storybook
 ```
 
 Acesse o Storybook em seu navegador: [http://localhost:6006](http://localhost:6006)
-
----
-
-## 👀 Observações
-
-- **Deploys separados na Vercel**: 
-  - A aplicação web está disponível em [https://bytebank-web.vercel.app](https://bytebank-web.vercel.app).
-  - O projeto do **Storybook** está disponível em [https://bytebank-storybook.vercel.app](https://bytebank-storybook.vercel.app).
-
-- **Headless UI**: Utilizado para criar componentes acessíveis e sem estilo, permitindo total personalização da interface e garantindo conformidade com padrões de acessibilidade.
-
-- **React Hook Form**: Implementado para manipulação e validação de formulários, proporcionando uma experiência de usuário fluida e intuitiva.
 
 ---
 
