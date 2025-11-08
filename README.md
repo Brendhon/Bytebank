@@ -1,15 +1,11 @@
 # 💸 Bytebank
 
-<h1 align="center">
-    <img src="./public/logo.svg" width="300px;" alt="logo"/>
-</h1>
-
 Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que simula um site bancário simples. Permite cadastro de transações financeiras, visualização de extrato detalhado e acesso a serviços financeiros, com foco em acessibilidade, componentização e boas práticas de desenvolvimento.
 
-**Figma:** [Bytebank Figma](https://www.figma.com/design/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264)
-**Storybook:** [Bytebank Storybook](https://bytebank-storybook.vercel.app/)
-**Deploy:** [Bytebank Web](https://bytebank-web.vercel.app/)
-**Vídeo de Demonstração:** [Bytebank Demo](https://bytebank-web.vercel.app/demo.pm4)
+- **Figma:** [Bytebank Figma](https://www.figma.com/design/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264)
+- **Storybook:** [Bytebank Storybook](https://bytebank-storybook.vercel.app/)
+- **Deploy:** [Bytebank Web](https://bytebank-web.vercel.app/)
+- **Vídeo de Demonstração:** [Bytebank Demo](https://bytebank-web.vercel.app/demo.mp4)
 
 ---
 
