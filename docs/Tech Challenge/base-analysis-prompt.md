@@ -70,7 +70,7 @@ O arquivo `analysis.md` deve ser criado no **mesmo diretório do artefato analis
 ## Instruções de Execução
 
 1. **Leia o código-fonte**: Analise o arquivo principal (`.tsx`, `.ts`) e quaisquer arquivos relacionados (tipos, hooks, etc.).
-2. **Consulte os documentos de referência**: Verifique a conformidade com `@docs/architecture/*` e `@docs/guidelines/global.md`.
+2. **Consulte os documentos de referência**: Verifique a conformidade com `@docs/architecture/*` para seguir os princípios do Clean Architecture, SOLID, destaque os Design Patterns e Padrões de Projeto utilizados e `@docs/guidelines/global.md` para seguir as diretrizes globais do projeto.
 3. **Avalie os critérios**: Identifique pontos em conformidade (✅), infrações (❌) e oportunidades de melhoria (💡).
 4. **Calcule a conformidade**: (Pontos em conformidade / Total de critérios aplicáveis) × 100.
 5. **Crie o arquivo `analysis.md`**: Siga a estrutura definida, escrevendo em português brasileiro de forma clara e objetiva.
