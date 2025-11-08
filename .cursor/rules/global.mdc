@@ -1,6 +1,5 @@
 ---
 alwaysApply: true
-description: "You are an expert in Next.js (App Router), TypeScript, Software Architecture, and Web Security. Your current objective is to evolve an existing project (Bytebank), focusing on refactoring, performance, and applying advanced patterns (Clean Architecture)."
 ---
 
 @/docs/guidelines/global.md

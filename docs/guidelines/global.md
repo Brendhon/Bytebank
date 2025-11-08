@@ -1,54 +1,64 @@
-# Next.js Development Guidelines (Refactoring & Architecture Focus)
+You are an expert in TypeScript, Next.js, React, Tailwind CSS, and Web Development. You must follow the following guidelines.
 
-You are an expert in Next.js (App Router), TypeScript, Software Architecture, and Web Security. Your current objective is to evolve an existing project (Bytebank), focusing on refactoring, performance, and applying advanced patterns (Clean Architecture).
-
-## 🎯 Refactoring Goals (Tech Challenge)
-- **Modular Architecture:** Clearly separate responsibilities (Presentation vs. Domain vs. Infrastructure).
-- **State Management:** Optimize the use of contexts and local state; prefer Server Components for static data.
-- **Performance:** Implement lazy loading, optimize images (`next/image`), and improve Core Web Vitals.
-- **Security:** Strengthen authentication (NextAuth), validate all server-side inputs (Zod), and protect sensitive routes.
-
-## Code Style & Architecture
-- **Server vs. Client Components:** By default, use **Server Components**. Only use `'use client'` when necessary (interactivity, state/effect hooks).
-- **Simplified Clean Architecture:**
-  - `@/app`: Presentation Layer (Routing and Layouts).
-  - `@/components`: Presentation Layer (Reusable UI).
-  - `@/services`: Domain/Application Layer (Business rules and data calls).
-  - `@/lib`: Infrastructure Layer (DB config, third-party clients, base utilities).
-  - `@/types`: Domain Definitions (Models/Interfaces).
-- **Modularity:** Keep components small. Extract complex UI logic into Custom Hooks (`@/hooks`).
+## Code Style
+- Write concise, type-safe TypeScript code.
+- Use functional components and hooks.
+- Keep components modular, reusable, and maintainable.
+- Group related files by feature (components, hooks, styles, etc.).
 
 ## Naming
-- Use `camelCase` for variables, functions, and hooks.
-- Use `PascalCase` for component and page names.
-- Use `kebab-case` for file and directory names (e.g., `components/ui/button.tsx`, `app/dashboard/page.tsx`).
+- Use camelCase for variables/functions.
+- Use PascalCase for component names.
+- Use lowercase-hyphenated for directories.
 
 ## TypeScript
-- Use strict TypeScript throughout the project.
-- Prefer `interface` for defining component props and data models.
-- Avoid `any` at all costs; use Generics or utility types (`Partial`, `Omit`) when flexibility is needed without sacrificing safety.
-- Strongly type API responses (use Zod to infer types from external data).
+- Use TypeScript everywhere.
+- Prefer interfaces for props.
+- Enable strict typing in `tsconfig.json`.
+- Avoid `any`; use precise types. Use `unknown` for type-safe flexibility when necessary.
 
-## Performance & Web Optimization
-- **Images:** ALWAYS use the `<Image />` component from `next/image` with defined dimensions and correct priority (LCP).
-- **Fonts:** Use `next/font` to load fonts optimally and avoid CLS (Cumulative Layout Shift).
-- **Lazy Loading:** Utilize `next/dynamic` to load heavy components on demand (e.g., complex modals, charts).
-- **Rendering:** Avoid unnecessary re-renders. Use `useMemo` for heavy calculations and `useCallback` for functions passed to client-side child components.
-- **Data Fetching:** Prefer fetching data on the Server Side (in `page.tsx` or layouts) and passing it as props, rather than fetching on the client with `useEffect`.
+## Performance
+- Be mindful of the boundary between Server Components (default) and Client Components (`"use client"`).
+- Keep Client Components small and push heavy logic to Server Components or API routes.
+- Use `useMemo` ONLY for memoizing expensive calculations and static props.
+- Use `useCallback` ONLY for functions passed as props to memoized child components.
+- Utilize Next.js features like dynamic imports (`React.lazy`) for code splitting.
+- Use the `next/image` component for automatic image optimization.
+- Limit unnecessary `useEffect`/`useState` hooks and avoid heavy logic in the render body. Avoid using `useEffect` in the render body.
 
 ## UI & Styling
-- Use **Tailwind CSS** for all styling.
-- Utilize `clsx` or `tailwind-merge` to cleanly combine classes conditionally.
-- Ensure full responsiveness (mobile-first).
-- For icons, use `lucide-react`.
-- Use components from **Headless UI** for guaranteed accessibility in complex elements (menus, dialogs).
+- Use **Tailwind CSS** for all component styles.
+- For accessible, unstyled primitives, use **Headless UI**.
+- Always ensure your UI is responsive and adapts to different screen sizes using Tailwind's variants.
+- For images, always use the `Image` component from `next/image`.
+- For icons, always use the **`lucide-react`** library.
+- For animations, prefer CSS transitions or a dedicated library like **Framer Motion**.
 
-## Security
-- Never expose secret keys (ENVs) on the client (use the `NEXT_PUBLIC_` prefix only for what MUST be public).
-- Validate all forms and input data with **Zod** before sending them to the backend or database.
-- Protect Server Actions and Route Handlers by checking the session (NextAuth) before executing sensitive operations.
+## Documentation
+- All reusable, common components (buttons, inputs, modals, etc.) must be documented in **Storybook**.
+- All internal, textual documentation must be stored in the `docs` directory.
+- Write all documentation, Storybook stories, and code comments in English.
+- Do not document pages or single-use components.
+- For "usages," only document shared features like APIs, custom hooks, and utility services.
+- Do not include large code examples in `.md` documentation files; link to Storybook or relevant source files instead.
+- Place all component usage documentation in `docs/components`.
+- Place all guidelines (like this file) in `docs/guidelines`.
+- Place all shared feature usage documentation in `docs/usages`.
+- Whenever you update a documented component or usage, also update its Storybook story and documentation in the `docs` directory.
+- Use clear and descriptive file names, e.g., `docs/components/button-usage.md` or `docs/usages/auth-service.md`.
 
-## Documentation (Evolution Focus)
-- Document architectural decisions in `docs/architecture/`.
-- When refactoring a complex component, create a quick note about the "Why" of the change (e.g., `docs/refactoring/transaction-list-optimization.md`).
-- Maintain documentation for reusable UI components (Button, Input, Modal) in `docs/components/`.
+## Best Practices
+- All comments must be in English.
+- Use the **Next.js App Router** for all routing and deep linking.
+- Use **NextAuth** for all authentication logic.
+- For forms, use **React Hook Form** for state management and **Zod** for schema validation.
+- Use **Vercel** for deployment.
+- Adhere to the following directory structure:
+    - `@/app` (App Router pages and API routes)
+    - `@/components` (Reusable UI components)
+    - `@/contexts` (React Context providers)
+    - `@/hooks` (Custom React hooks)
+    - `@/models` (Database models, e.g., Mongoose schemas)
+    - `@/services` (Business logic, API clients, database interactions)
+    - `@/utils` (Helper functions)
+- After each step, verify the relevant guideline and ensure all rules are followed.
