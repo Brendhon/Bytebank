@@ -8,10 +8,20 @@ const meta: Meta<typeof Logo> = {
     variant: {
       control: 'select',
       options: ['full', 'icon'],
+      description: 'Display variant: full for complete logo with text, icon for icon only',
     },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
+      description: 'Size preset: sm (64px), md (128px), lg (168px)',
+    },
+    className: {
+      control: 'text',
+      description: 'Additional CSS classes for customization',
+    },
+    title: {
+      control: 'text',
+      description: 'Accessible label for screen readers (defaults to "Bytebank Logo")',
     },
   },
 };
@@ -69,5 +79,31 @@ export const IconLarge: Story = {
   args: {
     variant: 'icon',
     size: 'lg',
+  },
+};
+
+// Accessibility stories
+export const WithCustomTitle: Story = {
+  args: {
+    variant: 'full',
+    size: 'md',
+    title: 'Bytebank - Your Financial Partner',
+  },
+};
+
+export const IconWithCustomTitle: Story = {
+  args: {
+    variant: 'icon',
+    size: 'md',
+    title: 'Bytebank Icon',
+  },
+};
+
+// Custom className story
+export const WithCustomClassName: Story = {
+  args: {
+    variant: 'full',
+    size: 'md',
+    className: 'opacity-75 hover:opacity-100 transition-opacity',
   },
 };

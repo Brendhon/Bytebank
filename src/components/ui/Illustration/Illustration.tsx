@@ -53,7 +53,6 @@ export default function Illustration({
 
 /**
  * Illustration component styles
- * Using template literals for Tailwind Intellisense autocomplete support
  */
 const styles = {
   container: `flex flex-col items-center`,

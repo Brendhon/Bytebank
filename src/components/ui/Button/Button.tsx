@@ -53,7 +53,6 @@ export default function Button({
 
 /**
  * Button component styles
- * Using template literals for Tailwind Intellisense autocomplete support
  */
 const styles = {
   span: `opacity-0`,
