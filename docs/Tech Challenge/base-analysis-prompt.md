@@ -70,11 +70,16 @@ O arquivo `analysis.md` deve ser criado no **mesmo diretório do artefato analis
 ## Instruções de Execução
 
 1. **Leia o código-fonte**: Analise o arquivo principal (`.tsx`, `.ts`) e quaisquer arquivos relacionados (tipos, hooks, etc.).
-2. **Consulte os documentos de referência**: Verifique a conformidade com `@docs/architecture/*` para seguir os princípios do Clean Architecture, SOLID, destaque os Design Patterns e Padrões de Projeto utilizados e `@docs/guidelines/global.md` para seguir as diretrizes globais do projeto.
-3. **Avalie os critérios**: Identifique pontos em conformidade (✅), infrações (❌) e oportunidades de melhoria (💡).
-4. **Calcule a conformidade**: (Pontos em conformidade / Total de critérios aplicáveis) × 100.
-5. **Crie o arquivo `analysis.md`**: Siga a estrutura definida, escrevendo em português brasileiro de forma clara e objetiva.
-6. **Atualize o `analysis-mapping.md`**: Marque o status da análise como "Criado" (✅) e o da implementação como "Pendente" (⚠️) ou "Concluído" (✅) em `@docs/Tech Challenge/analysis-mapping.md`.
+2. **Consulte os documentos de referência**: Verifique a conformidade e siga os princípios do Clean Architecture, SOLID, destaque os Design Patterns e Padrões de Projeto utilizados, as boas práticas de performance, segurança e gerenciamento de estado e as diretrizes globais do projeto: 
+- `@docs/architecture/modular-architecture.md`
+- `@docs/architecture/performance-optimization.md`
+- `@docs/architecture/security.md`
+- `@docs/architecture/state-management.md`
+- `@docs/guidelines/global.md`
+4. **Avalie os critérios**: Identifique pontos em conformidade (✅), infrações (❌) e oportunidades de melhoria (💡).
+5. **Calcule a conformidade**: (Pontos em conformidade / Total de critérios aplicáveis) × 100.
+6. **Crie o arquivo `analysis.md`**: Siga a estrutura definida, escrevendo em português brasileiro de forma clara e objetiva.
+7. **Atualize o `analysis-mapping.md`**: Marque o status da análise como "Criado" (✅) e o da implementação como "Pendente" (⚠️) ou "Concluído" (✅) em `@docs/Tech Challenge/analysis-mapping.md`.
 
 ---
 
