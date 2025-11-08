@@ -20,6 +20,10 @@ Avalie o componente comparando-o com os seguintes documentos:
 
 ### Critérios de Avaliação
 
+> **⚠️ Importante:** Esta análise **NÃO** deve se preocupar com:
+> - **Testes**: Não avaliar cobertura de testes, testes unitários, testes de integração, etc.
+> - **Internacionalização (i18n)**: Não avaliar suporte a múltiplos idiomas, textos hardcoded, ou configurações de i18n.
+
 Avalie os seguintes aspectos:
 
 #### 1. **Nomenclatura e Estrutura**
@@ -55,11 +59,7 @@ Avalie os seguintes aspectos:
 - Stories incluem `tags: ['autodocs']` e `argTypes`?
 - Comentários agregam valor (não são redundantes)?
 
-#### 7. **Internacionalização**
-- Textos hardcoded são evitados ou configuráveis via props?
-- Suporte para i18n quando aplicável?
-
-#### 8. **Boas Práticas React**
+#### 7. **Boas Práticas React**
 - Keys de lista usam IDs únicos (não `index`)?
 - Props opcionais tratadas com optional chaining?
 - Separação adequada de responsabilidades?
@@ -195,10 +195,8 @@ Crie um arquivo `analysis.md` no **mesmo diretório do componente** com a seguin
    - Percentual = (conformes / total) × 100
 
 5. **Crie o Documento**: 
-   - Salve como `analysis.md` no mesmo diretório do componente
    - Conteúdo em **português brasileiro**
    - Seja claro, objetivo e específico
-   - Cite sempre o documento e seção de referência
    - Inclua exemplos de código apenas em "Plano de Ação"
 
 6. **Mantenha Consistência**:
@@ -224,6 +222,5 @@ Para analisar o componente `Button`:
 
 - **Seja Específico**: Cite linhas de código quando relevante
 - **Seja Prático**: Foque em melhorias acionáveis
-- **Seja Consistente**: Use sempre a mesma estrutura e terminologia
-- **Seja Objetivo**: Evite julgamentos vagos; aponte problemas concretos
+- **Seja Claro e Objetivo**: Evite julgamentos vagos; aponte problemas concretos e específicos de forma objetiva.
 - **Contextualize**: Sempre cite o documento de referência e a seção específica
