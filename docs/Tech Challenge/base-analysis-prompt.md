@@ -45,6 +45,25 @@ O arquivo `analysis.md` deve ser criado no **mesmo diretório do artefato analis
 ## Pontos de Melhoria
 1. **[Nome]:** [Descrição e por que é problema]
 
+## 🎨 Design Patterns Utilizados
+> Se não houver: "Nenhum design pattern identificado."
+
+1. **[Nome do Pattern]:** [Descrição breve de como foi implementado]
+   - **Localização:** [Onde no código está implementado]
+   - **Benefício:** [Por que foi escolhido este pattern]
+
+## 🏗️ Princípios SOLID Implementados
+> Documentar quais princípios foram implementados e quais serão implementados no Plano de Ação.
+
+### Implementados
+1. **[Nome do Princípio]:** [Descrição de como foi implementado]
+   - **Evidência:** [Onde no código está aplicado]
+
+### A Implementar
+1. **[Nome do Princípio]:** [Descrição do que será implementado]
+   - **Justificativa:** [Por que será implementado]
+   - **Plano:** [Como será implementado - referenciar Plano de Ação]
+
 ## Plano de Ação
 ### 1. [Nome] (Prioridade: Crítica/Alta/Média/Baixa)
 - [Descrição]
@@ -70,16 +89,19 @@ O arquivo `analysis.md` deve ser criado no **mesmo diretório do artefato analis
 ## Instruções de Execução
 
 1. **Leia o código-fonte**: Analise o arquivo principal (`.tsx`, `.ts`) e quaisquer arquivos relacionados (tipos, hooks, etc.).
-2. **Consulte os documentos de referência**: Verifique a conformidade e siga os princípios do Clean Architecture, SOLID, destaque os Design Patterns e Padrões de Projeto utilizados, as boas práticas de performance, segurança e gerenciamento de estado e as diretrizes globais do projeto: 
-- `@docs/architecture/modular-architecture.md`
-- `@docs/architecture/performance-optimization.md`
-- `@docs/architecture/security.md`
-- `@docs/architecture/state-management.md`
-- `@docs/guidelines/global.md`
-4. **Avalie os critérios**: Identifique pontos em conformidade (✅), infrações (❌) e oportunidades de melhoria (💡).
-5. **Calcule a conformidade**: (Pontos em conformidade / Total de critérios aplicáveis) × 100.
-6. **Crie o arquivo `analysis.md`**: Siga a estrutura definida, escrevendo em português brasileiro de forma clara e objetiva.
-7. **Atualize o `analysis-mapping.md`**: Marque o status da análise como "Criado" (✅) e o da implementação como "Pendente" (⚠️) ou "Concluído" (✅) em `@docs/Tech Challenge/analysis-mapping.md`.
+2. **Consulte os documentos de referência**: Verifique a conformidade e siga os princípios do Clean Architecture, SOLID, destaque os Design Patterns e Padrões de Projeto utilizados, as boas práticas de performance, segurança e gerenciamento de estado e as diretrizes globais do projeto. **Identifique e documente explicitamente:**
+   - **Design Patterns**: Quais padrões de projeto foram utilizados no código (Factory, Strategy, Observer, etc.) e como foram implementados.
+   - **Princípios SOLID**: Quais princípios do SOLID foram implementados (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion) e quais precisam ser implementados.
+   - Documentos a consultar:
+     - `@docs/architecture/modular-architecture.md`
+     - `@docs/architecture/performance-optimization.md`
+     - `@docs/architecture/security.md`
+     - `@docs/architecture/state-management.md`
+     - `@docs/guidelines/global.md`
+3. **Avalie os critérios**: Identifique pontos em conformidade (✅), infrações (❌) e oportunidades de melhoria (💡).
+4. **Calcule a conformidade**: (Pontos em conformidade / Total de critérios aplicáveis) × 100.
+5. **Crie o arquivo `analysis.md`**: Siga a estrutura definida, escrevendo em português brasileiro de forma clara e objetiva. **Inclua as seções de Design Patterns e Princípios SOLID conforme definido na estrutura.**
+6. **Atualize o `analysis-mapping.md`**: Marque o status da análise como "Criado" (✅) e o da implementação como "Pendente" (⚠️) ou "Concluído" (✅) em `@docs/Tech Challenge/analysis-mapping.md`.
 
 ---
 
