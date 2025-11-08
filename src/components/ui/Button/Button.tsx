@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 import { ButtonVariant } from '@/types/ui';
 import { Button as HeadlessButton } from '@headlessui/react';

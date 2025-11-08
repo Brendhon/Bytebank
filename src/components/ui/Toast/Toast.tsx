@@ -4,27 +4,39 @@ import { cn } from '@/lib/utils';
 import { IToast } from '@/types/ui';
 import { Button, Transition } from '@headlessui/react';
 import { CheckCircle, Info, X, XCircle } from 'lucide-react';
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import { useAutoClose } from '@/hooks';
 
-interface Props extends IToast {
+/**
+ * Toast component props
+ * @interface ToastProps
+ */
+export interface ToastProps extends IToast {
+  /** Controls visibility of the toast */
   show?: boolean;
+  /** Callback fired when toast is closed */
   onClose?: () => void;
+  /** Position of the toast on screen */
+  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  /** Custom accessible label for screen readers */
+  ariaLabel?: string;
 }
 
-const icons = {
-  success: <CheckCircle className="text-white w-5 h-5" />,
-  error: <XCircle className="text-white w-5 h-5" />,
-  info: <Info className="text-white w-5 h-5" />,
-};
-
-export default ({
+/**
+ * Toast notification component with auto-dismiss and close functionality
+ * Supports multiple variants (success, error, info) and provides accessibility features
+ * @param props - Toast component props
+ * @returns A toast notification component with transitions
+ */
+export default function Toast({
   message,
   variant = 'info',
   show = true,
   onClose,
-  duration = 0, // Default to 0 (no auto close)
-}: Props) => {
-  // State to control the visibility of the toast
+  duration = 0,
+  position = 'top-right',
+  ariaLabel,
+}: ToastProps) {
   const [isVisible, setIsVisible] = useState(show);
 
   const handleClose = useCallback(() => {
@@ -32,46 +44,75 @@ export default ({
     onClose?.();
   }, [onClose]);
 
-  // Auto close after duration
-  useEffect(() => {
-    // If the toast is not visible or duration is 0, do nothing
-    if (!isVisible || duration === 0) return;
+  useAutoClose(isVisible, duration, handleClose);
 
-    // Set a timeout to close the toast after the specified duration
-    const timeout = setTimeout(() => handleClose(), duration);
+  const toastClassName = cn(
+    styles.base,
+    styles.positionClasses[position],
+    styles.variantClasses[variant]
+  );
 
-    // Clear the timeout if the component unmounts or if isVisible changes
-    return () => clearTimeout(timeout);
-  }, [isVisible, duration, handleClose]);
+  const role = variant === 'error' ? 'alert' : 'status';
+  const ariaLive = variant === 'error' ? 'assertive' : 'polite';
+  const defaultAriaLabel = ariaLabel || `${variant} notification: ${message}`;
 
-
-  // Set className based on variant
-  const className = cn(
-    'fixed top-20 right-4 z-50 h-12 flex gap-3 rounded-sm p-3 shadow-lg text-white min-w-[250px] flex-row justify-between items-center',
-    {
-      'bg-green': variant === 'success',
-      'bg-red': variant === 'error',
-      'bg-blue': variant === 'info',
-    }
-  )
+  const icons = {
+    success: <CheckCircle className={styles.icon} />,
+    error: <XCircle className={styles.icon} />,
+    info: <Info className={styles.icon} />,
+  } as const;
 
   return (
     <Transition
       show={isVisible}
-      enter="transition ease-out duration-200"
-      enterFrom="translate-y-2 opacity-0"
-      enterTo="translate-y-0 opacity-100"
-      leave="transition ease-in duration-150"
-      leaveFrom="opacity-100"
-      leaveTo="opacity-0"
+      enter={styles.enter}
+      enterFrom={styles.enterFrom}
+      enterTo={styles.enterTo}
+      leave={styles.leave}
+      leaveFrom={styles.leaveFrom}
+      leaveTo={styles.leaveTo}
     >
-      <div className={className}>
+      <div
+        className={toastClassName}
+        role={role}
+        aria-live={ariaLive}
+        aria-atomic="true"
+        aria-label={defaultAriaLabel}
+      >
         <div>{icons[variant]}</div>
-        <p className="text-14 flex-1">{message}</p>
-        <Button onClick={handleClose} className="ml-2">
-          <X className="w-4 h-4 cursor-pointer" />
+        <p className={styles.message}>{message}</p>
+        <Button onClick={handleClose} className={styles.closeButton}>
+          <X className={styles.closeIcon} />
         </Button>
       </div>
     </Transition>
   );
-};
+}
+
+/**
+ * Toast component styles
+ */
+const styles = {
+  base: `fixed z-50 h-12 flex gap-3 rounded-sm p-3 shadow-lg text-white min-w-[250px] flex-row justify-between items-center`,
+  enter: `transition ease-out duration-200`,
+  enterFrom: `translate-y-2 opacity-0`,
+  enterTo: `translate-y-0 opacity-100`,
+  leave: `transition ease-in duration-150`,
+  leaveFrom: `opacity-100`,
+  leaveTo: `opacity-0`,
+  positionClasses: {
+    'top-right': `top-20 right-4`,
+    'top-left': `top-20 left-4`,
+    'bottom-right': `bottom-4 right-4`,
+    'bottom-left': `bottom-4 left-4`,
+  },
+  variantClasses: {
+    success: `bg-green`,
+    error: `bg-red`,
+    info: `bg-blue`,
+  },
+  icon: `text-white w-5 h-5`,
+  message: `text-14 flex-1`,
+  closeButton: `ml-2`,
+  closeIcon: `w-4 h-4 cursor-pointer`,
+} as const;
