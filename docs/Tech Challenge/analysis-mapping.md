@@ -52,7 +52,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 |------|----------------|--------------|-------------|
 | `components/form/AccountForm/AccountForm.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - Melhorias pendentes |
 | `components/form/Checkbox/Checkbox.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
-| `components/form/Input/Input.tsx` | ❌ | ❌ | - |
+| `components/form/Input/Input.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - Melhorias pendentes |
 | `components/form/LoginForm/LoginForm.tsx` | ❌ | ❌ | - |
 | `components/form/RegisterForm/RegisterForm.tsx` | ❌ | ❌ | - |
 | `components/form/Select/Select.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - Melhorias pendentes |
@@ -208,5 +208,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-11-08
 **Total de arquivos mapeados**: 72
-**Arquivos analisados**: 14 (UI: 4, Table: 3, Cards: 4, Form: 3)
+**Arquivos analisados**: 15 (UI: 4, Table: 3, Cards: 4, Form: 4)
 
