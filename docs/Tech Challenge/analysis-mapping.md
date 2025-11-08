@@ -38,10 +38,10 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `components/cards/Card/Card.tsx` | ❌ | ❌ | - |
-| `components/cards/CreditCard/CreditCard.tsx` | ❌ | ❌ | - |
-| `components/cards/CreditCardSession/CreditCardSession.tsx` | ❌ | ❌ | - |
-| `components/cards/WelcomeCard/WelcomeCard.tsx` | ❌ | ❌ | - |
+| `components/cards/Card/Card.tsx` | ✅ | ⚠️ | Análise criada - Status: Crítico (35%) - Melhorias pendentes |
+| `components/cards/CreditCard/CreditCard.tsx` | ✅ | ⚠️ | Análise criada - Status: Crítico (30%) - **VIOLAÇÃO DE SEGURANÇA PCI DSS** - CVV exposto |
+| `components/cards/CreditCardSession/CreditCardSession.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (55%) - Melhorias pendentes |
+| `components/cards/WelcomeCard/WelcomeCard.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (52%) - Melhorias pendentes |
 | `components/cards/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
@@ -206,6 +206,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 ---
 
-**Última atualização**: 2025-01-27
+**Última atualização**: 2025-11-08
 **Total de arquivos mapeados**: 72
+**Arquivos analisados**: 11 (UI: 4, Table: 3, Cards: 4)
 
