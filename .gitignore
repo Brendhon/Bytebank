@@ -68,8 +68,5 @@ out
 # Storybook
 storybook-static
 
-# VSCode
-.vscode
-
 # Coverage (se usar testes)
 coverage

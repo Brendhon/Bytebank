@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonVariant } from '@/types/ui';
 import { Button as HeadlessButton } from '@headlessui/react';
 import { Loader2 } from 'lucide-react';
-import { ButtonVariant } from '@/types/ui';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { buttonVariants } from './Button.variants';
 
 /**
@@ -40,13 +40,22 @@ export default function Button({
       aria-busy={loading}
       aria-label={loading ? `${children} - Loading` : undefined}
       {...props}>
-      <span className={cn({ 'opacity-0': loading })}>{children}</span>
+      <span className={cn({ [styles.span]: loading })}>{children}</span>
       {loading && (
-        <Loader2 
-          className="animate-spin text-white absolute flex items-center justify-center" 
+        <Loader2
+          className={cn(styles.loader)}
           aria-hidden="true"
         />
       )}
     </HeadlessButton>
   );
 }
+
+/**
+ * Button component styles
+ * Using template literals for Tailwind Intellisense autocomplete support
+ */
+const styles = {
+  span: `opacity-0`,
+  loader: `animate-spin text-white absolute flex items-center justify-center`,
+} as const;

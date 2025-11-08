@@ -16,6 +16,7 @@ type Story = StoryObj<typeof Illustration>;
 export const Default: Story = {
   args: {
     src: 'register.svg',
+    alt: 'Registration illustration',
   },
 };
 
@@ -23,6 +24,7 @@ export const Default: Story = {
 export const Small: Story = {
   args: {
     src: 'settings.svg',
+    alt: 'Settings illustration',
     width: 200,
   },
 };
@@ -31,6 +33,7 @@ export const Small: Story = {
 export const Large: Story = {
   args: {
     src: '404.svg',
+    alt: '404 error page illustration',
     width: 600,
   },
 };
@@ -39,6 +42,7 @@ export const Large: Story = {
 export const WithCustomClass: Story = {
   args: {
     src: 'login.svg',
+    alt: 'Login illustration',
     className: 'rounded-lg border border-gray-200 p-4 bg-gray-50',
   },
 };
@@ -47,6 +51,27 @@ export const WithCustomClass: Story = {
 export const WithDifferentFormat: Story = {
   args: {
     src: 'devices.png',
+    alt: 'Devices illustration',
     width: 50,
+  },
+};
+
+// Story for the Illustration component with custom height
+export const WithCustomHeight: Story = {
+  args: {
+    src: 'register.svg',
+    alt: 'Registration illustration with custom height',
+    width: 400,
+    height: 300,
+  },
+};
+
+// Story for the Illustration component without responsive behavior
+export const NotResponsive: Story = {
+  args: {
+    src: 'settings.svg',
+    alt: 'Settings illustration always visible',
+    width: 300,
+    responsive: false,
   },
 };
