@@ -174,6 +174,25 @@ Crie um arquivo `analysis.md` no **mesmo diretório do componente** com a seguin
 **Ordenação**: Listar do mais crítico para o menos crítico.
 
 ---
+```
+
+### 6. **Referência ao Mapeamento**
+
+```markdown
+---
+
+## 📊 Mapeamento
+
+**Arquivo:** `[caminho relativo a partir de src]`  
+**Status no Mapping:** [✅ Criado / ⚠️ Pendente / ❌ Não criado]  
+**Link para Mapping:** `@docs/Tech Challenge/analysis-mapping.md`
+
+> **Nota:** Após implementar as melhorias descritas neste documento, atualize o status no arquivo `@docs/Tech Challenge/analysis-mapping.md` alterando a coluna "Implementado" para ✅.
+
+---
+```
+
+---
 
 ## Instruções de Execução
 
@@ -198,8 +217,15 @@ Crie um arquivo `analysis.md` no **mesmo diretório do componente** com a seguin
    - Conteúdo em **português brasileiro**
    - Seja claro, objetivo e específico
    - Inclua exemplos de código apenas em "Plano de Ação"
+   - **Inclua a seção "Mapeamento"** com referência ao arquivo de mapping
 
-6. **Mantenha Consistência**:
+6. **Atualize o Mapeamento**: 
+   - Após criar o `analysis.md`, atualize o arquivo `@docs/Tech Challenge/analysis-mapping.md`
+   - Marque a coluna "Analysis Criado" como ✅ para o arquivo analisado
+   - Marque a coluna "Implementado" como ⚠️ (análise criada mas melhorias pendentes)
+   - Quando implementar as melhorias, atualize novamente marcando "Implementado" como ✅
+
+7. **Mantenha Consistência**:
    - Use emojis padrão: 📋 ✅ ⚠️ 🔴 🚨
    - Mantenha formatação consistente
    - Prioridades claras e justificadas
@@ -215,6 +241,10 @@ Para analisar o componente `Button`:
 3. Compare com documentos de arquitetura
 4. Identifique infrações (ex: exportação sem nome, falta ARIA)
 5. Crie `/src/components/ui/Button/analysis.md`
+6. **Atualize `@docs/Tech Challenge/analysis-mapping.md`** marcando:
+   - "Analysis Criado": ✅
+   - "Implementado": ⚠️ (se houver melhorias pendentes) ou ✅ (se já implementadas)
+7. Quando implementar as melhorias, atualize novamente o mapping marcando "Implementado" como ✅
 
 ---
 
@@ -224,3 +254,4 @@ Para analisar o componente `Button`:
 - **Seja Prático**: Foque em melhorias acionáveis
 - **Seja Claro e Objetivo**: Evite julgamentos vagos; aponte problemas concretos e específicos de forma objetiva.
 - **Contextualize**: Sempre cite o documento de referência e a seção específica
+- **Mantenha o Mapping Atualizado**: Sempre que criar um `analysis.md` ou implementar melhorias, atualize o arquivo `@docs/Tech Challenge/analysis-mapping.md` para manter o rastreamento do progresso do projeto
