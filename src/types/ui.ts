@@ -1,5 +1,5 @@
-import { buttonVariants } from '@/components/ui/Button/Button';
 import { cardVariants } from '@/components/cards/Card/Card';
+import { buttonVariants } from '@/components/ui/Button/Button.variants';
 import { VariantProps } from 'class-variance-authority';
 import { ReactNode } from 'react';
 import { TransactionDescKey } from './transaction';
