@@ -72,7 +72,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `components/layout/Header/GuestActions/GuestActions.tsx` | ❌ | ❌ | - |
 | `components/layout/Header/AvatarPopover/AvatarPopover.tsx` | ❌ | ❌ | - |
 | `components/layout/Header/MenuPopover/MenuPopover.tsx` | ❌ | ❌ | - |
-| `components/layout/Modal/Modal.tsx` | ❌ | ❌ | - |
+| `components/layout/Modal/Modal.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
 | `components/layout/MovementsSection/MovementsSection.tsx` | ❌ | ❌ | - |
 | `components/layout/NavMenu/NavMenu.tsx` | ❌ | ❌ | - |
 | `components/layout/Popover/Popover.tsx` | ❌ | ❌ | - |
@@ -208,5 +208,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 72
-**Arquivos analisados**: 20 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 2)
+**Arquivos analisados**: 21 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 3)
 
