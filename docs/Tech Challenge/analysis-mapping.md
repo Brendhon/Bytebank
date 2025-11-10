@@ -74,8 +74,8 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `components/layout/Header/MenuPopover/MenuPopover.tsx` | ❌ | ❌ | - |
 | `components/layout/Modal/Modal.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
 | `components/layout/MovementsSection/MovementsSection.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (55%) - Melhorias pendentes |
-| `components/layout/NavMenu/NavMenu.tsx` | ❌ | ❌ | - |
-| `components/layout/Popover/Popover.tsx` | ❌ | ❌ | - |
+| `components/layout/NavMenu/NavMenu.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
+| `components/layout/Popover/Popover.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
 | `components/layout/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
@@ -208,5 +208,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 72
-**Arquivos analisados**: 22 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 4)
+**Arquivos analisados**: 24 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 6)
 
