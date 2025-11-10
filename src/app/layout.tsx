@@ -1,5 +1,5 @@
-import NextAuthProvider from "@/context/NextAuthContext";
-import { ToastProvider } from "@/context/ToastContext";
+import NextAuthProvider from "@/context/NextAuthContext/NextAuthContext";
+import { ToastProvider } from "@/context/ToastContext/ToastContext";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ReactNode } from "react";

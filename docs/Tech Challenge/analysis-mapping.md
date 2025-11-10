@@ -94,8 +94,8 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `context/ToastContext.tsx` | ❌ | ❌ | Context Provider - necessita análise |
-| `context/NextAuthContext.tsx` | ❌ | ❌ | Context Provider - necessita análise |
+| `context/ToastContext/ToastContext.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (50%) - Melhorias pendentes |
+| `context/NextAuthContext/NextAuthContext.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (50%) - Melhorias pendentes |
 | `context/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
