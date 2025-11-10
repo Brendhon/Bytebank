@@ -206,7 +206,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 ---
 
-**Última atualização**: 2025-01-27
-**Total de arquivos mapeados**: 72
-**Arquivos analisados**: 29 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11)
+**Última atualização**: 2025-11-10
+**Total de arquivos mapeados**: 74
+**Arquivos analisados**: 31 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2)
 
