@@ -162,7 +162,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `middleware.ts` | ❌ | ❌ | Next.js middleware - necessita análise |
+| `middleware.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
 
 ---
 
@@ -208,5 +208,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 47 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3)
+**Arquivos analisados**: 48 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1)
 
