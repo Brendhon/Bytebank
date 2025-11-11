@@ -10,19 +10,19 @@ O componente CreditCard apresenta múltiplas violações de padrões de código 
 
 ### 1. Exportação Anônima (Prioridade: Crítica)
 - **Requisito:** Componentes devem ser exportados com nome explícito usando `export default function ComponentName()`
-- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
 - **Infração:** Linha 10: `export default ({ ... }: CreditCardProps) => {` - Exportação anônima
 - **Impacto:** Dificulta debugging (aparece como "Anonymous" no React DevTools), prejudica stack traces, viola convenções
 
 ### 2. Ausência de JSDoc (Prioridade: Crítica)
 - **Requisito:** Interfaces e componentes devem ter documentação JSDoc completa
-- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Documentação"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Documentação"
 - **Infração:** Ausência de JSDoc na interface `CreditCardProps` (linha 4) e no componente (linha 10)
 - **Impacto:** Dificulta entendimento do código, reduz efetividade do Storybook autodocs, não documenta comportamento do componente
 
 ### 3. Falta de Acessibilidade (Prioridade: Crítica)
 - **Requisito:** Componentes devem ter atributos ARIA apropriados e HTML semântico conforme WCAG
-- **Documento:** `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
 - **Infração:** 
   - Linha 31: `<div>` genérico sem role ou aria-label
   - Dados do cartão não possuem contexto para leitores de tela
@@ -65,7 +65,7 @@ O componente CreditCard apresenta múltiplas violações de padrões de código 
 
 ### 9. Semântica HTML Inadequada (Prioridade: Média)
 - **Requisito:** Usar HTML semântico apropriado
-- **Documento:** `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
 - **Infração:** Uso excessivo de `<div>` e `<span>` genéricos sem semântica
 - **Impacto:** Reduz acessibilidade, dificulta interpretação por leitores de tela
 
@@ -343,5 +343,5 @@ const meta: Meta<typeof CreditCard> = {
 ## 📊 Mapeamento
 **Arquivo:** `src/components/cards/CreditCard/CreditCard.tsx`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

@@ -17,7 +17,7 @@ O arquivo `transaction.schema.ts` apresenta a definição do schema Zod para val
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** O schema `transactionSchema` e o tipo `TransactionFormData` não possuem documentação JSDoc explicando seu propósito e uso.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores.
 
@@ -179,5 +179,5 @@ value: z
 ## 📊 Mapeamento
 **Arquivo:** `src/schemas/transaction.schema.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

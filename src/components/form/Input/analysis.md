@@ -17,25 +17,25 @@ O componente `Input` apresenta uma implementação funcional e bem estruturada, 
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** Não há documentação JSDoc na interface `Props` (linhas 10-16) nem na função do componente (linha 18).
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
 
 ### 3. Exportação do Componente (Prioridade: Média)
 - **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default (...)` (linha 18), que é uma exportação anônima.
 - **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
 
 ### 4. Interface de Props Não Exportada (Prioridade: Média)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** A interface `Props` (linhas 10-16) não está sendo exportada, impedindo sua reutilização em outros arquivos.
 - **Impacto:** Impede que outros componentes ou testes referenciem a tipagem do Input, reduzindo a reutilização de código e a consistência de tipos na aplicação.
 
 ### 5. Nome da Interface Pouco Descritivo (Prioridade: Baixa)
 - **Requisito:** As props devem ser definidas em interfaces com nomes descritivos (e.g., `ComponentNameProps`).
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** A interface está nomeada como `Props` (linha 10) em vez de `InputProps`.
 - **Impacto:** Reduz a clareza do código em contextos onde múltiplas interfaces podem estar em escopo, e dificulta a pesquisa por tipos específicos.
 
@@ -306,5 +306,5 @@ const iconClass = (icon || isPassword)
 ## 📊 Mapeamento
 **Arquivo:** `src/components/form/Input/Input.tsx`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

@@ -242,5 +242,5 @@ export async function getTransactionSummary(userId: string): Promise<Transaction
 ## 📊 Mapeamento
 **Arquivo:** `src/services/transaction.service.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

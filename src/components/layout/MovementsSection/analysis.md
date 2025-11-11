@@ -17,19 +17,19 @@ O componente `MovementsSection` apresenta uma implementação funcional e bem es
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** Não há documentação JSDoc na interface `Props` (linha 6) nem na função do componente (linha 10). O componente utiliza `CardProps[]` que já possui tipagem, mas não há documentação explicando o propósito e uso do componente.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
 
 ### 3. Exportação do Componente (Prioridade: Média)
 - **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default ({ ... })` (linha 10), que é uma exportação anônima.
 - **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
 
 ### 4. Interface Não Exportada (Prioridade: Média)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** A interface `Props` (linha 6) não está sendo exportada e possui um nome genérico. Deveria ser `MovementsSectionProps` e exportada para reutilização.
 - **Impacto:** Impede que outros componentes ou testes referenciem a tipagem específica do MovementsSection, reduzindo a reutilização de código e a consistência de tipos na aplicação.
 
@@ -359,5 +359,5 @@ export default function MovementsSection({ data }: MovementsSectionProps) {
 ## 📊 Mapeamento
 **Arquivo:** `src/components/layout/MovementsSection/MovementsSection.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

@@ -11,7 +11,7 @@ O arquivo `mongoose.ts` apresenta a configuração e função de conexão com o 
 
 ### 1. Uso de `any` para Cache Global (Prioridade: Média)
 - **Requisito:** O código é estritamente tipado, sem o uso de `any`.
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
 - **Infração:** O código utiliza `(global as any).mongoose` para acessar o cache global (linhas 11, 14).
 - **Impacto:** Reduz a segurança de tipos, dificulta a manutenção e pode mascarar erros em tempo de compilação. No entanto, é uma prática comum e necessária para cache global em TypeScript.
 
@@ -150,5 +150,5 @@ if (!cached.promise) {
 ## 📊 Mapeamento
 **Arquivo:** `src/lib/mongoose.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

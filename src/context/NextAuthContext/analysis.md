@@ -11,19 +11,19 @@ O `NextAuthContext` apresenta uma implementação funcional e simples, com uso a
 
 ### 1. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa, explicando seu propósito, parâmetros e retorno.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** Não há documentação JSDoc no componente `NextAuthProvider` (linha 6). O componente não possui props tipadas, mas deveria ter documentação explicando o propósito e uso do componente.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente.
 
 ### 2. Exportação do Componente (Prioridade: Média)
 - **Requisito:** Funções e variáveis são exportadas de forma explícita (`export const functionName = (...)`).
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default function NextAuthProvider(...)` (linha 6), que está correto, mas poderia ser exportado como named export também para melhor reutilização.
 - **Impacto:** Baixo impacto, pois a exportação default está correta. No entanto, named exports facilitam reutilização e tree-shaking.
 
 ### 3. Falta de Interface de Props Exportada (Prioridade: Média)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente utiliza tipagem inline `{ children: ReactNode }` (linha 6) em vez de uma interface nomeada `NextAuthProviderProps` que poderia ser exportada.
 - **Impacto:** Reduz a type safety e dificulta a manutenção. Se props forem adicionadas no futuro, não haverá estrutura de tipagem clara.
 
@@ -35,13 +35,13 @@ O `NextAuthContext` apresenta uma implementação funcional e simples, com uso a
 
 ### 5. Falta de Tipagem Explícita de Retorno (Prioridade: Baixa)
 - **Requisito:** Funções e hooks têm tipos de retorno explícitos.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
 - **Infração:** O componente não possui tipo de retorno explícito (linha 6). TypeScript infere o tipo, mas seria melhor ter tipo explícito.
 - **Impacto:** Baixo impacto, pois TypeScript infere o tipo corretamente. No entanto, tipo explícito melhora a clareza e documentação.
 
 ### 6. Falta de Named Export (Prioridade: Baixa)
 - **Requisito:** Funções e variáveis são exportadas de forma explícita.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado apenas como default export (linha 6), sem named export adicional.
 - **Impacto:** Baixo impacto, pois a exportação default está correta. No entanto, named exports facilitam reutilização e tree-shaking.
 
@@ -210,5 +210,5 @@ export default function NextAuthProvider({
 ## 📊 Mapeamento
 **Arquivo:** `src/context/NextAuthContext.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

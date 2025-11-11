@@ -102,5 +102,5 @@ export function useAutoClose(
 ## 📊 Mapeamento
 **Arquivo:** `src/hooks/useAutoClose.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

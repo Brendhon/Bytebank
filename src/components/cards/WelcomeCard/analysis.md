@@ -16,13 +16,13 @@ O componente WelcomeCard apresenta problemas significativos de arquitetura. As p
 
 ### 2. Exportação Anônima (Prioridade: Crítica)
 - **Requisito:** Componentes devem ser exportados com nome explícito usando `export default function ComponentName()`
-- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
 - **Infração:** Linha 16: `export default ({ name, balance, accountType, date }: Props) => {` - Exportação anônima
 - **Impacto:** Dificulta debugging (aparece como "Anonymous" no React DevTools), prejudica stack traces, viola convenções
 
 ### 3. Ausência de JSDoc (Prioridade: Crítica)
 - **Requisito:** Interfaces e componentes devem ter documentação JSDoc completa
-- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Documentação"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Documentação"
 - **Infração:** 
   - Ausência de JSDoc na interface `Props` (linha 8)
   - Ausência de JSDoc no componente (linha 16)
@@ -30,7 +30,7 @@ O componente WelcomeCard apresenta problemas significativos de arquitetura. As p
 
 ### 4. Falta de Acessibilidade Crítica (Prioridade: Crítica)
 - **Requisito:** Componentes devem ter atributos ARIA apropriados e HTML semântico conforme WCAG
-- **Documento:** `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
 - **Infração:** 
   - Linha 26: `<div>` genérico como container principal sem semântica
   - Linha 35: `<Button>` do Headless UI sem `aria-label` adequado - usuário de leitor de tela não sabe o que o botão faz
@@ -48,7 +48,7 @@ O componente WelcomeCard apresenta problemas significativos de arquitetura. As p
 
 ### 6. Interface Não Exportada (Prioridade: Alta)
 - **Requisito:** Interfaces devem ser exportadas para reutilização
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "TypeScript"
+- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "TypeScript"
 - **Infração:** Linha 8: `interface Props` não é exportada e tem nome genérico
 - **Impacto:** Não pode ser reutilizada em outros arquivos, reduz modularidade, dificulta testes
 
@@ -82,7 +82,7 @@ O componente WelcomeCard apresenta problemas significativos de arquitetura. As p
 
 ### 11. Storybook Incompleto (Prioridade: Média)
 - **Requisito:** Storybook deve ter `tags: ['autodocs']` e `argTypes` completos
-- **Documento:** `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Documentação"
+- **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Documentação"
 - **Infração:** WelcomeCard.stories.tsx possui `tags: ['autodocs']` mas não tem `argTypes` documentados
 - **Impacto:** Documentação automática incompleta, dificulta uso do componente
 
@@ -448,5 +448,5 @@ describe('WelcomeCard Accessibility', () => {
 ## 📊 Mapeamento
 **Arquivo:** `src/components/cards/WelcomeCard/WelcomeCard.tsx`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

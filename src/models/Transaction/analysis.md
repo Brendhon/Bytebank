@@ -11,7 +11,7 @@ O arquivo `Transaction.ts` apresenta a definição do modelo Mongoose para trans
 
 ### 1. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** O modelo `Transaction` e o schema não possuem documentação JSDoc explicando sua estrutura, campos e relacionamentos.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e compreensão do modelo por outros desenvolvedores.
 
@@ -23,7 +23,7 @@ O arquivo `Transaction.ts` apresenta a definição do modelo Mongoose para trans
 
 ### 3. Convenção de Exportação (Prioridade: Média)
 - **Requisito:** Funções e variáveis são exportadas de forma explícita (`export const functionName = (...)`).
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O modelo utiliza `export default` (linha 52) em vez de exportação explícita com nome.
 - **Impacto:** Dificulta a rastreabilidade do código e não segue o padrão estabelecido no projeto, embora seja comum em modelos Mongoose.
 
@@ -219,5 +219,5 @@ TransactionSchema.virtual('formattedValue').get(function() {
 ## 📊 Mapeamento
 **Arquivo:** `src/models/Transaction.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

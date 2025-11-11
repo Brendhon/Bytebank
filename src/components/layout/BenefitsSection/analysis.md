@@ -17,19 +17,19 @@ O componente `BenefitsSection` apresenta uma implementação funcional e respons
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** Não há documentação JSDoc na função do componente (linha 26). O componente não possui props, mas deveria ter documentação explicando seu propósito e uso.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
 
 ### 3. Exportação do Componente (Prioridade: Média)
 - **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default () => { ... }` (linha 26), que é uma exportação anônima.
 - **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
 
 ### 4. Uso de Índice como Key em Listas (Prioridade: Alta)
 - **Requisito:** Ao renderizar listas, `keys` únicas e estáveis (preferencialmente IDs) devem ser utilizadas em vez do índice do array.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "7. Boas Práticas de React"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "7. Boas Práticas de React"
 - **Infração:** O componente utiliza `key={idx}` (linha 46) ao renderizar a lista de benefícios, usando o índice do array como key.
 - **Impacto:** Pode causar problemas de performance e bugs quando a ordem dos itens muda. React pode reutilizar componentes incorretamente, causando problemas de estado e animações. Além disso, se os dados vierem de uma API no futuro, o índice não será uma key estável.
 
@@ -53,19 +53,19 @@ O componente `BenefitsSection` apresenta uma implementação funcional e respons
 
 ### 8. Falta de Acessibilidade nas Imagens (Prioridade: Alta)
 - **Requisito:** Imagens devem ter descrições alternativas significativas para acessibilidade (WCAG 2.1).
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
 - **Infração:** Os componentes `Illustration` (linhas 5, 10, 15, 20, 38) não recebem a prop `alt` descritiva, violando requisitos de acessibilidade WCAG.
 - **Impacto:** Usuários de leitores de tela não terão acesso às informações das imagens. Viola o critério WCAG 2.1 Nível A (1.1.1 Non-text Content).
 
 ### 9. Falta de Tag `autodocs` no Storybook (Prioridade: Média)
 - **Requisito:** A story do Storybook deve incluir a tag `tags: ['autodocs']` para geração automática de documentação.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação > Storybook"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação > Storybook"
 - **Infração:** O arquivo `.stories.tsx` (linha 4-9) não inclui a tag `tags: ['autodocs']` na configuração do meta.
 - **Impacto:** Reduz a capacidade de geração automática de documentação pelo Storybook, dificultando a manutenção da documentação do componente.
 
 ### 10. Falta de Interface de Props (Prioridade: Baixa)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente não possui props, mas poderia ter uma interface `BenefitsSectionProps` vazia ou com props opcionais para extensibilidade futura (como `className`, `title`, etc.).
 - **Impacto:** Reduz a extensibilidade do componente e dificulta a adição de props no futuro. Também dificulta a documentação e tipagem explícita.
 
@@ -372,5 +372,5 @@ export default function BenefitsSection({
 ## 📊 Mapeamento
 **Arquivo:** `src/components/layout/BenefitsSection/BenefitsSection.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

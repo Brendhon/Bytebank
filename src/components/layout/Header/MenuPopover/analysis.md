@@ -17,19 +17,19 @@ O componente `MenuPopover` apresenta uma implementação funcional e bem estrutu
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** Não há documentação JSDoc na função do componente (linha 6). O componente utiliza `Pick<HeaderProps, ...>` que já possui tipagem, mas não há documentação explicando o propósito e uso do componente.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
 
 ### 3. Exportação do Componente (Prioridade: Média)
 - **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default ({ ... }) => { ... }` (linha 6), que é uma exportação anônima.
 - **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
 
 ### 4. Falta de Interface de Props Exportada (Prioridade: Média)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente utiliza `Pick<HeaderProps, ...>` diretamente sem definir uma interface específica `MenuPopoverProps` que poderia ser exportada para reutilização e documentação.
 - **Impacto:** Impede que outros componentes ou testes referenciem a tipagem específica do MenuPopover, reduzindo a reutilização de código e a consistência de tipos na aplicação.
 
@@ -41,7 +41,7 @@ O componente `MenuPopover` apresenta uma implementação funcional e bem estrutu
 
 ### 6. Falta de Tag `autodocs` no Storybook (Prioridade: Média)
 - **Requisito:** A story do Storybook deve incluir a tag `tags: ['autodocs']` para geração automática de documentação.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação > Storybook"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação > Storybook"
 - **Infração:** O arquivo `.stories.tsx` (linha 5-10) não inclui a tag `tags: ['autodocs']` na configuração do meta.
 - **Impacto:** Reduz a capacidade de geração automática de documentação pelo Storybook, dificultando a manutenção da documentação do componente.
 
@@ -225,5 +225,5 @@ const meta: Meta<typeof MenuPopover> = {
 ## 📊 Mapeamento
 **Arquivo:** `src/components/layout/Header/MenuPopover/MenuPopover.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

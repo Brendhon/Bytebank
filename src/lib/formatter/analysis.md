@@ -151,5 +151,5 @@ export const formatDateToLong = (date: Date): string => {
 ## 📊 Mapeamento
 **Arquivo:** `src/lib/formatter.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

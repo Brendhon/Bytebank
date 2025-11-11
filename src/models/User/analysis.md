@@ -11,7 +11,7 @@ O arquivo `User.ts` apresenta a definição do modelo Mongoose para usuários. O
 
 ### 1. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** O modelo `User` e o schema não possuem documentação JSDoc explicando sua estrutura, campos e propósito.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e compreensão do modelo por outros desenvolvedores.
 
@@ -23,13 +23,13 @@ O arquivo `User.ts` apresenta a definição do modelo Mongoose para usuários. O
 
 ### 3. Convenção de Exportação (Prioridade: Média)
 - **Requisito:** Funções e variáveis são exportadas de forma explícita (`export const functionName = (...)`).
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O modelo utiliza `export default` (linha 22) em vez de exportação explícita com nome.
 - **Impacto:** Dificulta a rastreabilidade do código e não segue o padrão estabelecido no projeto, embora seja comum em modelos Mongoose.
 
 ### 4. Campo `name` Não Obrigatório (Prioridade: Média)
 - **Requisito:** Campos essenciais devem ser marcados como `required: true`.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "5. Boas Práticas"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "5. Boas Práticas"
 - **Infração:** O campo `name` não possui `required: true` (linha 10), embora seja um campo essencial para um usuário.
 - **Impacto:** Pode permitir criação de usuários sem nome, causando problemas na aplicação e violando regras de negócio.
 
@@ -248,5 +248,5 @@ export const User = models.User || model<SchemaType>('User', UserSchema);
 ## 📊 Mapeamento
 **Arquivo:** `src/models/User.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

@@ -29,7 +29,7 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 
 ### 4. Rotas Hardcoded (Prioridade: Baixa)
 - **Requisito:** Código deve ser fácil de manter e configurável.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "5. Boas Práticas e Princípios de Design"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "5. Boas Práticas e Princípios de Design"
 - **Infração:** Rotas como `/home`, `/dashboard`, `/api` estão hardcoded em múltiplos arquivos (`guards.ts` linhas 12, 21; `handlers.ts` linhas 20, 30). Isso dificulta mudanças futuras e manutenção.
 - **Impacto:** Se as rotas precisarem ser alteradas, será necessário modificar múltiplos arquivos, aumentando a chance de erros e inconsistências.
 
@@ -309,4 +309,4 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 ## 📊 Mapeamento
 **Arquivo:** `src/middleware.ts` e `src/middleware/`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`

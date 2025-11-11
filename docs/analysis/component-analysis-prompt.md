@@ -1,6 +1,6 @@
 # Prompt de Análise Arquitetural de Componentes
 
-Leia e siga as diretrizes do @docs/Tech Challenge/base-analysis-prompt.md antes de ler este documento.
+Leia e siga as diretrizes do @docs/analysis/base-analysis-prompt.md antes de ler este documento.
 
 ---
 

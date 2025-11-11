@@ -17,13 +17,13 @@ O `ToastContext` apresenta uma implementação funcional e bem estruturada, com 
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa, explicando seu propósito, parâmetros e retorno.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** Não há documentação JSDoc nos tipos `SimpleToast` (linha 8), `ToastContextType` (linha 11), no contexto `ToastContext` (linha 18), nem no componente `ToastProvider` (linha 21). As funções `showToast`, `removeToast`, `showSuccessToast`, e `showErrorToast` também não possuem documentação.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o contexto, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente.
 
 ### 3. Tipos Não Exportados (Prioridade: Média)
 - **Requisito:** Tipos e interfaces são definidos com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** Os tipos `SimpleToast` (linha 8) e `ToastContextType` (linha 11) não estão sendo exportados, impedindo sua reutilização em outros locais da aplicação.
 - **Impacto:** Impede que outros componentes ou hooks referenciem esses tipos, reduzindo a reutilização de código e a consistência de tipos na aplicação.
 
@@ -35,7 +35,7 @@ O `ToastContext` apresenta uma implementação funcional e bem estruturada, com 
 
 ### 5. Falta de Memoização de Funções (Prioridade: Média)
 - **Requisito:** `useCallback` é utilizado de forma criteriosa para evitar recriações de funções desnecessárias.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "3. Performance"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "3. Performance"
 - **Infração:** As funções `showToast`, `removeToast`, `showSuccessToast`, e `showErrorToast` (linhas 26, 35, 40, 45) não estão sendo memoizadas com `useCallback`, causando recriações a cada render do componente.
 - **Impacto:** Pode causar re-renders desnecessários em componentes que consomem o contexto, especialmente se esses componentes forem memoizados. Também pode causar problemas de performance em aplicações grandes.
 
@@ -53,7 +53,7 @@ O `ToastContext` apresenta uma implementação funcional e bem estruturada, com 
 
 ### 8. Falta de Interface de Props Exportada (Prioridade: Baixa)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente `ToastProvider` utiliza tipagem inline `{ children: ReactNode }` (linha 21) em vez de uma interface nomeada `ToastProviderProps` que poderia ser exportada.
 - **Impacto:** Reduz a type safety e dificulta a manutenção. Se props forem adicionadas no futuro, não haverá estrutura de tipagem clara.
 
@@ -472,5 +472,5 @@ const showToast = useCallback(({ message, variant, duration }: Omit<IToast, 'id'
 ## 📊 Mapeamento
 **Arquivo:** `src/context/ToastContext.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

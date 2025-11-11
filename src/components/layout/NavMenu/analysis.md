@@ -17,19 +17,19 @@ O componente `NavMenu` apresenta uma implementação funcional e bem estruturada
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** Não há documentação JSDoc na interface `Props` (linha 11) nem na função do componente (linha 24). O componente utiliza `NavItemLabel` que já possui tipagem, mas não há documentação explicando o propósito e uso do componente.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
 
 ### 3. Exportação do Componente (Prioridade: Média)
 - **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default ({ ... })` (linha 24), que é uma exportação anônima.
 - **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
 
 ### 4. Interface Não Exportada (Prioridade: Média)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** A interface `Props` (linha 11) não está sendo exportada e possui um nome genérico. Deveria ser `NavMenuProps` e exportada para reutilização.
 - **Impacto:** Impede que outros componentes ou testes referenciem a tipagem específica do NavMenu, reduzindo a reutilização de código e a consistência de tipos na aplicação.
 
@@ -41,7 +41,7 @@ O componente `NavMenu` apresenta uma implementação funcional e bem estruturada
 
 ### 6. Uso de `clsx` em vez de `cn` (Prioridade: Média)
 - **Requisito:** A função `cn` (ou similar) deve ser utilizada para aplicar classes de forma condicional e legível.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "4. Estilos e UI"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "4. Estilos e UI"
 - **Infração:** O componente utiliza `clsx` diretamente (linha 45) em vez de usar `cn` que já está importado. O `cn` é uma função que combina `clsx` com `twMerge`, fornecendo melhor merge de classes Tailwind.
 - **Impacto:** Reduz a consistência com outros componentes do projeto que utilizam `cn` para composição de classes. O `cn` fornece melhor merge de classes Tailwind do que `clsx` sozinho.
 
@@ -327,5 +327,5 @@ const getColorClass = (value: string, current: NavItemLabel) =>
 ## 📊 Mapeamento
 **Arquivo:** `src/components/layout/NavMenu/NavMenu.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

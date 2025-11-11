@@ -15,7 +15,7 @@ O componente `AccountForm` apresenta uma implementação funcional e bem estrutu
 ### 1. Acessibilidade (WCAG) - Atributos ARIA Ausentes (Prioridade: Crítica)
 
 - **Requisito:** Elementos interativos e não-semânticos devem possuir atributos ARIA apropriados (`aria-label`, `aria-describedby`, `role`) para garantir acessibilidade a leitores de tela.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
 - **Infração:**
   - **Linha 111-116:** Os botões "Excluir conta" e "Salvar alterações" não possuem `aria-label` descritivo. Embora contenham texto visível, não há indicação clara do contexto para leitores de tela sobre o que a ação afeta (ex: "Excluir permanentemente minha conta do Bytebank").
   - **Linha 128-148:** O componente `Modal` não possui atributos ARIA essenciais como `role="dialog"`, `aria-modal="true"`, `aria-labelledby` ou `aria-describedby` para associar o título e descrição ao modal.
@@ -25,7 +25,7 @@ O componente `AccountForm` apresenta uma implementação funcional e bem estrutu
 ### 2. Nomenclatura e Exportação de Componente (Prioridade: Alta)
 
 - **Requisito:** O componente deve ser exportado com um nome explícito, utilizando `export default function ComponentName(...)` ou `export const ComponentName = (...)`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:**
   - **Linha 18:** O componente é exportado como `export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {...}`, ou seja, uma arrow function anônima.
 - **Impacto:** 
@@ -53,7 +53,7 @@ O componente `AccountForm` apresenta uma implementação funcional e bem estrutu
 ### 4. Documentação JSDoc Ausente (Prioridade: Média)
 
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa, descrevendo o propósito, parâmetros e comportamento.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:**
   - **Linha 14-16:** A interface `AccountFormProps` não possui documentação JSDoc explicando as props (`onDelete`, `onSubmit`, `defaultValues`).
   - **Linha 18:** O componente principal não possui JSDoc descrevendo seu propósito, uso e exemplos.
@@ -65,7 +65,7 @@ O componente `AccountForm` apresenta uma implementação funcional e bem estrutu
 ### 5. Interface de Props Não Exportada (Prioridade: Média)
 
 - **Requisito:** Interfaces e tipos devem ser exportados para permitir reutilização em outros locais da aplicação.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
 - **Infração:**
   - **Linha 14:** A interface `AccountFormProps` não é exportada (`interface AccountFormProps extends FormProps<AccountFormData>`).
 - **Impacto:** 
@@ -75,7 +75,7 @@ O componente `AccountForm` apresenta uma implementação funcional e bem estrutu
 ### 6. HTML Semântico Inadequado (Prioridade: Média)
 
 - **Requisito:** O componente deve utilizar tags HTML semânticas apropriadas para melhorar acessibilidade e SEO.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
 - **Infração:**
   - **Linha 58:** O componente utiliza `<section>` como elemento raiz, mas o conteúdo é claramente um formulário (`<form>`). O uso de `<form>` seria mais semântico e melhoraria a acessibilidade, permitindo que leitores de tela identifiquem a área como um formulário.
 - **Impacto:** 
@@ -86,7 +86,7 @@ O componente `AccountForm` apresenta uma implementação funcional e bem estrutu
 ### 7. Storybook - argTypes Não Configurados (Prioridade: Média)
 
 - **Requisito:** A story do Storybook deve incluir `argTypes` configurados para descrever e controlar as props no painel de controles.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:**
   - **Arquivo:** `AccountForm.stories.tsx` não possui a configuração de `argTypes` no objeto `meta`.
 - **Impacto:** 
@@ -477,7 +477,7 @@ const handleFormSubmit = async (data: AccountFormData) => {
 
 **Arquivo:** `src/components/form/AccountForm/AccountForm.tsx`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 
 ---
 

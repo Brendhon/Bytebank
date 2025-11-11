@@ -17,7 +17,7 @@ O arquivo `api.ts` apresenta funções utilitárias para manipulação de requis
 
 ### 2. Uso de `any` em Função (Prioridade: Alta)
 - **Requisito:** O código é estritamente tipado, sem o uso de `any`.
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
 - **Infração:** A função `handleErrorResponse` utiliza `any` como tipo do parâmetro `error` (linha 33).
 - **Impacto:** Reduz a segurança de tipos, dificulta a manutenção e pode mascarar erros em tempo de compilação.
 
@@ -158,5 +158,5 @@ export const API_MESSAGES = {
 ## 📊 Mapeamento
 **Arquivo:** `src/lib/api.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

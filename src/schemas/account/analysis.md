@@ -17,7 +17,7 @@ O arquivo `account.schema.ts` apresenta a definição do schema Zod para valida�
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** O schema `accountSchema` e o tipo `AccountFormData` não possuem documentação JSDoc explicando seu propósito e uso.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores.
 
@@ -195,5 +195,5 @@ name: z
 ## 📊 Mapeamento
 **Arquivo:** `src/schemas/account.schema.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

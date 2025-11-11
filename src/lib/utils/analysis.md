@@ -11,13 +11,13 @@ O arquivo `utils.ts` apresenta funções utilitárias diversas para manipulaçã
 
 ### 1. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** As funções `isNumber`, `parseDate`, `sortByDate` e `getFieldFromSession` não possuem documentação JSDoc (linhas 13, 16, 22, 31).
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores.
 
 ### 2. Uso de `any` em Validações (Prioridade: Alta)
 - **Requisito:** O código é estritamente tipado, sem o uso de `any`.
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
 - **Infração:** As funções `isNumber`, `parseDate`, `sortByDate` e `getFieldFromSession` utilizam `any` (linhas 13, 16, 22, 31).
 - **Impacto:** Reduz a segurança de tipos, dificulta a manutenção e pode mascarar erros em tempo de compilação.
 
@@ -204,5 +204,5 @@ export const sortByDate = <T>(arr: T[], dateKey: keyof T): T[] => {
 ## 📊 Mapeamento
 **Arquivo:** `src/lib/utils.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

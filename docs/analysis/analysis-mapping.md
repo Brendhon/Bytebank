@@ -1,6 +1,6 @@
 # Mapeamento de Análises Arquiteturais
 
-Este documento mapeia todos os arquivos do projeto que necessitam de análise arquitetural conforme o padrão definido em `@docs/Tech Challenge/architectural-analysis-prompt.md`.
+Este documento mapeia todos os arquivos do projeto que necessitam de análise arquitetural conforme o padrão definido em `@docs/analysis/architectural-analysis-prompt.md`.
 
 ## Legenda
 

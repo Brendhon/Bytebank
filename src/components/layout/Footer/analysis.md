@@ -17,13 +17,13 @@ O componente `Footer` apresenta uma implementação funcional e simples, com uso
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** Não há documentação JSDoc na função do componente principal (linha 14) nem no componente `Content` (linha 5). O componente não possui props, mas deveria ter documentação explicando seu propósito e uso.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
 
 ### 3. Exportação do Componente (Prioridade: Média)
 - **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default () => { ... }` (linha 14), que é uma exportação anônima. O componente `Content` também é anônimo (linha 5).
 - **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
 
@@ -41,25 +41,25 @@ O componente `Footer` apresenta uma implementação funcional e simples, com uso
 
 ### 6. Falta de Acessibilidade (Prioridade: Alta)
 - **Requisito:** Links e informações de contato devem ser acessíveis e clicáveis. Elementos interativos devem ter atributos ARIA apropriados.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG)"
 - **Infração:** O telefone (linha 19) e email (linha 20) estão em elementos `<span>` em vez de links clicáveis (`<a>` com `href="tel:"` e `href="mailto:"`). Isso impede que usuários cliquem diretamente para ligar ou enviar email.
 - **Impacto:** Viola requisitos de acessibilidade WCAG e reduz a usabilidade. Usuários não podem clicar para ligar ou enviar email diretamente. Também prejudica a experiência em dispositivos móveis.
 
 ### 7. Falta de Estrutura Semântica Adequada (Prioridade: Média)
 - **Requisito:** O HTML semântico deve ser utilizado apropriadamente. Footers devem usar elementos semânticos como `<address>`, `<nav>`, etc.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG) > HTML Semântico"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "3. Acessibilidade (WCAG) > HTML Semântico"
 - **Infração:** O footer não utiliza elementos semânticos apropriados. O telefone e email deveriam estar dentro de um elemento `<address>`. O footer poderia ter uma estrutura mais semântica com `<nav>` para links de navegação (se houver no futuro).
 - **Impacto:** Reduz a acessibilidade e SEO. Leitores de tela e motores de busca não conseguem identificar adequadamente as informações de contato.
 
 ### 8. Falta de Tag `autodocs` no Storybook (Prioridade: Média)
 - **Requisito:** A story do Storybook deve incluir a tag `tags: ['autodocs']` para geração automática de documentação.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação > Storybook"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação > Storybook"
 - **Infração:** O arquivo `.stories.tsx` (linha 4-9) não inclui a tag `tags: ['autodocs']` na configuração do meta.
 - **Impacto:** Reduz a capacidade de geração automática de documentação pelo Storybook, dificultando a manutenção da documentação do componente.
 
 ### 9. Falta de Interface de Props (Prioridade: Baixa)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente não possui props, mas poderia ter uma interface `FooterProps` vazia ou com props opcionais para extensibilidade futura (como `className`, `contactInfo`, etc.).
 - **Impacto:** Reduz a extensibilidade do componente e dificulta a adição de props no futuro. Também dificulta a documentação e tipagem explícita.
 
@@ -356,5 +356,5 @@ const styles = {
 ## 📊 Mapeamento
 **Arquivo:** `src/components/layout/Footer/Footer.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

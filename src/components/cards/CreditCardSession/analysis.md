@@ -16,13 +16,13 @@ O componente CreditCardSession apresenta problemas significativos de arquitetura
 
 ### 2. Exportação Anônima (Prioridade: Crítica)
 - **Requisito:** Componentes devem ser exportados com nome explícito usando `export default function ComponentName()`
-- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
 - **Infração:** Linha 25: `export default ({ digital, physical }: Props) => {` - Exportação anônima
 - **Impacto:** Dificulta debugging (aparece como "Anonymous" no React DevTools), prejudica stack traces, viola convenções
 
 ### 3. Ausência de JSDoc (Prioridade: Crítica)
 - **Requisito:** Interfaces e componentes devem ter documentação JSDoc completa
-- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Documentação"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Documentação"
 - **Infração:** 
   - Ausência de JSDoc na interface `Props` (linha 8)
   - Ausência de JSDoc no componente principal (linha 25)
@@ -31,7 +31,7 @@ O componente CreditCardSession apresenta problemas significativos de arquitetura
 
 ### 4. Falta de Acessibilidade (Prioridade: Crítica)
 - **Requisito:** Componentes devem ter atributos ARIA apropriados e HTML semântico conforme WCAG
-- **Documento:** `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
 - **Infração:** 
   - Linha 62: `<section>` sem atributos ARIA adequados
   - Linha 65: Título sem hierarquia semântica apropriada
@@ -476,5 +476,5 @@ const meta: Meta<typeof CreditCardSession> = {
 ## 📊 Mapeamento
 **Arquivo:** `src/components/cards/CreditCardSession/CreditCardSession.tsx`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

@@ -11,13 +11,13 @@ O hook `useToast` apresenta uma implementação funcional que encapsula o acesso
 
 ### 1. Convenção de Exportação (Prioridade: Alta)
 - **Requisito:** Funções e variáveis são exportadas de forma explícita (`export const functionName = (...)`).
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O hook utiliza `export default` (linha 5) em vez de exportação explícita com nome.
 - **Impacto:** Dificulta a rastreabilidade do código, pode causar problemas com tree-shaking, e não segue o padrão estabelecido no projeto.
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa, explicando seu propósito, parâmetros e retorno.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** O hook não possui documentação JSDoc explicando seu propósito, comportamento e valor de retorno.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores.
 
@@ -29,7 +29,7 @@ O hook `useToast` apresenta uma implementação funcional que encapsula o acesso
 
 ### 4. Tipo de Retorno Explícito (Prioridade: Média)
 - **Requisito:** Funções e hooks têm tipos de retorno explícitos.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
 - **Infração:** O hook não possui tipo de retorno explícito, dependendo da inferência do TypeScript.
 - **Impacto:** Reduz a clareza do código e pode dificultar a manutenção quando o tipo do contexto mudar.
 
@@ -139,5 +139,5 @@ export { useAutoClose } from './useAutoClose';
 ## 📊 Mapeamento
 **Arquivo:** `src/hooks/useToast.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

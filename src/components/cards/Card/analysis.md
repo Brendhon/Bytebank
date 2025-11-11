@@ -10,19 +10,19 @@ O componente Card apresenta múltiplas violações críticas dos requisitos arqu
 
 ### 1. Exportação Anônima (Prioridade: Crítica)
 - **Requisito:** Componentes devem ser exportados com nome explícito usando `export default function ComponentName()`
-- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Code Style" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Nomenclatura e Estrutura"
 - **Infração:** Linha 30: `export default ({ variant, className, value, label }: CardProps) => {` - Exportação anônima
 - **Impacto:** Dificulta debugging (aparece como "Anonymous" no React DevTools), prejudica stack traces, viola convenções de nomenclatura, e impacta negativamente a manutenibilidade do código
 
 ### 2. Ausência de JSDoc (Prioridade: Crítica)
 - **Requisito:** Interfaces e componentes devem ter documentação JSDoc completa
-- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Documentação"
+- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "Documentação"
 - **Infração:** Ausência de JSDoc na interface `CardProps` (linha 3) e no componente (linha 30)
 - **Impacto:** Dificulta entendimento do código, reduz efetividade do Storybook autodocs, prejudica onboarding de novos desenvolvedores
 
 ### 3. Falta de Acessibilidade (Prioridade: Crítica)
 - **Requisito:** Componentes devem ter atributos ARIA apropriados e HTML semântico conforme WCAG
-- **Documento:** `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
+- **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Acessibilidade (WCAG)"
 - **Infração:** 
   - Linha 37: `<div>` genérico sem role ou aria-label
   - Não há identificação semântica do propósito do card
@@ -38,7 +38,7 @@ O componente Card apresenta múltiplas violações críticas dos requisitos arqu
 
 ### 5. Interface Não Exportada (Prioridade: Alta)
 - **Requisito:** Interfaces devem ser exportadas para reutilização
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "TypeScript"
+- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/architectural-analysis-prompt.md` - Seção "TypeScript"
 - **Infração:** Linha 3: `CardProps` é importado de `@/types/ui` mas o componente não exporta sua própria interface
 - **Impacto:** Dependência externa para tipos, dificulta reutilização, não está claro onde a interface está definida
 
@@ -56,7 +56,7 @@ O componente Card apresenta múltiplas violações críticas dos requisitos arqu
 
 ### 8. Storybook Incompleto (Prioridade: Média)
 - **Requisito:** Storybook deve ter `tags: ['autodocs']` e `argTypes` completos
-- **Documento:** `@docs/Tech Challenge/architectural-analysis-prompt.md` - Seção "Documentação"
+- **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Documentação"
 - **Infração:** Card.stories.tsx possui `argTypes` mas falta descrição detalhada e falta documentação do comportamento de loading
 - **Impacto:** Documentação automática incompleta, dificulta uso do componente
 
@@ -260,5 +260,5 @@ label = 'Payments', // Changed from 'Pagamentos'
 ## 📊 Mapeamento
 **Arquivo:** `src/components/cards/Card/Card.tsx`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

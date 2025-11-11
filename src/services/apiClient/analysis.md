@@ -23,7 +23,7 @@ O arquivo `apiClient.ts` apresenta uma função genérica para realizar requisi�
 
 ### 3. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** A função `request` possui apenas um comentário genérico em português (linha 2-3), mas não possui documentação JSDoc completa explicando parâmetros, retorno, e comportamento.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores.
 
@@ -274,5 +274,5 @@ export async function request<T>(
 ## 📊 Mapeamento
 **Arquivo:** `src/services/apiClient.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

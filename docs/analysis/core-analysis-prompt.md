@@ -1,6 +1,6 @@
 # Prompt de Análise Arquitetural de Código (Hooks, Serviços, etc.)
 
-Leia o @docs/Tech Challenge/base-analysis-prompt.md antes de ler este documento.
+Leia o @docs/analysis/base-analysis-prompt.md antes de ler este documento.
 
 ---
 

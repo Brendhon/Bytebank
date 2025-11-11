@@ -17,7 +17,7 @@ O arquivo `login.schema.ts` apresenta a definição do schema Zod para validaç�
 
 ### 2. Falta de Documentação JSDoc Formal (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** Embora existam comentários explicativos (linhas 3, 13), não há documentação JSDoc formal para o schema e tipo exportado.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores. Comentários não são processados por ferramentas de documentação.
 
@@ -128,5 +128,5 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 ## 📊 Mapeamento
 **Arquivo:** `src/schemas/login.schema.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

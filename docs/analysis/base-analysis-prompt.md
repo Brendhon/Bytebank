@@ -72,7 +72,7 @@ O arquivo `analysis.md` deve ser criado no **mesmo diretório do artefato analis
 ## 📊 Mapeamento
 **Arquivo:** `[caminho relativo a src]`  
 **Status:** [✅ Criado / ⚠️ Pendente / ❌ Não criado]  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 ```
 
 ---
@@ -101,7 +101,7 @@ O arquivo `analysis.md` deve ser criado no **mesmo diretório do artefato analis
 3. **Avalie os critérios**: Identifique pontos em conformidade (✅), infrações (❌) e oportunidades de melhoria (💡).
 4. **Calcule a conformidade**: (Pontos em conformidade / Total de critérios aplicáveis) × 100.
 5. **Crie o arquivo `analysis.md`**: Siga a estrutura definida, escrevendo em português brasileiro de forma clara e objetiva. **Inclua as seções de Design Patterns e Princípios SOLID conforme definido na estrutura.**
-6. **Atualize o `analysis-mapping.md`**: Marque o status da análise como "Criado" (✅) e o da implementação como "Pendente" (⚠️) ou "Concluído" (✅) em `@docs/Tech Challenge/analysis-mapping.md`.
+6. **Atualize o `analysis-mapping.md`**: Marque o status da análise como "Criado" (✅) e o da implementação como "Pendente" (⚠️) ou "Concluído" (✅) em `@docs/analysis/analysis-mapping.md`.
 
 ---
 

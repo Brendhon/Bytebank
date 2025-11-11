@@ -11,13 +11,13 @@ O arquivo `auth.ts` apresenta a configuração do NextAuth.js para autenticaçã
 
 ### 1. Uso de `any` em Callbacks (Prioridade: Alta)
 - **Requisito:** O código é estritamente tipado, sem o uso de `any`.
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
 - **Infração:** Os callbacks `jwt` e `session` utilizam `(user as any)` e `(token as any)` para acessar propriedades (linhas 42-44, 51-53).
 - **Impacto:** Reduz a segurança de tipos, dificulta a manutenção e pode mascarar erros em tempo de compilação. Viola o princípio de tipagem forte do TypeScript.
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "4. Documentação"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** O objeto `authOptions` e suas propriedades não possuem documentação JSDoc explicando sua configuração e comportamento.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e compreensão da configuração de autenticação.
 
@@ -35,7 +35,7 @@ O arquivo `auth.ts` apresenta a configuração do NextAuth.js para autenticaçã
 
 ### 5. Falta de Tratamento de Erros (Prioridade: Média)
 - **Requisito:** Tratamento adequado de erros em todas as operações.
-- **Documento:** `@docs/Tech Challenge/core-analysis-prompt.md` - Seção "5. Boas Práticas"
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "5. Boas Práticas"
 - **Infração:** A função `authorize` não possui tratamento de erros explícito para falhas de conexão com o banco de dados ou outros erros inesperados.
 - **Impacto:** Erros não tratados podem causar crashes ou expor informações sensíveis em mensagens de erro.
 
@@ -203,5 +203,5 @@ async authorize(credentials) {
 ## 📊 Mapeamento
 **Arquivo:** `src/lib/auth.ts`  
 **Status:** ✅ Criado  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 

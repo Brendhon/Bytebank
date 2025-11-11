@@ -17,19 +17,19 @@ O componente `TransactionForm` apresenta uma implementação funcional e bem est
 
 ### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "6. Documentação"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** Não há documentação JSDoc na função do componente (linha 36). O componente utiliza `GeneralModalProps<TransactionFormData>` que já possui tipagem, mas não há documentação explicando o propósito e uso do componente.
 - **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
 
 ### 3. Exportação do Componente (Prioridade: Média)
 - **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente está sendo exportado como `export default ({ ... })` (linha 36), que é uma exportação anônima.
 - **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
 
 ### 4. Falta de Interface de Props Exportada (Prioridade: Média)
 - **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** O componente utiliza diretamente `GeneralModalProps<TransactionFormData>` sem definir uma interface específica `TransactionFormProps` que poderia ser exportada para reutilização e documentação.
 - **Impacto:** Impede que outros componentes ou testes referenciem a tipagem específica do TransactionForm, reduzindo a reutilização de código e a consistência de tipos na aplicação.
 
@@ -59,7 +59,7 @@ O componente `TransactionForm` apresenta uma implementação funcional e bem est
 
 ### 9. Uso de Classes Condicionais (Prioridade: Baixa)
 - **Requisito:** A função `cn` (ou similar) deve ser utilizada para aplicar classes de forma condicional e legível.
-- **Documento:** `@docs/Tech Challenge/component-analysis-prompt.md` - Seção "4. Estilos e UI"
+- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "4. Estilos e UI"
 - **Infração:** O componente não utiliza a função `cn` para composição de classes, embora não haja classes condicionais complexas no momento. As classes nas linhas 77, 82, 83, 95, 114 poderiam ser isoladas no objeto de estilos.
 - **Impacto:** Reduz a consistência com outros componentes do projeto que utilizam `cn` para composição de classes.
 
@@ -339,5 +339,5 @@ Adicionar um `alt` descritivo ao componente `Illustration`:
 ## 📊 Mapeamento
 **Arquivo:** `src/components/form/TransactionForm/TransactionForm.tsx`  
 **Status:** ⚠️ Pendente  
-**Link:** `@docs/Tech Challenge/analysis-mapping.md`
+**Link:** `@docs/analysis/analysis-mapping.md`
 
