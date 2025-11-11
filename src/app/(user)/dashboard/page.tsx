@@ -2,7 +2,7 @@
 
 import { WelcomeCard } from "@/components/cards";
 import { MovementsSection } from "@/components/layout";
-import { getTransactionSummary } from "@/services/transaction.service";
+import { getTransactionSummary } from "@/services/transaction/transaction.service";
 import { TransactionSummary } from "@/types/transaction";
 import { CardProps } from "@/types/ui";
 import { useSession } from "next-auth/react";

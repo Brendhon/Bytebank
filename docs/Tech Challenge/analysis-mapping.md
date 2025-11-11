@@ -104,9 +104,9 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `services/apiClient.ts` | ❌ | ❌ | Service layer - necessita análise |
-| `services/transaction.service.ts` | ❌ | ❌ | Service layer - necessita análise |
-| `services/user.service.ts` | ❌ | ❌ | Service layer - necessita análise |
+| `services/apiClient.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - **VIOLAÇÃO CRÍTICA DE SEGURANÇA** - API key exposta no cliente - Melhorias pendentes |
+| `services/transaction.service.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (85%) - Melhorias pendentes |
+| `services/user.service.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (72%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha no cliente - Melhorias pendentes |
 
 ---
 
@@ -206,7 +206,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 ---
 
-**Última atualização**: 2025-11-10
+**Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 44 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4)
+**Arquivos analisados**: 47 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3)
 

@@ -1,5 +1,5 @@
 import { ITransaction, TransactionSummary } from "@/types/transaction";
-import { request } from "./apiClient";
+import { request } from "@/services/apiClient/apiClient";
 
 /**
  * Form the endpoint for the API

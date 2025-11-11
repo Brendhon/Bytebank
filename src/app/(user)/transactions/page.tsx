@@ -5,7 +5,7 @@ import { Modal } from "@/components/layout";
 import { TransactionTable } from "@/components/table";
 import { Button } from "@/components/ui";
 import { sortByDate } from "@/lib/utils/utils";
-import { createTransaction, deleteTransaction, getUserTransactions, updateTransaction } from "@/services/transaction.service";
+import { createTransaction, deleteTransaction, getUserTransactions, updateTransaction } from "@/services/transaction/transaction.service";
 import { ITransaction } from "@/types/transaction";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";

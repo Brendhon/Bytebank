@@ -2,7 +2,7 @@ import { removeEmptyFields } from "@/lib/utils/utils";
 import { AccountFormData } from "@/schemas";
 import { IUser } from "@/types/user";
 import bcrypt from "bcryptjs";
-import { request } from "./apiClient";
+import { request } from "@/services/apiClient/apiClient";
 
 /**
  * Form the endpoint for the API
