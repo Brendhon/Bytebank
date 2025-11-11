@@ -1,6 +1,6 @@
 import { getUserIdFromQuery, handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
-import Transaction from '@/models/Transaction';
+import Transaction from '@/models/Transaction/Transaction';
 import { ITransaction } from '@/types/transaction';
 
 /**

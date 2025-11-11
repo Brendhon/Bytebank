@@ -114,8 +114,8 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `models/Transaction.ts` | ❌ | ❌ | Model - necessita análise |
-| `models/User.ts` | ❌ | ❌ | Model - necessita análise |
+| `models/Transaction.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (80%) - Melhorias pendentes |
+| `models/User.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - **VIOLAÇÃO DE SEGURANÇA** - Falta validação de senha - Melhorias pendentes |
 
 ---
 
@@ -208,5 +208,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-11-10
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 38 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5)
+**Arquivos analisados**: 40 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2)
 

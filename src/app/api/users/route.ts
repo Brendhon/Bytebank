@@ -1,6 +1,6 @@
 import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
-import User from '@/models/User';
+import User from '@/models/User/User';
 import { IUser } from '@/types/user';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
