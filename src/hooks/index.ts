@@ -1,2 +1,2 @@
-export { default as useToast } from './useToast';
-export { useAutoClose } from './useAutoClose';
+export { default as useToast } from './useToast/useToast';
+export { useAutoClose } from './useAutoClose/useAutoClose'; 

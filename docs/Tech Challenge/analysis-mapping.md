@@ -84,8 +84,8 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `hooks/useAutoClose.ts` | ❌ | ❌ | Hook customizado - necessita análise |
-| `hooks/useToast.ts` | ❌ | ❌ | Hook customizado - necessita análise |
+| `hooks/useAutoClose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (85%) - Melhorias pendentes |
+| `hooks/useToast.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
 | `hooks/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
