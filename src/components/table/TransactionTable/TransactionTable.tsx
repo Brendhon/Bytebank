@@ -1,8 +1,8 @@
 'use client'
 
 import { Button } from '@/components/ui'
-import { formatCurrency } from '@/lib/formatter'
-import { cn } from '@/lib/utils'
+import { formatCurrency } from '@/lib/formatter/formatter'
+import { cn } from '@/lib/utils/utils'
 import { ITransaction, TransactionDesc, TransactionDescKey } from '@/types/transaction'
 import { TableColumn } from '@/types/ui'
 import { Pencil, Trash } from 'lucide-react'

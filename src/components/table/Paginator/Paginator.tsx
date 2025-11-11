@@ -1,4 +1,4 @@
-import { cn, isNumber } from "@/lib/utils";
+import { cn, isNumber } from "@/lib/utils/utils";
 import { Button } from "@headlessui/react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 

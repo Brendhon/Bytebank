@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 import { ICreditCard } from "@/types/ui";
 
 export interface CreditCardProps extends ICreditCard   {

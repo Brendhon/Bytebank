@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { Checkbox, CheckboxProps, Field, Label } from '@headlessui/react';
 import { Check } from 'lucide-react';
 interface Props extends CheckboxProps {

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { InputTypes } from '@/types/ui';
 import { Button, Field, Input, InputProps, Label, } from '@headlessui/react';
 import { InputMask } from '@react-input/mask';

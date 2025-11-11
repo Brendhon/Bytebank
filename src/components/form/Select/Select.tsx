@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { Field, Label, Select, SelectProps } from '@headlessui/react';
 import { ChevronDownIcon } from 'lucide-react';
 

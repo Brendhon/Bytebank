@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { ButtonVariant } from '@/types/ui';
 import { Button as HeadlessButton } from '@headlessui/react';
 import { Loader2 } from 'lucide-react';

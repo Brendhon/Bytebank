@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { NavItemLabel } from '@/types/nav';
 import { Button } from '@headlessui/react';
 import clsx from 'clsx';

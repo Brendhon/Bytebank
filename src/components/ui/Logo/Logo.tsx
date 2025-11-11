@@ -1,6 +1,6 @@
 import IconSvg from '@/assets/icon.svg';
 import LogoSvg from '@/assets/logo.svg';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 
 /**
  * Logo component props

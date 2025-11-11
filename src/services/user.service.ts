@@ -1,4 +1,4 @@
-import { removeEmptyFields } from "@/lib/utils";
+import { removeEmptyFields } from "@/lib/utils/utils";
 import { AccountFormData } from "@/schemas";
 import { IUser } from "@/types/user";
 import bcrypt from "bcryptjs";

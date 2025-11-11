@@ -1,5 +1,5 @@
-import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api';
-import { connectToDatabase } from '@/lib/mongoose';
+import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api/api';
+import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import User from '@/models/User';
 import { IUser } from '@/types/user';
 import bcrypt from 'bcryptjs';

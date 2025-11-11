@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { IToast } from '@/types/ui';
 import { Button, Transition } from '@headlessui/react';
 import { CheckCircle, Info, X, XCircle } from 'lucide-react';

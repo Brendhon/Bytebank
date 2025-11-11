@@ -150,11 +150,11 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `lib/api.ts` | ❌ | ❌ | Funções utilitárias de API - necessita análise |
-| `lib/auth.ts` | ❌ | ❌ | Funções utilitárias de autenticação - necessita análise |
-| `lib/formatter.ts` | ❌ | ❌ | Funções de formatação - necessita análise |
-| `lib/mongoose.ts` | ❌ | ❌ | Configuração do Mongoose - necessita análise |
-| `lib/utils.ts` | ❌ | ❌ | Funções utilitárias gerais - necessita análise |
+| `lib/api.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - **VIOLAÇÃO CRÍTICA DE SEGURANÇA** - API key exposta no cliente - Melhorias pendentes |
+| `lib/auth.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
+| `lib/formatter.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (82%) - Melhorias pendentes |
+| `lib/mongoose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (88%) - Melhorias pendentes |
+| `lib/utils.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - Melhorias pendentes |
 
 ---
 
@@ -208,5 +208,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-11-10
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 31 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2)
+**Arquivos analisados**: 38 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5)
 

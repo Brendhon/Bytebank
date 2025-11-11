@@ -1,5 +1,5 @@
-import { formatCurrency } from '@/lib/formatter';
-import { cn, isNumber } from '@/lib/utils';
+import { formatCurrency } from '@/lib/formatter/formatter';
+import { cn, isNumber } from '@/lib/utils/utils';
 import { CardProps } from '@/types/ui';
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';

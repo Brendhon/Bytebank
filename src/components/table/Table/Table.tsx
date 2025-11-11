@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/utils'
 import { TableColumn } from '@/types/ui'
 import { useMemo, useState } from 'react'
 import Paginator from '../Paginator/Paginator'

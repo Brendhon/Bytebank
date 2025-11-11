@@ -1,6 +1,6 @@
 'use client'
 
-import { formatCurrency, formatDateToLong } from '@/lib/formatter'
+import { formatCurrency, formatDateToLong } from '@/lib/formatter/formatter'
 import { Button } from '@headlessui/react'
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
