@@ -1,4 +1,4 @@
-import { API_ROUTES } from "@/lib/constants/routes";
+import { API_ROUTES, EMAIL_REGEX } from "@/lib/constants";
 import { removeEmptyFields } from "@/lib/utils/utils";
 import { AccountFormData } from "@/schemas";
 import { request } from "@/services/apiClient/apiClient";
@@ -96,13 +96,8 @@ export async function getUserByEmail(email: string | null | undefined): Promise<
  */
 function isEmailValid(email: string | null | undefined): void {
   // Check if email exists
-  if (!email) {
-    throw new InvalidEmailError('Email é obrigatório');
-  }
+  if (!email) throw new InvalidEmailError('Email is required');
 
   // Validate email format
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    throw new InvalidEmailError('Formato de email inválido');
-  }
+  if (!EMAIL_REGEX.test(email)) throw new InvalidEmailError('Invalid email format');
 }

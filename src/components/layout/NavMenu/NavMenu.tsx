@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils/utils';
 import { NavItemLabel } from '@/types/nav';
-import { PROTECTED_ROUTES } from '@/lib/constants/routes';
+import { PROTECTED_ROUTES } from '@/lib/constants';
 import { Button } from '@headlessui/react';
 import clsx from 'clsx';
 import { BadgeDollarSign, CreditCard, LayoutDashboard, Loader2, Settings } from 'lucide-react';

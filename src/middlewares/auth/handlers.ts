@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
-import { PAGE_ROUTES, PROTECTED_ROUTES } from '@/lib/constants/routes';
+import { PAGE_ROUTES, PROTECTED_ROUTES } from '@/lib/constants';
 
 /**
  * Handler for API routes - allows them to pass through

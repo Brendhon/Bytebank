@@ -1,5 +1,5 @@
 import { Illustration } from '@/components/ui'
-import { PAGE_ROUTES } from '@/lib/constants/routes'
+import { PAGE_ROUTES } from '@/lib/constants'
 import Link from 'next/link'
 
 export default () => {

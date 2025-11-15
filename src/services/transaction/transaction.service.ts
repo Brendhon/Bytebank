@@ -1,6 +1,6 @@
 import { ITransaction, TransactionSummary } from "@/types/transaction";
 import { request } from "@/services/apiClient/apiClient";
-import { API_ROUTES } from "@/lib/constants/routes";
+import { API_ROUTES } from "@/lib/constants";
 
 /**
  * Form the endpoint for the API

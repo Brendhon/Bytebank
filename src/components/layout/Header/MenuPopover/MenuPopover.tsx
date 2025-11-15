@@ -1,5 +1,5 @@
 import { HeaderProps } from "@/types/layout";
-import { PROTECTED_ROUTES } from "@/lib/constants/routes";
+import { PROTECTED_ROUTES } from "@/lib/constants";
 import { Menu } from "lucide-react";
 import NavMenu from "../../NavMenu/NavMenu";
 import Popover from "../../Popover/Popover";

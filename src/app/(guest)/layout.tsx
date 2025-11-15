@@ -3,7 +3,7 @@
 import { LoginForm, RegisterForm } from "@/components/form";
 import { Footer, Header } from "@/components/layout";
 import { useToast } from "@/hooks";
-import { PROTECTED_ROUTES } from "@/lib/constants/routes";
+import { PROTECTED_ROUTES } from "@/lib/constants";
 import { LoginFormData, RegisterFormData } from "@/schemas";
 import { registerUser } from "@/services/user/user.service";
 import { IUser } from "@/types/user";

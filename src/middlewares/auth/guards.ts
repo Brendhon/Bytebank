@@ -1,4 +1,4 @@
-import { API_ROUTES, PAGE_ROUTES } from '@/lib/constants/routes';
+import { API_ROUTES, PAGE_ROUTES } from '@/lib/constants';
 import { JWT } from 'next-auth/jwt';
 
 /**
