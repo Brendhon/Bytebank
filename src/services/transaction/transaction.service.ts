@@ -3,12 +3,40 @@ import { request } from "@/services/apiClient/apiClient";
 import { API_ROUTES } from "@/lib/constants";
 
 /**
- * Form the endpoint for the API
- * @param {string} endpoint - The id of the transaction or endpoint
+ * Forms the base endpoint for the API
+ * @returns {string} - The base endpoint URL
+ */
+function getBaseEndpoint(): string {
+  return API_ROUTES.TRANSACTIONS.BASE;
+}
+
+/**
+ * Forms the endpoint for the API.
+ * @param {string} id - The id of the transaction
  * @returns {string} - The endpoint URL
  */
-function getEndpoint(endpoint?: string | null | undefined): string {
-  return endpoint ? API_ROUTES.TRANSACTIONS.BY_ID(endpoint) : API_ROUTES.TRANSACTIONS.BASE;
+function getTransactionByIdEndpoint(id: string): string {
+  return API_ROUTES.TRANSACTIONS.BY_ID(id);
+}
+
+/**
+ * Forms the endpoint for the API - Summary
+ * @param {string} userId - The user id for filtering transactions
+ * @returns {string} - The endpoint URL - Summary
+ */
+function getSummaryEndpoint(userId: string): string {
+  const searchParams = new URLSearchParams({ userId });
+  return `${API_ROUTES.TRANSACTIONS.SUMMARY}?${searchParams.toString()}`;
+}
+
+/**
+ * Forms the endpoint for the API - Transactions
+ * @param {string} userId - The user id for filtering transactions
+ * @returns {string} - The endpoint URL - Transactions
+ */
+function getTransactionsEndpoint(userId: string): string {
+  const searchParams = new URLSearchParams({ userId });
+  return `${getBaseEndpoint()}?${searchParams.toString()}`;
 }
 
 /**
@@ -17,9 +45,8 @@ function getEndpoint(endpoint?: string | null | undefined): string {
  * @returns {Promise<ITransaction>} - Created transaction.
  */
 export async function createTransaction(data: ITransaction): Promise<ITransaction> {
-  return request<ITransaction>('POST', getEndpoint(), data);
+  return request<ITransaction>('POST', getBaseEndpoint(), data);
 }
-
 
 /**
  * Updates an existing transaction.
@@ -28,7 +55,7 @@ export async function createTransaction(data: ITransaction): Promise<ITransactio
  * @returns {Promise<ITransaction>} - Updated transaction.
  */
 export async function updateTransaction(id: string, data: Partial<ITransaction>): Promise<ITransaction> {
-  return request<ITransaction>('PUT', getEndpoint(id), data);
+  return request<ITransaction>('PUT', getTransactionByIdEndpoint(id), data);
 }
 
 /**
@@ -37,7 +64,7 @@ export async function updateTransaction(id: string, data: Partial<ITransaction>)
  * @returns {Promise<ITransaction>} - Deleted transaction.
  */
 export async function deleteTransaction(id: string): Promise<ITransaction> {
-  return request<ITransaction>('DELETE', getEndpoint(id));
+  return request<ITransaction>('DELETE', getTransactionByIdEndpoint(id));
 }
 
 /**
@@ -46,24 +73,23 @@ export async function deleteTransaction(id: string): Promise<ITransaction> {
  * @returns {Promise<ITransaction>} - Transaction data.
  */
 export async function getTransactionById(id: string): Promise<ITransaction> {
-  return request<ITransaction>('GET', getEndpoint(id));
+  return request<ITransaction>('GET', getTransactionByIdEndpoint(id));
 }
 
 /**
  * Retrieves all user transactions.
- * @returns {Promise<ITransaction[]>} - List of transactions.
+ * @param {string} userId - User ID for filtering transactions
+ * @returns {Promise<ITransaction[]>} - List of transactions
  */
 export async function getUserTransactions(userId: string): Promise<ITransaction[]> {
-  const path = getEndpoint() + `?userId=${userId}`;
-  return request<ITransaction[]>('GET', path);
+  return request<ITransaction[]>('GET', getTransactionsEndpoint(userId));
 }
 
 /**
- * Get summary of transactions.
- * @param {string} userId - User ID for filtering transactions. Query param.
- * @returns {Promise<TransactionSummary>} - Summary of transactions.
+ * Gets summary of transactions.
+ * @param {string} userId - User ID for filtering transactions (query parameter)
+ * @returns {Promise<TransactionSummary>} - Summary of transactions
  */
 export async function getTransactionSummary(userId: string): Promise<TransactionSummary> {
-  const path = getEndpoint('summary') + `?userId=${userId}`;
-  return request<TransactionSummary>('GET', path);
+  return request<TransactionSummary>('GET', getSummaryEndpoint(userId));
 }

@@ -61,7 +61,7 @@ export default () => {
 
       // Sign out user
       await signOut({ redirect: true });
-      
+
       // Show user feedback
       showSuccessToast({ message: 'Conta deletada com sucesso' });
     } catch (error) {
