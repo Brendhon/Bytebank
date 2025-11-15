@@ -239,12 +239,12 @@ export const handleAuthenticatedAuthPageAccess = (request: NextRequest): NextRes
 ```
 
 ### 4. Extrair Rotas para Constantes ✅ (Prioridade: Baixa)
-- ✅ Criado arquivo `lib/constants/routes.ts` com constantes organizadas por categoria.
+- ✅ Criado arquivo `lib/constants/routes/routes.ts` com constantes organizadas por categoria.
 - ✅ Todos os arquivos do projeto (middleware, páginas, componentes, configurações) agora utilizam as constantes centralizadas.
 - ✅ Rotas separadas em `PAGE_ROUTES`, `PROTECTED_ROUTES`, e `API_ROUTES` para melhor organização.
 - Código implementado:
 ```typescript
-// lib/constants/routes.ts
+// lib/constants/routes/routes.ts
 export const PAGE_ROUTES = {
   HOME: '/home',
   NOT_FOUND: '/404',
@@ -263,7 +263,7 @@ export const API_ROUTES = {
 } as const;
 
 // middlewares/auth/guards.ts
-import { API_ROUTES, PAGE_ROUTES } from '@/lib/constants/routes';
+import { API_ROUTES, PAGE_ROUTES } from '@/lib/constants/routes/routes';
 
 export const isAuthPage = (pathname: string): boolean => {
   return pathname.startsWith(PAGE_ROUTES.HOME);
@@ -274,7 +274,7 @@ export const isAPIRoute = (pathname: string): boolean => {
 };
 
 // middlewares/auth/handlers.ts
-import { PAGE_ROUTES, PROTECTED_ROUTES } from '@/lib/constants/routes';
+import { PAGE_ROUTES, PROTECTED_ROUTES } from '@/lib/constants/routes/routes';
 
 export const handleUnauthenticatedAccess = (request: NextRequest): NextResponse => {
   try {
@@ -342,12 +342,12 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 - `middlewares/auth/index.ts`: Lógica principal (`authMiddleware`)
 - `middlewares/auth/guards.ts`: Funções de verificação
 - `middlewares/auth/handlers.ts`: Handlers de requisição
-- `lib/constants/routes.ts`: Constantes de rotas compartilhadas (utilizado por todo o projeto)
+- `lib/constants/routes/routes.ts`: Constantes de rotas compartilhadas (utilizado por todo o projeto)
 **Status:** ✅ Criado  
 **Link:** `@docs/analysis/analysis-mapping.md`
 
 **Dependências:**
-- Utiliza constantes de rotas de `lib/constants/routes.ts`:
+- Utiliza constantes de rotas de `lib/constants/routes/routes.ts`:
   - `PAGE_ROUTES` - Rotas públicas (HOME, NOT_FOUND)
   - `PROTECTED_ROUTES` - Rotas protegidas (DASHBOARD, TRANSACTIONS, CARDS, SETTINGS)
   - `API_ROUTES` - Rotas de API (BASE, AUTH, TRANSACTIONS, USERS)
@@ -362,7 +362,7 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 - ✅ Tratamento de erros robusto com try-catch e fallbacks adequados
 - ✅ Validação de variável de ambiente `NEXTAUTH_SECRET`
 - ✅ Tratamento de erros nos handlers ao criar URLs
-- ✅ Rotas centralizadas em `lib/constants/routes.ts` com organização por categoria (PAGE_ROUTES, PROTECTED_ROUTES, API_ROUTES)
+- ✅ Rotas centralizadas em `lib/constants/routes/routes.ts` com organização por categoria (PAGE_ROUTES, PROTECTED_ROUTES, API_ROUTES)
 - ✅ Comentário detalhado sobre matcher pattern
 - ✅ Tipagem melhorada do token (`JWT | null` em vez de `unknown`)
 - ✅ Integração com sistema de rotas compartilhado do projeto
