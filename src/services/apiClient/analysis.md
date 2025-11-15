@@ -3,11 +3,34 @@
 ## 📋 Resumo Executivo
 **Status:** ✅ Excelente (98%)
 
-O arquivo `apiClient.ts` apresenta funções genéricas para realizar requisições HTTP, servindo como camada de abstração para comunicação com a API. O código utiliza TypeScript com genéricos para flexibilidade de tipos, implementa tratamento robusto de erros com códigos de status HTTP, validação de entrada, timeout configurável, cancelamento de requisições, e centraliza a configuração de headers. A **vulnerabilidade crítica de segurança relacionada à exposição de API key foi corrigida** através da migração para autenticação baseada em sessão NextAuth. O código foi refatorado em funções auxiliares menores para melhor legibilidade e manutenção. Todas as melhorias principais foram implementadas: documentação JSDoc completa, validação de entrada, tratamento de erros aprimorado, suporte a timeout, constantes para mensagens, e cancelamento de requisições.
+O arquivo `apiClient.ts` apresenta funções genéricas para realizar requisições HTTP, servindo como camada de abstração para comunicação com a API. O código utiliza TypeScript com genéricos para flexibilidade de tipos, implementa tratamento robusto de erros com códigos de status HTTP, validação de entrada, timeout configurável, cancelamento de requisições, e centraliza a configuração de headers. A **vulnerabilidade crítica de segurança relacionada à exposição de API key foi corrigida** através da migração para autenticação baseada em sessão NextAuth. O código foi refatorado em funções auxiliares menores para melhor legibilidade e manutenção. Constantes e tipos foram reorganizados para seguir o padrão do projeto: constantes HTTP em `src/lib/constants/http/http.ts` e tipos HTTP em `src/types/http.ts`, facilitando reutilização em todo o projeto. Todas as melhorias principais foram implementadas: documentação JSDoc completa, validação de entrada, tratamento de erros aprimorado, suporte a timeout, constantes para mensagens, cancelamento de requisições, e organização adequada de constantes e tipos.
 
 **Conformidade:** 98%
 
 ## ✅ Correções Implementadas
+
+### 2025-01-27 - Reorganização e Melhorias de Estrutura
+
+**Melhorias Implementadas:**
+- ✅ Reorganização de constantes e tipos para melhor organização e reutilização
+- ✅ Constantes HTTP movidas para `src/lib/constants/http/http.ts`
+- ✅ Tipos HTTP movidos para `src/types/http.ts`
+- ✅ Separação de responsabilidades melhorada
+- ✅ Melhor reutilização de código em todo o projeto
+
+**Arquivos Criados:**
+- `src/lib/constants/http/http.ts` - Constantes HTTP (VALID_HTTP_METHODS, DEFAULT_TIMEOUT, ERROR_MESSAGES)
+- `src/types/http.ts` - Tipos HTTP (HttpMethod, HttpError, CancellableRequest)
+
+**Arquivos Modificados:**
+- `src/services/apiClient/apiClient.ts` - Atualizado para importar constantes e tipos dos novos locais
+- `src/lib/constants/index.ts` - Adicionada exportação de constantes HTTP
+
+**Impacto:**
+- ✅ Melhor organização seguindo padrões do projeto
+- ✅ Constantes e tipos reutilizáveis em outros arquivos
+- ✅ Estrutura mais limpa e manutenível
+- ✅ Consistência com organização de outros módulos (routes, regex)
 
 ### 2025-01-27 - Melhorias de Qualidade e Robustez
 
@@ -128,10 +151,26 @@ Todos os requisitos técnicos foram atendidos:
 10. **Validação de Entrada:** Valida todos os parâmetros de entrada antes de processar.
 11. **Timeout Configurável:** Implementa timeout com AbortController para evitar requisições pendentes.
 12. **Mensagens em Inglês:** Todas as mensagens e comentários estão em inglês.
+13. **Organização de Constantes e Tipos:** Constantes e tipos estão organizados em locais apropriados seguindo o padrão do projeto (`lib/constants` e `types`).
+14. **Reutilização:** Constantes e tipos podem ser importados e reutilizados em outros arquivos do projeto.
 
 ## ✅ Melhorias Implementadas (2025-01-27)
 
-### 1. Constantes para Mensagens (✅ RESOLVIDO)
+### 1. Reorganização de Constantes e Tipos (✅ RESOLVIDO)
+- **Status:** ✅ Implementado
+- **Descrição:** Constantes e tipos foram movidos para locais apropriados seguindo o padrão de organização do projeto.
+- **Benefícios:**
+  - Melhor organização e estrutura do código
+  - Constantes e tipos reutilizáveis em todo o projeto
+  - Consistência com organização de outros módulos (routes, regex)
+  - Facilita manutenção e localização de código relacionado
+- **Implementação:**
+  - Constantes HTTP movidas para `src/lib/constants/http/http.ts`
+  - Tipos HTTP movidos para `src/types/http.ts`
+  - `apiClient.ts` atualizado para importar dos novos locais
+  - `src/lib/constants/index.ts` atualizado para exportar constantes HTTP
+
+### 2. Constantes para Mensagens (✅ RESOLVIDO)
 - **Status:** ✅ Implementado
 - **Descrição:** Todas as mensagens de erro foram extraídas para o objeto `ERROR_MESSAGES` com funções para mensagens dinâmicas.
 - **Benefícios:**
@@ -139,11 +178,11 @@ Todos os requisitos técnicos foram atendidos:
   - Prepara o código para futura internacionalização
   - Centraliza todas as mensagens em um único local
 - **Implementação:**
-  - Objeto `ERROR_MESSAGES` com todas as mensagens
+  - Objeto `ERROR_MESSAGES` com todas as mensagens em `src/lib/constants/http/http.ts`
   - Funções para mensagens dinâmicas (com parâmetros)
   - Mensagens padronizadas e consistentes
 
-### 2. Request Cancellation (✅ RESOLVIDO)
+### 3. Request Cancellation (✅ RESOLVIDO)
 - **Status:** ✅ Implementado
 - **Descrição:** Nova função `requestWithCancellation` que expõe o AbortController para permitir cancelamento manual de requisições.
 - **Benefícios:**
@@ -152,7 +191,7 @@ Todos os requisitos técnicos foram atendidos:
   - Melhora a experiência do usuário ao evitar requisições desnecessárias
 - **Implementação:**
   - Nova função `requestWithCancellation` exportada
-  - Interface `CancellableRequest<T>` para tipagem
+  - Interface `CancellableRequest<T>` para tipagem em `src/types/http.ts`
   - Retorna objeto com `promise` e método `cancel()`
   - Documentação JSDoc completa com exemplos
 

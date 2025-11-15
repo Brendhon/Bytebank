@@ -1,37 +1,9 @@
-// Constants
-const VALID_HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE'] as const;
-const DEFAULT_TIMEOUT = 30000; // 30 seconds
-
-// Error messages
-const ERROR_MESSAGES = {
-  DEFAULT: 'Error performing task, please try again',
-  INVALID_METHOD: (method: string, validMethods: readonly string[]) =>
-    `Invalid HTTP method: ${method}. Must be one of: ${validMethods.join(', ')}`,
-  INVALID_URL: (url: string) => `Invalid URL: ${url}`,
-  INVALID_TIMEOUT: (timeout: number) =>
-    `Invalid timeout: ${timeout}. Must be a positive number`,
-  REQUEST_TIMEOUT: (timeout: number) => `Request timeout after ${timeout}ms`,
-} as const;
-
-// Types
-type HttpMethod = (typeof VALID_HTTP_METHODS)[number];
-type HttpError = Error & { status: number };
-
-/**
- * Result object for cancellable requests.
- *
- * @template T - The expected response type
- */
-export interface CancellableRequest<T> {
-  /**
-   * Promise that resolves with the response data.
-   */
-  promise: Promise<T>;
-  /**
-   * Cancels the ongoing request.
-   */
-  cancel: () => void;
-}
+import {
+  DEFAULT_TIMEOUT,
+  ERROR_MESSAGES,
+  VALID_HTTP_METHODS,
+} from '@/lib/constants';
+import type { CancellableRequest, HttpError, HttpMethod } from '@/types/http';
 
 /**
  * Validates if the HTTP method is valid.
