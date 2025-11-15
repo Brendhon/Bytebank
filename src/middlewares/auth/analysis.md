@@ -3,7 +3,7 @@
 ## 📋 Resumo Executivo
 **Status:** ✅ Excelente (95%)
 
-O middleware foi refatorado com excelente separação de responsabilidades, seguindo princípios de Clean Architecture e SOLID. O `middleware.ts` atua como ponto de entrada do Next.js, delegando a lógica principal para `authMiddleware` em `middlewares/auth/index.ts`. As funções auxiliares foram modularizadas em arquivos separados (`guards.ts`, `handlers.ts`, `constants.ts`), cada um com uma responsabilidade única e bem definida. O código utiliza TypeScript com tipagem forte, possui documentação JSDoc adequada, e implementa padrões de design apropriados (Strategy, Guard, Handler). **Todas as melhorias recomendadas foram implementadas:** tratamento de erros robusto com fallbacks adequados, validação de variáveis de ambiente, tratamento de erros nos handlers, rotas centralizadas em constantes, documentação detalhada do matcher pattern, e tipagem melhorada do token.
+O middleware foi refatorado com excelente separação de responsabilidades, seguindo princípios de Clean Architecture e SOLID. O `middleware.ts` atua como ponto de entrada do Next.js, delegando a lógica principal para `authMiddleware` em `middlewares/auth/index.ts`. As funções auxiliares foram modularizadas em arquivos separados (`guards.ts`, `handlers.ts`), cada um com uma responsabilidade única e bem definida. As rotas foram centralizadas em `lib/constants/routes.ts`, seguindo boas práticas de organização de projeto. O código utiliza TypeScript com tipagem forte, possui documentação JSDoc adequada, e implementa padrões de design apropriados (Strategy, Guard, Handler). **Todas as melhorias recomendadas foram implementadas:** tratamento de erros robusto com fallbacks adequados, validação de variáveis de ambiente, tratamento de erros nos handlers, rotas centralizadas em arquivo compartilhado, documentação detalhada do matcher pattern, e tipagem melhorada do token.
 
 **Conformidade:** 95%
 
@@ -30,8 +30,8 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 ### 4. Rotas Centralizadas em Constantes ✅ (Prioridade: Baixa)
 - **Requisito:** Código deve ser fácil de manter e configurável.
 - **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "5. Boas Práticas e Princípios de Design"
-- **Status:** ✅ **IMPLEMENTADO** - Rotas foram extraídas para o arquivo `constants.ts` (`ROUTES.HOME`, `ROUTES.DASHBOARD`, `ROUTES.API_PREFIX`). Todos os arquivos agora utilizam essas constantes.
-- **Benefício:** Facilita mudanças futuras e manutenção. Se as rotas precisarem ser alteradas, basta modificar um único arquivo, reduzindo a chance de erros e inconsistências.
+- **Status:** ✅ **IMPLEMENTADO** - Rotas foram centralizadas no arquivo `lib/constants/routes.ts` com organização por categoria (`PAGE_ROUTES`, `PROTECTED_ROUTES`, `API_ROUTES`). Todos os arquivos do projeto (middleware, páginas, componentes, configurações) agora utilizam essas constantes compartilhadas.
+- **Benefício:** Facilita mudanças futuras e manutenção. Se as rotas precisarem ser alteradas, basta modificar um único arquivo centralizado, reduzindo a chance de erros e inconsistências. A organização por categoria (páginas públicas, protegidas e API) melhora a legibilidade e manutenibilidade.
 
 ### 5. Comentário Detalhado sobre Matcher Pattern ✅ (Prioridade: Baixa)
 - **Requisito:** Código complexo deve ter comentários explicativos.
@@ -52,6 +52,7 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
    - `middlewares/auth/index.ts`: Lógica principal de orquestração (`authMiddleware`)
    - `middlewares/auth/guards.ts`: Funções de verificação (guards)
    - `middlewares/auth/handlers.ts`: Handlers para diferentes casos
+   - `lib/constants/routes.ts`: Constantes de rotas compartilhadas em todo o projeto
 
 5. **Clean Code:** O código é legível, conciso e de fácil manutenção. A modularização torna o código muito mais fácil de entender e testar.
 
@@ -71,7 +72,7 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 
 ## Pontos de Melhoria
 
-1. **Constantes para Rotas:** Rotas públicas e protegidas deveriam ser definidas como constantes em um arquivo de configuração centralizado.
+1. **Constantes para Rotas:** ✅ Rotas públicas e protegidas foram centralizadas em `lib/constants/routes.ts` com organização por categoria, seguindo boas práticas de estruturação de projeto.
 
 2. **Tipos de Erro Customizados:** Poderia criar tipos de erro customizados para diferentes cenários de autenticação e roteamento.
 
@@ -238,37 +239,59 @@ export const handleAuthenticatedAuthPageAccess = (request: NextRequest): NextRes
 ```
 
 ### 4. Extrair Rotas para Constantes ✅ (Prioridade: Baixa)
-- ✅ Criado arquivo `constants.ts` com constantes para rotas.
-- ✅ Todos os arquivos agora utilizam as constantes centralizadas.
+- ✅ Criado arquivo `lib/constants/routes.ts` com constantes organizadas por categoria.
+- ✅ Todos os arquivos do projeto (middleware, páginas, componentes, configurações) agora utilizam as constantes centralizadas.
+- ✅ Rotas separadas em `PAGE_ROUTES`, `PROTECTED_ROUTES`, e `API_ROUTES` para melhor organização.
 - Código implementado:
 ```typescript
-// middlewares/auth/constants.ts
-export const ROUTES = {
+// lib/constants/routes.ts
+export const PAGE_ROUTES = {
   HOME: '/home',
+  NOT_FOUND: '/404',
+} as const;
+
+export const PROTECTED_ROUTES = {
   DASHBOARD: '/dashboard',
-  API_PREFIX: '/api',
+  TRANSACTIONS: '/transactions',
+  CARDS: '/cards',
+  SETTINGS: '/settings',
+} as const;
+
+export const API_ROUTES = {
+  BASE: '/api',
+  // ... outras rotas de API
 } as const;
 
 // middlewares/auth/guards.ts
-import { ROUTES } from './constants';
+import { API_ROUTES, PAGE_ROUTES } from '@/lib/constants/routes';
 
 export const isAuthPage = (pathname: string): boolean => {
-  return pathname.startsWith(ROUTES.HOME);
+  return pathname.startsWith(PAGE_ROUTES.HOME);
 };
 
 export const isAPIRoute = (pathname: string): boolean => {
-  return pathname.startsWith(ROUTES.API_PREFIX);
+  return pathname.startsWith(API_ROUTES.BASE);
 };
 
 // middlewares/auth/handlers.ts
-import { ROUTES } from './constants';
+import { PAGE_ROUTES, PROTECTED_ROUTES } from '@/lib/constants/routes';
 
 export const handleUnauthenticatedAccess = (request: NextRequest): NextResponse => {
-  return NextResponse.redirect(new URL(ROUTES.HOME, request.url));
+  try {
+    return NextResponse.redirect(new URL(PAGE_ROUTES.HOME, request.url));
+  } catch (error) {
+    console.error('Error creating redirect URL:', error);
+    return NextResponse.next();
+  }
 };
 
 export const handleAuthenticatedAuthPageAccess = (request: NextRequest): NextResponse => {
-  return NextResponse.redirect(new URL(ROUTES.DASHBOARD, request.url));
+  try {
+    return NextResponse.redirect(new URL(PROTECTED_ROUTES.DASHBOARD, request.url));
+  } catch (error) {
+    console.error('Error creating redirect URL:', error);
+    return NextResponse.next();
+  }
 };
 ```
 
@@ -319,9 +342,15 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 - `middlewares/auth/index.ts`: Lógica principal (`authMiddleware`)
 - `middlewares/auth/guards.ts`: Funções de verificação
 - `middlewares/auth/handlers.ts`: Handlers de requisição
-- `middlewares/auth/constants.ts`: Constantes de rotas (novo)
+- `lib/constants/routes.ts`: Constantes de rotas compartilhadas (utilizado por todo o projeto)
 **Status:** ✅ Criado  
 **Link:** `@docs/analysis/analysis-mapping.md`
+
+**Dependências:**
+- Utiliza constantes de rotas de `lib/constants/routes.ts`:
+  - `PAGE_ROUTES` - Rotas públicas (HOME, NOT_FOUND)
+  - `PROTECTED_ROUTES` - Rotas protegidas (DASHBOARD, TRANSACTIONS, CARDS, SETTINGS)
+  - `API_ROUTES` - Rotas de API (BASE, AUTH, TRANSACTIONS, USERS)
 
 ---
 
@@ -333,8 +362,9 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 - ✅ Tratamento de erros robusto com try-catch e fallbacks adequados
 - ✅ Validação de variável de ambiente `NEXTAUTH_SECRET`
 - ✅ Tratamento de erros nos handlers ao criar URLs
-- ✅ Rotas centralizadas em arquivo de constantes
+- ✅ Rotas centralizadas em `lib/constants/routes.ts` com organização por categoria (PAGE_ROUTES, PROTECTED_ROUTES, API_ROUTES)
 - ✅ Comentário detalhado sobre matcher pattern
 - ✅ Tipagem melhorada do token (`JWT | null` em vez de `unknown`)
+- ✅ Integração com sistema de rotas compartilhado do projeto
 
 **Status Final:** ✅ Excelente (95%)
