@@ -69,11 +69,49 @@ export default () => {
     }
   }
 
-  // Handle error
-  const handleError = (error: any) => {
+  /**
+   * Maps HTTP status codes to user-friendly error messages in Portuguese.
+   * @param {number} status - HTTP status code
+   * @returns {string} - User-friendly error message
+   */
+  const getErrorMessageByStatus = (status: number): string => {
+    const statusMessages: Record<number, string> = {
+      400: 'Dados inválidos. Verifique as informações e tente novamente.',
+      401: 'Senha inválida. Verifique sua senha e tente novamente.',
+      403: 'Acesso negado. Você não tem permissão para realizar esta ação.',
+      404: 'Usuário não encontrado. Por favor, faça login novamente.',
+      409: 'Conflito. Este email já está cadastrado.',
+      422: 'Dados inválidos. Verifique o formato das informações.',
+      500: 'Erro interno do servidor. Tente novamente mais tarde.',
+      503: 'Serviço temporariamente indisponível. Tente novamente mais tarde.',
+    };
+
+    return statusMessages[status] || 'Erro ao realizar ação. Tente novamente mais tarde.';
+  };
+
+  /**
+   * Handles errors and displays appropriate user-friendly messages based on HTTP status.
+   * @param {unknown} error - The error object to handle
+   */
+  const handleError = (error: unknown) => {
     console.error('Error:', error);
-    const message = error.message || 'Erro ao realizar ação';
-    showErrorToast({ message });
+
+    // Check if error has status property (from apiClient)
+    if (error instanceof Error && 'status' in error) {
+      const status = (error as Error & { status: number }).status;
+      const message = getErrorMessageByStatus(status);
+      showErrorToast({ message });
+      return;
+    }
+
+    // Fallback: use error message if available
+    if (error instanceof Error) {
+      showErrorToast({ message: error.message || 'Erro ao realizar ação' });
+      return;
+    }
+
+    // Final fallback for unknown error types
+    showErrorToast({ message: 'Erro ao realizar ação. Tente novamente mais tarde.' });
   }
 
   // Render component

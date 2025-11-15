@@ -2,11 +2,10 @@ import { API_ROUTES } from "@/lib/constants/routes";
 import { removeEmptyFields } from "@/lib/utils/utils";
 import { AccountFormData } from "@/schemas";
 import { request } from "@/services/apiClient/apiClient";
-import { IUser } from "@/types/user";
-import bcrypt from "bcryptjs";
+import { IUser, IUserUpdateData, InvalidEmailError } from "@/types/user";
 
 /**
- * Form the endpoint for the API
+ * Forms the endpoint for the API
  * @param {string} email - The email of the user
  * @returns {string} - The endpoint URL
  */
@@ -33,42 +32,44 @@ export function getAllUsers(): Promise<IUser[]> {
 }
 /**
  * Deletes a user by sending a DELETE request to the API.
+ * Password validation is performed server-side.
  * @param {string} email - The email of the user to delete
+ * @param {string} password - The password for authentication
  * @returns {Promise<IUser>} - The deleted user data
+ * @throws {InvalidEmailError} - Throws an error if the email is invalid
  */
 export async function deleteUser(email: string | null | undefined, password: string): Promise<IUser> {
-  // Check if email is valid
+  // Check if email is valid (throws InvalidEmailError if invalid)
   isEmailValid(email);
-  
-  // Validate password
-  await validatePassword(email!, password);
 
-  // Send request to API
-  return request<IUser>('DELETE', getEndpoint(email));
+  // Send request to API (password validation happens server-side)
+  return request<IUser>('DELETE', getEndpoint(email), { password });
 }
 
 /**
  * Updates a user by sending a PUT request to the API.
+ * Password validation is performed server-side.
  * @param {string} email - Current email of the user
- * @param {IUser} data - The user data to update
+ * @param {AccountFormData} data - The user data to update
  * @returns {Promise<IUser>} - The updated user data
+ * @throws {InvalidEmailError} - Throws an error if the email is invalid
  */
 export async function updateUser(email: string | null | undefined, data: AccountFormData): Promise<IUser> {
-  // Check if email is valid
+  // Check if email is valid (throws InvalidEmailError if invalid)
   isEmailValid(email);
 
-  // Validate password
-  await validatePassword(email!, data.password);
+  // Prepare data for API request
+  const updateData: IUserUpdateData = {
+    name: data.name,
+    email: data.email,
+    currentPassword: data.password,
+  };
 
-  // Set password 
-  if (data.newPassword) {
-    data.password = data.newPassword;
-    delete data.newPassword;
-    delete data.confirmPassword;
-  }
+  // Set new password
+  if (data.newPassword) updateData.password = data.newPassword;
 
   // Remove empty fields from data
-  const cleanedData = removeEmptyFields(data);
+  const cleanedData = removeEmptyFields(updateData);
 
   // Send data to API
   return request<IUser>('PUT', getEndpoint(email), cleanedData);
@@ -80,7 +81,7 @@ export async function updateUser(email: string | null | undefined, data: Account
  * @returns {Promise<IUser>} - The user data
  */
 export async function getUserByEmail(email: string | null | undefined): Promise<IUser> {
-  // Check if email is valid
+  // Check if email is valid (throws InvalidEmailError if invalid)
   isEmailValid(email);
 
   // Send request to API
@@ -88,33 +89,20 @@ export async function getUserByEmail(email: string | null | undefined): Promise<
 }
 
 /**
- * Validates a user's password by comparing it with the hashed password in the database.
- * @param {string} email - The email of the user
- * @param {string} plain - The plain text password to validate
- * @returns {Promise<void>} - Resolves if the password is valid, rejects otherwise
- * @throws {Error} - Throws an error if the user is not found or the password is invalid
- */
-async function validatePassword(email: string, plain: string): Promise<void> {
-  // Connect to the database
-  const user = await getUserByEmail(email);
-
-  // Check if email is valid
-  if (!user) throw new Error('Usuário não encontrado');
-
-  // Compare the plain text password with the hashed password
-  const isValid = await bcrypt.compare(plain, user.password);
-
-  // If the password is invalid, throw an error
-  if (!isValid) throw new Error('Senha inválida');
-}
-
-/**
- * Check of email is valid
+ * Checks if email is valid (exists and has valid format)
  * @param {string} email - The email to check
- * @returns {Promise<void>} - True if email is valid, false otherwise
- * @throws {Error} - Throws an error if the email is invalid
+ * @returns {void}
+ * @throws {InvalidEmailError} - Throws an error if the email is invalid or has invalid format
  */
 function isEmailValid(email: string | null | undefined): void {
-  // Check if email is valid
-  if (!email) throw new Error('Email inválido');
+  // Check if email exists
+  if (!email) {
+    throw new InvalidEmailError('Email é obrigatório');
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    throw new InvalidEmailError('Formato de email inválido');
+  }
 }

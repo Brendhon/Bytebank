@@ -25,8 +25,22 @@ export async function request<T>(
 
   // Analyze the response
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || 'Erro ao realizar tarefa, tente novamente');
+    let message: string;
+    try {
+      const errorData = await response.json();
+      message = errorData.message || 'Error performing task, please try again';
+    } catch {
+      message = await response.text() || 'Error performing task, please try again';
+    }
+    
+    // Create the error
+    const error = new Error(message);
+
+    // Attach status code to error
+    (error as Error & { status: number }).status = response.status;
+
+    // Throw the error
+    throw error;
   }
 
   // Parse the response
