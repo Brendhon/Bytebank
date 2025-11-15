@@ -1,14 +1,20 @@
 import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth/auth";
+import { Session } from "next-auth";
 
 /**
- * Function to check if the request is authenticated
- * @param {Request} req - The request object
- * @returns {Promise<void>} - Resolves if the request is authenticated
+ * Function to check if the request is authenticated using NextAuth session
+ * @returns {Promise<Session>} - Returns the session if authenticated
  * @throws {Error} - Throws an error if the request is not authenticated
  */
-export function isReqAuthenticated(req: Request): void {
-  if (req.headers.get('x-api-key') !== process.env.NEXT_PUBLIC_API_KEY)
-    throw new Error('Forbidden', { cause: { status: 401 } });
+export async function isAuthenticated(): Promise<Session> {
+  const session = await auth();
+  
+  if (!session?.user?.id) {
+    throw new Error('Unauthorized', { cause: { status: 401 } });
+  }
+  
+  return session;
 }
 
 /**
@@ -42,24 +48,4 @@ export function handleErrorResponse(error: any, defaultMessage: string): NextRes
 
   // Return an error response
   return NextResponse.json({ message }, { status });
-}
-
-/**
- * Get user id from query parameters
- * @param {Request} req - The request object
- * @returns {string} - The user id
- * @throws {Error} - Throws an error if the user id is not found
- */
-export function getUserIdFromQuery(req: Request): string {
-  // Get query parameters from the request
-  const { searchParams } = new URL(req.url);
-
-  // Extract userId from query parameters
-  const userId = searchParams.get("userId");
-
-  // Check if userId is provided
-  if (!userId) throw new Error("userId is required", { cause: { status: 400 } });
-
-  // Return userId
-  return userId;
 }

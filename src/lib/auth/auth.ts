@@ -1,7 +1,7 @@
-import User from '@/models/User/User';
 import { PAGE_ROUTES } from '@/lib/constants';
+import User from '@/models/User/User';
 import bcrypt from 'bcryptjs';
-import { NextAuthOptions } from 'next-auth';
+import { NextAuthOptions, Session, getServerSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { connectToDatabase } from '../mongoose/mongoose';
 
@@ -58,3 +58,9 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
+
+/**
+ * Helper function to get the current session in API routes
+ * @returns {Promise<Session | null>} The current session or null if not authenticated
+ */
+export const auth = (): Promise<Session | null> => getServerSession(authOptions);

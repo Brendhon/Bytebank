@@ -1,4 +1,4 @@
-import { getUserIdFromQuery, handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api/api';
+import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import Transaction from '@/models/Transaction/Transaction';
 import { ITransaction } from '@/types/transaction';
@@ -10,11 +10,11 @@ import { ITransaction } from '@/types/transaction';
  */
 export async function GET(req: Request) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
-    // Get query parameters from the request
-    const userId = getUserIdFromQuery(req);
+    // Get user ID from session
+    const userId = session.user.id;
 
     // Check if the request method is GET
     await connectToDatabase();
@@ -36,8 +36,8 @@ export async function GET(req: Request) {
  */
 export async function POST(req: Request) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Check if the request method is POST
     await connectToDatabase();
@@ -45,8 +45,14 @@ export async function POST(req: Request) {
     // Parse the request body as JSON
     const data = await req.json();
 
+    // Ensure the transaction belongs to the authenticated user
+    const transactionData = {
+      ...data,
+      user: session.user.id
+    };
+
     // Create a new transaction record in the database
-    const transaction = await Transaction.create(data);
+    const transaction = await Transaction.create(transactionData);
 
     // Return a success response with the created transaction
     return handleSuccessResponse<ITransaction>(transaction);

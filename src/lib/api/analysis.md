@@ -1,33 +1,42 @@
 # Análise Arquitetural: Utilitário: api.ts
 
 ## 📋 Resumo Executivo
-**Status:** ⚠️ Requer Atenção (70%)
+**Status:** ✅ Bom (85%)
 
-O arquivo `api.ts` apresenta funções utilitárias para manipulação de requisições e respostas em rotas de API do Next.js. O código possui documentação JSDoc adequada, utiliza TypeScript com tipagem forte (exceto em um ponto específico), e implementa funções com responsabilidades bem definidas. No entanto, existem violações críticas relacionadas à segurança (exposição de chave de API no cliente), uso de `any` em uma função, mensagens de erro em português, e falta de validação adequada de entrada.
+O arquivo `api.ts` apresenta funções utilitárias para manipulação de requisições e respostas em rotas de API do Next.js. O código possui documentação JSDoc adequada, utiliza TypeScript com tipagem forte (exceto em um ponto específico), e implementa funções com responsabilidades bem definidas. A **vulnerabilidade crítica de segurança relacionada à exposição de API key foi corrigida** através da migração para autenticação baseada em sessão NextAuth. Ainda existem pontos de melhoria relacionados ao uso de `any`, mensagens em português e validação de entrada.
 
-**Conformidade:** 70%
+**Conformidade:** 85%
+
+## ✅ Correções Implementadas (2025-11-15)
+
+### 1. Correção de Exposição de Chave de API no Cliente (✅ RESOLVIDO)
+- **Problema Original:** A função `isReqAuthenticated` utilizava `process.env.NEXT_PUBLIC_API_KEY` exposta no cliente.
+- **Solução Implementada:** 
+  - Função `isReqAuthenticated()` foi **deprecada e removida**
+  - Nova função `isAuthenticated()` implementada usando NextAuth session
+  - Validação agora feita via `auth()` do NextAuth com cookies HTTP-only
+  - Todas as API routes migradas para usar autenticação por sessão
+- **Impacto:** Vulnerabilidade crítica eliminada. Sistema agora usa autenticação segura baseada em sessão.
+
+### 2. Remoção de Função getUserIdFromQuery (✅ RESOLVIDO)
+- **Problema Original:** Função permitia passar userId via query parameter, possibilitando acesso a dados de outros usuários.
+- **Solução Implementada:** Função removida. User ID agora obtido exclusivamente da sessão autenticada.
 
 ## 🚨 Requisitos Técnicos Infringidos
 
-### 1. Exposição de Chave de API no Cliente (Prioridade: Crítica)
-- **Requisito:** Variáveis de ambiente sensíveis não devem ser expostas ao cliente. Chaves de API devem estar apenas no servidor.
-- **Documento:** `@docs/architecture/security.md` - Seção "Pontos Fortes > Gerenciamento de Variáveis de Ambiente"
-- **Infração:** A função `isReqAuthenticated` utiliza `process.env.NEXT_PUBLIC_API_KEY` (linha 10), que é exposta ao cliente através do prefixo `NEXT_PUBLIC_`. Chaves de API nunca devem ser acessíveis no cliente.
-- **Impacto:** **CRÍTICO** - A chave de API fica exposta no código JavaScript do cliente, permitindo que qualquer pessoa possa visualizá-la e utilizá-la para fazer requisições não autorizadas. Isso viola princípios fundamentais de segurança.
-
-### 2. Uso de `any` em Função (Prioridade: Alta)
+### 1. Uso de `any` em Função (Prioridade: Alta)
 - **Requisito:** O código é estritamente tipado, sem o uso de `any`.
 - **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
-- **Infração:** A função `handleErrorResponse` utiliza `any` como tipo do parâmetro `error` (linha 33).
+- **Infração:** A função `handleErrorResponse` utiliza `any` como tipo do parâmetro `error`.
 - **Impacto:** Reduz a segurança de tipos, dificulta a manutenção e pode mascarar erros em tempo de compilação.
 
-### 3. Mensagens de Erro em Português (Prioridade: Média)
+### 2. Mensagens de Erro em Português (Prioridade: Média)
 - **Requisito:** Todos os comentários e documentação devem estar em inglês.
 - **Documento:** `@docs/guidelines/global.md` - Seção "Best Practices > Comments"
-- **Infração:** A função `handleSuccessResponse` possui mensagem padrão em português: `'Recurso não encontrado'` (linha 20).
+- **Infração:** A função `handleSuccessResponse` possui mensagem padrão em português: `'Recurso não encontrado'`.
 - **Impacto:** Viola o padrão estabelecido no projeto e pode causar inconsistência na documentação e mensagens de erro.
 
-### 4. Falta de Validação de Entrada (Prioridade: Média)
+### 3. Falta de Validação de Entrada (Prioridade: Média)
 - **Requisito:** Validação de input em todas as entradas com Zod.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
 - **Infração:** As funções não validam os tipos e formatos dos parâmetros de entrada antes de processá-los.
@@ -81,20 +90,7 @@ O arquivo `api.ts` apresenta funções utilitárias para manipulação de requis
 
 ## Plano de Ação
 
-### 1. Corrigir Exposição de Chave de API (Prioridade: Crítica)
-- Remover o prefixo `NEXT_PUBLIC_` da variável de ambiente `API_KEY` e utilizá-la apenas no servidor.
-- Atualizar todas as referências à variável no código.
-- Código exemplo:
-```typescript
-export function isReqAuthenticated(req: Request): void {
-  const apiKey = process.env.API_KEY; // Sem NEXT_PUBLIC_
-  if (req.headers.get('x-api-key') !== apiKey) {
-    throw new Error('Forbidden', { cause: { status: 401 } });
-  }
-}
-```
-
-### 2. Substituir `any` por Tipo Específico (Prioridade: Alta)
+### 1. Substituir `any` por Tipo Específico (Prioridade: Alta)
 - Criar uma interface ou tipo para erros e substituir `any` na função `handleErrorResponse`.
 - Código exemplo:
 ```typescript
@@ -113,7 +109,7 @@ export function handleErrorResponse(
 }
 ```
 
-### 3. Traduzir Mensagens para Inglês (Prioridade: Média)
+### 2. Traduzir Mensagens para Inglês (Prioridade: Média)
 - Traduzir todas as mensagens de erro e sucesso para inglês.
 - Código exemplo:
 ```typescript
@@ -125,25 +121,7 @@ export function handleSuccessResponse<T>(
 }
 ```
 
-### 4. Adicionar Validação de Entrada (Prioridade: Média)
-- Adicionar validação de tipos e formatos dos parâmetros de entrada nas funções.
-- Código exemplo:
-```typescript
-export function getUserIdFromQuery(req: Request): string {
-  const { searchParams } = new URL(req.url);
-  const userId = searchParams.get("userId");
-  
-  if (!userId || typeof userId !== 'string' || userId.trim() === '') {
-    throw new Error("userId is required and must be a non-empty string", { 
-      cause: { status: 400 } 
-    });
-  }
-  
-  return userId;
-}
-```
-
-### 5. Extrair Constantes de Mensagens (Prioridade: Baixa)
+### 3. Extrair Constantes de Mensagens (Prioridade: Baixa)
 - Criar um arquivo de constantes para mensagens de erro e sucesso.
 - Código exemplo:
 ```typescript

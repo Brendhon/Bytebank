@@ -1,4 +1,4 @@
-import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api/api';
+import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import User from '@/models/User/User';
 import { IUser } from '@/types/user';
@@ -12,8 +12,8 @@ import { NextResponse } from 'next/server';
  */
 export async function GET(req: Request) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    await isAuthenticated();
 
     // Check if the request method is GET
     await connectToDatabase();
@@ -35,8 +35,8 @@ export async function GET(req: Request) {
  */
 export async function POST(req: Request) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    await isAuthenticated();
 
     // Check if the request method is POST
     await connectToDatabase();

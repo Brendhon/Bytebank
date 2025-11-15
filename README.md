@@ -129,27 +129,21 @@ NEXT_PUBLIC_GITHUB_URL=https://github.com/Brendhon/Bytebank
 
 4. Segurança das APIs:
 
-Uma chave de autenticação é utilizada para proteger os endpoints da API contra acessos não autorizados. Essa chave é automaticamente incluída nas requisições realizadas pelo front-end, garantindo que apenas chamadas legítimas da aplicação possam acessar os endpoints protegidos. Isso impede que ferramentas externas, como Postman ou bots, realizem requisições diretamente à API.
+Os endpoints da API são protegidos através de autenticação baseada em sessão, utilizando **NextAuth.js** com estratégia JWT. Quando um usuário faz login, uma sessão segura é criada e mantida através de cookies HTTP-only, que são automaticamente enviados em cada requisição.
 
-Para configurar a chave de autenticação, adicione a seguinte variável de ambiente no arquivo `.env.local`:
+**Como funciona:**
+- O usuário realiza login através da interface da aplicação
+- O NextAuth cria uma sessão JWT armazenada em cookies seguros
+- Todas as requisições do front-end para as rotas `/api/*` incluem automaticamente os cookies de sessão
+- As rotas de API validam a sessão antes de processar qualquer operação
+- Apenas usuários autenticados podem acessar dados e realizar operações
 
-```bash
-NEXT_PUBLIC_API_KEY=sua_chave_api
-```
-
-> **🔐 Dica de segurança:**  
-> Gere uma chave segura usando o comando abaixo no terminal:  
-> ```bash
-> openssl rand -hex 32
-> ```  
-> Copie o valor gerado e use como `NEXT_PUBLIC_API_KEY`.
-
-> **⚠️ Aviso Importante:**
-> Esta abordagem de segurança (utilizar uma API_KEY pública no front-end para autenticar chamadas internas) não é recomendada para aplicações em produção, pois o valor da variável pode ser exposto e facilmente acessado.
-> 
-> Em um ambiente de produção, recomenda-se implementar uma autenticação mais robusta, como OAuth ou JWT (JSON Web Tokens), para proteger os endpoints da API e garantir a segurança dos dados do usuário.
-> 
-> No entanto, por se tratar de um projeto de estudo, optou-se por esta solução simplificada para fins didáticos.
+**Benefícios desta abordagem:**
+- ✅ Cookies HTTP-only não são acessíveis via JavaScript (proteção contra XSS)
+- ✅ Tokens JWT não são expostos no código do cliente
+- ✅ Proteção CSRF nativa do NextAuth
+- ✅ Expiração automática de sessões após 24 horas
+- ✅ Validação de propriedade de recursos (usuários só podem acessar seus próprios dados)
 
 > **Nota:** Substitua as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
 

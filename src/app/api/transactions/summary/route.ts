@@ -1,4 +1,4 @@
-import { getUserIdFromQuery, handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from "@/lib/api/api";
+import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from "@/lib/api/api";
 import { connectToDatabase } from "@/lib/mongoose/mongoose";
 import Transaction from "@/models/Transaction/Transaction";
 import { TransactionDescKey } from "@/types/transaction";
@@ -6,14 +6,14 @@ import { Types } from "mongoose";
 
 export async function GET(req: Request) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Connect to the database
     await connectToDatabase();
 
-    // Get query parameters from the request
-    const userId = getUserIdFromQuery(req);
+    // Get user ID from session
+    const userId = session.user.id;
 
     // Aggregate transactions by userId
     const agg = await Transaction.aggregate([

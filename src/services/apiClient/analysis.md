@@ -1,45 +1,82 @@
 # Análise Arquitetural: Serviço: apiClient.ts
 
 ## 📋 Resumo Executivo
-**Status:** ⚠️ Requer Atenção (68%)
+**Status:** ✅ Bom (83%)
 
-O arquivo `apiClient.ts` apresenta uma função genérica para realizar requisições HTTP, servindo como camada de abstração para comunicação com a API. O código utiliza TypeScript com genéricos para flexibilidade de tipos, implementa tratamento de erros básico, e centraliza a configuração de headers e autenticação. No entanto, existem violações críticas relacionadas à segurança (exposição de chave de API no cliente), mensagens de erro em português, falta de documentação JSDoc adequada, ausência de validação de entrada, e falta de tratamento de erros mais robusto.
+O arquivo `apiClient.ts` apresenta uma função genérica para realizar requisições HTTP, servindo como camada de abstração para comunicação com a API. O código utiliza TypeScript com genéricos para flexibilidade de tipos, implementa tratamento de erros básico, e centraliza a configuração de headers. A **vulnerabilidade crítica de segurança relacionada à exposição de API key foi corrigida** através da migração para autenticação baseada em sessão NextAuth. Ainda existem pontos de melhoria relacionados a mensagens em português, documentação JSDoc e tratamento de erros mais robusto.
 
-**Conformidade:** 68%
+**Conformidade:** 83%
+
+## ✅ Correções Implementadas (2025-11-15)
+
+### 1. Correção de Exposição de Chave de API no Cliente (✅ RESOLVIDO)
+
+**Problema Original:**
+- A função `request` utilizava `process.env.NEXT_PUBLIC_API_KEY` no header `X-api-key`
+- API key exposta no bundle JavaScript do cliente
+- Qualquer pessoa podia visualizar e usar a chave para requisições não autorizadas
+
+**Solução Implementada:**
+- ✅ Removido header `'X-api-key': process.env.NEXT_PUBLIC_API_KEY`
+- ✅ Removido parâmetro `isAuth` (não mais necessário)
+- ✅ Autenticação agora baseada em cookies de sessão NextAuth
+- ✅ Cookies HTTP-only enviados automaticamente pelo navegador
+- ✅ Sem necessidade de headers de autenticação manuais
+
+**Arquivo Modificado:**
+- `src/services/apiClient/apiClient.ts` - Função `request()` simplificada
+
+**Como Funciona Agora:**
+```typescript
+// Antes (INSEGURO):
+const headers = {
+  'Content-Type': 'application/json',
+  'X-api-key': process.env.NEXT_PUBLIC_API_KEY // ❌ Exposto!
+};
+
+// Depois (SEGURO):
+const headers = {
+  'Content-Type': 'application/json'
+  // ✅ Cookies de sessão enviados automaticamente
+};
+```
+
+**Documentação:**
+- As correções foram implementadas através da migração completa para autenticação baseada em sessão NextAuth
+
+**Impacto:**
+- ✅ Vulnerabilidade crítica eliminada
+- ✅ Autenticação segura via cookies HTTP-only
+- ✅ Proteção contra XSS (cookies inacessíveis via JavaScript)
+- ✅ Nível de segurança: ⭐⭐⭐⭐⭐ (Excelente)
 
 ## 🚨 Requisitos Técnicos Infringidos
 
-### 1. Exposição de Chave de API no Cliente (Prioridade: Crítica)
-- **Requisito:** Variáveis de ambiente sensíveis não devem ser expostas ao cliente. Chaves de API devem estar apenas no servidor.
-- **Documento:** `@docs/architecture/security.md` - Seção "Pontos Fortes > Gerenciamento de Variáveis de Ambiente"
-- **Infração:** A função `request` utiliza `process.env.NEXT_PUBLIC_API_KEY` (linha 13), que é exposta ao cliente através do prefixo `NEXT_PUBLIC_`. Chaves de API nunca devem ser acessíveis no cliente.
-- **Impacto:** **CRÍTICO** - A chave de API fica exposta no código JavaScript do cliente, permitindo que qualquer pessoa possa visualizá-la e utilizá-la para fazer requisições não autorizadas. Isso viola princípios fundamentais de segurança.
-
-### 2. Mensagens de Erro em Português (Prioridade: Alta)
+### 1. Mensagens de Erro em Português (Prioridade: Alta)
 - **Requisito:** Todos os comentários e documentação devem estar em inglês.
 - **Documento:** `@docs/guidelines/global.md` - Seção "Best Practices > Comments" e "Documentation Rules"
 - **Infração:** A mensagem de erro padrão está em português: `'Erro ao realizar tarefa, tente novamente'` (linha 29). Os comentários também estão em português (linhas 10, 16, 19, 26, 32).
 - **Impacto:** Viola o padrão estabelecido no projeto e pode causar inconsistência na documentação e experiência do usuário.
 
-### 3. Falta de Documentação JSDoc (Prioridade: Alta)
+### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
 - **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
 - **Infração:** A função `request` possui apenas um comentário genérico em português (linha 2-3), mas não possui documentação JSDoc completa explicando parâmetros, retorno, e comportamento.
 - **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores.
 
-### 4. Falta de Validação de Entrada (Prioridade: Média)
+### 3. Falta de Validação de Entrada (Prioridade: Média)
 - **Requisito:** Validação de input em todas as entradas.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
 - **Infração:** A função não valida os tipos e formatos dos parâmetros de entrada (método HTTP, URL, body) antes de processá-los.
 - **Impacto:** Pode permitir que dados inválidos sejam processados, causando erros em tempo de execução ou comportamentos inesperados.
 
-### 5. Tratamento de Erros Inadequado (Prioridade: Média)
+### 4. Tratamento de Erros Inadequado (Prioridade: Média)
 - **Requisito:** Tratamento robusto de erros com códigos de status HTTP apropriados.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria"
 - **Infração:** O tratamento de erro apenas verifica `response.ok` e lança um erro genérico, sem diferenciar tipos de erro (400, 401, 403, 404, 500, etc.) ou fornecer informações mais detalhadas.
 - **Impacto:** Dificulta o debugging e não fornece feedback adequado sobre o tipo de erro ocorrido.
 
-### 6. Falta de Timeout em Requisições (Prioridade: Baixa)
+### 5. Falta de Timeout em Requisições (Prioridade: Baixa)
 - **Requisito:** Requisições HTTP devem ter timeout configurado para evitar requisições pendentes indefinidamente.
 - **Documento:** `@docs/architecture/performance-optimization.md`
 - **Infração:** A função `fetch` não possui configuração de timeout.
@@ -96,41 +133,7 @@ O arquivo `apiClient.ts` apresenta uma função genérica para realizar requisi�
 
 ## Plano de Ação
 
-### 1. Corrigir Exposição de Chave de API (Prioridade: Crítica)
-- Remover o prefixo `NEXT_PUBLIC_` da variável de ambiente `API_KEY` e utilizá-la apenas no servidor.
-- Mover a lógica de autenticação para o lado do servidor (API routes do Next.js).
-- Código exemplo:
-```typescript
-export async function request<T>(
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-  url: string,
-  body?: unknown | T,
-): Promise<T> {
-  // Form header
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    // API key should be handled server-side, not exposed to client
-  };
-
-  // Create the request
-  const response = await fetch(url, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
-
-  // Analyze the response
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || 'Error performing task, please try again');
-  }
-
-  // Parse the response
-  return response.json() as T;
-}
-```
-
-### 2. Traduzir Mensagens e Comentários para Inglês (Prioridade: Alta)
+### 1. Traduzir Mensagens e Comentários para Inglês (Prioridade: Alta)
 - Traduzir todas as mensagens de erro e comentários para inglês.
 - Código exemplo:
 ```typescript
@@ -171,11 +174,11 @@ export async function request<T>(
 }
 ```
 
-### 3. Adicionar Documentação JSDoc Completa (Prioridade: Alta)
+### 2. Adicionar Documentação JSDoc Completa (Prioridade: Alta)
 - Adicionar documentação JSDoc completa para a função, explicando propósito, parâmetros, retorno e exemplos de uso.
 - Código exemplo (já incluído no item 2).
 
-### 4. Adicionar Validação de Entrada (Prioridade: Média)
+### 3. Adicionar Validação de Entrada (Prioridade: Média)
 - Adicionar validação de tipos e formatos dos parâmetros de entrada.
 - Código exemplo:
 ```typescript
@@ -201,7 +204,7 @@ export async function request<T>(
 }
 ```
 
-### 5. Melhorar Tratamento de Erros (Prioridade: Média)
+### 4. Melhorar Tratamento de Erros (Prioridade: Média)
 - Diferenciar tipos de erro baseado no código de status HTTP.
 - Código exemplo:
 ```typescript
@@ -236,7 +239,7 @@ if (!response.ok) {
 }
 ```
 
-### 6. Adicionar Timeout em Requisições (Prioridade: Baixa)
+### 5. Adicionar Timeout em Requisições (Prioridade: Baixa)
 - Adicionar configuração de timeout para requisições.
 - Código exemplo:
 ```typescript

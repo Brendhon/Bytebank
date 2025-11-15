@@ -1,4 +1,4 @@
-import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api/api';
+import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import User from '@/models/User/User';
 import { IUser, UserNotFoundError, InvalidPasswordError, InvalidEmailError } from '@/types/user';
@@ -41,14 +41,19 @@ async function validatePassword(email: string, plainPassword: string): Promise<v
  */
 export async function DELETE(req: Request, { params }: Params): Promise<NextResponse> {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Connect to the database
     await connectToDatabase();
 
     // Get email from params
     const { email } = await params;
+
+    // Verify that the authenticated user is trying to delete their own account
+    if (session.user.email !== email) {
+      throw new Error('Forbidden: You can only delete your own account', { cause: { status: 403 } });
+    }
 
     // Parse the request body to get password
     const { password } = await req.json();
@@ -78,14 +83,19 @@ export async function DELETE(req: Request, { params }: Params): Promise<NextResp
  */
 export async function PUT(req: Request, { params }: Params): Promise<NextResponse> {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Connect to the database
     await connectToDatabase();
 
     // Get email from params
     const { email } = await params;
+
+    // Verify that the authenticated user is trying to update their own account
+    if (session.user.email !== email) {
+      throw new Error('Forbidden: You can only update your own account', { cause: { status: 403 } });
+    }
 
     // Parse the request body as JSON
     const data = await req.json();
@@ -117,14 +127,19 @@ export async function PUT(req: Request, { params }: Params): Promise<NextRespons
  */
 export async function GET(req: Request, { params }: Params): Promise<NextResponse> {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Connect to the database
     await connectToDatabase();
 
     // Get email from params
     const { email } = await params;
+
+    // Verify that the authenticated user is trying to access their own account
+    if (session.user.email !== email) {
+      throw new Error('Forbidden: You can only access your own account', { cause: { status: 403 } });
+    }
 
     // Get the User record from the database
     const user = await User.findOne<IUser>({ email });

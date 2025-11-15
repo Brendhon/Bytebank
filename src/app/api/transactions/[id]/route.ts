@@ -1,4 +1,4 @@
-import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api/api';
+import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import Transaction from '@/models/Transaction/Transaction';
 import { ITransaction } from '@/types/transaction';
@@ -13,8 +13,8 @@ interface Params { params: Promise<{ id: string }> }
  */
 export async function GET(req: Request, { params }: Params) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Connect to the database
     await connectToDatabase();
@@ -24,6 +24,11 @@ export async function GET(req: Request, { params }: Params) {
 
     // Find the transaction record by ID
     const transaction = await Transaction.findById(id);
+
+    // Verify ownership - ensure the transaction belongs to the authenticated user
+    if (transaction && transaction.user.toString() !== session.user.id) {
+      throw new Error('Forbidden: You can only access your own transactions', { cause: { status: 403 } });
+    }
 
     // Handle success response
     return handleSuccessResponse<ITransaction>(transaction);
@@ -40,8 +45,8 @@ export async function GET(req: Request, { params }: Params) {
  */
 export async function DELETE(req: Request, { params }: Params) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Connect to the database
     await connectToDatabase();
@@ -49,11 +54,23 @@ export async function DELETE(req: Request, { params }: Params) {
     // Extract the ID from params
     const { id } = await params;
 
+    // Find the transaction first to verify ownership
+    const transaction = await Transaction.findById(id);
+
+    // Verify ownership - ensure the transaction belongs to the authenticated user
+    if (!transaction) {
+      throw new Error('Transaction not found', { cause: { status: 404 } });
+    }
+
+    if (transaction.user.toString() !== session.user.id) {
+      throw new Error('Forbidden: You can only delete your own transactions', { cause: { status: 403 } });
+    }
+
     // Delete the transaction record by ID
-    const transaction = await Transaction.findByIdAndDelete(id);
+    const deletedTransaction = await Transaction.findByIdAndDelete(id);
 
     // Return a success response with the deleted transaction
-    return handleSuccessResponse<ITransaction>(transaction);
+    return handleSuccessResponse<ITransaction>(deletedTransaction);
   } catch (error) {
     return handleErrorResponse(error, 'Erro ao deletar transação');
   }
@@ -67,8 +84,8 @@ export async function DELETE(req: Request, { params }: Params) {
  */
 export async function PUT(req: Request, { params }: Params) {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    // Check if the request is authenticated using NextAuth session
+    const session = await isAuthenticated();
 
     // Connect to the database
     await connectToDatabase();
@@ -76,8 +93,23 @@ export async function PUT(req: Request, { params }: Params) {
     // Extract the ID from params
     const { id } = await params;
 
+    // Find the transaction first to verify ownership
+    const existingTransaction = await Transaction.findById(id);
+
+    // Verify ownership - ensure the transaction belongs to the authenticated user
+    if (!existingTransaction) {
+      throw new Error('Transaction not found', { cause: { status: 404 } });
+    }
+
+    if (existingTransaction.user.toString() !== session.user.id) {
+      throw new Error('Forbidden: You can only update your own transactions', { cause: { status: 403 } });
+    }
+
     // Parse the request body as JSON
     const data = await req.json();
+
+    // Ensure user field is not modified
+    delete data.user;
 
     // Update the transaction record by ID
     const transaction = await Transaction.findByIdAndUpdate(id, data, {
