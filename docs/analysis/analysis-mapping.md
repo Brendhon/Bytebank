@@ -182,7 +182,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `app/(guest)/home/page.tsx` | ✅ | ⚠️ | Análise criada - Status: Bom (75%) - Melhorias pendentes (JSDoc, nome de função) |
 | `app/(guest)/404/page.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (58%) - Melhorias pendentes (Link, isolamento de estilos, JSDoc, acessibilidade) |
 | `app/(user)/layout.tsx` | ❌ | ❌ | User layout - necessita análise |
-| `app/(user)/dashboard/page.tsx` | ❌ | ❌ | Dashboard page - necessita análise |
+| `app/(user)/dashboard/page.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (55%) - **ANTI-PADRÃO CRÍTICO** - Uso de useEffect para data fetching (deveria ser Server Component) - Melhorias pendentes (refatorar para Server Component, JSDoc, isolamento de estilos, nome de função, estados de loading/error) |
 | `app/(user)/transactions/page.tsx` | ❌ | ❌ | Transactions page - necessita análise |
 | `app/(user)/settings/page.tsx` | ❌ | ❌ | Settings page - necessita análise |
 | `app/(user)/cards/page.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - **VIOLAÇÃO CRÍTICA DE SEGURANÇA PCI DSS** - CVV e números de cartão expostos - Página demonstrativa com dados mockados - Melhorias pendentes (remover dados sensíveis, JSDoc, authOptions, nome de função) |
@@ -213,5 +213,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 63 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1, Types: 8, App Routes: 7)
+**Arquivos analisados**: 64 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1, Types: 8, App Routes: 8)
 
