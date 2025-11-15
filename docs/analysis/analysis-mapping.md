@@ -135,14 +135,15 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `types/form.ts` | ❌ | ❌ | Definições de tipos - necessita análise |
-| `types/layout.ts` | ❌ | ❌ | Definições de tipos - necessita análise |
-| `types/modal.ts` | ❌ | ❌ | Definições de tipos - necessita análise |
-| `types/nav.ts` | ❌ | ❌ | Definições de tipos - necessita análise |
-| `types/next-auth.d.ts` | ❌ | ❌ | Type declarations - necessita análise |
-| `types/transaction.ts` | ❌ | ❌ | Definições de tipos - necessita análise |
-| `types/ui.ts` | ❌ | ❌ | Definições de tipos - necessita análise |
-| `types/user.ts` | ❌ | ❌ | Definições de tipos - necessita análise |
+| `types/` (pasta completa) | ✅ | ⚠️ | Análise consolidada criada - Status: Bom (78%) - Melhorias pendentes (JSDoc, tradução de comentários) |
+| `types/form.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
+| `types/layout.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
+| `types/modal.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
+| `types/nav.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
+| `types/next-auth.d.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
+| `types/transaction.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
+| `types/ui.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
+| `types/user.ts` | ✅ | ⚠️ | Incluído na análise consolidada da pasta |
 
 ---
 
@@ -208,5 +209,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 48 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1)
+**Arquivos analisados**: 56 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1, Types: 8)
 
