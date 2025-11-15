@@ -148,7 +148,8 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `lib/formatter.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (82%) - Melhorias pendentes |
 | `lib/mongoose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (88%) - Melhorias pendentes |
 | `lib/utils.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - Melhorias pendentes |
-| `lib/constants/routes.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (JSDoc completo, validação de parâmetros, tipos explícitos) |
+| `lib/constants/routes/routes.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (JSDoc completo, validação de parâmetros, tipos explícitos) |
+| `lib/constants/regex/regex.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Conformidade total (JSDoc completo, nomenclatura adequada, organização, reutilização) |
 
 ---
 
@@ -205,6 +206,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 ---
 
 **Última atualização**: 2025-01-27
-**Total de arquivos mapeados**: 75
-**Arquivos analisados**: 74 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 6, Models: 2, Schemas: 4, Services: 3, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+**Total de arquivos mapeados**: 76
+**Arquivos analisados**: 75 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 7 ✅, Models: 2, Schemas: 4, Services: 3, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
 
