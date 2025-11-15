@@ -1,3 +1,6 @@
+import { API_ROUTES, PAGE_ROUTES } from '@/lib/constants/routes';
+import { JWT } from 'next-auth/jwt';
+
 /**
  * Route guard utilities for middleware
  * Contains functions to identify different types of routes
@@ -9,7 +12,7 @@
  * @returns true if the pathname is an auth page
  */
 export const isAuthPage = (pathname: string): boolean => {
-  return pathname.startsWith('/home');
+  return pathname.startsWith(PAGE_ROUTES.HOME);
 };
 
 /**
@@ -18,7 +21,7 @@ export const isAuthPage = (pathname: string): boolean => {
  * @returns true if the pathname is an API route
  */
 export const isAPIRoute = (pathname: string): boolean => {
-  return pathname.startsWith('/api');
+  return pathname.startsWith(API_ROUTES.BASE);
 };
 
 /**
@@ -26,7 +29,7 @@ export const isAPIRoute = (pathname: string): boolean => {
  * @param token - The JWT token from next-auth
  * @returns true if the user has a valid token
  */
-export const isAuthenticated = (token: unknown): boolean => {
+export const isAuthenticated = (token: JWT | null): boolean => {
   return !!token;
 };
 

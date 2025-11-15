@@ -1,4 +1,6 @@
 import { Illustration } from '@/components/ui'
+import { PAGE_ROUTES } from '@/lib/constants/routes'
+import Link from 'next/link'
 
 export default () => {
   return (
@@ -12,9 +14,9 @@ export default () => {
         Que tal voltar e tentar novamente?
       </p>
 
-      <a href='/home' className="button button-orange">
+      <Link href={PAGE_ROUTES.HOME} className="button button-orange">
         Voltar ao início
-      </a>
+      </Link>
 
       <div className="mt-6">
         <Illustration src="404.svg" className='flex' />

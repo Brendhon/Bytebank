@@ -1,4 +1,5 @@
 import User from '@/models/User/User';
+import { PAGE_ROUTES } from '@/lib/constants/routes';
 import bcrypt from 'bcryptjs';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -28,7 +29,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: '/home',
+    signIn: PAGE_ROUTES.HOME,
   },
   session: {
     strategy: 'jwt',

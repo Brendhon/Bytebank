@@ -3,6 +3,7 @@
 import { LoginForm, RegisterForm } from "@/components/form";
 import { Footer, Header } from "@/components/layout";
 import { useToast } from "@/hooks";
+import { PROTECTED_ROUTES } from "@/lib/constants/routes";
 import { LoginFormData, RegisterFormData } from "@/schemas";
 import { registerUser } from "@/services/user/user.service";
 import { IUser } from "@/types/user";
@@ -37,7 +38,7 @@ export default ({ children }: { children: ReactNode }) => {
       setIsLoginOpen(false);
 
       // Redirect to the dashboard
-      router.push('/dashboard');
+      router.push(PROTECTED_ROUTES.DASHBOARD);
     } else {
       // Log failed
       console.error('Login failed:', response?.error);

@@ -1,9 +1,10 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth/auth';
+import { PAGE_ROUTES, PROTECTED_ROUTES } from '@/lib/constants/routes';
 
 export default async () => {
   return await getServerSession(authOptions)
-    ? redirect('/dashboard')
-    : redirect('/home');
+    ? redirect(PROTECTED_ROUTES.DASHBOARD)
+    : redirect(PAGE_ROUTES.HOME);
 };

@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils/utils';
 import { NavItemLabel } from '@/types/nav';
+import { PROTECTED_ROUTES } from '@/lib/constants/routes';
 import { Button } from '@headlessui/react';
 import clsx from 'clsx';
 import { BadgeDollarSign, CreditCard, LayoutDashboard, Loader2, Settings } from 'lucide-react';
@@ -15,10 +16,10 @@ interface Props {
 }
 
 export const navItems = [
-  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Transações', href: '/transactions', icon: BadgeDollarSign },
-  { label: 'Meus Cartões', href: '/cards', icon: CreditCard },
-  { label: 'Configurações', href: '/settings', icon: Settings },
+  { label: 'Dashboard', href: PROTECTED_ROUTES.DASHBOARD, icon: LayoutDashboard },
+  { label: 'Transações', href: PROTECTED_ROUTES.TRANSACTIONS, icon: BadgeDollarSign },
+  { label: 'Meus Cartões', href: PROTECTED_ROUTES.CARDS, icon: CreditCard },
+  { label: 'Configurações', href: PROTECTED_ROUTES.SETTINGS, icon: Settings },
 ] as const;
 
 export default ({ current, onNavigate, className = '' }: Props) => {
