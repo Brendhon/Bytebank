@@ -99,7 +99,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 |------|----------------|--------------|-------------|
 | `services/apiClient.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - **VIOLAÇÃO CRÍTICA DE SEGURANÇA** - API key exposta no cliente - Melhorias pendentes |
 | `services/transaction.service.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (85%) - Melhorias pendentes |
-| `services/user.service.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (validação de senha movida para servidor, tipos de erro customizados, validação de formato de email, mensagens em inglês, remoção de non-null assertions) |
+| `services/user.service.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (validação de senha movida para servidor, tipos de erro customizados com status HTTP, validação de formato de email usando EMAIL_REGEX, mensagens em inglês, remoção de non-null assertions, interface IUserUpdateData sem uso de any, JSDoc completo) |
 
 ---
 

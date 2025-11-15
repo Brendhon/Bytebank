@@ -1,64 +1,93 @@
 # Análise Arquitetural: Serviço: user.service.ts
 
 ## 📋 Resumo Executivo
-**Status:** ⚠️ Requer Atenção (72%)
+**Status:** ✅ Excelente (98%)
 
-O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários (registro, busca, atualização, exclusão). O código utiliza TypeScript com tipagem forte, implementa validação de senha e email, e centraliza a lógica de comunicação com a API através do `apiClient`. As funções possuem documentação JSDoc, seguem o padrão de responsabilidade única, e reutilizam tipos do projeto. No entanto, existem violações relacionadas a mensagens de erro em português, falta de tratamento de erros mais robusto, validação de senha no cliente (deveria ser apenas no servidor), e falta de validação de entrada mais rigorosa.
+O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários (registro, busca, atualização, exclusão). O código utiliza TypeScript com tipagem forte, implementa validação de email no cliente (formato), e centraliza a lógica de comunicação com a API através do `apiClient`. As funções possuem documentação JSDoc completa em inglês, seguem o padrão de responsabilidade única, reutilizam tipos do projeto, e utilizam classes de erro customizadas com status HTTP apropriados. A validação de senha foi corretamente movida para o servidor, garantindo segurança adequada. O código está em alta conformidade com os padrões arquiteturais do projeto.
 
-**Conformidade:** 72%
+**Conformidade:** 98%
 
-## 🚨 Requisitos Técnicos Infringidos
+## ✅ Requisitos Técnicos Conformes
 
-### 1. Mensagens de Erro em Português (Prioridade: Alta)
+### 1. Mensagens e Documentação em Inglês ✅ (Prioridade: Alta)
 - **Requisito:** Todos os comentários e documentação devem estar em inglês.
 - **Documento:** `@docs/guidelines/global.md` - Seção "Best Practices > Comments" e "Documentation Rules"
-- **Infração:** As mensagens de erro estão em português: `'Usuário não encontrado'` (linha 101), `'Senha inválida'` (linha 107), `'Email inválido'` (linha 118). Os comentários também estão em português (linhas 8, 22, 28, 35, 40, 42, 50, 59, 62, 69, 77, 83, 90, 100, 103, 106, 111, 117).
-- **Impacto:** Viola o padrão estabelecido no projeto e pode causar inconsistência na documentação e experiência do usuário.
+- **Status:** ✅ **IMPLEMENTADO** - Todas as mensagens de erro estão em inglês (`Email is required`, `Invalid email format`). Todos os comentários e documentação JSDoc estão em inglês.
+- **Benefício:** Mantém consistência no projeto e facilita colaboração internacional.
 
-### 2. Validação de Senha no Cliente (Prioridade: Alta)
+### 2. Validação de Senha no Servidor ✅ (Prioridade: Crítica)
 - **Requisito:** Validação de senha deve ser realizada apenas no servidor. O cliente não deve ter acesso a senhas hasheadas para comparação.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Infração:** A função `validatePassword` (linhas 96-108) busca o usuário do servidor e compara a senha no cliente usando `bcrypt.compare`. Isso expõe a senha hasheada ao cliente e permite tentativas de força bruta.
-- **Impacto:** **CRÍTICO** - Compromete a segurança ao expor lógica de validação de senha no cliente e permite ataques de força bruta. A validação de senha deve ser feita exclusivamente no servidor.
+- **Status:** ✅ **IMPLEMENTADO** - A validação de senha foi completamente removida do cliente. As funções `deleteUser` e `updateUser` enviam a senha para validação no servidor através dos endpoints da API.
+- **Benefício:** **CRÍTICO** - Garante segurança adequada, prevenindo exposição de senhas hasheadas e ataques de força bruta no cliente.
 
-### 3. Falta de Tratamento de Erros Robusto (Prioridade: Média)
-- **Requisito:** Tratamento robusto de erros com códigos de status HTTP apropriados e mensagens claras.
-- **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria"
-- **Infração:** As funções lançam erros genéricos sem diferenciar tipos de erro ou fornecer informações mais detalhadas sobre o que ocorreu.
-- **Impacto:** Dificulta o debugging e não fornece feedback adequado sobre o tipo de erro ocorrido.
-
-### 4. Falta de Validação de Entrada Mais Rigorosa (Prioridade: Média)
+### 3. Validação de Formato de Email ✅ (Prioridade: Média)
 - **Requisito:** Validação de input em todas as entradas com validação de formato e comprimento.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Infração:** A função `isEmailValid` apenas verifica se o email existe, mas não valida o formato do email (linhas 116-119). A validação de formato deveria ser feita antes de enviar para a API.
-- **Impacto:** Pode permitir que emails inválidos sejam processados, causando erros desnecessários na API.
+- **Status:** ✅ **IMPLEMENTADO** - A função `isEmailValid` valida tanto a existência quanto o formato do email usando `EMAIL_REGEX` importado de constantes (linhas 97-103).
+- **Benefício:** Previne que emails inválidos sejam enviados para a API, melhorando a experiência do usuário e reduzindo requisições desnecessárias.
 
-### 5. Uso de Non-null Assertion (Prioridade: Baixa)
+### 4. Tipos de Erro Customizados ✅ (Prioridade: Média)
+- **Requisito:** Tratamento robusto de erros com códigos de status HTTP apropriados e mensagens claras.
+- **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria"
+- **Status:** ✅ **IMPLEMENTADO** - O código utiliza `InvalidEmailError` importado de `@/types/user`, que possui status HTTP apropriado (400) e mensagens descritivas.
+- **Benefício:** Facilita o debugging e fornece feedback adequado sobre o tipo de erro ocorrido, permitindo tratamento específico no cliente.
+
+### 5. Tipagem Forte sem `any` ✅ (Prioridade: Alta)
+- **Requisito:** O código é estritamente tipado, sem o uso de `any`.
+- **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
+- **Status:** ✅ **IMPLEMENTADO** - O código utiliza a interface `IUserUpdateData` para tipar os dados de atualização, evitando o uso de `any` (linhas 62-66).
+- **Benefício:** Garante type-safety completo, prevenindo erros em tempo de compilação e melhorando a experiência de desenvolvimento.
+
+### 6. Remoção de Non-null Assertions ✅ (Prioridade: Baixa)
 - **Requisito:** Evitar uso de non-null assertion (`!`) quando possível, preferindo validação explícita.
 - **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript"
-- **Infração:** O código utiliza non-null assertion (`email!`) nas linhas 43, 60, após verificar se o email é válido.
-- **Impacto:** Embora funcione após validação, pode ser mais seguro usar validação explícita ou early return.
+- **Status:** ✅ **IMPLEMENTADO** - O código não utiliza non-null assertions. A validação de email é feita antes do uso, e o TypeScript infere corretamente os tipos após a validação.
+- **Benefício:** Código mais seguro e legível, com validação explícita.
 
 ## Pontos em Conformidade
 
 1. **Nomenclatura e Estrutura:** As funções seguem a convenção `camelCase` e estão em arquivo com nomenclatura adequada (`user.service.ts`).
-2. **TypeScript e Tipagem:** O código utiliza TypeScript com tipagem forte, utilizando tipos do projeto (`IUser`, `AccountFormData`).
-3. **Reutilização de Tipos:** Reutiliza tipos do projeto (`IUser`, `AccountFormData`) para garantir consistência.
-4. **Tipos de Retorno:** Todas as funções têm tipos de retorno explícitos.
-5. **Documentação JSDoc:** Todas as funções exportadas possuem documentação JSDoc explicando propósito, parâmetros e retorno.
-6. **Responsabilidade Única (SRP):** Cada função tem uma responsabilidade única e bem definida.
-7. **Clean Code:** O código é legível e bem estruturado.
-8. **Centralização de Endpoints:** A função `getEndpoint` centraliza a formação de endpoints, evitando duplicação.
-9. **Validação de Email:** Implementa validação básica de email antes de fazer requisições.
-10. **Tratamento de Dados:** Remove campos vazios e processa dados antes de enviar para a API (linhas 70, 63-67).
+
+2. **TypeScript e Tipagem:** 
+   - O código utiliza TypeScript com tipagem forte, utilizando tipos do projeto (`IUser`, `AccountFormData`, `IUserUpdateData`).
+   - Reutiliza tipos do projeto para garantir consistência.
+   - Todas as funções têm tipos de retorno explícitos.
+   - Sem uso de `any`.
+
+3. **Reutilização de Tipos:** Reutiliza tipos do projeto (`IUser`, `AccountFormData`, `IUserUpdateData`, `InvalidEmailError`) para garantir consistência e type-safety.
+
+4. **Documentação JSDoc:** Todas as funções exportadas possuem documentação JSDoc completa em inglês, explicando propósito, parâmetros, retorno e exceções lançadas.
+
+5. **Responsabilidade Única (SRP):** Cada função tem uma responsabilidade única e bem definida:
+   - `registerUser`: registra novos usuários
+   - `getAllUsers`: busca todos os usuários
+   - `getUserByEmail`: busca usuário por email
+   - `updateUser`: atualiza dados do usuário
+   - `deleteUser`: deleta usuário
+   - `isEmailValid`: valida formato de email
+
+6. **Clean Code:** O código é legível, conciso e de fácil manutenção.
+
+7. **Centralização de Endpoints:** A função `getEndpoint` centraliza a formação de endpoints, evitando duplicação e facilitando manutenção.
+
+8. **Validação de Email:** Implementa validação completa de email (existência e formato) antes de fazer requisições, usando constante reutilizável (`EMAIL_REGEX`).
+
+9. **Tratamento de Dados:** Remove campos vazios e processa dados antes de enviar para a API (linha 72).
+
+10. **Segurança:** Validação de senha ocorre exclusivamente no servidor, garantindo que senhas hasheadas nunca sejam expostas ao cliente.
+
+11. **Imutabilidade:** Os dados são tratados de forma imutável, criando novos objetos ao invés de modificar os existentes.
+
+12. **Acoplamento:** O código possui baixo acoplamento, dependendo de abstrações (`request` do `apiClient`) em vez de implementações concretas.
 
 ## Pontos de Melhoria
 
-1. **Validação de Formato de Email:** A validação de email poderia ser mais rigorosa, verificando formato antes de fazer requisições.
-2. **Constantes para Mensagens:** Mensagens de erro deveriam ser extraídas para constantes ou arquivo de configuração.
-3. **Tipos de Erro Customizados:** Poderia criar tipos de erro customizados para diferentes cenários (UserNotFoundError, InvalidPasswordError, etc.).
-4. **Validação de Senha no Servidor:** A validação de senha deveria ser feita exclusivamente no servidor através de endpoints específicos.
-5. **Retry Logic:** Para requisições que falham, poderia implementar lógica de retry com backoff exponencial.
+1. **Retry Logic:** Para requisições que falham, poderia implementar lógica de retry com backoff exponencial para melhorar a resiliência da aplicação.
+
+2. **Validação Adicional:** Poderia adicionar validação de comprimento máximo para campos como `name` e `email` antes de enviar para a API.
+
+3. **Cache de Usuários:** Para `getUserByEmail`, poderia implementar cache para evitar requisições repetidas para o mesmo usuário em um curto período.
 
 ## 🎨 Design Patterns Utilizados
 
@@ -78,214 +107,33 @@ O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários 
    - **Localização:** Funções de CRUD (create, read, update, delete)
    - **Benefício:** Permite adicionar novas operações sem modificar código existente.
 
+5. **Error Handling Pattern:** Utiliza classes de erro customizadas com status HTTP apropriados para tratamento consistente de erros.
+   - **Localização:** Uso de `InvalidEmailError` (linhas 99, 102)
+   - **Benefício:** Permite tratamento específico de erros no cliente e fornece informações estruturadas sobre falhas.
+
 ## 🏗️ Princípios SOLID Implementados
 
 ### Implementados
 
 1. **Single Responsibility Principle (SRP):** Cada função tem uma responsabilidade única e bem definida.
-   - **Evidência:** `registerUser` registra usuários, `getUserByEmail` busca por email, `updateUser` atualiza, `deleteUser` exclui, `validatePassword` valida senha, `isEmailValid` valida email.
+   - **Evidência:** `registerUser` registra usuários, `getUserByEmail` busca por email, `updateUser` atualiza, `deleteUser` exclui, `isEmailValid` valida email.
 
 2. **Open/Closed Principle (OCP):** As funções são extensíveis através de parâmetros sem necessidade de modificar o código interno.
    - **Evidência:** Funções aceitam diferentes parâmetros (email, data) permitindo uso em diferentes contextos.
 
 3. **Dependency Inversion Principle (DIP):** As funções dependem da abstração `request` do `apiClient` em vez de implementação concreta.
-   - **Evidência:** Importação e uso de `request` do `./apiClient` (linha 5).
+   - **Evidência:** Importação e uso de `request` do `@/services/apiClient/apiClient` (linha 4).
+
+4. **Liskov Substitution Principle (LSP):** As classes de erro customizadas podem ser substituídas por `Error` padrão sem quebrar o código.
+   - **Evidência:** `InvalidEmailError` estende `Error` e pode ser usado em qualquer lugar que espera `Error`.
 
 ### A Implementar
 
 1. **Interface Segregation Principle (ISP):** Poderia criar interfaces específicas para diferentes operações (IUserReader, IUserWriter) em vez de ter todas as operações em um único serviço.
    - **Justificativa:** Separar interfaces permitiria que clientes dependam apenas das operações que realmente utilizam.
-   - **Plano:** Criar interfaces específicas e refatorar o serviço para implementá-las.
-
-## Plano de Ação
-
-### 1. Traduzir Mensagens e Comentários para Inglês (Prioridade: Alta)
-- Traduzir todas as mensagens de erro e comentários para inglês.
-- Código exemplo:
-```typescript
-/**
- * Form the endpoint for the API
- * @param {string} email - The email of the user
- * @returns {string} - The endpoint URL
- */
-function getEndpoint(email?: string | null | undefined): string {
-  return `/api/users${email ? `/${email}` : ''}`;
-}
-
-/**
- * Registers a new user by sending a POST request to the API.
- * @param {IUser} data - The user data to register
- * @returns {Promise<IUser>} - The registered user data
- */
-export async function registerUser(data: IUser): Promise<IUser> {
-  // Send request to API
-  return request<IUser>('POST', getEndpoint(), data);
-}
-
-// ... similar for all functions
-
-/**
- * Validates a user's password by comparing it with the hashed password in the database.
- * @param {string} email - The email of the user
- * @param {string} plain - The plain text password to validate
- * @returns {Promise<void>} - Resolves if the password is valid, rejects otherwise
- * @throws {Error} - Throws an error if the user is not found or the password is invalid
- */
-async function validatePassword(email: string, plain: string): Promise<void> {
-  // Connect to the database
-  const user = await getUserByEmail(email);
-
-  // Check if email is valid
-  if (!user) throw new Error('User not found');
-
-  // Compare the plain text password with the hashed password
-  const isValid = await bcrypt.compare(plain, user.password);
-
-  // If the password is invalid, throw an error
-  if (!isValid) throw new Error('Invalid password');
-}
-
-/**
- * Check if email is valid
- * @param {string} email - The email to check
- * @returns {void}
- * @throws {Error} - Throws an error if the email is invalid
- */
-function isEmailValid(email: string | null | undefined): void {
-  // Check if email is valid
-  if (!email) throw new Error('Invalid email');
-}
-```
-
-### 2. Mover Validação de Senha para o Servidor (Prioridade: Crítica)
-- Remover a função `validatePassword` do cliente e criar um endpoint no servidor para validação de senha.
-- Atualizar `deleteUser` e `updateUser` para usar o endpoint de validação no servidor.
-- Código exemplo:
-```typescript
-/**
- * Deletes a user by sending a DELETE request to the API.
- * Password validation is performed server-side.
- * @param {string} email - The email of the user to delete
- * @param {string} password - The password for authentication
- * @returns {Promise<IUser>} - The deleted user data
- */
-export async function deleteUser(email: string | null | undefined, password: string): Promise<IUser> {
-  // Check if email is valid
-  isEmailValid(email);
-  
-  // Send request to API (password validation happens server-side)
-  return request<IUser>('DELETE', getEndpoint(email), { password });
-}
-
-/**
- * Updates a user by sending a PUT request to the API.
- * Password validation is performed server-side.
- * @param {string} email - Current email of the user
- * @param {AccountFormData} data - The user data to update
- * @returns {Promise<IUser>} - The updated user data
- */
-export async function updateUser(email: string | null | undefined, data: AccountFormData): Promise<IUser> {
-  // Check if email is valid
-  isEmailValid(email);
-
-  // Set password 
-  if (data.newPassword) {
-    data.password = data.newPassword;
-    delete data.newPassword;
-    delete data.confirmPassword;
-  }
-
-  // Remove empty fields from data
-  const cleanedData = removeEmptyFields(data);
-
-  // Send data to API (password validation happens server-side)
-  return request<IUser>('PUT', getEndpoint(email), cleanedData);
-}
-
-// Remove validatePassword function - validation should be server-side only
-```
-
-### 3. Melhorar Tratamento de Erros (Prioridade: Média)
-- Criar tipos de erro customizados e melhorar o tratamento de erros.
-- Código exemplo:
-```typescript
-class UserNotFoundError extends Error {
-  constructor(email: string) {
-    super(`User with email ${email} not found`);
-    this.name = 'UserNotFoundError';
-  }
-}
-
-class InvalidPasswordError extends Error {
-  constructor() {
-    super('Invalid password');
-    this.name = 'InvalidPasswordError';
-  }
-}
-
-class InvalidEmailError extends Error {
-  constructor() {
-    super('Invalid email');
-    this.name = 'InvalidEmailError';
-  }
-}
-
-function isEmailValid(email: string | null | undefined): void {
-  if (!email) throw new InvalidEmailError();
-}
-
-async function validatePassword(email: string, plain: string): Promise<void> {
-  const user = await getUserByEmail(email);
-  if (!user) throw new UserNotFoundError(email);
-  
-  const isValid = await bcrypt.compare(plain, user.password);
-  if (!isValid) throw new InvalidPasswordError();
-}
-```
-
-### 4. Adicionar Validação de Formato de Email (Prioridade: Média)
-- Adicionar validação de formato de email antes de fazer requisições.
-- Código exemplo:
-```typescript
-/**
- * Check if email is valid
- * @param {string} email - The email to check
- * @returns {void}
- * @throws {Error} - Throws an error if the email is invalid
- */
-function isEmailValid(email: string | null | undefined): void {
-  if (!email) throw new Error('Invalid email');
-  
-  // Validate email format
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    throw new Error('Invalid email format');
-  }
-}
-```
-
-### 5. Remover Non-null Assertion (Prioridade: Baixa)
-- Substituir non-null assertion por validação explícita ou early return.
-- Código exemplo:
-```typescript
-export async function deleteUser(email: string | null | undefined, password: string): Promise<IUser> {
-  // Check if email is valid
-  isEmailValid(email);
-  
-  if (!email) {
-    throw new Error('Invalid email');
-  }
-  
-  // Validate password (server-side validation recommended)
-  await validatePassword(email, password);
-
-  // Send request to API
-  return request<IUser>('DELETE', getEndpoint(email));
-}
-```
+   - **Plano:** Criar interfaces específicas e refatorar o serviço para implementá-las. Isso seria uma melhoria opcional, pois o código atual já está bem estruturado.
 
 ## 📊 Mapeamento
-**Arquivo:** `src/services/user.service.ts`  
+**Arquivo:** `src/services/user/user.service.ts`  
 **Status:** ✅ Criado  
 **Link:** `@docs/analysis/analysis-mapping.md`
-
