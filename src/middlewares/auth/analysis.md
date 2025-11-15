@@ -3,7 +3,7 @@
 ## 📋 Resumo Executivo
 **Status:** ✅ Bom (82%)
 
-O middleware foi refatorado com excelente separação de responsabilidades, seguindo princípios de Clean Architecture e SOLID. A lógica foi modularizada em arquivos separados (`index.ts`, `guards.ts`, `handlers.ts`, `config.ts`), cada um com uma responsabilidade única e bem definida. O código utiliza TypeScript com tipagem forte, possui documentação JSDoc adequada em todas as funções, e implementa padrões de design apropriados (Strategy, Guard, Handler). No entanto, existem algumas violações menores relacionadas à falta de tratamento de erros robusto, ausência de validação de variável de ambiente, e falta de constantes para rotas que poderiam facilitar manutenção futura.
+O middleware foi refatorado com excelente separação de responsabilidades, seguindo princípios de Clean Architecture e SOLID. A lógica principal está em `middleware.ts` (ponto de entrada do Next.js), enquanto as funções auxiliares foram modularizadas em arquivos separados (`guards.ts`, `handlers.ts`), cada um com uma responsabilidade única e bem definida. O código utiliza TypeScript com tipagem forte, possui documentação JSDoc adequada, e implementa padrões de design apropriados (Strategy, Guard, Handler). No entanto, existem algumas violações menores relacionadas à falta de tratamento de erros robusto, ausência de validação de variável de ambiente, e falta de constantes para rotas que poderiam facilitar manutenção futura.
 
 **Conformidade:** 82%
 
@@ -12,13 +12,13 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 ### 1. Falta de Tratamento de Erros Robusto (Prioridade: Alta)
 - **Requisito:** Tratamento robusto de erros com fallbacks adequados.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria"
-- **Infração:** A função `middlewareHandler` em `index.ts` não trata erros que podem ocorrer ao chamar `getToken` (ex: se `NEXTAUTH_SECRET` não estiver definido, se houver erro na decodificação do token). Os handlers também não tratam erros ao criar URLs de redirecionamento.
+- **Infração:** A função `middleware` em `middleware.ts` não trata erros que podem ocorrer ao chamar `getToken` (ex: se `NEXTAUTH_SECRET` não estiver definido, se houver erro na decodificação do token). Os handlers também não tratam erros ao criar URLs de redirecionamento.
 - **Impacto:** Pode causar falhas silenciosas ou erros não tratados que quebram a aplicação, especialmente em produção. Se `getToken` falhar, o middleware pode lançar uma exceção não tratada.
 
 ### 2. Falta de Validação de Variável de Ambiente (Prioridade: Alta)
 - **Requisito:** Variáveis de ambiente críticas devem ser validadas.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria"
-- **Infração:** A função `middlewareHandler` utiliza `process.env.NEXTAUTH_SECRET` sem validar se está definido (linha 21 de `index.ts`). Se não estiver definido, pode causar erros em tempo de execução.
+- **Infração:** A função `middleware` utiliza `process.env.NEXTAUTH_SECRET` sem validar se está definido (linha 10 de `middleware.ts`). Se não estiver definido, pode causar erros em tempo de execução.
 - **Impacto:** Pode causar falhas em produção se a variável de ambiente não estiver configurada corretamente, resultando em comportamento inesperado ou falhas no middleware.
 
 ### 3. Falta de Tratamento de Erros nos Handlers (Prioridade: Média)
@@ -36,7 +36,7 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 ### 5. Falta de Comentário Explicando Matcher Pattern (Prioridade: Baixa)
 - **Requisito:** Código complexo deve ter comentários explicativos.
 - **Documento:** `@docs/guidelines/global.md` - Seção "Best Practices > Comments"
-- **Infração:** O padrão regex do matcher em `config.ts` (linha 9) possui apenas um comentário básico, mas não explica detalhadamente o que o regex faz.
+- **Infração:** O padrão regex do matcher em `middleware.ts` (linha 45) possui apenas um comentário básico, mas não explica detalhadamente o que o regex faz.
 - **Impacto:** Dificulta a compreensão do padrão regex para desenvolvedores que não estão familiarizados com a sintaxe.
 
 ## Pontos em Conformidade
@@ -45,14 +45,12 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 
 2. **TypeScript e Tipagem:** O código utiliza TypeScript com tipagem forte, utilizando tipos do Next.js (`NextRequest`, `NextResponse`) e tipos apropriados em todas as funções.
 
-3. **Documentação JSDoc:** Todas as funções exportadas possuem documentação JSDoc completa, explicando propósito, parâmetros e retorno (arquivos: `index.ts`, `guards.ts`, `handlers.ts`, `config.ts`).
+3. **Documentação JSDoc:** As funções exportadas possuem documentação JSDoc adequada, explicando propósito, parâmetros e retorno (arquivos: `middleware.ts`, `guards.ts`, `handlers.ts`).
 
 4. **Separação de Responsabilidades (SRP):** A refatoração implementa excelente separação de responsabilidades:
-   - `middleware.ts`: Ponto de entrada e exportações
-   - `index.ts`: Lógica principal de orquestração
-   - `guards.ts`: Funções de verificação (guards)
-   - `handlers.ts`: Handlers para diferentes casos
-   - `config.ts`: Configuração do middleware
+   - `middleware.ts`: Ponto de entrada do Next.js, lógica principal de orquestração e configuração
+   - `middlewares/auth/guards.ts`: Funções de verificação (guards)
+   - `middlewares/auth/handlers.ts`: Handlers para diferentes casos
 
 5. **Clean Code:** O código é legível, conciso e de fácil manutenção. A modularização torna o código muito mais fácil de entender e testar.
 
@@ -105,11 +103,11 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
    - **Benefício:** Separa a lógica de processamento da lógica de decisão, facilitando manutenção e testes.
 
 5. **Module Pattern:** Cada arquivo representa um módulo com responsabilidade específica.
-   - **Localização:** Toda a estrutura de pastas `middleware/`
+   - **Localização:** Toda a estrutura de pastas `middlewares/auth/`
    - **Benefício:** Facilita organização, manutenção e testes do código.
 
 6. **Factory Pattern (Parcial):** A função `getToken` funciona como uma factory para criar tokens.
-   - **Localização:** `index.ts` linha 19-22
+   - **Localização:** `middleware.ts` linha 8-11
    - **Benefício:** Centraliza a criação de tokens, facilitando mudanças futuras na implementação.
 
 ## 🏗️ Princípios SOLID Implementados
@@ -117,11 +115,9 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 ### Implementados
 
 1. **Single Responsibility Principle (SRP):** Cada arquivo e função tem uma responsabilidade única e bem definida:
-   - `middleware.ts`: Apenas exportações
-   - `index.ts`: Orquestração da lógica principal
-   - `guards.ts`: Verificações (guards)
-   - `handlers.ts`: Processamento de requisições (handlers)
-   - `config.ts`: Configuração
+   - `middleware.ts`: Ponto de entrada do Next.js, orquestração da lógica principal e configuração
+   - `middlewares/auth/guards.ts`: Verificações (guards)
+   - `middlewares/auth/handlers.ts`: Processamento de requisições (handlers)
    - **Evidência:** Cada arquivo contém funções relacionadas a uma única responsabilidade.
 
 2. **Open/Closed Principle (OCP):** O sistema é extensível sem modificar código existente:
@@ -131,7 +127,7 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
    - **Evidência:** A estrutura modular permite adicionar funcionalidades sem alterar código existente.
 
 3. **Dependency Inversion Principle (DIP):** O código depende de abstrações (funções) em vez de implementações concretas:
-   - `index.ts` depende de funções abstratas de `guards.ts` e `handlers.ts`
+   - `middleware.ts` depende de funções abstratas de `guards.ts` e `handlers.ts`
    - Handlers dependem de tipos abstratos (`NextRequest`, `NextResponse`)
    - **Evidência:** As dependências são através de imports de funções, não de implementações concretas.
 
@@ -152,8 +148,8 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 - Adicionar tratamento de erros com try-catch e fallbacks adequados.
 - Código exemplo:
 ```typescript
-// middleware/index.ts
-export async function middlewareHandler(request: NextRequest): Promise<NextResponse> {
+// middleware.ts
+export async function middleware(request: NextRequest) {
   try {
     // Validate environment variable
     if (!process.env.NEXTAUTH_SECRET) {
@@ -209,7 +205,7 @@ export async function middlewareHandler(request: NextRequest): Promise<NextRespo
 - Adicionar tratamento de erros ao criar URLs nos handlers.
 - Código exemplo:
 ```typescript
-// middleware/handlers.ts
+// middlewares/auth/handlers.ts
 export const handleUnauthenticatedAccess = (request: NextRequest): NextResponse => {
   try {
     return NextResponse.redirect(new URL('/home', request.url));
@@ -235,14 +231,14 @@ export const handleAuthenticatedAuthPageAccess = (request: NextRequest): NextRes
 - Criar arquivo de constantes para rotas.
 - Código exemplo:
 ```typescript
-// middleware/constants.ts
+// middlewares/auth/constants.ts
 export const ROUTES = {
   HOME: '/home',
   DASHBOARD: '/dashboard',
   API_PREFIX: '/api',
 } as const;
 
-// middleware/guards.ts
+// middlewares/auth/guards.ts
 import { ROUTES } from './constants';
 
 export const isAuthPage = (pathname: string): boolean => {
@@ -253,7 +249,7 @@ export const isAPIRoute = (pathname: string): boolean => {
   return pathname.startsWith(ROUTES.API_PREFIX);
 };
 
-// middleware/handlers.ts
+// middlewares/auth/handlers.ts
 import { ROUTES } from './constants';
 
 export const handleUnauthenticatedAccess = (request: NextRequest): NextResponse => {
@@ -269,10 +265,9 @@ export const handleAuthenticatedAuthPageAccess = (request: NextRequest): NextRes
 - Adicionar comentário explicando o regex do matcher.
 - Código exemplo:
 ```typescript
-// middleware/config.ts
+// middleware.ts
 /**
- * Middleware configuration
- * Defines which routes should be processed by the middleware
+ * Configuration for the middleware
  * 
  * The matcher pattern uses a negative lookahead regex:
  * - `(?!_next|.*\\..*)` - Negative lookahead that excludes:
@@ -282,10 +277,8 @@ export const handleAuthenticatedAuthPageAccess = (request: NextRequest): NextRes
  * This ensures the middleware only runs on actual page routes,
  * improving performance by skipping static assets and Next.js internals.
  */
-export const middlewareConfig: Pick<NextConfig, 'matcher'> = {
-  matcher: [
-    '/((?!_next|.*\\..*).*)', // Exclude /_next and files with extension
-  ],
+export const config = {
+  matcher: ['/((?!_next|.*\\..*).*)'] // Exclude /_next and files with extension
 };
 ```
 
@@ -293,7 +286,7 @@ export const middlewareConfig: Pick<NextConfig, 'matcher'> = {
 - Usar tipo mais específico para o token em vez de `unknown`.
 - Código exemplo:
 ```typescript
-// middleware/guards.ts
+// middlewares/auth/guards.ts
 import { JWT } from 'next-auth/jwt';
 
 /**
@@ -307,6 +300,6 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 ```
 
 ## 📊 Mapeamento
-**Arquivo:** `src/middleware.ts` e `src/middleware/`  
+**Arquivo:** `src/middleware.ts` e `src/middlewares/auth/`  
 **Status:** ✅ Criado  
 **Link:** `@docs/analysis/analysis-mapping.md`

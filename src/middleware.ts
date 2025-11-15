@@ -1,15 +1,46 @@
+import { getToken } from 'next-auth/jwt';
+import { NextRequest } from 'next/server';
+import { isAPIRoute, isAuthenticated, isAuthPage } from './middlewares/auth/guards';
+import { handleAPIRequest, handleAuthenticatedAuthPageAccess, handleDefaultCase, handleUnauthenticatedAccess } from './middlewares/auth/handlers';
+
+export async function middleware(request: NextRequest) {
+  // Get the token from the request
+  const token = await getToken({ 
+    req: request, 
+    secret: process.env.NEXTAUTH_SECRET 
+  });
+
+  // Get path from the request
+  const { pathname } = request.nextUrl;
+
+  // Check route types
+  const isAPI = isAPIRoute(pathname);
+  const isAuth = isAuthPage(pathname);
+  const hasToken = isAuthenticated(token);
+
+  // Route handling logic
+  switch (true) {
+    // Allow API requests to pass through
+    case isAPI:
+      return handleAPIRequest(request);
+
+    // Redirect unauthenticated users to home/login
+    case !hasToken && !isAuth:
+      return handleUnauthenticatedAccess(request);
+
+    // Redirect authenticated users away from auth pages to dashboard
+    case hasToken && isAuth:
+      return handleAuthenticatedAuthPageAccess(request);
+
+    // Default: allow request to continue
+    default:
+      return handleDefaultCase(request);
+  } 
+}
+
 /**
- * Next.js Middleware Entry Point
- * 
- * This file must remain at src/middleware.ts due to Next.js conventions.
- * All logic has been modularized in the src/middleware/ directory.
- * 
- * @see src/middleware/index.ts - Main middleware logic
- * @see src/middleware/guards.ts - Route guards and checks
- * @see src/middleware/handlers.ts - Request handlers
- * @see src/middleware/config.ts - Middleware configuration
+ * Configuration for the middleware
  */
-
-export { middlewareHandler as middleware } from './middleware/index';
-export { middlewareConfig as config } from './middleware/config';
-
+export const config = {
+  matcher: ['/((?!_next|.*\\..*).*)'] // Exclude /_next and files with extension
+};
