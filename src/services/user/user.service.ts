@@ -1,8 +1,9 @@
+import { API_ROUTES } from "@/lib/constants/routes";
 import { removeEmptyFields } from "@/lib/utils/utils";
 import { AccountFormData } from "@/schemas";
+import { request } from "@/services/apiClient/apiClient";
 import { IUser } from "@/types/user";
 import bcrypt from "bcryptjs";
-import { request } from "@/services/apiClient/apiClient";
 
 /**
  * Form the endpoint for the API
@@ -10,7 +11,7 @@ import { request } from "@/services/apiClient/apiClient";
  * @returns {string} - The endpoint URL
  */
 function getEndpoint(email?: string | null | undefined): string {
-  return `/api/users${email ? `/${email}` : ''}`;
+  return email ? API_ROUTES.USERS.BY_EMAIL(email) : API_ROUTES.USERS.BASE;
 }
 
 /**

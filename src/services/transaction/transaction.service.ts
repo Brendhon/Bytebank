@@ -1,5 +1,6 @@
 import { ITransaction, TransactionSummary } from "@/types/transaction";
 import { request } from "@/services/apiClient/apiClient";
+import { API_ROUTES } from "@/lib/constants/routes";
 
 /**
  * Form the endpoint for the API
@@ -7,7 +8,7 @@ import { request } from "@/services/apiClient/apiClient";
  * @returns {string} - The endpoint URL
  */
 function getEndpoint(endpoint?: string | null | undefined): string {
-  return `/api/transactions${endpoint ? `/${endpoint}` : ''}`;
+  return endpoint ? API_ROUTES.TRANSACTIONS.BY_ID(endpoint) : API_ROUTES.TRANSACTIONS.BASE;
 }
 
 /**

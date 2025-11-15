@@ -48,8 +48,23 @@ export const API_ROUTES = {
   TRANSACTIONS: {
     /** Base transactions endpoint */
     BASE: '/api/transactions',
-    /** Get transaction by ID */
-    BY_ID: (id: string) => `/api/transactions/${id}`,
+    /**
+     * Creates a dynamic route URL for a transaction by ID.
+     * 
+     * @param {string} id - The transaction ID (must be a non-empty string)
+     * @returns {string} The complete API route URL for the transaction
+     * @throws {Error} If id is empty or invalid
+     * 
+     * @example
+     * const route = API_ROUTES.TRANSACTIONS.BY_ID('507f1f77bcf86cd799439011');
+     * // Returns: '/api/transactions/507f1f77bcf86cd799439011'
+     */
+    BY_ID: (id: string): string => {
+      if (!id || typeof id !== 'string' || id.trim() === '') {
+        throw new Error('Transaction ID must be a non-empty string');
+      }
+      return `/api/transactions/${id}`;
+    },
     /** Transaction summary endpoint */
     SUMMARY: '/api/transactions/summary',
   },
@@ -58,8 +73,23 @@ export const API_ROUTES = {
   USERS: {
     /** Base users endpoint */
     BASE: '/api/users',
-    /** Get user by email */
-    BY_EMAIL: (email: string) => `/api/users/${email}`,
+    /**
+     * Creates a dynamic route URL for a user by email.
+     * 
+     * @param {string} email - The user email address (must be a non-empty string)
+     * @returns {string} The complete API route URL for the user
+     * @throws {Error} If email is empty or invalid
+     * 
+     * @example
+     * const route = API_ROUTES.USERS.BY_EMAIL('user@example.com');
+     * // Returns: '/api/users/user@example.com'
+     */
+    BY_EMAIL: (email: string): string => {
+      if (!email || typeof email !== 'string' || email.trim() === '') {
+        throw new Error('User email must be a non-empty string');
+      }
+      return `/api/users/${email}`;
+    },
   },
 } as const;
 
