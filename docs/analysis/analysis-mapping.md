@@ -171,9 +171,10 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `app/layout.tsx` | ❌ | ❌ | Root layout - necessita análise |
-| `app/page.tsx` | ❌ | ❌ | Home page - necessita análise |
-| `app/not-found.tsx` | ❌ | ❌ | 404 page - necessita análise |
+| `app/` (pasta raiz - principais) | ✅ | ⚠️ | Análise consolidada criada - Status: Bom (82%) - Melhorias pendentes (JSDoc, tratamento de erros) |
+| `app/layout.tsx` | ✅ | ⚠️ | Incluído na análise consolidada da pasta raiz |
+| `app/page.tsx` | ✅ | ⚠️ | Incluído na análise consolidada da pasta raiz |
+| `app/not-found.tsx` | ✅ | ⚠️ | Incluído na análise consolidada da pasta raiz |
 | `app/(guest)/layout.tsx` | ❌ | ❌ | Guest layout - necessita análise |
 | `app/(guest)/home/page.tsx` | ❌ | ❌ | Guest home page - necessita análise |
 | `app/(guest)/404/page.tsx` | ❌ | ❌ | Guest 404 page - necessita análise |
@@ -209,5 +210,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 56 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1, Types: 8)
+**Arquivos analisados**: 59 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1, Types: 8, App Routes: 3)
 
