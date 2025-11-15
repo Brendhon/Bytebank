@@ -24,7 +24,7 @@ O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários 
 ### 3. Validação de Formato de Email ✅ (Prioridade: Média)
 - **Requisito:** Validação de input em todas as entradas com validação de formato e comprimento.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Status:** ✅ **IMPLEMENTADO** - A função `isEmailValid` valida tanto a existência quanto o formato do email usando a função utilitária `isEmailFormatValid` importada de `@/lib/utils/utils` (linhas 97-103). A função `isEmailFormatValid` encapsula a validação de formato usando `EMAIL_REGEX`, proporcionando melhor reutilização e manutenibilidade.
+- **Status:** ✅ **IMPLEMENTADO** - A função `validateEmail` valida tanto a existência quanto o formato do email usando a função utilitária `isEmailFormatValid` importada de `@/lib/utils/utils` (linhas 97-103). A função `isEmailFormatValid` encapsula a validação de formato usando `EMAIL_REGEX`, proporcionando melhor reutilização e manutenibilidade.
 - **Benefício:** Previne que emails inválidos sejam enviados para a API, melhorando a experiência do usuário e reduzindo requisições desnecessárias. A encapsulação em uma função utilitária facilita manutenção futura e garante consistência na validação de email em todo o projeto.
 
 ### 4. Tipos de Erro Customizados ✅ (Prioridade: Média)
@@ -65,7 +65,7 @@ O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários 
    - `getUserByEmail`: busca usuário por email
    - `updateUser`: atualiza dados do usuário
    - `deleteUser`: deleta usuário
-   - `isEmailValid`: valida formato de email
+   - `validateEmail`: valida formato de email
 
 6. **Clean Code:** O código é legível, conciso e de fácil manutenção.
 
@@ -116,7 +116,7 @@ O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários 
 ### Implementados
 
 1. **Single Responsibility Principle (SRP):** Cada função tem uma responsabilidade única e bem definida.
-   - **Evidência:** `registerUser` registra usuários, `getUserByEmail` busca por email, `updateUser` atualiza, `deleteUser` exclui, `isEmailValid` valida email.
+   - **Evidência:** `registerUser` registra usuários, `getUserByEmail` busca por email, `updateUser` atualiza, `deleteUser` exclui, `validateEmail` valida email.
 
 2. **Open/Closed Principle (OCP):** As funções são extensíveis através de parâmetros sem necessidade de modificar o código interno.
    - **Evidência:** Funções aceitam diferentes parâmetros (email, data) permitindo uso em diferentes contextos.

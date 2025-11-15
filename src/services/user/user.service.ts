@@ -40,7 +40,7 @@ export function getAllUsers(): Promise<IUser[]> {
  */
 export async function deleteUser(email: string | null | undefined, password: string): Promise<IUser> {
   // Check if email is valid (throws InvalidEmailError if invalid)
-  isEmailValid(email);
+  validateEmail(email);
 
   // Send request to API (password validation happens server-side)
   return request<IUser>('DELETE', getEndpoint(email), { password });
@@ -56,7 +56,7 @@ export async function deleteUser(email: string | null | undefined, password: str
  */
 export async function updateUser(email: string | null | undefined, data: AccountFormData): Promise<IUser> {
   // Check if email is valid (throws InvalidEmailError if invalid)
-  isEmailValid(email);
+  validateEmail(email);
 
   // Prepare data for API request
   const updateData: IUserUpdateData = {
@@ -82,7 +82,7 @@ export async function updateUser(email: string | null | undefined, data: Account
  */
 export async function getUserByEmail(email: string | null | undefined): Promise<IUser> {
   // Check if email is valid (throws InvalidEmailError if invalid)
-  isEmailValid(email);
+  validateEmail(email);
 
   // Send request to API
   return request<IUser>('GET', getEndpoint(email));
@@ -94,7 +94,7 @@ export async function getUserByEmail(email: string | null | undefined): Promise<
  * @returns {void}
  * @throws {InvalidEmailError} - Throws an error if the email is invalid or has invalid format
  */
-function isEmailValid(email: string | null | undefined): void {
+function validateEmail(email: string | null | undefined): void {
   // Check if email exists
   if (!email) throw new InvalidEmailError('Email is required');
 
