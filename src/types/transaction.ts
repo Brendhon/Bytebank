@@ -41,26 +41,44 @@ export type TransactionDescKey = keyof typeof TransactionDesc;
 export type TransactionTypeKey = keyof typeof TransactionType;
 
 /**
- * Represents a financial transaction in the system.
+ * Base transaction information containing core transaction data.
  * 
- * @interface ITransaction
- * @property {string} [_id] - Optional unique identifier for the transaction (MongoDB ObjectId)
+ * @interface ITransactionBase
  * @property {string} date - Transaction date in ISO format (YYYY-MM-DD)
  * @property {string} [alias] - Optional alias or description for the transaction
  * @property {TransactionTypeKey} type - Type of transaction (inflow or outflow)
  * @property {TransactionDescKey} desc - Description category of the transaction
  * @property {number} value - Transaction amount (positive number)
+ */
+export interface ITransactionBase {
+  date: string;
+  alias?: string;
+  type: TransactionTypeKey;
+  desc: TransactionDescKey;
+  value: number;
+}
+
+/**
+ * Transaction metadata containing database and user-related fields.
+ * 
+ * @interface ITransactionMetadata
+ * @property {string} [_id] - Optional unique identifier for the transaction (MongoDB ObjectId)
  * @property {string} [user] - Optional user identifier associated with the transaction
  */
-export interface ITransaction {
-  _id?: string
-  date: string
-  alias?: string
-  type: TransactionTypeKey
-  desc: TransactionDescKey
-  value: number
-  user?: string
+export interface ITransactionMetadata {
+  _id?: string;
+  user?: string;
 }
+
+/**
+ * Represents a complete financial transaction in the system.
+ * Combines base transaction information with metadata following Interface Segregation Principle.
+ * 
+ * @interface ITransaction
+ * @extends {ITransactionBase}
+ * @extends {ITransactionMetadata}
+ */
+export interface ITransaction extends ITransactionBase, ITransactionMetadata {}
 
 /**
  * Represents a summary of transactions with balance and breakdown by category.
