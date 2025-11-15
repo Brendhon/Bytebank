@@ -189,7 +189,7 @@ async function executeRequest(
  * ```
  */
 export async function request<T>(
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  method: HttpMethod,
   url: string,
   body?: unknown | T,
   timeout: number = DEFAULT_TIMEOUT,
@@ -249,7 +249,7 @@ export async function request<T>(
  * ```
  */
 export function requestWithCancellation<T>(
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  method: HttpMethod,
   url: string,
   body?: unknown | T,
   timeout: number = DEFAULT_TIMEOUT,

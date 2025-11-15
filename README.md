@@ -112,6 +112,9 @@ NEXTAUTH_SECRET=sua_chave_secreta
 
 # URL base do site
 NEXTAUTH_URL=http://localhost:3000
+
+# URL base da API
+NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
 3. Para habilitar links diretos para o Storybook, Figma e Github no menu de perfil do usuário, adicione também as seguintes variáveis de ambiente:

@@ -4,13 +4,17 @@ import { AccountFormData } from "@/schemas";
 import { request } from "@/services/apiClient/apiClient";
 import { IUser, IUserUpdateData, InvalidEmailError } from "@/types/user";
 
+// Base URL of the API
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
 /**
  * Forms the endpoint for the API
  * @param {string} email - The email of the user
  * @returns {string} - The endpoint URL
  */
 function getEndpoint(email?: string | null | undefined): string {
-  return email ? API_ROUTES.USERS.BY_EMAIL(email) : API_ROUTES.USERS.BASE;
+  const path = email ? API_ROUTES.USERS.BY_EMAIL(email) : API_ROUTES.USERS.BASE;
+  return `${baseUrl}${path}`;
 }
 
 /**

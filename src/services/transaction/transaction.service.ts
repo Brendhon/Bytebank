@@ -1,13 +1,16 @@
-import { ITransaction, TransactionSummary } from "@/types/transaction";
-import { request } from "@/services/apiClient/apiClient";
 import { API_ROUTES } from "@/lib/constants";
+import { request } from "@/services/apiClient/apiClient";
+import { ITransaction, TransactionSummary } from "@/types/transaction";
+
+// Base URL of the API
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Forms the base endpoint for the API
  * @returns {string} - The base endpoint URL
  */
 function getBaseEndpoint(): string {
-  return API_ROUTES.TRANSACTIONS.BASE;
+  return `${baseUrl}${API_ROUTES.TRANSACTIONS.BASE}`;
 }
 
 /**
@@ -16,7 +19,7 @@ function getBaseEndpoint(): string {
  * @returns {string} - The endpoint URL
  */
 function getTransactionByIdEndpoint(id: string): string {
-  return API_ROUTES.TRANSACTIONS.BY_ID(id);
+  return `${baseUrl}${API_ROUTES.TRANSACTIONS.BY_ID(id)}`;
 }
 
 /**
@@ -26,7 +29,7 @@ function getTransactionByIdEndpoint(id: string): string {
  */
 function getSummaryEndpoint(userId: string): string {
   const searchParams = new URLSearchParams({ userId });
-  return `${API_ROUTES.TRANSACTIONS.SUMMARY}?${searchParams.toString()}`;
+  return `${baseUrl}${API_ROUTES.TRANSACTIONS.SUMMARY}?${searchParams.toString()}`;
 }
 
 /**
