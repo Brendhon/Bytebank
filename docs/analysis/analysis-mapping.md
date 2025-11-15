@@ -193,7 +193,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `app/api/auth/[...nextauth]/route.ts` | ❌ | ❌ | NextAuth API route - necessita análise |
+| `app/api/auth/[...nextauth]/route.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (85%) - Melhorias pendentes (JSDoc) |
 | `app/api/transactions/route.ts` | ❌ | ❌ | API route - necessita análise |
 | `app/api/transactions/[id]/route.ts` | ❌ | ❌ | API route dinâmica - necessita análise |
 | `app/api/transactions/summary/route.ts` | ❌ | ❌ | API route - necessita análise |
@@ -213,5 +213,5 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 **Última atualização**: 2025-01-27
 **Total de arquivos mapeados**: 74
-**Arquivos analisados**: 67 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1, Types: 8, App Routes: 11)
+**Arquivos analisados**: 68 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 5, Models: 2, Schemas: 4, Services: 3, Middleware: 1, Types: 8, App Routes: 11, API Routes: 1)
 
