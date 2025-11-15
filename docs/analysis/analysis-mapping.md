@@ -19,7 +19,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `components/ui/Toast/Toast.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) |
 | `components/ui/Logo/Logo.tsx` | ✅ | ✅ | Melhorias implementadas |
 | `components/ui/Illustration/Illustration.tsx` | ✅ | ✅ | Melhorias implementadas |
-| `components/ui/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
@@ -30,7 +29,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `components/table/Table/Table.tsx` | ✅ | ⚠️ | Análise criada - Status: Bom (75%) - Melhorias pendentes |
 | `components/table/Paginator/Paginator.tsx` | ✅ | ⚠️ | Análise criada - Melhorias pendentes |
 | `components/table/TransactionTable/TransactionTable.tsx` | ✅ | ⚠️ | Análise criada - Melhorias pendentes |
-| `components/table/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
@@ -42,7 +40,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `components/cards/CreditCard/CreditCard.tsx` | ✅ | ⚠️ | Análise criada - Status: Crítico (30%) - **VIOLAÇÃO DE SEGURANÇA PCI DSS** - CVV exposto |
 | `components/cards/CreditCardSession/CreditCardSession.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (55%) - Melhorias pendentes |
 | `components/cards/WelcomeCard/WelcomeCard.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (52%) - Melhorias pendentes |
-| `components/cards/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
@@ -57,7 +54,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `components/form/RegisterForm/RegisterForm.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
 | `components/form/Select/Select.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - Melhorias pendentes |
 | `components/form/TransactionForm/TransactionForm.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
-| `components/form/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
@@ -76,7 +72,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `components/layout/MovementsSection/MovementsSection.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (55%) - Melhorias pendentes |
 | `components/layout/NavMenu/NavMenu.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
 | `components/layout/Popover/Popover.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
-| `components/layout/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
@@ -86,7 +81,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 |------|----------------|--------------|-------------|
 | `hooks/useAutoClose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (85%) - Melhorias pendentes |
 | `hooks/useToast.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
-| `hooks/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
@@ -96,7 +90,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 |------|----------------|--------------|-------------|
 | `context/ToastContext/ToastContext.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (50%) - Melhorias pendentes |
 | `context/NextAuthContext/NextAuthContext.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (50%) - Melhorias pendentes |
-| `context/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
@@ -127,7 +120,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `schemas/login.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - Melhorias pendentes |
 | `schemas/register.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
 | `schemas/transaction.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (72%) - Melhorias pendentes |
-| `schemas/index.ts` | ❌ | ❌ | Arquivo de exportação - pode não necessitar análise individual |
 
 ---
 
