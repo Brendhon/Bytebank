@@ -1,4 +1,9 @@
 import { navItems } from "@/components/layout/NavMenu/NavMenu";
 
-// This type is used to define the possible values for the href property in the navItems array.
+/**
+ * Type representing the possible navigation item labels (href values).
+ * Derived from the navItems array in NavMenu component.
+ * 
+ * @typedef {typeof navItems[number]['href']} NavItemLabel
+ */
 export type NavItemLabel = typeof navItems[number]['href'];

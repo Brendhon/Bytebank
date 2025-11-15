@@ -1,27 +1,58 @@
 import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
-// Extending the "next-auth" module to customize the Session and User interfaces
+/**
+ * Type declaration module augmentation for NextAuth.
+ * Extends the "next-auth" module to customize the Session and User interfaces.
+ * 
+ * @module next-auth
+ */
 declare module "next-auth" {
-  // Customizing the Session interface to include a user object with specific properties
+  /**
+   * Customized Session interface with user object containing specific properties.
+   * 
+   * @interface Session
+   * @property {Object} user - User object with authentication information
+   * @property {string} user.id - Unique identifier for the user
+   * @property {string | null} [user.name] - Optional name of the user
+   * @property {string | null} [user.email] - Optional email of the user
+   * @property {string | null} [user.image] - Optional profile image URL of the user
+   */
   interface Session {
     user: {
-      id: string; // Unique identifier for the user
-      name?: string | null; // Optional name of the user
-      email?: string | null; // Optional email of the user
-      image?: string | null; // Optional profile image of the user
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
     };
   }
 
-  // Extending the DefaultUser interface to include an id property
+  /**
+   * Extended User interface that includes an id property.
+   * 
+   * @interface User
+   * @extends {DefaultUser}
+   * @property {string} id - Unique identifier for the user
+   */
   interface User extends DefaultUser {
-    id: string; // Unique identifier for the user
+    id: string;
   }
 }
 
-// Extending the "next-auth/jwt" module to customize the JWT interface
+/**
+ * Type declaration module augmentation for NextAuth JWT.
+ * Extends the "next-auth/jwt" module to customize the JWT interface.
+ * 
+ * @module next-auth/jwt
+ */
 declare module "next-auth/jwt" {
+  /**
+   * Customized JWT interface with user identifier.
+   * 
+   * @interface JWT
+   * @property {string} id - Unique identifier for the user stored in the JWT
+   */
   interface JWT {
-    id: string; // Unique identifier for the user stored in the JWT
+    id: string;
   }
 }
