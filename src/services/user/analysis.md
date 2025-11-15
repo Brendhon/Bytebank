@@ -24,8 +24,8 @@ O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários 
 ### 3. Validação de Formato de Email ✅ (Prioridade: Média)
 - **Requisito:** Validação de input em todas as entradas com validação de formato e comprimento.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Status:** ✅ **IMPLEMENTADO** - A função `isEmailValid` valida tanto a existência quanto o formato do email usando `EMAIL_REGEX` importado de constantes (linhas 97-103).
-- **Benefício:** Previne que emails inválidos sejam enviados para a API, melhorando a experiência do usuário e reduzindo requisições desnecessárias.
+- **Status:** ✅ **IMPLEMENTADO** - A função `isEmailValid` valida tanto a existência quanto o formato do email usando a função utilitária `isEmailFormatValid` importada de `@/lib/utils/utils` (linhas 97-103). A função `isEmailFormatValid` encapsula a validação de formato usando `EMAIL_REGEX`, proporcionando melhor reutilização e manutenibilidade.
+- **Benefício:** Previne que emails inválidos sejam enviados para a API, melhorando a experiência do usuário e reduzindo requisições desnecessárias. A encapsulação em uma função utilitária facilita manutenção futura e garante consistência na validação de email em todo o projeto.
 
 ### 4. Tipos de Erro Customizados ✅ (Prioridade: Média)
 - **Requisito:** Tratamento robusto de erros com códigos de status HTTP apropriados e mensagens claras.
@@ -71,7 +71,7 @@ O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários 
 
 7. **Centralização de Endpoints:** A função `getEndpoint` centraliza a formação de endpoints, evitando duplicação e facilitando manutenção.
 
-8. **Validação de Email:** Implementa validação completa de email (existência e formato) antes de fazer requisições, usando constante reutilizável (`EMAIL_REGEX`).
+8. **Validação de Email:** Implementa validação completa de email (existência e formato) antes de fazer requisições, usando a função utilitária `isEmailFormatValid` importada de `@/lib/utils/utils`, que encapsula a validação de formato com `EMAIL_REGEX`.
 
 9. **Tratamento de Dados:** Remove campos vazios e processa dados antes de enviar para a API (linha 72).
 

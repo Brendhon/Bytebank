@@ -1,5 +1,5 @@
-import { API_ROUTES, EMAIL_REGEX } from "@/lib/constants";
-import { removeEmptyFields } from "@/lib/utils/utils";
+import { API_ROUTES } from "@/lib/constants";
+import { isEmailFormatValid, removeEmptyFields } from "@/lib/utils/utils";
 import { AccountFormData } from "@/schemas";
 import { request } from "@/services/apiClient/apiClient";
 import { IUser, IUserUpdateData, InvalidEmailError } from "@/types/user";
@@ -99,5 +99,5 @@ function isEmailValid(email: string | null | undefined): void {
   if (!email) throw new InvalidEmailError('Email is required');
 
   // Validate email format
-  if (!EMAIL_REGEX.test(email)) throw new InvalidEmailError('Invalid email format');
+  if (!isEmailFormatValid(email)) throw new InvalidEmailError('Invalid email format');
 }

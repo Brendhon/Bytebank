@@ -1,6 +1,7 @@
 import { ClassValue, clsx } from 'clsx';
-import { DefaultSession, Session } from 'next-auth';
+import { Session } from 'next-auth';
 import { twMerge } from 'tailwind-merge';
+import { EMAIL_REGEX } from '../constants/regex/regex';
 
 /**
  * Utility function to merge class names
@@ -17,6 +18,13 @@ export const parseDate = (dateStr: string) => {
   const [day, month, year] = dateStr.split('/').map(Number);
   return new Date(year, month - 1, day); // month é 0-based
 };
+
+/**
+ * Checks if an email string matches the valid email format pattern
+ * @param {string} email - The email string to validate
+ * @returns {boolean} - True if the email format is valid, false otherwise
+ */
+export const isEmailFormatValid = (email: string): boolean => EMAIL_REGEX.test(email);
 
 // Sort an array of objects by a specific date (dd/mm/yyyy) property
 export const sortByDate = <T>(arr: T[], dateKey: keyof T) => {
