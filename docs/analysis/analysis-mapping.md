@@ -163,7 +163,8 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `middleware.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (82%) - Contém lógica principal, orquestração e configuração - Melhorias pendentes |
+| `middleware.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (82%) - Ponto de entrada do Next.js, wrapper e configuração - Melhorias pendentes |
+| `middlewares/auth/index.ts` | ✅ | ⚠️ | Incluído na análise do middleware - Lógica principal (`authMiddleware`) |
 | `middlewares/auth/guards.ts` | ✅ | ⚠️ | Incluído na análise do middleware - Route guards e checks |
 | `middlewares/auth/handlers.ts` | ✅ | ⚠️ | Incluído na análise do middleware - Request handlers |
 
