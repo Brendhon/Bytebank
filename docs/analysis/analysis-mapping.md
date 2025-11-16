@@ -150,7 +150,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `lib/auth.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
 | `lib/formatter.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (documentação JSDoc traduzida para inglês, validação de entrada para todas as funções, tratamento de casos extremos com mensagens de erro descritivas) |
 | `lib/mongoose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (88%) - Melhorias pendentes |
-| `lib/utils.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - Melhorias pendentes |
+| `lib/utils.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (documentação JSDoc completa em inglês, eliminação de `any` (substituído por `unknown`), comentários traduzidos, validação de entrada robusta, tratamento de erros, reutilização de constantes `DATE_REGEX` e `EMAIL_REGEX` do módulo de constantes) |
 | `lib/constants/routes/routes.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (JSDoc completo, validação de parâmetros, tipos explícitos) |
 | `lib/constants/regex/regex.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Conformidade total (JSDoc completo, nomenclatura adequada, organização, reutilização) |
 | `lib/constants/http/http.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (tipos específicos para funções de mensagem de erro, JSDoc completo, organização e reutilização) |

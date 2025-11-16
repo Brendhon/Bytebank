@@ -74,7 +74,7 @@ export async function updateUser(email: string | null | undefined, data: Account
   if (data.newPassword) updateData.password = data.newPassword;
 
   // Remove empty fields from data
-  const cleanedData = removeEmptyFields(updateData);
+  const cleanedData = removeEmptyFields<Partial<IUserUpdateData>>(updateData);
 
   // Send data to API
   return request<IUser>('PUT', getEndpoint(email), cleanedData);
