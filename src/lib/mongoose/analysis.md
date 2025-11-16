@@ -1,43 +1,58 @@
 # Análise Arquitetural: Configuração: mongoose.ts
 
 ## 📋 Resumo Executivo
-**Status:** ✅ Bom (88%)
+**Status:** ✅ Excelente (98%)
 
-O arquivo `mongoose.ts` apresenta a configuração e função de conexão com o MongoDB utilizando Mongoose. O código implementa um padrão de cache de conexão para evitar múltiplas conexões desnecessárias, possui documentação JSDoc adequada, utiliza TypeScript com tipagem forte, e implementa tratamento de erros adequado. A implementação segue boas práticas de conexão com banco de dados em ambientes serverless. No entanto, existem violações relacionadas ao uso de `any` para tipagem do cache global e falta de validação da variável de ambiente antes de ser utilizada.
+O arquivo `mongoose.ts` apresenta a configuração e função de conexão com o MongoDB utilizando Mongoose. O código implementa um padrão de cache de conexão para evitar múltiplas conexões desnecessárias, possui documentação JSDoc adequada, utiliza TypeScript com tipagem forte (sem uso de `any`), implementa validação de formato de URI, tratamento de erros robusto com retry, e configuração de timeout adequada. A implementação segue boas práticas de conexão com banco de dados em ambientes serverless. Todas as melhorias sugeridas foram implementadas.
 
-**Conformidade:** 88%
+**Conformidade:** 98%
 
-## 🚨 Requisitos Técnicos Infringidos
+## ✅ Melhorias Implementadas
 
-### 1. Uso de `any` para Cache Global (Prioridade: Média)
-- **Requisito:** O código é estritamente tipado, sem o uso de `any`.
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
-- **Infração:** O código utiliza `(global as any).mongoose` para acessar o cache global (linhas 11, 14).
-- **Impacto:** Reduz a segurança de tipos, dificulta a manutenção e pode mascarar erros em tempo de compilação. No entanto, é uma prática comum e necessária para cache global em TypeScript.
+### 1. Tipagem do Cache Global ✅
+- **Status:** O cache global agora está tipado adequadamente usando uma interface `MongooseCache`.
+- **Implementação:** 
+  - Criada interface `MongooseCache` com tipos específicos
+  - Uso de `declare global` para estender o tipo global sem `any`
+  - Eliminação completa do uso de `any` no código
 
-### 2. Falta de Validação de Variável de Ambiente (Prioridade: Baixa)
-- **Requisito:** Validação de input em todas as entradas.
-- **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Infração:** Embora haja validação da existência de `MONGODB_URI`, não há validação do formato da URI antes de utilizá-la.
-- **Impacto:** Pode permitir que URIs malformadas sejam utilizadas, causando erros em tempo de execução ou comportamentos inesperados.
+### 2. Validação de Formato de URI ✅
+- **Status:** Adicionada validação do formato da URI MongoDB antes de tentar conectar.
+- **Implementação:** 
+  - Validação usando regex `/^mongodb(\+srv)?:\/\//` para garantir formato válido
+  - Mensagem de erro descritiva quando o formato é inválido
+
+### 3. Tratamento de Erros Melhorado ✅
+- **Status:** Tratamento de erros aprimorado com suporte a retry.
+- **Implementação:** 
+  - Limpeza da promise em caso de erro para permitir retry
+  - Tratamento seguro de erros com type guard (`error instanceof Error`)
+  - Mensagens de erro mais descritivas
+
+### 4. Configuração de Timeout ✅
+- **Status:** Adicionada configuração de timeout para evitar travamentos.
+- **Implementação:** 
+  - `serverSelectionTimeoutMS: 5000` (5 segundos)
+  - `socketTimeoutMS: 45000` (45 segundos)
 
 ## Pontos em Conformidade
 
 1. **Nomenclatura e Estrutura:** O arquivo segue a convenção de nomenclatura adequada (`mongoose.ts`).
-2. **Documentação JSDoc:** A função `connectToDatabase` possui documentação JSDoc completa, explicando propósito e retorno.
-3. **TypeScript e Tipagem:** O código é estritamente tipado na maioria dos casos, com tipo de retorno explícito.
+2. **Documentação JSDoc:** A função `connectToDatabase` e interfaces possuem documentação JSDoc completa.
+3. **TypeScript e Tipagem:** O código é estritamente tipado sem uso de `any`, utilizando interfaces e tipos específicos.
 4. **Responsabilidade Única (SRP):** O arquivo tem uma responsabilidade única: gerenciar a conexão com o MongoDB.
 5. **Clean Code:** O código é legível e conciso.
-6. **Tratamento de Erros:** A função implementa tratamento adequado de erros com mensagens descritivas.
-7. **Padrão de Cache:** Implementa corretamente o padrão de cache de conexão para ambientes serverless.
-8. **Validação de Variável de Ambiente:** Valida se a variável de ambiente `MONGODB_URI` existe antes de utilizá-la.
+6. **Tratamento de Erros:** A função implementa tratamento robusto de erros com suporte a retry e mensagens descritivas.
+7. **Padrão de Cache:** Implementa corretamente o padrão de cache de conexão para ambientes serverless com tipagem adequada.
+8. **Validação de Variável de Ambiente:** Valida se a variável de ambiente `MONGODB_URI` existe e está no formato correto antes de utilizá-la.
+9. **Configuração de Timeout:** Configuração adequada de timeouts para evitar travamentos da aplicação.
+10. **Type Safety:** Eliminação completa de `any` com uso de interfaces e `declare global` para tipagem segura.
 
-## Pontos de Melhoria
+## Pontos de Melhoria (Futuros)
 
-1. **Tipagem do Cache Global:** O cache global poderia ser tipado adequadamente usando uma interface ou tipo específico.
-2. **Validação de Formato de URI:** Adicionar validação do formato da URI MongoDB antes de tentar conectar.
-3. **Logging Estruturado:** Considerar usar um sistema de logging estruturado em vez de `console.log`.
-4. **Configuração de Timeout:** Considerar adicionar configuração de timeout para a conexão.
+1. **Logging Estruturado:** Considerar usar um sistema de logging estruturado em vez de `console.log` para melhor rastreabilidade em produção.
+2. **Health Check:** Adicionar função de health check para verificar o status da conexão.
+3. **Reconexão Automática:** Implementar lógica de reconexão automática em caso de perda de conexão.
 
 ## 🎨 Design Patterns Utilizados
 
@@ -67,85 +82,32 @@ O arquivo `mongoose.ts` apresenta a configuração e função de conexão com o 
 
 Nenhum princípio adicional precisa ser implementado. O arquivo é focado e bem estruturado, não requerendo abstrações adicionais que justifiquem a implementação dos outros princípios SOLID.
 
-## Plano de Ação
+## ✅ Melhorias Implementadas - Detalhes
 
-### 1. Tipar o Cache Global Adequadamente (Prioridade: Média)
-- Criar uma interface para tipar o cache global, evitando o uso de `any`.
-- Código exemplo:
-```typescript
-interface MongooseCache {
-  conn: Connection | null;
-  promise: Promise<Connection> | null;
-}
+### 1. Tipagem do Cache Global ✅
+- **Interface `MongooseCache`:** Criada interface com tipos específicos para `conn` e `promise`, movida para `src/types/mongoose.ts` para melhor organização
+- **Declaração Global:** Uso de `declare global` para estender o tipo global sem type assertions inseguros, mantida junto com a interface em `types/mongoose.ts`
+- **Eliminação de `any`:** Substituição completa de `(global as any).mongoose` por tipagem segura
+- **Reutilização:** Interface exportada e reutilizável em outros módulos se necessário
+- **Benefício:** Type safety completo, melhor autocomplete, detecção de erros em tempo de compilação e melhor organização do código
 
-declare global {
-  var mongoose: MongooseCache | undefined;
-}
+### 2. Validação de Formato de URI ✅
+- **Regex de Validação:** `MONGO_URI_REGEX` movido para `src/lib/constants/regex/regex.ts` para centralização e reutilização
+- **Validação Precoce:** Validação antes de tentar conectar, evitando erros em tempo de execução
+- **Mensagem Descritiva:** Erro claro quando o formato é inválido
+- **Reutilização:** Regex centralizado e disponível para uso em outros módulos
+- **Benefício:** Previne tentativas de conexão com URIs malformadas, evita duplicação e garante consistência
 
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+### 3. Tratamento de Erros Melhorado ✅
+- **Limpeza de Promise:** `cached.promise = null` em caso de erro para permitir retry
+- **Type Guard:** Uso de `error instanceof Error` para tratamento seguro de erros
+- **Mensagens Descritivas:** Mensagens de erro mais informativas
+- **Benefício:** Permite retry automático e melhor debugging
 
-if (!global.mongoose) {
-  global.mongoose = cached;
-}
-```
-
-### 2. Adicionar Validação de Formato de URI (Prioridade: Baixa)
-- Validar se a URI MongoDB está no formato esperado antes de tentar conectar.
-- Código exemplo:
-```typescript
-const MONGODB_URI = process.env.MONGODB_URI as string;
-
-if (!MONGODB_URI) {
-  throw new Error('❌ Please define the MONGODB_URI environment variable in .env.local');
-}
-
-// Validate MongoDB URI format
-const mongoUriRegex = /^mongodb(\+srv)?:\/\//;
-if (!mongoUriRegex.test(MONGODB_URI)) {
-  throw new Error('❌ MONGODB_URI must be a valid MongoDB connection string');
-}
-```
-
-### 3. Melhorar Tratamento de Erros (Prioridade: Baixa)
-- Adicionar mais informações contextuais nos erros e considerar logging estruturado.
-- Código exemplo:
-```typescript
-export async function connectToDatabase(): Promise<Connection> {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      dbName: 'bytebank',
-      bufferCommands: false,
-    });
-  }
-
-  try {
-    cached.conn = await cached.promise;
-    console.log('✅ MongoDB connected successfully');
-    return cached.conn;
-  } catch (error) {
-    // Clear the promise on error to allow retry
-    cached.promise = null;
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    throw new Error(`❌ MongoDB connection failed: ${errorMessage}`);
-  }
-}
-```
-
-### 4. Adicionar Configuração de Timeout (Prioridade: Baixa)
-- Adicionar timeout para a conexão para evitar que a aplicação trave indefinidamente.
-- Código exemplo:
-```typescript
-if (!cached.promise) {
-  cached.promise = mongoose.connect(MONGODB_URI, {
-    dbName: 'bytebank',
-    bufferCommands: false,
-    serverSelectionTimeoutMS: 5000, // 5 seconds
-    socketTimeoutMS: 45000, // 45 seconds
-  });
-}
-```
+### 4. Configuração de Timeout ✅
+- **Server Selection Timeout:** 5 segundos para seleção de servidor
+- **Socket Timeout:** 45 segundos para operações de socket
+- **Benefício:** Evita travamentos indefinidos da aplicação
 
 ## 📊 Mapeamento
 **Arquivo:** `src/lib/mongoose.ts`  

@@ -3,7 +3,7 @@
 ## 📋 Resumo Executivo
 **Status:** ✅ Excelente (98%)
 
-O arquivo `regex.ts` contém uma constante de expressão regular para validação de endereços de email. O código é extremamente simples e focado, possuindo documentação JSDoc completa em inglês com exemplo de uso, seguindo as melhores práticas de organização de constantes. A constante é exportada explicitamente, utiliza nomenclatura adequada (`EMAIL_REGEX`), e está bem posicionada no módulo de constantes para reutilização em todo o projeto. O arquivo demonstra excelente conformidade com os padrões arquiteturais do projeto.
+O arquivo `regex.ts` contém constantes de expressões regulares para validação de diferentes formatos (email, data e URI MongoDB). O código é extremamente simples e focado, possuindo documentação JSDoc completa em inglês com exemplo de uso para cada constante, seguindo as melhores práticas de organização de constantes. As constantes são exportadas explicitamente, utilizam nomenclatura adequada (`EMAIL_REGEX`, `DATE_REGEX`, `MONGO_URI_REGEX`), e estão bem posicionadas no módulo de constantes para reutilização em todo o projeto. O arquivo demonstra excelente conformidade com os padrões arquiteturais do projeto.
 
 **Conformidade:** 98%
 
@@ -15,7 +15,7 @@ Nenhum requisito técnico infringido.
 
 1. **Nomenclatura e Estrutura:**
    - Arquivo segue convenção `lowercase-hyphenated.ts` (regex.ts)
-   - Constante segue convenção `UPPER_SNAKE_CASE` (EMAIL_REGEX)
+   - Constantes seguem convenção `UPPER_SNAKE_CASE` (EMAIL_REGEX, DATE_REGEX, MONGO_URI_REGEX)
    - Exportação é explícita (`export const`)
 
 2. **TypeScript e Tipagem:**
@@ -24,10 +24,10 @@ Nenhum requisito técnico infringido.
    - Tipo é inferido corretamente pelo compilador
 
 3. **Documentação JSDoc:**
-   - Possui documentação JSDoc completa e clara (linhas 1-9)
+   - Todas as constantes possuem documentação JSDoc completa e clara
    - Inclui tag `@constant` especificando o tipo
    - Inclui tag `@description` explicando o propósito
-   - Inclui tag `@example` com exemplo prático de uso
+   - Inclui tag `@example` com exemplo prático de uso para cada constante
    - Documentação está em inglês conforme diretrizes do projeto
 
 4. **Organização e Estrutura:**
@@ -41,9 +41,11 @@ Nenhum requisito técnico infringido.
    - Regex é compilada uma vez e reutilizada
 
 6. **Reutilização:**
-   - Constante pode ser importada e utilizada em todo o projeto
-   - Já está sendo utilizada em `user.service.ts` para validação de email
-   - Centraliza a definição da regex, evitando duplicação
+   - Constantes podem ser importadas e utilizadas em todo o projeto
+   - `EMAIL_REGEX` está sendo utilizada em `user.service.ts` e `utils.ts` para validação de email
+   - `DATE_REGEX` está sendo utilizada em `utils.ts` e `Transaction.ts` para validação de formato de data
+   - `MONGO_URI_REGEX` está sendo utilizada em `mongoose.ts` para validação de URI MongoDB
+   - Centraliza a definição das regexes, evitando duplicação e garantindo consistência
 
 7. **Clean Code:**
    - Código é extremamente legível e conciso
@@ -52,7 +54,7 @@ Nenhum requisito técnico infringido.
 
 8. **Responsabilidade Única (SRP):**
    - O arquivo tem uma única responsabilidade: definir constantes de expressões regulares
-   - A constante `EMAIL_REGEX` tem responsabilidade única: validar formato de email
+   - Cada constante tem responsabilidade única: `EMAIL_REGEX` valida formato de email, `DATE_REGEX` valida formato de data, `MONGO_URI_REGEX` valida formato de URI MongoDB
 
 9. **Acoplamento:**
    - Baixo acoplamento: constante independente, sem dependências
@@ -67,7 +69,7 @@ Nenhum requisito técnico infringido.
 
 1. **Validação de Email Mais Rigorosa:** A regex atual (`/^[^\s@]+@[^\s@]+\.[^\s@]+$/`) é uma validação básica. Para validação mais rigorosa, poderia considerar usar uma biblioteca especializada ou uma regex mais completa que valide TLDs, domínios, etc. No entanto, para a maioria dos casos de uso, a regex atual é adequada e balancea simplicidade com funcionalidade.
 
-2. **Adicionar Mais Constantes de Regex:** O arquivo poderia ser expandido para incluir outras expressões regulares comuns (CPF, telefone, CEP, etc.) se necessário no futuro, mantendo a organização centralizada.
+2. **Adicionar Mais Constantes de Regex:** O arquivo já foi expandido para incluir `DATE_REGEX` e `MONGO_URI_REGEX`. Pode ser expandido ainda mais para incluir outras expressões regulares comuns (CPF, telefone, CEP, etc.) se necessário no futuro, mantendo a organização centralizada.
 
 3. **Testes Unitários:** Embora não seja avaliado conforme os prompts, seria benéfico ter testes unitários para validar que a regex funciona corretamente com diferentes formatos de email.
 

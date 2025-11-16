@@ -1,17 +1,29 @@
 import mongoose, { Connection } from 'mongoose';
+import { MONGO_URI_REGEX } from '../constants/regex/regex';
+import type { MongooseCache } from '../../types/mongoose';
 
-// MongoDB connection URI
+// Import the types file to ensure declare global is executed
+import '../../types/mongoose';
+
+/**
+ * MongoDB connection URI from environment variables
+ */
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
   throw new Error('❌ Please define the MONGODB_URI environment variable in .env.local');
 }
 
+// Validate MongoDB URI format
+if (!MONGO_URI_REGEX.test(MONGODB_URI)) {
+  throw new Error('❌ MONGODB_URI must be a valid MongoDB connection string');
+}
+
 // Global variable to maintain a cached connection
-let cached = (global as any).mongoose;
+let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 
 // Check if the cached connection is already established
-if (!cached) cached = (global as any).mongoose = { conn: null, promise: null };
+if (!global.mongoose) global.mongoose = cached;
 
 /**
  * Connects to the MongoDB database
@@ -26,12 +38,15 @@ export async function connectToDatabase(): Promise<Connection> {
     cached.promise = mongoose.connect(MONGODB_URI, {
       dbName: 'bytebank',
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000, // 5 seconds
+      socketTimeoutMS: 45000, // 45 seconds
     });
   }
 
   try {
     // Wait for the connection to be established
-    cached.conn = await cached.promise;
+    await cached.promise;
+    cached.conn = mongoose.connection;
 
     // Log the successful connection
     console.log('✅ MongoDB connected successfully');
@@ -39,6 +54,9 @@ export async function connectToDatabase(): Promise<Connection> {
     // Return the established connection
     return cached.conn;
   } catch (error) {
-    throw new Error(`❌ MongoDB connection failed: ${(error as Error).message}`);
+    // Clear the promise on error to allow retry
+    cached.promise = null;
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`❌ MongoDB connection failed: ${errorMessage}`);
   }
 }

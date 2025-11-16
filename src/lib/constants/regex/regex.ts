@@ -21,3 +21,15 @@ export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * }
  */
 export const DATE_REGEX = /^\d{2}\/\d{2}\/\d{4}$/;
+
+/**
+ * Regular expression for validating MongoDB connection URI format
+ * @constant {RegExp} MONGO_URI_REGEX
+ * @description Matches MongoDB connection strings in the format: mongodb:// or mongodb+srv://
+ * @example
+ * const uri = 'mongodb+srv://user:pass@cluster.mongodb.net/db';
+ * if (MONGO_URI_REGEX.test(uri)) {
+ *   console.log('MongoDB URI format is valid');
+ * }
+ */
+export const MONGO_URI_REGEX = /^mongodb(\+srv)?:\/\//;

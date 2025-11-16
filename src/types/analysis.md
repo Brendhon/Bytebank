@@ -28,6 +28,7 @@ A pasta `src/types` contém definições de tipos TypeScript bem estruturadas e 
 - `layout.ts` - 1 type e 1 interface com documentação JSDoc completa
 - `nav.ts` - 1 type com documentação JSDoc completa
 - `next-auth.d.ts` - Type declarations com documentação JSDoc completa
+- `mongoose.ts` - 1 interface (`MongooseCache`) com documentação JSDoc completa e `declare global` para tipagem segura do cache global
 
 ### 2. Comentários em Inglês ✅
 
