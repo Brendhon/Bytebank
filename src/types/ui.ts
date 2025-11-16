@@ -39,6 +39,25 @@ export interface IToast {
   message: string;
   variant: 'success' | 'error' | 'info';
   duration?: number
+}
+
+/**
+ * Simplified toast object without id
+ * @type SimpleToast
+ */
+export type SimpleToast = Pick<IToast, 'message' | 'duration'>;
+
+/**
+ * Toast context type that defines the API exposed by the context
+ * @interface ToastContextType
+ */
+export type ToastContextType = {
+  /** Show a toast with custom variant */
+  showToast(toast: Omit<IToast, 'id'>): void;
+  /** Show a success toast */
+  showSuccessToast(toast: SimpleToast): void;
+  /** Show an error toast */
+  showErrorToast(toast: SimpleToast): void;
 };
 
 /**

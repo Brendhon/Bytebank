@@ -1,6 +1,7 @@
 import { ClassValue, clsx } from 'clsx';
 import { Session } from 'next-auth';
 import { twMerge } from 'tailwind-merge';
+import { IToast } from '@/types/ui';
 import { DATE_REGEX, EMAIL_REGEX } from '../constants/regex/regex';
 
 /**
@@ -182,4 +183,105 @@ export const removeEmptyFields = <T extends Record<string, unknown>>(obj: T): Pa
   return Object.fromEntries(
     Object.entries(obj).filter(([_, value]) => value !== '' && value !== undefined && value !== null)
   ) as Partial<T>;
+};
+
+// ============================================================================
+// Toast Utilities
+// ============================================================================
+
+/**
+ * Generate a unique ID for the toast
+ * Uses crypto.randomUUID() if available, otherwise falls back to a timestamp-based ID
+ * @returns {string} A unique identifier
+ */
+export const generateToastId = (): string => {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback for environments without crypto.randomUUID
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+};
+
+/**
+ * Validate toast message
+ * @param {string} message - Message to validate
+ * @returns {boolean} True if message is valid, false otherwise
+ */
+export const validateToastMessage = (message: string): boolean => {
+  if (!message || message.trim() === '') {
+    console.warn('ToastContext: message is required');
+    return false;
+  }
+  return true;
+};
+
+/**
+ * Validate toast duration
+ * @param {number} [duration] - Duration to validate
+ * @returns {boolean} True if duration is valid, false otherwise
+ */
+export const validateToastDuration = (duration?: number): boolean => {
+  if (duration !== undefined && duration < 0) {
+    console.warn('ToastContext: duration must be a positive number');
+    return false;
+  }
+  return true;
+};
+
+/**
+ * Create a toast object with a generated ID
+ * @param {Omit<IToast, 'id'>} toast - Toast object without id
+ * @returns {IToast} Toast object with generated id
+ */
+export const createToast = (toast: Omit<IToast, 'id'>): IToast => {
+  const id = generateToastId();
+  return { ...toast, id };
+};
+
+/**
+ * Check if a toast should be auto-removed
+ * @param {IToast} toast - Toast to check
+ * @returns {boolean} True if toast should be auto-removed, false otherwise
+ */
+export const shouldAutoRemoveToast = (toast: IToast): boolean => {
+  return toast.duration !== undefined && toast.duration > 0;
+};
+
+/**
+ * Create a toast with a specific variant
+ * @param {string} message - Toast message
+ * @param {IToast['variant']} variant - Toast variant
+ * @param {number} [duration] - Optional duration in milliseconds
+ * @returns {Omit<IToast, 'id'>} Toast object without id
+ */
+export const createVariantToast = (
+  message: string,
+  variant: IToast['variant'],
+  duration?: number
+): Omit<IToast, 'id'> => {
+  return { message, variant, duration };
+};
+
+/**
+ * Create a success toast
+ * @param {SimpleToast} toast - Simplified toast object
+ * @returns {Omit<IToast, 'id'>} Success toast object without id
+ */
+export const createSuccessToast = ({
+  message,
+  duration = 3000,
+}: Pick<IToast, 'message' | 'duration'>): Omit<IToast, 'id'> => {
+  return createVariantToast(message, 'success', duration);
+};
+
+/**
+ * Create an error toast
+ * @param {SimpleToast} toast - Simplified toast object
+ * @returns {Omit<IToast, 'id'>} Error toast object without id
+ */
+export const createErrorToast = ({
+  message,
+  duration = 3000,
+}: Pick<IToast, 'message' | 'duration'>): Omit<IToast, 'id'> => {
+  return createVariantToast(message, 'error', duration);
 };

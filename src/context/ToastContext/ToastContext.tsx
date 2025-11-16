@@ -1,58 +1,116 @@
 'use client';
 
 import { Toast } from '@/components/ui';
-import { IToast } from '@/types/ui';
-import { createContext, ReactNode, useState } from 'react';
+import { useAutoRemoveToasts } from '@/hooks';
+import {
+  createErrorToast,
+  createSuccessToast,
+  createToast,
+  validateToastDuration,
+  validateToastMessage,
+} from '@/lib/utils/utils';
+import {
+  IToast,
+  SimpleToast,
+  ToastContextType,
+} from '@/types/ui';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 
-// Define the type for the toast object
-type SimpleToast = Pick<IToast, 'message' | 'duration'>;
+// Re-export types for convenience
+export type { SimpleToast, ToastContextType };
 
-// Define what our context will expose
-type ToastContextType = {
-  showToast(toast: Omit<IToast, 'id'>): void
-  showSuccessToast(toast: SimpleToast): void
-  showErrorToast(toast: SimpleToast): void
-};
-
-// Create the context
+/**
+ * Toast context for managing toast notifications globally
+ * Provides functions to show different types of toasts
+ */
 export const ToastContext = createContext<ToastContextType | null>(null);
 
-// Provider component that wraps your app
-export const ToastProvider = ({ children }: { children: ReactNode }) => {
+/**
+ * ToastProvider component props
+ * @interface ToastProviderProps
+ */
+export interface ToastProviderProps {
+  /** Child components to wrap */
+  children: ReactNode;
+}
+
+/**
+ * Toast provider component that wraps your app
+ * Manages toast state and provides toast functions to child components
+ * @param props - ToastProvider component props
+ * @returns A toast provider component
+ */
+export const ToastProvider = ({ children }: ToastProviderProps) => {
   // State to hold the list of active toasts
   const [toasts, setToasts] = useState<IToast[]>([]);
 
-  // Expose this function to trigger a new toast
-  const showToast = ({ message, variant, duration }: Omit<IToast, 'id'>) => {
-    // Generate a unique ID for the toast
-    const id = crypto.randomUUID();
-
-    // Add the new toast to the list
-    setToasts((prev) => [...prev, { id, message, variant, duration }]);
-  };
-
-  // Function to remove a toast by its ID
-  const removeToast = (id?: string) => {
+  /**
+   * Remove a toast by its ID
+   * @param id - Toast ID to remove
+   */
+  const removeToast = useCallback((id?: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
-  }
+  }, []);
 
-  // Show success toast
-  const showSuccessToast = ({ message, duration = 3000 }: SimpleToast) => {
-    showToast({ message, variant: 'success', duration });
-  };
+  /**
+   * Show a toast with custom variant
+   * @param toast - Toast object without id (id is generated automatically)
+   */
+  const showToast = useCallback((toast: Omit<IToast, 'id'>) => {
+    // Destructure the toast object
+    const { message, variant, duration } = toast;
 
-  // Show error toast
-  const showErrorToast = ({ message, duration = 3000 }: SimpleToast) => {
-    showToast({ message, variant: 'error', duration });
-  };
+    // Validate toast data
+    if (!validateToastMessage(message) || !validateToastDuration(duration)) return;
+
+    // Create and add the new toast to the list
+    setToasts((prev) => [...prev, createToast({ message, variant, duration })]);
+  }, []);
+
+  /**
+   * Show a success toast
+   * @param toast - Simplified toast object with message and optional duration
+   */
+  const showSuccessToast = useCallback(
+    (toast: SimpleToast) => {
+      showToast(createSuccessToast(toast));
+    },
+    [showToast]
+  );  
+
+  /**
+   * Show an error toast
+   * @param toast - Simplified toast object with message and optional duration
+   */
+  const showErrorToast = useCallback(
+    (toast: SimpleToast) => {
+      showToast(createErrorToast(toast));
+    },
+    [showToast]
+  );
+
+  // Remove toast automatically after duration
+  useAutoRemoveToasts(toasts, removeToast);
+
+  // Memoize the context value to avoid unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({ showToast, showSuccessToast, showErrorToast }),
+    [showToast, showSuccessToast, showErrorToast]
+  );
 
   return (
-    <ToastContext.Provider value={{ showToast, showSuccessToast, showErrorToast }}>
+    <ToastContext.Provider value={contextValue}>
       {/* Render the children */}
       {children}
 
       {/* Toaster global */}
-      <div className="fixed top-4 right-4 space-y-2 z-50">
+      <div className={styles.container}>
         {toasts.map(({ id, message, variant, duration }) => (
           <Toast
             key={id}
@@ -66,3 +124,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     </ToastContext.Provider>
   );
 };
+
+const styles = {
+  container: 'fixed top-4 right-4 space-y-2 z-50',
+} as const;
