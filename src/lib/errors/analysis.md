@@ -57,54 +57,76 @@ Nenhuma violação identificada. Todos os requisitos técnicos foram atendidos c
 
 ## Pontos de Excelência
 
-1. **Type Guards Robustos:**
+1. **Type Guards Robustos e Reutilizáveis:**
    - `isHttpError()` e `isError()` implementados com type predicates
-   - Permitem type narrowing seguro sem type assertions
+   - Funções auxiliares genéricas: `isObject()` e `hasObjectProperty()` para reutilização
+   - `hasObjectMessage()` e `hasObjectStatus()` reutilizam funções auxiliares
    - Função privada `hasErrorCauseStatus()` para verificação específica
    - Type safety garantida em tempo de compilação
+   - Eliminação de duplicação de código através de funções auxiliares
 
-2. **Normalização Completa de Erros:**
-   - `toHttpError()` lida com todos os tipos possíveis de erro
+2. **Normalização Completa e Modular:**
+   - `toHttpError()` lida com todos os tipos possíveis de erro usando `switch(true)`
+   - Funções de normalização especializadas: `normalizeErrorInstance()`, `normalizeStringError()`, `normalizeObjectError()`
+   - Constante `DEFAULT_ERROR_STATUS` centraliza valor padrão (500)
+   - Função auxiliar `createHttpErrorWithDefaultStatus()` elimina repetição
    - Suporta: `HttpError`, `Error` (com/sem `cause.status`), `string`, objetos com `message`/`status`, e tipos desconhecidos
    - Sempre retorna instância válida de `HttpError`
    - Preserva status codes quando disponíveis
 
 3. **Funções Auxiliares Úteis:**
-   - `getErrorMessage()` - Extrai mensagem de qualquer tipo de erro
-   - `getErrorStatus()` - Extrai status code de qualquer tipo de erro
+   - `getErrorMessage()` - Extrai mensagem de qualquer tipo de erro usando `switch(true)`
+   - `getErrorStatus()` - Extrai status code de qualquer tipo de erro usando `switch(true)`
    - Úteis para logging, debugging e tratamento de erros
+   - Consistência no padrão de implementação com `switch(true)`
 
-4. **Documentação Exemplar:**
+4. **Refatoração e DRY (Don't Repeat Yourself):**
+   - Funções auxiliares genéricas eliminam duplicação
+   - `isObject()` reutilizada em múltiplas verificações
+   - `hasObjectProperty()` permite verificação genérica de propriedades
+   - Constante `DEFAULT_ERROR_STATUS` evita magic numbers
+   - Funções de normalização especializadas melhoram legibilidade
+
+5. **Documentação Exemplar:**
    - JSDoc completo com exemplos práticos
    - Descrições claras de comportamento
    - Exemplos mostrando uso real
+   - Documentação para funções auxiliares internas
 
-5. **Arquitetura Bem Pensada:**
+6. **Arquitetura Bem Pensada:**
    - Módulo dedicado para utilitários de erro
    - Separação clara de responsabilidades
+   - Funções pequenas e focadas (Single Responsibility)
    - Facilita manutenção e extensão
+   - Padrão consistente de implementação (`switch(true)`)
 
 ## 🎨 Design Patterns Utilizados
 
 1. **Type Guard Pattern:** Funções que verificam tipos em runtime de forma segura.
-   - **Localização:** `isHttpError()`, `isError()`, `hasErrorCauseStatus()`
-   - **Benefício:** Type narrowing seguro, evita type assertions, type safety garantida.
+   - **Localização:** `isHttpError()`, `isError()`, `hasErrorCauseStatus()`, `hasObjectMessage()`, `hasObjectStatus()`
+   - **Funções auxiliares genéricas:** `isObject()`, `hasObjectProperty()`
+   - **Benefício:** Type narrowing seguro, evita type assertions, type safety garantida, reutilização de lógica comum.
 
 2. **Normalization Pattern:** Normalização de diferentes tipos de erro para formato padronizado.
-   - **Localização:** Função `toHttpError()` (linhas 77-115)
-   - **Benefício:** Trata qualquer tipo de erro de forma consistente, type-safe, garante formato padronizado.
+   - **Localização:** Função `toHttpError()` usando `switch(true)` com funções auxiliares especializadas
+   - **Funções de normalização:** `normalizeErrorInstance()`, `normalizeStringError()`, `normalizeObjectError()`
+   - **Benefício:** Trata qualquer tipo de erro de forma consistente, type-safe, garante formato padronizado, código modular e legível.
 
 3. **Utility Functions Pattern:** Agrupa funções utilitárias relacionadas a tratamento de erros.
    - **Localização:** Todo o arquivo `error-utils.ts`
    - **Benefício:** Centraliza lógica comum de tratamento de erros, evita duplicação, facilita manutenção.
 
 4. **Extraction Pattern:** Funções que extraem informações específicas de estruturas complexas.
-   - **Localização:** `getErrorMessage()`, `getErrorStatus()`
-   - **Benefício:** Abstrai complexidade de extração, fornece interface simples e type-safe.
+   - **Localização:** `getErrorMessage()`, `getErrorStatus()` usando `switch(true)`
+   - **Benefício:** Abstrai complexidade de extração, fornece interface simples e type-safe, padrão consistente.
 
 5. **Strategy Pattern (Implícito):** Diferentes estratégias de normalização baseadas no tipo de erro.
-   - **Localização:** Função `toHttpError()` com múltiplos `if` statements
-   - **Benefício:** Flexível para lidar com diferentes tipos de erro, extensível para novos tipos.
+   - **Localização:** Função `toHttpError()` com `switch(true)` delegando para funções especializadas
+   - **Benefício:** Flexível para lidar com diferentes tipos de erro, extensível para novos tipos, código mais limpo.
+
+6. **DRY (Don't Repeat Yourself) Pattern:** Eliminação de duplicação através de funções auxiliares.
+   - **Localização:** `isObject()`, `hasObjectProperty()`, `createHttpErrorWithDefaultStatus()`, constante `DEFAULT_ERROR_STATUS`
+   - **Benefício:** Reduz duplicação, facilita manutenção, garante consistência.
 
 ## 🏗️ Princípios SOLID Implementados
 
@@ -114,10 +136,18 @@ Nenhuma violação identificada. Todos os requisitos técnicos foram atendidos c
    - **Evidência:**
      - `isHttpError()`: apenas verifica se é HttpError
      - `isError()`: apenas verifica se é Error
-     - `toHttpError()`: apenas normaliza erro para HttpError
+     - `isObject()`: apenas verifica se é objeto não-nulo
+     - `hasObjectProperty()`: apenas verifica propriedade de tipo específico
+     - `toHttpError()`: apenas normaliza erro para HttpError (orquestra funções especializadas)
+     - `normalizeErrorInstance()`: apenas normaliza instância de Error
+     - `normalizeStringError()`: apenas normaliza string
+     - `normalizeObjectError()`: apenas normaliza objeto com message
+     - `createHttpErrorWithDefaultStatus()`: apenas cria HttpError com status padrão
      - `getErrorMessage()`: apenas extrai mensagem
      - `getErrorStatus()`: apenas extrai status code
      - `hasErrorCauseStatus()`: apenas verifica se Error tem cause.status
+     - `hasObjectMessage()`: apenas verifica se objeto tem message
+     - `hasObjectStatus()`: apenas verifica se objeto tem status
 
 2. **Open/Closed Principle (OCP):** Funções extensíveis através de parâmetros sem modificar código interno.
    - **Evidência:**
@@ -235,8 +265,14 @@ export function getErrorCategory(error: unknown): 'client' | 'server' | 'unknown
                ├── isHttpError() ──→ HttpError
                │
                ├── isError() ──→ Error
+               │   └── hasErrorCauseStatus() ──→ Error & { cause: { status } }
                │
-               └── hasErrorCauseStatus() ──→ Error & { cause: { status } }
+               ├── isObject() ──→ Record<string, unknown>
+               │   ├── hasObjectProperty(obj, 'message', 'string') ──→ { message: string }
+               │   └── hasObjectProperty(obj, 'status', 'number') ──→ { status: number }
+               │
+               └── hasObjectMessage() ──→ { message: string }
+                   └── hasObjectStatus() ──→ { status: number }
 ```
 
 ### Dependências
@@ -265,7 +301,20 @@ error-utils.ts
 
 ---
 
-**Última atualização:** 2025-11-16  
-**Versão da Análise:** 1.0  
+**Última atualização:** 2025-01-27  
+**Versão da Análise:** 2.0  
 **Análise realizada por:** Arquiteto de Software AI
+
+## 🔄 Histórico de Refatorações
+
+### Versão 2.0 (2025-01-27)
+- **Refatoração de repetições:** Criadas funções auxiliares genéricas `isObject()` e `hasObjectProperty()` para eliminar duplicação
+- **Constante centralizada:** Adicionada `DEFAULT_ERROR_STATUS` para evitar magic numbers
+- **Função auxiliar de criação:** Criada `createHttpErrorWithDefaultStatus()` para reutilização
+- **Funções de normalização especializadas:** Quebrada `toHttpError()` em funções menores e mais focadas
+- **Padrão consistente:** Todas as funções principais agora usam `switch(true)` para melhor legibilidade
+- **Melhorias de DRY:** Redução significativa de código duplicado, melhor manutenibilidade
+
+### Versão 1.0 (2025-11-16)
+- Análise inicial do arquivo
 
