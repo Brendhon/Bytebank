@@ -119,7 +119,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `schemas/account/account.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
 | `schemas/login/login.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - Melhorias pendentes |
 | `schemas/register/register.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, validação de senha fortalecida com 8 caracteres + complexidade, validação de comprimento máximo, validação de formato de nome) - Vulnerabilidade de segurança corrigida |
-| `schemas/transaction/transaction.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (72%) - Melhorias pendentes |
+| `schemas/transaction/transaction.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, validação de formato de data com regex e refine, validação de comprimento máximo para alias, validação de valor máximo, validação de precisão decimal) |
 | `schemas/api/api.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (schema reutilizável para mensagens, exemplos na documentação JSDoc, eliminação de duplicação) |
 
 ---

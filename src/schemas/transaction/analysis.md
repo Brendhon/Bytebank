@@ -1,43 +1,47 @@
 # Análise Arquitetural: Schema: transaction.schema.ts
 
 ## 📋 Resumo Executivo
-**Status:** ⚠️ Requer Atenção (72%)
+**Status:** ✅ Excelente (98%)
 
-O arquivo `transaction.schema.ts` apresenta a definição do schema Zod para validação de dados de transação. O código utiliza Zod corretamente, implementa validações adequadas (enum para desc e type, valor mínimo), e exporta tipos TypeScript inferidos. O schema reutiliza tipos do projeto (`TransactionDesc`, `TransactionType`) para garantir consistência. No entanto, existem violações relacionadas a mensagens de erro em português, falta de documentação JSDoc, falta de validação de formato de data, ausência de validação de comprimento máximo para campos de texto, e falta de validação de valor máximo.
+O arquivo `transaction.schema.ts` apresenta a definição do schema Zod para validação de dados de transação. O código utiliza Zod corretamente, implementa validações robustas (enum para desc e type, validação de valor mínimo e máximo, validação de precisão decimal, validação de formato e validade de data, validação de comprimento máximo), e exporta tipos TypeScript inferidos. O schema reutiliza tipos do projeto (`TransactionDesc`, `TransactionType`) para garantir consistência. Todas as mensagens de erro estão em inglês e o código possui documentação JSDoc completa com exemplos de uso.
 
-**Conformidade:** 72%
+**Conformidade:** 98%
 
-## 🚨 Requisitos Técnicos Infringidos
+## ✅ Requisitos Técnicos Corrigidos
 
-### 1. Mensagens de Erro em Português (Prioridade: Alta)
+### 1. Mensagens de Erro em Português (Prioridade: Alta) - ✅ CORRIGIDO
 - **Requisito:** Todos os comentários e documentação devem estar em inglês.
 - **Documento:** `@docs/guidelines/global.md` - Seção "Best Practices > Comments" e "Documentation Rules"
-- **Infração:** Todas as mensagens de erro estão em português (linhas 10, 13, 16, 17).
-- **Impacto:** Viola o padrão estabelecido no projeto e pode causar inconsistência na documentação e experiência do usuário.
+- **Status:** ✅ **CORRIGIDO** - Todas as mensagens de erro foram traduzidas para inglês.
+- **Implementação:** Todas as mensagens de erro do schema agora estão em inglês, incluindo mensagens de enum, validação de valor, data, alias e precisão decimal.
 
-### 2. Falta de Documentação JSDoc (Prioridade: Alta)
+### 2. Falta de Documentação JSDoc (Prioridade: Alta) - ✅ CORRIGIDO
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
 - **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
-- **Infração:** O schema `transactionSchema` e o tipo `TransactionFormData` não possuem documentação JSDoc explicando seu propósito e uso.
-- **Impacto:** Reduz a clareza do código e dificulta a manutenção e uso por outros desenvolvedores.
+- **Status:** ✅ **CORRIGIDO** - Documentação JSDoc completa adicionada para o schema e tipo exportado.
+- **Implementação:** 
+  - `transactionSchema`: documentação completa com descrição, propósito e exemplo de uso.
+  - `TransactionFormData`: documentação explicando que é um tipo inferido do schema.
 
-### 3. Falta de Validação de Formato de Data (Prioridade: Média)
+### 3. Falta de Validação de Formato de Data (Prioridade: Média) - ✅ CORRIGIDO
 - **Requisito:** Validação de input em todas as entradas.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Infração:** O campo `date` apenas valida se não está vazio (linha 17), mas não valida o formato esperado (ex: 'dd/mm/yyyy').
-- **Impacto:** Pode permitir datas em formatos inválidos serem processadas, causando erros em tempo de execução ou comportamentos inesperados.
+- **Status:** ✅ **CORRIGIDO** - Validação completa de formato e validade de data implementada.
+- **Implementação:** 
+  - Validação de formato usando regex centralizado (`DATE_REGEX` importado de `@/lib/constants/regex/regex`).
+  - Validação de data real usando `refine` para garantir que a data é válida (ex: não permite 32/13/2025).
 
-### 4. Falta de Validação de Comprimento Máximo (Prioridade: Média)
+### 4. Falta de Validação de Comprimento Máximo (Prioridade: Média) - ✅ CORRIGIDO
 - **Requisito:** Validação de input em todas as entradas.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Infração:** O campo `alias` não possui validação de comprimento máximo (linha 15).
-- **Impacto:** Pode permitir valores excessivamente longos, causando problemas de armazenamento ou performance.
+- **Status:** ✅ **CORRIGIDO** - Validação de comprimento máximo implementada para o campo `alias`.
+- **Implementação:** Campo `alias` agora possui validação `.max(100, 'Alias cannot exceed 100 characters')`.
 
-### 5. Falta de Validação de Valor Máximo (Prioridade: Baixa)
+### 5. Falta de Validação de Valor Máximo (Prioridade: Baixa) - ✅ CORRIGIDO
 - **Requisito:** Validação de input em todas as entradas.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Infração:** O campo `value` não possui validação de valor máximo (linha 16).
-- **Impacto:** Pode permitir valores extremamente altos, causando problemas de armazenamento ou overflow.
+- **Status:** ✅ **CORRIGIDO** - Validação de valor máximo implementada para o campo `value`.
+- **Implementação:** Campo `value` agora possui validação `.max(999999999.99, 'Value is too large')`.
 
 ## Pontos em Conformidade
 
@@ -49,11 +53,26 @@ O arquivo `transaction.schema.ts` apresenta a definição do schema Zod para val
 6. **Validação de Valor Mínimo:** Implementa validação para garantir que o valor seja maior ou igual a zero.
 7. **Responsabilidade Única (SRP):** O arquivo tem uma responsabilidade única: definir o schema de validação de transação.
 8. **Clean Code:** O código é legível e bem estruturado.
+9. **Documentação JSDoc:** Documentação JSDoc completa em inglês com exemplos de uso.
+10. **Validação de Formato de Data:** Validação completa de formato e validade de data usando regex e refine.
+11. **Validação de Comprimento Máximo:** Validação de comprimento máximo para campos de texto.
+12. **Validação de Valor Máximo:** Validação de valor máximo para valores monetários.
+13. **Validação de Precisão Decimal:** Validação para garantir que valores monetários tenham no máximo 2 casas decimais.
+14. **Mensagens de Erro em Inglês:** Todas as mensagens de erro estão em inglês, seguindo os padrões do projeto.
 
-## Pontos de Melhoria
+## ✅ Melhorias Implementadas
 
-1. **Validação de Data Real:** Além de validar o formato, poderia validar se a data é uma data válida (ex: não permitir 32/13/2025).
-2. **Validação de Precisão Decimal:** O campo `value` poderia ter validação de precisão decimal (ex: máximo 2 casas decimais para valores monetários).
+1. **✅ Validação de Data Real:** Implementada validação completa de data usando `refine` para garantir que a data é válida (não permite 32/13/2025).
+2. **✅ Validação de Precisão Decimal:** Implementada validação para garantir que valores monetários tenham no máximo 2 casas decimais usando `refine`.
+3. **✅ Mensagens de Erro em Inglês:** Todas as mensagens de erro foram traduzidas para inglês.
+4. **✅ Documentação JSDoc:** Documentação JSDoc completa adicionada com exemplos de uso.
+5. **✅ Validação de Formato de Data:** Validação de formato usando regex e validação de data real.
+6. **✅ Validação de Comprimento Máximo:** Validação de comprimento máximo para o campo `alias`.
+7. **✅ Validação de Valor Máximo:** Validação de valor máximo para o campo `value`.
+
+## Pontos de Melhoria Futura
+
+Nenhum ponto de melhoria adicional identificado no momento.
 
 ## 🎨 Design Patterns Utilizados
 
@@ -83,11 +102,11 @@ O arquivo `transaction.schema.ts` apresenta a definição do schema Zod para val
 
 Nenhum princípio adicional precisa ser implementado. O arquivo é focado e bem estruturado, não requerendo abstrações adicionais que justifiquem a implementação dos outros princípios SOLID.
 
-## Plano de Ação
+## ✅ Plano de Ação - Implementado
 
-### 1. Traduzir Mensagens de Erro para Inglês (Prioridade: Alta)
-- Traduzir todas as mensagens de erro para inglês.
-- Código exemplo:
+### 1. ✅ Traduzir Mensagens de Erro para Inglês (Prioridade: Alta) - CONCLUÍDO
+- ✅ Todas as mensagens de erro foram traduzidas para inglês.
+- ✅ Implementado com todas as validações:
 ```typescript
 export const transactionSchema = z.object({
   desc: z.enum(TransactionDescKeys, {
@@ -96,15 +115,34 @@ export const transactionSchema = z.object({
   type: z.enum(TransactionTypeKeys, {
     errorMap: () => ({ message: 'Please select a type' }),
   }),
-  alias: z.string().optional().max(100, 'Alias cannot exceed 100 characters'),
-  value: z.number().min(0, 'Value must be greater than 0').max(999999999.99, 'Value is too large'),
-  date: z.string().min(1, 'Please provide a date'),
-});
+  alias: z.string().max(100, 'Alias cannot exceed 100 characters').optional(),
+  value: z
+    .number()
+    .min(0, 'Value must be greater than or equal to 0')
+    .max(999999999.99, 'Value is too large')
+    .refine((val) => {
+      const decimalPlaces = (val.toString().split('.')[1] || '').length;
+      return decimalPlaces <= 2;
+    }, {
+      message: 'Value cannot have more than 2 decimal places',
+    }),
+  date: z
+    .string()
+    .min(1, 'Please provide a date')
+    .regex(DATE_REGEX, 'Date must be in format dd/mm/yyyy')
+    .refine((val) => {
+      const [day, month, year] = val.split('/').map(Number);
+      const date = new Date(year, month - 1, day);
+      return date.getDate() === day && date.getMonth() === month - 1 && date.getFullYear() === year;
+    }, {
+      message: 'Please provide a valid date',
+    }),
+})
 ```
 
-### 2. Adicionar Documentação JSDoc (Prioridade: Alta)
-- Adicionar documentação JSDoc completa para o schema e tipo exportado.
-- Código exemplo:
+### 2. ✅ Adicionar Documentação JSDoc (Prioridade: Alta) - CONCLUÍDO
+- ✅ Documentação JSDoc completa adicionada para o schema e tipo exportado.
+- ✅ Implementado:
 ```typescript
 /**
  * Transaction schema for validating transaction form data
@@ -130,43 +168,40 @@ export const transactionSchema = z.object({
 export type TransactionFormData = z.infer<typeof transactionSchema>;
 ```
 
-### 3. Adicionar Validação de Formato de Data (Prioridade: Média)
-- Adicionar validação de formato de data (dd/mm/yyyy).
-- Código exemplo:
+### 3. ✅ Adicionar Validação de Formato de Data (Prioridade: Média) - CONCLUÍDO
+- ✅ Validação completa de formato e validade de data implementada.
+- ✅ Implementado com regex centralizado e refine para validar data real:
 ```typescript
-const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+import { DATE_REGEX } from '@/lib/constants/regex/regex';
 
-export const transactionSchema = z.object({
-  // ... other fields
-  date: z
-    .string()
-    .min(1, 'Please provide a date')
-    .regex(dateRegex, 'Date must be in format dd/mm/yyyy')
-    .refine((val) => {
-      const [day, month, year] = val.split('/').map(Number);
-      const date = new Date(year, month - 1, day);
-      return date.getDate() === day && date.getMonth() === month - 1 && date.getFullYear() === year;
-    }, {
-      message: 'Please provide a valid date',
-    }),
-});
+date: z
+  .string()
+  .min(1, 'Please provide a date')
+  .regex(DATE_REGEX, 'Date must be in format dd/mm/yyyy')
+  .refine((val) => {
+    const [day, month, year] = val.split('/').map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.getDate() === day && date.getMonth() === month - 1 && date.getFullYear() === year;
+  }, {
+    message: 'Please provide a valid date',
+  }),
 ```
 
-### 4. Adicionar Validação de Comprimento Máximo (Prioridade: Média)
-- Adicionar validação de comprimento máximo para campos de texto.
-- Código exemplo (já incluído no item 1).
+### 4. ✅ Adicionar Validação de Comprimento Máximo (Prioridade: Média) - CONCLUÍDO
+- ✅ Validação de comprimento máximo implementada para campos de texto.
+- ✅ Implementado: Campo `alias` com `.max(100, 'Alias cannot exceed 100 characters').optional()` (max antes de optional).
 
-### 5. Adicionar Validação de Valor Máximo (Prioridade: Baixa)
-- Adicionar validação de valor máximo para o campo `value`.
-- Código exemplo (já incluído no item 1).
+### 5. ✅ Adicionar Validação de Valor Máximo (Prioridade: Baixa) - CONCLUÍDO
+- ✅ Validação de valor máximo implementada para o campo `value`.
+- ✅ Implementado: Campo `value` com `.max(999999999.99, 'Value is too large')`.
 
-### 6. Adicionar Validação de Precisão Decimal (Prioridade: Baixa)
-- Adicionar validação para garantir que valores monetários tenham no máximo 2 casas decimais.
-- Código exemplo:
+### 6. ✅ Adicionar Validação de Precisão Decimal (Prioridade: Baixa) - CONCLUÍDO
+- ✅ Validação de precisão decimal implementada para valores monetários.
+- ✅ Implementado usando refine para validar casas decimais:
 ```typescript
 value: z
   .number()
-  .min(0, 'Value must be greater than 0')
+  .min(0, 'Value must be greater than or equal to 0')
   .max(999999999.99, 'Value is too large')
   .refine((val) => {
     const decimalPlaces = (val.toString().split('.')[1] || '').length;
@@ -177,7 +212,17 @@ value: z
 ```
 
 ## 📊 Mapeamento
-**Arquivo:** `src/schemas/transaction.schema.ts`  
-**Status:** ✅ Criado  
+**Arquivo:** `src/schemas/transaction/transaction.schema.ts`  
+**Status:** ✅ Implementado  
+**Conformidade:** 98%  
 **Link:** `@docs/analysis/analysis-mapping.md`
+
+### Resumo das Melhorias Implementadas
+- ✅ Mensagens de erro traduzidas para inglês
+- ✅ Documentação JSDoc completa com exemplos de uso
+- ✅ Validação de formato de data usando regex centralizado (`DATE_REGEX` de `@/lib/constants/regex/regex`)
+- ✅ Validação de data real usando refine (não permite datas inválidas)
+- ✅ Validação de comprimento máximo para alias (100 caracteres)
+- ✅ Validação de valor máximo (999999999.99)
+- ✅ Validação de precisão decimal (máximo 2 casas decimais)
 
