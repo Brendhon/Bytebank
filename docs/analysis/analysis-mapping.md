@@ -97,7 +97,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `services/apiClient.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (documentação JSDoc completa, validação de entrada, timeout configurável, tratamento robusto de erros, mensagens em inglês, refatoração em funções auxiliares, constantes para mensagens, cancelamento de requisições) - Vulnerabilidade de segurança corrigida (migração para NextAuth) |
+| `services/apiClient/apiClient.ts` | ✅ | ✅ | Análise criada - Status: Excelente (100%) - **TRATAMENTO DE ERRO PADRONIZADO COM HttpError** - Todas as validações lançam HttpError.badRequest(), createHttpError() cria instância real (sem type assertion), handleTimeoutError() usa HttpError (408), documentação exemplar com exemplos de uso, conformidade 100% com SOLID - Vulnerabilidade de segurança corrigida (migração para NextAuth) |
 | `services/transaction.service.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (documentação em inglês, construção segura de query parameters com URLSearchParams, separação aprimorada de responsabilidades com funções auxiliares especializadas, JSDoc completo) |
 | `services/user.service.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (validação de senha movida para servidor, tipos de erro customizados com status HTTP, validação de formato de email usando EMAIL_REGEX, mensagens em inglês, remoção de non-null assertions, interface IUserUpdateData sem uso de any, JSDoc completo) |
 
@@ -118,7 +118,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 |------|----------------|--------------|-------------|
 | `schemas/account/account.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
 | `schemas/login/login.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - Melhorias pendentes |
-| `schemas/register/register.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
+| `schemas/register/register.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, validação de senha fortalecida com 8 caracteres + complexidade, validação de comprimento máximo, validação de formato de nome) - Vulnerabilidade de segurança corrigida |
 | `schemas/transaction/transaction.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (72%) - Melhorias pendentes |
 | `schemas/api/api.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (schema reutilizável para mensagens, exemplos na documentação JSDoc, eliminação de duplicação) |
 
@@ -144,7 +144,8 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `lib/api.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (interface ApiError substituindo `any`, mensagens traduzidas para inglês, tipagem forte) - Vulnerabilidade crítica de segurança corrigida (migração para NextAuth) |
+| `lib/api/api.ts` | ✅ | ✅ | Análise criada - Status: Excelente (100%) - **ARQUITETURA COMPLETA DE ERRO PADRONIZADA** - Classe HttpError com factory methods, utilitários dedicados (toHttpError, type guards), eliminação total de type assertions inseguros, documentação exemplar, conformidade 100% com SOLID - Vulnerabilidade crítica de segurança corrigida (migração para NextAuth) |
+| `lib/errors/error-utils.ts` | ✅ | ✅ | Análise criada - Status: Excelente (100%) - **MÓDULO FUNDAMENTAL DE UTILITÁRIOS DE ERRO** - Type guards robustos com type predicates (isHttpError, isError), normalização completa de erros (toHttpError lida com todos os tipos), funções auxiliares (getErrorMessage, getErrorStatus), zero uso de `any`, type safety máxima, documentação JSDoc exemplar com exemplos, conformidade 100% com SOLID, 5 Design Patterns identificados |
 | `lib/auth.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
 | `lib/formatter.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (82%) - Melhorias pendentes |
 | `lib/mongoose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (88%) - Melhorias pendentes |
@@ -208,7 +209,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 ---
 
-**Última atualização**: 2025-01-27
-**Total de arquivos mapeados**: 79
-**Arquivos analisados**: 78 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 9 ✅, Models: 2, Schemas: 5 ✅, Services: 3, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+**Última atualização**: 2025-11-16
+**Total de arquivos mapeados**: 81
+**Arquivos analisados**: 80 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 11 ✅, Models: 2, Schemas: 5 (2 ✅), Services: 3 ✅, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
 

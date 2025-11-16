@@ -57,6 +57,6 @@ export async function POST(req: Request) {
     // Return a success response with the created transaction
     return handleSuccessResponse<ITransaction>(transaction);
   } catch (error) {
-    return handleErrorResponse(error, 'Erro ao buscar transação');
+    return handleErrorResponse(error, 'Erro ao criar transação');
   }
 }

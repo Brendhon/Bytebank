@@ -1,7 +1,8 @@
 import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import User from '@/models/User/User';
-import { IUser, UserNotFoundError, InvalidPasswordError, InvalidEmailError } from '@/types/user';
+import { HttpError } from '@/types/http';
+import { IUser } from '@/types/user';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
@@ -12,24 +13,23 @@ interface Params { params: Promise<{ email: string }> }
  * @param {string} email - The email of the user
  * @param {string} plainPassword - The plain text password to validate
  * @returns {Promise<void>} - Resolves if the password is valid, throws error otherwise
- * @throws {UserNotFoundError} - Throws if the user is not found
- * @throws {InvalidPasswordError} - Throws if the password is invalid
+ * @throws {HttpError} - Throws HttpError with appropriate status code if validation fails
  */
 async function validatePassword(email: string, plainPassword: string): Promise<void> {
   // Check if email is valid
-  if (!email) throw new InvalidEmailError('Email inválido');
+  if (!email) throw HttpError.badRequest('Email inválido');
 
   // Find the user in the database
   const user = await User.findOne<IUser>({ email });
 
   // Check if user exists
-  if (!user) throw new UserNotFoundError(email);
+  if (!user) throw HttpError.notFound(`Usuário com email ${email} não encontrado`);
 
   // Compare the plain text password with the hashed password
   const isValid = await bcrypt.compare(plainPassword, user.password);
 
   // If the password is invalid, throw an error
-  if (!isValid) throw new InvalidPasswordError('Senha inválida');
+  if (!isValid) throw HttpError.unauthorized('Senha inválida');
 }
 
 /**
@@ -52,20 +52,20 @@ export async function DELETE(req: Request, { params }: Params): Promise<NextResp
 
     // Verify that the authenticated user is trying to delete their own account
     if (session.user.email !== email) {
-      throw new Error('Forbidden: You can only delete your own account', { cause: { status: 403 } });
+      throw HttpError.forbidden('Forbidden: You can only delete your own account');
     }
 
     // Parse the request body to get password
     const { password } = await req.json();
 
-    // Validate password (throws UserNotFoundError or InvalidPasswordError if invalid)
+    // Validate password (throws HttpError if invalid)
     await validatePassword(email, password);
 
     // Delete the user from the database
     const deletedUser = await User.findOneAndDelete<IUser>({ email });
 
     // Check if user was found and deleted
-    if (!deletedUser) throw new UserNotFoundError(email);
+    if (!deletedUser) throw HttpError.notFound(`Usuário com email ${email} não encontrado`);
 
     // Return the response
     return handleSuccess(deletedUser);
@@ -94,7 +94,7 @@ export async function PUT(req: Request, { params }: Params): Promise<NextRespons
 
     // Verify that the authenticated user is trying to update their own account
     if (session.user.email !== email) {
-      throw new Error('Forbidden: You can only update your own account', { cause: { status: 403 } });
+      throw HttpError.forbidden('Forbidden: You can only update your own account');
     }
 
     // Parse the request body as JSON
@@ -138,7 +138,7 @@ export async function GET(req: Request, { params }: Params): Promise<NextRespons
 
     // Verify that the authenticated user is trying to access their own account
     if (session.user.email !== email) {
-      throw new Error('Forbidden: You can only access your own account', { cause: { status: 403 } });
+      throw HttpError.forbidden('Forbidden: You can only access your own account');
     }
 
     // Get the User record from the database

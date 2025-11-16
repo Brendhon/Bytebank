@@ -27,11 +27,11 @@ O arquivo `user.service.ts` apresenta funções para gerenciamento de usuários 
 - **Status:** ✅ **IMPLEMENTADO** - A função `validateEmail` valida tanto a existência quanto o formato do email usando a função utilitária `isEmailFormatValid` importada de `@/lib/utils/utils` (linhas 97-103). A função `isEmailFormatValid` encapsula a validação de formato usando `EMAIL_REGEX`, proporcionando melhor reutilização e manutenibilidade.
 - **Benefício:** Previne que emails inválidos sejam enviados para a API, melhorando a experiência do usuário e reduzindo requisições desnecessárias. A encapsulação em uma função utilitária facilita manutenção futura e garante consistência na validação de email em todo o projeto.
 
-### 4. Tipos de Erro Customizados ✅ (Prioridade: Média)
+### 4. Tipos de Erro Padronizados ✅ (Prioridade: Média)
 - **Requisito:** Tratamento robusto de erros com códigos de status HTTP apropriados e mensagens claras.
 - **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria"
-- **Status:** ✅ **IMPLEMENTADO** - O código utiliza `InvalidEmailError` importado de `@/types/user`, que possui status HTTP apropriado (400) e mensagens descritivas.
-- **Benefício:** Facilita o debugging e fornece feedback adequado sobre o tipo de erro ocorrido, permitindo tratamento específico no cliente.
+- **Status:** ✅ **IMPLEMENTADO** - O código utiliza a classe `HttpError` importada de `@/types/http`, que possui status HTTP apropriado (400 para bad request) e mensagens descritivas. Usa factory methods como `HttpError.badRequest()` para garantir consistência.
+- **Benefício:** Facilita o debugging, fornece feedback adequado sobre o tipo de erro, e garante padronização completa de erros em toda a aplicação (frontend e backend).
 
 ### 5. Tipagem Forte sem `any` ✅ (Prioridade: Alta)
 - **Requisito:** O código é estritamente tipado, sem o uso de `any`.

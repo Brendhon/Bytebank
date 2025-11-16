@@ -1,9 +1,9 @@
 import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import User from '@/models/User/User';
+import { HttpError } from '@/types/http';
 import { IUser } from '@/types/user';
 import bcrypt from 'bcryptjs';
-import { NextResponse } from 'next/server';
 
 /**
  * Handles GET requests to retrieve all User records.
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     const user = await User.findOne({ email: data.email });
 
     // If user exists, throw an error
-    if (user) throw new Error('Usuário já cadastrado na plataforma', { cause: { status: 409 } });
+    if (user) throw HttpError.conflict('Usuário já cadastrado na plataforma');
 
     // Hash the password using bcrypt
     const password = await bcrypt.hash(data.password, 10);

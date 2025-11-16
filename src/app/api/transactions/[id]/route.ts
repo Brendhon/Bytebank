@@ -1,6 +1,7 @@
 import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
 import { connectToDatabase } from '@/lib/mongoose/mongoose';
 import Transaction from '@/models/Transaction/Transaction';
+import { HttpError } from '@/types/http';
 import { ITransaction } from '@/types/transaction';
 
 interface Params { params: Promise<{ id: string }> }
@@ -27,7 +28,7 @@ export async function GET(req: Request, { params }: Params) {
 
     // Verify ownership - ensure the transaction belongs to the authenticated user
     if (transaction && transaction.user.toString() !== session.user.id) {
-      throw new Error('Forbidden: You can only access your own transactions', { cause: { status: 403 } });
+      throw HttpError.forbidden('Forbidden: You can only access your own transactions');
     }
 
     // Handle success response
@@ -59,11 +60,11 @@ export async function DELETE(req: Request, { params }: Params) {
 
     // Verify ownership - ensure the transaction belongs to the authenticated user
     if (!transaction) {
-      throw new Error('Transaction not found', { cause: { status: 404 } });
+      throw HttpError.notFound('Transaction not found');
     }
 
     if (transaction.user.toString() !== session.user.id) {
-      throw new Error('Forbidden: You can only delete your own transactions', { cause: { status: 403 } });
+      throw HttpError.forbidden('Forbidden: You can only delete your own transactions');
     }
 
     // Delete the transaction record by ID
@@ -98,11 +99,11 @@ export async function PUT(req: Request, { params }: Params) {
 
     // Verify ownership - ensure the transaction belongs to the authenticated user
     if (!existingTransaction) {
-      throw new Error('Transaction not found', { cause: { status: 404 } });
+      throw HttpError.notFound('Transaction not found');
     }
 
     if (existingTransaction.user.toString() !== session.user.id) {
-      throw new Error('Forbidden: You can only update your own transactions', { cause: { status: 403 } });
+      throw HttpError.forbidden('Forbidden: You can only update your own transactions');
     }
 
     // Parse the request body as JSON

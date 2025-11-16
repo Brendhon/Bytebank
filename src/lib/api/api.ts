@@ -2,33 +2,22 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/auth";
 import { Session } from "next-auth";
 import { API_MESSAGES } from "@/lib/constants";
-import {
-  errorSchema,
-  notFoundMessageSchema,
-  defaultMessageSchema,
-} from "@/schemas";
+import { notFoundMessageSchema, defaultMessageSchema } from "@/schemas";
+import { HttpError } from "@/types/http";
+import { toHttpError } from "@/lib/errors/error-utils";
 
-/**
- * Interface for API errors with optional status code
- */
-interface ApiError extends Error {
-  status?: number;
-  cause?: {
-    status?: number;
-  };
-}
 
 /**
  * Function to check if the request is authenticated using NextAuth session
  * @returns {Promise<Session>} - Returns the session if authenticated
- * @throws {Error} - Throws an error if the request is not authenticated
+ * @throws {HttpError} - Throws an HttpError with status 401 if not authenticated
  */
 export async function isAuthenticated(): Promise<Session> {
   // Get the session
   const session = await auth();
 
   // If the user is not authenticated, throw an error
-  if (!session?.user?.id) throw new Error(API_MESSAGES.UNAUTHORIZED, { cause: { status: 401 } });
+  if (!session?.user?.id) throw HttpError.unauthorized(API_MESSAGES.UNAUTHORIZED);
 
   // Return the session
   return session;
@@ -57,50 +46,43 @@ export function handleSuccessResponse<T>(
 }
 
 /**
- * Handle the error
- * @param {ApiError | Error} error - The error object
- * @param {string} defaultMessage - The default error message
- * @returns {NextResponse} - The response object
+ * Handles error responses in a standardized way
+ * 
+ * Accepts any error type (unknown), normalizes it to HttpError, and returns
+ * a properly formatted NextResponse with appropriate status code.
+ * 
+ * @param {unknown} error - The error object (can be any type)
+ * @param {string} defaultMessage - The default error message to use if none available
+ * @returns {NextResponse} - The response object with error message and status
+ * 
+ * @example
+ * ```typescript
+ * try {
+ *   // some operation
+ * } catch (error: unknown) {
+ *   return handleErrorResponse(error, 'Failed to process request');
+ * }
+ * ```
  */
 export function handleErrorResponse(
-  error: ApiError | Error,
+  error: unknown,
   defaultMessage: string = API_MESSAGES.DEFAULT_ERROR
 ): NextResponse {
-  // Log the error
-  console.error('Error:', error);
-
   // Validate defaultMessage parameter
   const messageValidation = defaultMessageSchema.safeParse(defaultMessage);
-  const validatedDefaultMessage = messageValidation.success ? messageValidation.data : API_MESSAGES.DEFAULT_ERROR;
+  const validatedDefaultMessage = messageValidation.success
+    ? messageValidation.data
+    : API_MESSAGES.DEFAULT_ERROR;
 
-  // Validate error structure if it's an object with known properties
-  let validatedError: ApiError | Error = error;
+  // Normalize error to HttpError
+  const httpError = toHttpError(error, validatedDefaultMessage);
 
-  // Validate error structure if it's an object with known properties
-  if (error && typeof error === 'object' && 'message' in error) {
-    const errorValidation = errorSchema.safeParse({
-      message: error.message,
-      status: (error as ApiError).status,
-      cause: (error as ApiError).cause,
-    });
+  // Log the error with full context
+  console.error('HTTP Error:', httpError);
 
-    // If validation succeeds, set the validated error
-    if (errorValidation.success) {
-      validatedError = {
-        ...error,
-        status: errorValidation.data.status,
-        cause: errorValidation.data.cause,
-      } as ApiError;
-    }
-  }
-
-  // Get message from error
-  const message = validatedError?.message || validatedDefaultMessage;
-
-  // Get status from error
-  const apiError = validatedError as ApiError;
-  const status = apiError?.status || apiError?.cause?.status || 500;
-
-  // Return an error response
-  return NextResponse.json({ message }, { status });
+  // Return standardized error response
+  return NextResponse.json(
+    { message: httpError.message },
+    { status: httpError.status }
+  );
 }

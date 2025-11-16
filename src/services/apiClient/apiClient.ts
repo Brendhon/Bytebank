@@ -3,17 +3,18 @@ import {
   ERROR_MESSAGES,
   VALID_HTTP_METHODS,
 } from '@/lib/constants';
-import type { CancellableRequest, HttpError, HttpMethod } from '@/types/http';
+import { HttpError } from '@/types/http';
+import type { CancellableRequest, HttpMethod } from '@/types/http';
 
 /**
  * Validates if the HTTP method is valid.
  *
  * @param {string} method - HTTP method to validate
- * @throws {Error} - Throws error if method is invalid
+ * @throws {HttpError} - Throws HttpError (400) if method is invalid
  */
 function validateHttpMethod(method: string): asserts method is HttpMethod {
   if (!VALID_HTTP_METHODS.includes(method as HttpMethod)) {
-    throw new Error(ERROR_MESSAGES.INVALID_METHOD(method, VALID_HTTP_METHODS));
+    throw HttpError.badRequest(ERROR_MESSAGES.INVALID_METHOD(method, VALID_HTTP_METHODS));
   }
 }
 
@@ -21,13 +22,13 @@ function validateHttpMethod(method: string): asserts method is HttpMethod {
  * Validates if the URL is valid.
  *
  * @param {string} url - URL to validate
- * @throws {Error} - Throws error if URL is invalid
+ * @throws {HttpError} - Throws HttpError (400) if URL is invalid
  */
 function validateUrl(url: string): void {
   try {
     new URL(url);
   } catch {
-    throw new Error(ERROR_MESSAGES.INVALID_URL(url));
+    throw HttpError.badRequest(ERROR_MESSAGES.INVALID_URL(url));
   }
 }
 
@@ -35,11 +36,11 @@ function validateUrl(url: string): void {
  * Validates if the timeout value is valid.
  *
  * @param {number} timeout - Timeout value to validate
- * @throws {Error} - Throws error if timeout is invalid
+ * @throws {HttpError} - Throws HttpError (400) if timeout is invalid
  */
 function validateTimeout(timeout: number): void {
   if (timeout <= 0 || !Number.isFinite(timeout)) {
-    throw new Error(ERROR_MESSAGES.INVALID_TIMEOUT(timeout));
+    throw HttpError.badRequest(ERROR_MESSAGES.INVALID_TIMEOUT(timeout));
   }
 }
 
@@ -71,28 +72,26 @@ async function extractErrorMessage(response: Response): Promise<string> {
 }
 
 /**
- * Creates an HTTP error with status code.
+ * Creates an HttpError instance with the given message and status code.
  *
  * @param {string} message - Error message
  * @param {number} status - HTTP status code
- * @returns {HttpError} - Error object with status code
+ * @returns {HttpError} - HttpError instance with status code
  */
 function createHttpError(message: string, status: number): HttpError {
-  const error = new Error(message) as HttpError;
-  error.status = status;
-  return error;
+  return new HttpError(message, status);
 }
 
 /**
- * Handles timeout errors by converting AbortError to a more descriptive error.
+ * Handles timeout errors by converting AbortError to HttpError.
  *
  * @param {unknown} error - Error to handle
  * @param {number} timeout - Timeout value in milliseconds
- * @throws {Error} - Throws descriptive timeout error if error is AbortError
+ * @throws {HttpError} - Throws HttpError (408) if error is AbortError
  */
 function handleTimeoutError(error: unknown, timeout: number): void {
   if (error instanceof Error && error.name === 'AbortError') {
-    throw new Error(ERROR_MESSAGES.REQUEST_TIMEOUT(timeout));
+    throw new HttpError(ERROR_MESSAGES.REQUEST_TIMEOUT(timeout), 408);
   }
 }
 
@@ -106,7 +105,7 @@ function handleTimeoutError(error: unknown, timeout: number): void {
  * @param {number} timeout - Request timeout in milliseconds
  * @param {AbortController} controller - AbortController for request cancellation
  * @returns {Promise<Response>} - Response object
- * @throws {Error} - Throws error if request fails or times out
+ * @throws {HttpError} - Throws HttpError if request fails or times out
  */
 async function executeRequest(
   method: HttpMethod,
@@ -139,14 +138,15 @@ async function executeRequest(
  * Generic function to perform HTTP requests with validation, error handling, and timeout support.
  * Authentication is handled automatically via NextAuth session cookies (HTTP-only cookies).
  *
+ * All errors thrown are instances of HttpError with appropriate status codes.
+ *
  * @template T - The expected response type
  * @param {('GET' | 'POST' | 'PUT' | 'DELETE')} method - HTTP method to use for the request
  * @param {string} url - Request URL (must be a valid URL)
  * @param {unknown | T} [body] - Request body (optional, will be JSON stringified)
  * @param {number} [timeout=30000] - Request timeout in milliseconds (default: 30000ms / 30 seconds)
  * @returns {Promise<T>} - Parsed response data as type T
- * @throws {Error} - Throws error if request fails, timeout occurs, or validation fails
- * @throws {Error & { status: number }} - Error object includes HTTP status code for failed requests
+ * @throws {HttpError} - Throws HttpError with appropriate status code if request fails, timeout occurs, or validation fails
  *
  * @example
  * ```typescript
@@ -158,6 +158,15 @@ async function executeRequest(
  *
  * // Request with custom timeout
  * const data = await request<Data>('GET', '/api/data', undefined, 60000);
+ *
+ * // Error handling
+ * try {
+ *   const data = await request<Data>('GET', '/api/data');
+ * } catch (error) {
+ *   if (error instanceof HttpError) {
+ *     console.log(`HTTP Error ${error.status}: ${error.message}`);
+ *   }
+ * }
  * ```
  */
 export async function request<T>(
@@ -195,13 +204,15 @@ export async function request<T>(
  * Returns an object with the promise and a cancel method to abort the request.
  * Authentication is handled automatically via NextAuth session cookies (HTTP-only cookies).
  *
+ * All errors thrown are instances of HttpError with appropriate status codes.
+ *
  * @template T - The expected response type
  * @param {('GET' | 'POST' | 'PUT' | 'DELETE')} method - HTTP method to use for the request
  * @param {string} url - Request URL (must be a valid URL)
  * @param {unknown | T} [body] - Request body (optional, will be JSON stringified)
  * @param {number} [timeout=30000] - Request timeout in milliseconds (default: 30000ms / 30 seconds)
  * @returns {CancellableRequest<T>} - Object with promise and cancel method
- * @throws {Error} - Throws error if validation fails
+ * @throws {HttpError} - Throws HttpError with appropriate status code if validation fails
  *
  * @example
  * ```typescript
@@ -214,8 +225,8 @@ export async function request<T>(
  * try {
  *   const users = await promise;
  * } catch (error) {
- *   if (error.name === 'AbortError') {
- *     console.log('Request was cancelled');
+ *   if (error instanceof HttpError && error.status === 408) {
+ *     console.log('Request was cancelled or timed out');
  *   }
  * }
  * ```
