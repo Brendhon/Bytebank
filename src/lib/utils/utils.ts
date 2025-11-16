@@ -53,6 +53,94 @@ export const parseDate = (dateStr: string): Date => {
 export const isEmailFormatValid = (email: string): boolean => EMAIL_REGEX.test(email);
 
 /**
+ * Checks if a value exists and can be used as a date
+ * @param {unknown} value - The value to check
+ * @returns {boolean} True if the value exists and is not empty
+ */
+const hasValidDateValue = (value: unknown): boolean => {
+  return value !== null && value !== undefined && value !== '';
+};
+
+/**
+ * Safely parses a date string and returns its timestamp
+ * @param {unknown} dateValue - The date value to parse
+ * @returns {number | null} The timestamp if parsing succeeds, null otherwise
+ */
+const getDateTimestamp = (dateValue: unknown): number | null => {
+  if (!hasValidDateValue(dateValue)) {
+    return null;
+  }
+
+  try {
+    const date = parseDate(dateValue as string);
+    return date.getTime();
+  } catch (error) {
+    return null;
+  }
+};
+
+/**
+ * Compares two date timestamps in descending order (newest first)
+ * @param {number} timestampA - First date timestamp
+ * @param {number} timestampB - Second date timestamp
+ * @returns {number} Comparison result for sorting
+ */
+const compareDateTimestamps = (timestampA: number, timestampB: number): number => {
+  return timestampB - timestampA;
+};
+
+/**
+ * Handles comparison when one or both date values are invalid
+ * Invalid dates are placed at the end of the sorted array
+ * @param {boolean} hasValueA - Whether the first value is valid
+ * @param {boolean} hasValueB - Whether the second value is valid
+ * @returns {number} Comparison result for sorting
+ */
+const handleInvalidDateComparison = (hasValueA: boolean, hasValueB: boolean): number => {
+  if (!hasValueA && !hasValueB) return 0;
+  if (!hasValueA) return 1; // Put invalid dates at the end
+  if (!hasValueB) return -1; // Put invalid dates at the end
+  return 0; // Should not reach here, but TypeScript requires it
+};
+
+/**
+ * Compares two objects by their date property values
+ * @param {T} a - First object
+ * @param {T} b - Second object
+ * @param {keyof T} dateKey - The key of the date property
+ * @returns {number} Comparison result for sorting
+ */
+const compareDates = <T>(a: T, b: T, dateKey: keyof T): number => {
+  const dateValueA = a[dateKey];
+  const dateValueB = b[dateKey];
+
+  const hasValueA = hasValidDateValue(dateValueA);
+  const hasValueB = hasValidDateValue(dateValueB);
+
+  // Handle invalid or missing date values
+  if (!hasValueA || !hasValueB) {
+    return handleInvalidDateComparison(hasValueA, hasValueB);
+  }
+
+  // Try to parse both dates
+  const timestampA = getDateTimestamp(dateValueA);
+  const timestampB = getDateTimestamp(dateValueB);
+
+  // If parsing fails for either value, log error and maintain order
+  if (timestampA === null || timestampB === null) {
+    console.error('Error parsing dates for sorting:', {
+      dateKey,
+      valueA: dateValueA,
+      valueB: dateValueB
+    });
+    return 0;
+  }
+
+  // Compare valid timestamps in descending order
+  return compareDateTimestamps(timestampA, timestampB);
+};
+
+/**
  * Sorts an array of objects by a specific date property (format: 'dd/mm/yyyy')
  * @param {T[]} arr - The array to sort
  * @param {keyof T} dateKey - The key of the date property to sort by
@@ -68,16 +156,7 @@ export const sortByDate = <T>(arr: T[], dateKey: keyof T): T[] => {
     return arr;
   }
   
-  return arr.sort((a, b) => {
-    try {
-    const dateA = parseDate(a[dateKey] as unknown as string);
-    const dateB = parseDate(b[dateKey] as unknown as string);
-    return dateB.getTime() - dateA.getTime(); // Descending order
-    } catch (error) {
-      console.error('Error sorting by date:', error);
-      return 0;
-    }
-  });
+  return arr.sort((a, b) => compareDates(a, b, dateKey));
 };
 
 /**
