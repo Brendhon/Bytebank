@@ -3,7 +3,7 @@
 ## 📋 Resumo Executivo
 **Status:** ✅ Excelente (98%)
 
-O arquivo `login.schema.ts` apresenta a definição do schema Zod para validação de dados de login. O código utiliza Zod corretamente, implementa validações robustas (email com normalização, senha com comprimento mínimo e máximo), e exporta tipos TypeScript inferidos. O schema possui documentação JSDoc completa em inglês com exemplos de uso. Todas as mensagens de erro estão em inglês. A validação de senha mantém um mínimo de 6 caracteres para garantir retrocompatibilidade com usuários existentes que foram cadastrados com as regras anteriores.
+O arquivo `login.schema.ts` apresenta a definição do schema Zod para validação de dados de login. O código utiliza Zod corretamente, implementa validações robustas (email com normalização, senha com comprimento mínimo e máximo), e exporta tipos TypeScript inferidos. O schema reutiliza schemas compartilhados de validação de usuário (`emailValidation` e `simplePasswordValidation`) do arquivo `user.schema.ts` para garantir consistência e manutenibilidade. O schema possui documentação JSDoc completa em inglês com exemplos de uso. Todas as mensagens de erro estão em inglês. A validação de senha mantém um mínimo de 6 caracteres para garantir retrocompatibilidade com usuários existentes que foram cadastrados com as regras anteriores.
 
 **Conformidade:** 98%
 
@@ -53,15 +53,16 @@ O arquivo `login.schema.ts` apresenta a definição do schema Zod para validaç�
 1. **Nomenclatura e Estrutura:** O arquivo segue a convenção de nomenclatura adequada (`login.schema.ts`).
 2. **TypeScript e Tipagem:** O código utiliza TypeScript com tipagem forte, exportando tipos inferidos do Zod.
 3. **Uso de Zod:** Utiliza Zod corretamente para validação de schemas.
-4. **Validação de Email:** Implementa validação de formato de email adequada com normalização (toLowerCase, trim).
-5. **Validação de Senha:** Implementa validação de senha com mínimo de 6 caracteres (retrocompatibilidade) e máximo de 128 caracteres.
+4. **Validação de Email:** Implementa validação de formato de email adequada com normalização (toLowerCase, trim) via schema compartilhado.
+5. **Validação de Senha:** Implementa validação de senha com mínimo de 6 caracteres (retrocompatibilidade) e máximo de 128 caracteres via schema compartilhado.
 6. **Responsabilidade Única (SRP):** O arquivo tem uma responsabilidade única: definir o schema de validação de login.
 7. **Clean Code:** O código é legível e bem estruturado.
 8. **Reutilização de Tipos:** Exporta tipos TypeScript inferidos do schema para reutilização.
-9. **Documentação JSDoc:** Documentação JSDoc completa em inglês com exemplos de uso e nota sobre retrocompatibilidade.
-10. **Validação de Comprimento Máximo:** Validação de comprimento máximo para todos os campos.
-11. **Normalização de Email:** Normalização de email (toLowerCase, trim) para garantir consistência.
-12. **Mensagens de Erro em Inglês:** Todas as mensagens de erro estão em inglês, seguindo os padrões do projeto.
+9. **Reutilização de Schemas:** Reutiliza schemas compartilhados de validação de usuário (`emailValidation` e `simplePasswordValidation`) do arquivo `user.schema.ts` para garantir consistência e manutenibilidade.
+10. **Documentação JSDoc:** Documentação JSDoc completa em inglês com exemplos de uso e nota sobre retrocompatibilidade.
+11. **Validação de Comprimento Máximo:** Validação de comprimento máximo para todos os campos (via schemas compartilhados).
+12. **Normalização de Email:** Normalização de email (toLowerCase, trim) para garantir consistência (via schema compartilhado).
+13. **Mensagens de Erro em Inglês:** Todas as mensagens de erro estão em inglês, seguindo os padrões do projeto.
 
 ## ✅ Melhorias Implementadas
 
@@ -82,8 +83,12 @@ Nenhum ponto de melhoria adicional identificado no momento. A validação de sen
    - **Benefício:** Fornece validação type-safe e reutilizável, garantindo que os dados atendam aos requisitos antes de serem processados.
 
 2. **Type Inference Pattern:** Utiliza inferência de tipos do TypeScript a partir do schema Zod.
-   - **Localização:** Linha 14
+   - **Localização:** Tipo `LoginFormData`
    - **Benefício:** Garante sincronização entre o schema de validação e os tipos TypeScript, evitando inconsistências.
+
+3. **Schema Reuse Pattern:** Reutiliza schemas compartilhados para validação de usuário.
+   - **Localização:** Importação de `emailValidation` e `simplePasswordValidation` de `user.schema.ts`
+   - **Benefício:** Garante consistência, facilita manutenção e permite reutilização em múltiplos schemas do projeto.
 
 ## 🏗️ Princípios SOLID Implementados
 
@@ -103,8 +108,10 @@ Nenhum princípio adicional precisa ser implementado. O arquivo é focado e bem 
 
 ### 1. ✅ Traduzir Mensagens de Erro e Comentários para Inglês (Prioridade: Alta) - CONCLUÍDO
 - ✅ Todas as mensagens de erro e comentários foram traduzidos para inglês.
-- ✅ Implementado com documentação JSDoc completa:
+- ✅ Implementado com documentação JSDoc completa e uso de schemas compartilhados:
 ```typescript
+import { emailValidation, simplePasswordValidation } from '../user/user.schema';
+
 /**
  * Login schema for validating login form data
  * 
@@ -121,16 +128,8 @@ Nenhum princípio adicional precisa ser implementado. O arquivo é focado e bem 
  * ```
  */
 export const loginSchema = z.object({
-  email: z
-    .string({ required_error: 'Email is required' })
-    .email('Invalid email address')
-    .max(255, 'Email cannot exceed 255 characters')
-    .toLowerCase()
-    .trim(),
-  password: z
-    .string({ required_error: 'Password is required' })
-    .min(6, 'Password must be at least 6 characters long')
-    .max(128, 'Password cannot exceed 128 characters'),
+  email: emailValidation,
+  password: simplePasswordValidation,
 });
 
 /**
@@ -152,14 +151,14 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 - ✅ Implementado: Campo `password` com `.min(6, 'Password must be at least 6 characters long').max(128, 'Password cannot exceed 128 characters')`.
 
 ### 4. ✅ Adicionar Validação de Comprimento Máximo (Prioridade: Média) - CONCLUÍDO
-- ✅ Validação de comprimento máximo implementada para todos os campos.
+- ✅ Validação de comprimento máximo implementada para todos os campos via schemas compartilhados.
 - ✅ Implementado: 
-  - Campo `email` com `.max(255, 'Email cannot exceed 255 characters')`.
-  - Campo `password` com `.max(128, 'Password cannot exceed 128 characters')`.
+  - Campo `email`: validação de máximo de 255 caracteres via `emailValidation` de `user.schema.ts`.
+  - Campo `password`: validação de máximo de 128 caracteres via `simplePasswordValidation` de `user.schema.ts`.
 
 ### 5. ✅ Normalizar Email (Prioridade: Baixa) - CONCLUÍDO
-- ✅ Normalização de email implementada (toLowerCase, trim) para garantir consistência.
-- ✅ Implementado: Campo `email` com `.toLowerCase().trim()`.
+- ✅ Normalização de email implementada (toLowerCase, trim) para garantir consistência via schema compartilhado.
+- ✅ Implementado: Campo `email` usa `emailValidation` de `user.schema.ts` que inclui `.toLowerCase().trim()`.
 
 ## 📊 Mapeamento
 **Arquivo:** `src/schemas/login/login.schema.ts`  
@@ -170,10 +169,11 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 ### Resumo das Melhorias Implementadas
 - ✅ Mensagens de erro traduzidas para inglês
 - ✅ Documentação JSDoc completa com exemplos de uso e nota sobre retrocompatibilidade
-- ✅ Validação de comprimento máximo para email (255 caracteres)
-- ✅ Validação de comprimento máximo para senha (128 caracteres)
-- ✅ Normalização de email (toLowerCase, trim)
-- ✅ Validação de senha mantida com mínimo de 6 caracteres para retrocompatibilidade
+- ✅ Reutilização de schemas compartilhados de validação de usuário (`user.schema.ts`) para garantir consistência
+- ✅ Validação de comprimento máximo para email (255 caracteres) via schema compartilhado
+- ✅ Validação de comprimento máximo para senha (128 caracteres) via schema compartilhado
+- ✅ Normalização de email (toLowerCase, trim) via schema compartilhado
+- ✅ Validação de senha mantida com mínimo de 6 caracteres para retrocompatibilidade via schema compartilhado
 
 ### Nota sobre Validação de Senha
 A validação de senha no login mantém um mínimo de 6 caracteres (ao invés de 8 caracteres com complexidade como no registro) para garantir retrocompatibilidade com usuários existentes que foram cadastrados com as regras anteriores. A validação de senha forte (8+ caracteres com complexidade) é aplicada apenas no registro (`register.schema.ts`), garantindo que novos usuários tenham senhas seguras. Usuários existentes podem atualizar suas senhas através de um fluxo de recuperação/atualização de senha, onde a validação forte será aplicada.

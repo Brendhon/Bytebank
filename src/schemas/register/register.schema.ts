@@ -1,24 +1,5 @@
 import { z } from 'zod';
-
-/**
- * Password validation schema with complexity requirements
- * 
- * Validates password with the following requirements:
- * - Minimum 8 characters
- * - Maximum 128 characters
- * - At least one lowercase letter
- * - At least one uppercase letter
- * - At least one number
- * - At least one special character (@$!%*?&)
- */
-const passwordValidation = z
-  .string({ required_error: 'Password is required' })
-  .min(8, 'Password must be at least 8 characters long')
-  .max(128, 'Password cannot exceed 128 characters')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number')
-  .regex(/[@$!%*?&]/, 'Password must contain at least one special character (@$!%*?&)');
+import { emailValidation, nameValidation, strongPasswordValidation } from '../user/user.schema';
 
 /**
  * Registration schema for validating user registration form data
@@ -38,22 +19,10 @@ const passwordValidation = z
  * ```
  */
 export const registerSchema = z.object({
-  name: z
-    .string({ required_error: 'Field is required' })
-    .min(1, 'Field is required')
-    .max(100, 'Name cannot exceed 100 characters')
-    .trim()
-    .refine((val) => val.length > 0, {
-      message: 'Name cannot be empty',
-    }),
-  email: z
-    .string({ required_error: 'Email is required' })
-    .email('Invalid email address')
-    .max(255, 'Email cannot exceed 255 characters')
-    .toLowerCase()
-    .trim(),
-  password: passwordValidation,
-  confirmPassword: passwordValidation,
+  name: nameValidation,
+  email: emailValidation,
+  password: strongPasswordValidation,
+  confirmPassword: strongPasswordValidation,
   acceptPrivacy: z
     .boolean()
     .refine((val) => val === true, {

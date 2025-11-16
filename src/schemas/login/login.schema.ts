@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { emailValidation, simplePasswordValidation } from '../user/user.schema';
 
 /**
  * Login schema for validating login form data
@@ -16,16 +17,8 @@ import { z } from 'zod';
  * ```
  */
 export const loginSchema = z.object({
-  email: z
-    .string({ required_error: 'Email is required' })
-    .email('Invalid email address')
-    .max(255, 'Email cannot exceed 255 characters')
-    .toLowerCase()
-    .trim(),
-  password: z
-    .string({ required_error: 'Password is required' })
-    .min(6, 'Password must be at least 6 characters long')
-    .max(128, 'Password cannot exceed 128 characters'),
+  email: emailValidation,
+  password: simplePasswordValidation,
 });
 
 /**

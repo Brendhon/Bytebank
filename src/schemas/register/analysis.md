@@ -3,7 +3,7 @@
 ## 📋 Resumo Executivo
 **Status:** ✅ Excelente (98%)
 
-O arquivo `register.schema.ts` apresenta a definição do schema Zod para validação de dados de registro de usuário. O código utiliza Zod corretamente, implementa validações robustas (email, senha forte com complexidade, confirmação de senha, aceite de privacidade), e exporta tipos TypeScript inferidos. O schema implementa validação customizada para garantir que as senhas coincidam e que os termos sejam aceitos. Todas as melhorias principais foram implementadas: mensagens traduzidas para inglês, documentação JSDoc completa, validação de senha fortalecida (8 caracteres + complexidade), validação de comprimento máximo, e validação de formato de nome.
+O arquivo `register.schema.ts` apresenta a definição do schema Zod para validação de dados de registro de usuário. O código utiliza Zod corretamente, implementa validações robustas (email, senha forte com complexidade, confirmação de senha, aceite de privacidade), e exporta tipos TypeScript inferidos. O schema reutiliza schemas compartilhados de validação de usuário (`emailValidation`, `nameValidation` e `strongPasswordValidation`) do arquivo `user.schema.ts` para garantir consistência e manutenibilidade. O schema implementa validação customizada para garantir que as senhas coincidam e que os termos sejam aceitos. Todas as melhorias principais foram implementadas: mensagens traduzidas para inglês, documentação JSDoc completa, validação de senha fortalecida (8 caracteres + complexidade), validação de comprimento máximo, e validação de formato de nome.
 
 **Conformidade:** 98%
 
@@ -69,6 +69,7 @@ Nenhuma violação identificada. Todos os requisitos técnicos foram atendidos.
 7. **Responsabilidade Única (SRP):** O arquivo tem uma responsabilidade única: definir o schema de validação de registro.
 8. **Clean Code:** O código é legível e bem estruturado.
 9. **Reutilização de Tipos:** Exporta tipos TypeScript inferidos do schema para reutilização.
+10. **Reutilização de Schemas:** Reutiliza schemas compartilhados de validação de usuário (`emailValidation`, `nameValidation` e `strongPasswordValidation`) do arquivo `user.schema.ts` para garantir consistência e manutenibilidade.
 
 ## Pontos de Melhoria
 
@@ -85,8 +86,12 @@ Nenhuma violação identificada. Todos os requisitos técnicos foram atendidos.
    - **Benefício:** Garante sincronização entre o schema de validação e os tipos TypeScript, evitando inconsistências.
 
 3. **Custom Validation Pattern:** Implementa validação customizada usando `refine` para regras de negócio complexas.
-   - **Localização:** Linhas 18-20, 22-25
+   - **Localização:** Validação de aceite de privacidade, validação de confirmação de senha
    - **Benefício:** Permite validações que dependem de múltiplos campos ou lógica customizada.
+
+4. **Schema Reuse Pattern:** Reutiliza schemas compartilhados para validação de usuário.
+   - **Localização:** Importação de `emailValidation`, `nameValidation` e `strongPasswordValidation` de `user.schema.ts`
+   - **Benefício:** Garante consistência, facilita manutenção e permite reutilização em múltiplos schemas do projeto.
 
 ## 🏗️ Princípios SOLID Implementados
 
@@ -112,7 +117,24 @@ Todas as melhorias principais foram implementadas. O schema está em conformidad
 2. **Validação de Nome com Regex:** Poderia adicionar validação regex para garantir que o nome contenha apenas letras, espaços e caracteres acentuados válidos (opcional, dependendo dos requisitos de negócio).
 
 ## 📊 Mapeamento
-**Arquivo:** `src/schemas/register.schema.ts`  
-**Status:** ✅ Criado  
+**Arquivo:** `src/schemas/register/register.schema.ts`  
+**Status:** ✅ Implementado  
+**Conformidade:** 98%  
 **Link:** `@docs/analysis/analysis-mapping.md`
+
+### Resumo das Melhorias Implementadas
+- ✅ Mensagens traduzidas para inglês
+- ✅ Documentação JSDoc completa com exemplos de uso
+- ✅ Validação de senha fortalecida (8 caracteres + complexidade) via schema compartilhado
+- ✅ Validação de comprimento máximo via schemas compartilhados
+- ✅ Validação de formato de nome via schema compartilhado
+- ✅ Reutilização de schemas de validação de usuário (`user.schema.ts`) para garantir consistência
+
+### Nota sobre Reutilização de Schemas
+O schema reutiliza validações compartilhadas de `user.schema.ts`:
+- `emailValidation`: validação de email (formato, máximo 255 caracteres, normalização)
+- `nameValidation`: validação de nome (mínimo 1, máximo 100 caracteres, não vazio)
+- `strongPasswordValidation`: validação forte de senha (8+ caracteres com complexidade)
+
+Isso garante consistência, facilita manutenção e permite reutilização em todos os schemas do projeto.
 

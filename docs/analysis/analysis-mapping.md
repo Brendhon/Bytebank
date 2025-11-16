@@ -116,9 +116,10 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `schemas/account/account.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
-| `schemas/login/login.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, validação de comprimento máximo, normalização de email, validação de senha mantida com mínimo de 6 caracteres para retrocompatibilidade) |
-| `schemas/register/register.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, validação de senha fortalecida com 8 caracteres + complexidade, validação de comprimento máximo, validação de formato de nome) - Vulnerabilidade de segurança corrigida |
+| `schemas/account/account.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, validação de senha forte para nova senha via schema compartilhado, validação de senha simples para senha atual para retrocompatibilidade, reutilização de schemas de validação de usuário do `user.schema.ts`, validação de comprimento máximo, normalização de email, validação de nome) - Vulnerabilidade de segurança corrigida |
+| `schemas/login/login.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, reutilização de schemas de validação de usuário do `user.schema.ts`, validação de comprimento máximo, normalização de email, validação de senha mantida com mínimo de 6 caracteres para retrocompatibilidade) |
+| `schemas/register/register.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, reutilização de schemas de validação de usuário do `user.schema.ts`, validação de senha fortalecida com 8 caracteres + complexidade, validação de comprimento máximo, validação de formato de nome) - Vulnerabilidade de segurança corrigida |
+| `schemas/user/user.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (100%) - **SCHEMA COMPARTILHADO FUNDAMENTAL** - Centraliza todas as validações de usuário (email, nome, senha forte, senha simples) para reutilização em account, register e login - Documentação JSDoc completa, mensagens em inglês, validações robustas, conformidade 100% |
 | `schemas/transaction/transaction.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens traduzidas para inglês, documentação JSDoc completa, validação de formato de data com regex e refine, validação de comprimento máximo para alias, validação de valor máximo, validação de precisão decimal) |
 | `schemas/api/api.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (schema reutilizável para mensagens, exemplos na documentação JSDoc, eliminação de duplicação) |
 
@@ -210,6 +211,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 ---
 
 **Última atualização**: 2025-11-16
-**Total de arquivos mapeados**: 81
-**Arquivos analisados**: 80 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 11 ✅, Models: 2, Schemas: 5 (2 ✅), Services: 3 ✅, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+**Total de arquivos mapeados**: 82
+**Arquivos analisados**: 81 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
 
