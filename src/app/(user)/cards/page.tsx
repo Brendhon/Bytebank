@@ -1,9 +1,9 @@
 import { CreditCardSession } from "@/components/cards";
-import { getServerSession } from "next-auth";
+import { auth } from "@/lib/auth/auth";
 
 export default async () => {
   // Get session data
-  const session = await getServerSession();
+  const session = await auth();
 
   // Render the component
   return (

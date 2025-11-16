@@ -47,12 +47,68 @@ declare module "next-auth" {
  */
 declare module "next-auth/jwt" {
   /**
-   * Customized JWT interface with user identifier.
+   * Customized JWT interface with user identifier and additional user information.
    * 
    * @interface JWT
    * @property {string} id - Unique identifier for the user stored in the JWT
+   * @property {string} [email] - User's email address stored in the JWT
+   * @property {string} [name] - User's name stored in the JWT
    */
   interface JWT {
     id: string;
+    email?: string;
+    name?: string;
   }
 }
+
+/**
+ * Credentials type for NextAuth authorize function
+ * 
+ * @typedef {Object} Credentials
+ * @property {string} [email] - User email address
+ * @property {string} [password] - User password
+ */
+export type Credentials = {
+  email?: string;
+  password?: string;
+};
+
+/**
+ * Type for JWT callback parameters
+ * 
+ * @typedef {Object} JWTCallbackParams
+ * @property {JWT} token - JWT token object
+ * @property {User} [user] - User object from authorize function (only present during initial login)
+ */
+export type JWTCallbackParams = {
+  token: JWT;
+  user?: import('next-auth').User;
+};
+
+/**
+ * Type for Session callback parameters
+ * 
+ * @typedef {Object} SessionCallbackParams
+ * @property {Session} session - Session object
+ * @property {JWT} token - JWT token object
+ */
+export type SessionCallbackParams = {
+  session: import('next-auth').Session;
+  token: JWT;
+};
+
+/**
+ * Type for User document from database
+ * 
+ * @typedef {Object} UserDocument
+ * @property {Object} _id - MongoDB document ID with toString method
+ * @property {string | null} [name] - User's name
+ * @property {string | null} [email] - User's email address
+ * @property {string} password - User's hashed password
+ */
+export type UserDocument = {
+  _id: { toString: () => string };
+  name?: string | null;
+  email?: string | null;
+  password: string;
+};

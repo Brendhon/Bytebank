@@ -70,9 +70,9 @@ export const sortByDate = <T>(arr: T[], dateKey: keyof T): T[] => {
   
   return arr.sort((a, b) => {
     try {
-      const dateA = parseDate(a[dateKey] as unknown as string);
-      const dateB = parseDate(b[dateKey] as unknown as string);
-      return dateB.getTime() - dateA.getTime(); // Descending order
+    const dateA = parseDate(a[dateKey] as unknown as string);
+    const dateB = parseDate(b[dateKey] as unknown as string);
+    return dateB.getTime() - dateA.getTime(); // Descending order
     } catch (error) {
       console.error('Error sorting by date:', error);
       return 0;

@@ -2,11 +2,11 @@
 
 ## 📋 Resumo Executivo
 
-**Status:** ⚠️ Requer Atenção (65%)
+**Status:** ⚠️ Requer Atenção (72%)
 
-A página de cards (`(user)/cards/page.tsx`) é um Server Component demonstrativo que exibe informações de cartões de crédito para usuários autenticados. O componente utiliza `getServerSession` para obter dados da sessão e renderiza o componente `CreditCardSession` com dados mockados. A implementação demonstra corretamente o uso de Server Components no Next.js App Router, mas apresenta violações críticas de segurança: exposição de dados sensíveis de cartão de crédito (CVV, números completos) hardcoded no código, o que viola padrões PCI DSS. Além disso, há falta de documentação JSDoc, uso de arrow function anônima, e ausência de `authOptions` na chamada de `getServerSession`. Embora os dados sejam mockados para demonstração, isso deve ser claramente documentado e os dados sensíveis não deveriam estar expostos mesmo em ambiente de desenvolvimento.
+A página de cards (`(user)/cards/page.tsx`) é um Server Component demonstrativo que exibe informações de cartões de crédito para usuários autenticados. O componente utiliza `auth()` corretamente para obter dados da sessão (garantindo configuração adequada de autenticação) e renderiza o componente `CreditCardSession` com dados mockados. A implementação demonstra corretamente o uso de Server Components no Next.js App Router, mas apresenta violações críticas de segurança: exposição de dados sensíveis de cartão de crédito (CVV, números completos) hardcoded no código, o que viola padrões PCI DSS. Além disso, há falta de documentação JSDoc e uso de arrow function anônima. Embora os dados sejam mockados para demonstração, isso deve ser claramente documentado e os dados sensíveis não deveriam estar expostos mesmo em ambiente de desenvolvimento.
 
-**Conformidade:** 65%
+**Conformidade:** 72%
 
 ---
 
@@ -19,28 +19,21 @@ A página de cards (`(user)/cards/page.tsx`) é um Server Component demonstrativ
 - **Infração:** Linhas 13-15 e 19-21 expõem dados sensíveis hardcoded: números completos de cartão, datas de expiração e CVV em texto plano no código-fonte.
 - **Impacto:** Violação grave de segurança (PCI DSS), risco de exposição de dados mesmo em ambiente de desenvolvimento, possível commit acidental de dados sensíveis no repositório.
 
-### 2. Falta de `authOptions` em `getServerSession` (Prioridade: Alta)
-
-- **Requisito:** `getServerSession` deve receber `authOptions` como parâmetro para garantir configuração correta da autenticação.
-- **Documento:** Boas práticas do NextAuth
-- **Infração:** Linha 6 utiliza `getServerSession()` sem passar `authOptions`, o que pode causar problemas de configuração.
-- **Impacto:** Possível falha na obtenção da sessão, comportamento inconsistente, e dificuldade de debugging.
-
-### 3. Falta de Documentação JSDoc (Prioridade: Alta)
+### 2. Falta de Documentação JSDoc (Prioridade: Alta)
 
 - **Requisito:** A interface de props e a assinatura do componente possuem documentação JSDoc clara e completa.
 - **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
 - **Infração:** O componente não possui documentação JSDoc explicando seu propósito, que é demonstrativo, e que os dados são mockados.
 - **Impacto:** Dificulta a compreensão de que é uma página demonstrativa, e não deixa claro que os dados são mockados para fins de demonstração.
 
-### 4. Falta de Nome de Função (Prioridade: Média)
+### 3. Falta de Nome de Função (Prioridade: Média)
 
 - **Requisito:** Componentes devem ser exportados de forma explícita com nomes descritivos.
 - **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
 - **Infração:** Linha 4 utiliza arrow function anônima `export default async () => {` em vez de função nomeada.
 - **Impacto:** Dificulta debugging (componente aparece como "Anonymous" no React DevTools) e reduz rastreabilidade.
 
-### 5. Dados Mockados Sem Documentação Clara (Prioridade: Média)
+### 4. Dados Mockados Sem Documentação Clara (Prioridade: Média)
 
 - **Requisito:** Dados mockados devem ser claramente documentados e separados do código de produção.
 - **Documento:** Boas práticas de desenvolvimento
@@ -60,8 +53,8 @@ A página de cards (`(user)/cards/page.tsx`) é um Server Component demonstrativ
    - Tipagem implícita adequada
 
 3. **Autenticação Server-Side:**
-   - Utiliza `getServerSession` para verificar autenticação no servidor
-   - Acesso a dados da sessão de forma segura
+   - Utiliza `auth()` para verificar autenticação no servidor (que internamente usa `getServerSession` com `authOptions`)
+   - Acesso a dados da sessão de forma segura e com configuração correta
 
 4. **Estrutura e Nomenclatura:**
    - Arquivo segue convenções do Next.js App Router (`page.tsx`)
@@ -95,16 +88,13 @@ A página de cards (`(user)/cards/page.tsx`) é um Server Component demonstrativ
 3. **Nome de Função:**
    - Usar função nomeada em vez de arrow function anônima
 
-4. **Configuração de Autenticação:**
-   - Passar `authOptions` para `getServerSession`
+4. **Tratamento de Erros:**
+   - Adicionar tratamento de erro caso `auth()` falhe
 
-5. **Tratamento de Erros:**
-   - Adicionar tratamento de erro caso `getServerSession` falhe
-
-6. **Separação de Dados Mockados:**
+5. **Separação de Dados Mockados:**
    - Mover dados mockados para arquivo separado ou constantes bem documentadas
 
-7. **Validação de Sessão:**
+6. **Validação de Sessão:**
    - Validar se a sessão existe antes de renderizar o componente
 
 ---
@@ -137,7 +127,7 @@ A página de cards (`(user)/cards/page.tsx`) é um Server Component demonstrativ
    - **Benefício:** Código simples e fácil de entender.
 
 2. **Dependency Inversion Principle (DIP):**
-   - **Evidência:** O componente depende de abstrações (componente `CreditCardSession`, `getServerSession`) em vez de implementações concretas.
+   - **Evidência:** O componente depende de abstrações (componente `CreditCardSession`, `auth()`) em vez de implementações concretas.
    - **Benefício:** Baixo acoplamento e alta flexibilidade.
 
 ### A Implementar
@@ -190,8 +180,7 @@ export const MOCK_PHYSICAL_CARD = {
 **Código exemplo:**
 ```typescript
 import { CreditCardSession } from "@/components/cards";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth/auth";
+import { auth } from "@/lib/auth/auth";
 import { MOCK_DIGITAL_CARD, MOCK_PHYSICAL_CARD } from "@/constants/mockCreditCards";
 
 /**
@@ -201,7 +190,7 @@ import { MOCK_DIGITAL_CARD, MOCK_PHYSICAL_CARD } from "@/constants/mockCreditCar
  * In production, credit card data should be fetched from a secure API endpoint.
  * 
  * This is a Server Component that:
- * - Fetches user session data server-side
+ * - Fetches user session data server-side using auth()
  * - Renders credit card information using mock data
  * - Demonstrates Server Component pattern in Next.js App Router
  * 
@@ -212,22 +201,7 @@ export default async function CardsPage() {
 }
 ```
 
-### 3. Passar `authOptions` para `getServerSession` (Prioridade: Alta)
-
-- Importar e passar `authOptions` para garantir configuração correta
-
-**Código exemplo:**
-```typescript
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth/auth";
-
-export default async function CardsPage() {
-  const session = await getServerSession(authOptions);
-  // ...
-}
-```
-
-### 4. Usar Função Nomeada (Prioridade: Média)
+### 3. Usar Função Nomeada (Prioridade: Média)
 
 - Substituir arrow function anônima por função nomeada
 
@@ -238,15 +212,18 @@ export default async function CardsPage() {
 }
 ```
 
-### 5. Adicionar Tratamento de Erros e Validação (Prioridade: Média)
+### 4. Adicionar Tratamento de Erros e Validação (Prioridade: Média)
 
 - Validar sessão e tratar erros adequadamente
 
 **Código exemplo:**
 ```typescript
+import { auth } from "@/lib/auth/auth";
+import { redirect } from "next/navigation";
+
 export default async function CardsPage() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     
     if (!session?.user) {
       // Redirect to login or show error
@@ -273,12 +250,11 @@ export default async function CardsPage() {
 }
 ```
 
-### 6. Código Completo Refatorado (Exemplo)
+### 5. Código Completo Refatorado (Exemplo)
 
 ```typescript
 import { CreditCardSession } from "@/components/cards";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth/auth";
+import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 import { MOCK_DIGITAL_CARD, MOCK_PHYSICAL_CARD } from "@/constants/mockCreditCards";
 
@@ -289,7 +265,7 @@ import { MOCK_DIGITAL_CARD, MOCK_PHYSICAL_CARD } from "@/constants/mockCreditCar
  * In production, credit card data should be fetched from a secure API endpoint.
  * 
  * This is a Server Component that:
- * - Fetches user session data server-side
+ * - Fetches user session data server-side using auth()
  * - Renders credit card information using mock data
  * - Demonstrates Server Component pattern in Next.js App Router
  * 
@@ -299,7 +275,7 @@ import { MOCK_DIGITAL_CARD, MOCK_PHYSICAL_CARD } from "@/constants/mockCreditCar
 export default async function CardsPage() {
   try {
     // Get session data
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     // Validate session
     if (!session?.user) {
