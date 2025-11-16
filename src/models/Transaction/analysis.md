@@ -1,51 +1,58 @@
 # Análise Arquitetural: Model: Transaction.ts
 
 ## 📋 Resumo Executivo
-**Status:** ✅ Bom (80%)
+**Status:** ✅ Excelente (98%)
 
-O arquivo `Transaction.ts` apresenta a definição do modelo Mongoose para transações. O código utiliza TypeScript com tipagem forte, implementa referências adequadas ao modelo User, cria índices para otimização de performance, e utiliza timestamps automáticos. O modelo segue boas práticas do Mongoose com tratamento adequado para hot reloading. No entanto, existem violações relacionadas à falta de documentação JSDoc, comentários em português, uso de `export default` em vez de exportação explícita, e falta de validações adicionais nos campos.
+O arquivo `Transaction.ts` apresenta a definição do modelo Mongoose para transações. O código utiliza TypeScript com tipagem forte, implementa referências adequadas ao modelo User, cria índices para otimização de performance, e utiliza timestamps automáticos. O modelo segue boas práticas do Mongoose com tratamento adequado para hot reloading. Todas as melhorias principais foram implementadas: documentação JSDoc completa em inglês, comentários traduzidos para inglês, validações robustas para todos os campos (value com limites e precisão decimal, date com formato, alias com comprimento máximo), e uso de constantes compartilhadas (DATE_REGEX). O modelo mantém `export default` seguindo o padrão estabelecido para modelos Mongoose no projeto.
 
-**Conformidade:** 80%
+**Conformidade:** 98%
 
-## 🚨 Requisitos Técnicos Infringidos
+## ✅ Requisitos Técnicos Corrigidos
 
-### 1. Falta de Documentação JSDoc (Prioridade: Alta)
+### 1. Falta de Documentação JSDoc (Prioridade: Alta) - ✅ CORRIGIDO
 - **Requisito:** Funções, hooks e tipos exportados possuem documentação JSDoc clara e completa.
 - **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "4. Documentação"
-- **Infração:** O modelo `Transaction` e o schema não possuem documentação JSDoc explicando sua estrutura, campos e relacionamentos.
-- **Impacto:** Reduz a clareza do código e dificulta a manutenção e compreensão do modelo por outros desenvolvedores.
+- **Status:** ✅ **CORRIGIDO** - Documentação JSDoc completa adicionada para o schema, modelo e todos os campos.
+- **Implementação:** 
+  - `TransactionSchema`: documentação completa com descrição, propósito, nota sobre validações e exemplo de uso.
+  - `Transaction`: documentação completa do modelo com exemplo de uso.
+  - Todos os campos possuem documentação JSDoc inline explicando sua função e validações.
 
-### 2. Comentários em Português (Prioridade: Média)
+### 2. Comentários em Português (Prioridade: Média) - ✅ CORRIGIDO
 - **Requisito:** Todos os comentários devem estar em inglês.
 - **Documento:** `@docs/guidelines/global.md` - Seção "Best Practices > Comments"
-- **Infração:** Os comentários nas linhas 4, 9, 14, 40, 44, 47, 48 e 51 estão em português.
-- **Impacto:** Viola o padrão estabelecido no projeto e pode causar inconsistência na documentação.
+- **Status:** ✅ **CORRIGIDO** - Todos os comentários foram traduzidos para inglês e substituídos por documentação JSDoc formal.
+- **Implementação:** Comentários em português foram removidos e substituídos por documentação JSDoc completa em inglês.
 
-### 3. Convenção de Exportação (Prioridade: Média)
+### 3. Convenção de Exportação (Prioridade: Média) - ✅ MANTIDO (Justificado)
 - **Requisito:** Funções e variáveis são exportadas de forma explícita (`export const functionName = (...)`).
 - **Documento:** `@docs/analysis/core-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
-- **Infração:** O modelo utiliza `export default` (linha 52) em vez de exportação explícita com nome.
-- **Impacto:** Dificulta a rastreabilidade do código e não segue o padrão estabelecido no projeto, embora seja comum em modelos Mongoose.
+- **Status:** ✅ **MANTIDO** - O modelo mantém `export default` seguindo o padrão estabelecido para modelos Mongoose no projeto (consistente com `User.ts`).
+- **Justificativa:** Modelos Mongoose tradicionalmente usam `export default` e o projeto já segue esse padrão em outros modelos. A mudança não é necessária e manteria consistência com o restante do código.
 
 ## Pontos em Conformidade
 
 1. **Nomenclatura e Estrutura:** O arquivo segue a convenção de nomenclatura adequada (`Transaction.ts`).
 2. **TypeScript e Tipagem:** O código é estritamente tipado, utilizando interfaces e tipos do TypeScript corretamente.
 3. **Reutilização de Tipos:** Utiliza tipos importados de `@/types/transaction`, evitando duplicação.
-4. **Responsabilidade Única (SRP):** O arquivo tem uma responsabilidade única: definir o modelo de Transaction.
-5. **Clean Code:** O código é legível e bem estruturado.
-6. **Otimização de Performance:** Cria índice composto nos campos `user` e `date` para melhorar performance de queries (linha 45).
-7. **Referências Adequadas:** Utiliza referência correta ao modelo User através de `Types.ObjectId` e `ref: 'User'`.
-8. **Timestamps Automáticos:** Configura timestamps para adicionar automaticamente `createdAt` e `updatedAt`.
-9. **Hot Reloading:** Implementa tratamento adequado para evitar "OverwriteModelError" em desenvolvimento.
+4. **Reutilização de Constantes:** Utiliza `DATE_REGEX` compartilhado de `@/lib/constants/regex/regex`, evitando duplicação.
+5. **Responsabilidade Única (SRP):** O arquivo tem uma responsabilidade única: definir o modelo de Transaction.
+6. **Clean Code:** O código é legível e bem estruturado.
+7. **Otimização de Performance:** Cria índice composto nos campos `user` e `date` para melhorar performance de queries.
+8. **Referências Adequadas:** Utiliza referência correta ao modelo User através de `Types.ObjectId` e `ref: 'User'`.
+9. **Validações Robustas:** Implementa validações robustas para todos os campos (value com limites e precisão, date com formato, alias com comprimento máximo).
+10. **Validação de Valor:** Implementa validação de valor monetário (mínimo 0, máximo 999,999,999.99, máximo 2 casas decimais).
+11. **Validação de Data:** Implementa validação de formato de data (dd/mm/yyyy) usando `DATE_REGEX` compartilhado.
+12. **Validação de Alias:** Implementa validação de comprimento máximo para alias (100 caracteres) com trim.
+13. **Validação de Enum:** Implementa validação customizada para enums com mensagens de erro descritivas.
+14. **Timestamps Automáticos:** Configura timestamps para adicionar automaticamente `createdAt` e `updatedAt`.
+15. **Hot Reloading:** Implementa tratamento adequado para evitar "OverwriteModelError" em desenvolvimento.
+16. **Documentação JSDoc:** Documentação JSDoc completa em inglês com exemplos de uso e explicações detalhadas.
+17. **Mensagens de Erro em Inglês:** Todas as mensagens de erro estão em inglês, seguindo os padrões do projeto.
 
 ## Pontos de Melhoria
 
-1. **Validações Adicionais:** O campo `value` poderia ter validação para garantir que seja um número positivo.
-2. **Validação de Data:** O campo `date` poderia ter validação de formato (ex: regex para formato 'dd/mm/yyyy').
-3. **Validação de Enum:** Embora use `enum` no schema, poderia adicionar validação customizada para garantir valores válidos.
-4. **Virtuals ou Methods:** Poderia adicionar métodos ou virtuals úteis ao schema (ex: método para calcular saldo).
-5. **Validação de Alias:** O campo `alias` poderia ter validação de comprimento máximo.
+1. **Virtuals ou Methods:** Poderia adicionar métodos ou virtuals úteis ao schema (ex: método para calcular saldo, método para verificar se é entrada ou saída).
 
 ## 🎨 Design Patterns Utilizados
 
@@ -81,39 +88,56 @@ O arquivo `Transaction.ts` apresenta a definição do modelo Mongoose para trans
    - **Justificativa:** Dependências diretas dificultam testes unitários e podem criar acoplamento forte.
    - **Plano:** Considerar criar interfaces para o modelo, permitindo injeção de dependências em testes (conforme sugerido em `@docs/architecture/modular-architecture.md` - Repository Pattern).
 
-## Plano de Ação
+## ✅ Melhorias Implementadas
 
-### 1. Adicionar Documentação JSDoc (Prioridade: Alta)
-- Adicionar documentação JSDoc completa para o modelo e schema, explicando campos, relacionamentos e propósito.
-- Código exemplo:
+1. **✅ Documentação JSDoc:** Documentação JSDoc completa adicionada para o schema, modelo e todos os campos.
+2. **✅ Comentários em Inglês:** Todos os comentários traduzidos para inglês e substituídos por documentação JSDoc formal.
+3. **✅ Validação de Valor:** Validação de valor monetário implementada (mínimo 0, máximo 999,999,999.99, máximo 2 casas decimais).
+4. **✅ Validação de Data:** Validação de formato de data implementada usando `DATE_REGEX` compartilhado.
+5. **✅ Validação de Alias:** Validação de comprimento máximo para alias (100 caracteres) com trim.
+6. **✅ Validação de Enum:** Validação customizada para enums com mensagens de erro descritivas.
+7. **✅ Reutilização de Constantes:** Uso de `DATE_REGEX` compartilhado de `@/lib/constants/regex/regex`.
+
+## ✅ Plano de Ação - Implementado
+
+### 1. ✅ Adicionar Documentação JSDoc (Prioridade: Alta) - CONCLUÍDO
+- ✅ Documentação JSDoc completa adicionada para o modelo e schema.
+- ✅ Implementado:
 ```typescript
 /**
- * Transaction Mongoose Model
- * Represents a financial transaction in the system.
+ * Transaction Mongoose Schema
+ * 
+ * Defines the structure and validation rules for transaction documents in MongoDB.
+ * Includes validation for user reference, description, type, value, date, and optional alias.
+ * 
+ * Note: Value validation allows values from 0 to 999,999,999.99 with maximum 2 decimal places.
+ * Date validation ensures format dd/mm/yyyy using shared DATE_REGEX constant.
  * 
  * @example
+ * ```typescript
  * const transaction = new Transaction({
  *   user: userId,
  *   desc: 'deposit',
  *   type: 'inflow',
- *   value: 100.50,
+ *   value: 1000.50,
  *   date: '18/04/2025',
  *   alias: 'Salary'
  * });
+ * await transaction.save();
+ * ```
  */
 const TransactionSchema = new Schema<SchemaType>(
   {
     /**
      * Reference to the User who owns this transaction
-     * @type {Types.ObjectId}
-     * @required
+     * MongoDB ObjectId reference to the User model
      */
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: [true, 'User reference is required'],
     },
-    // ... other fields
+    // ... other fields with JSDoc
   },
   {
     timestamps: true,
@@ -121,103 +145,80 @@ const TransactionSchema = new Schema<SchemaType>(
 );
 ```
 
-### 2. Traduzir Comentários para Inglês (Prioridade: Média)
-- Traduzir todos os comentários para inglês.
-- Código exemplo:
-```typescript
-// Define the interface for the Transaction document (overriding the user field)
-type SchemaType = Document & Omit<ITransaction, 'user'> & {
-  user: Types.ObjectId;
-};
+### 2. ✅ Traduzir Comentários para Inglês (Prioridade: Média) - CONCLUÍDO
+- ✅ Todos os comentários traduzidos para inglês e substituídos por documentação JSDoc formal.
+- ✅ Implementado: Comentários em português removidos e substituídos por documentação JSDoc completa em inglês.
 
-// Define the schema for the Transaction model
-const TransactionSchema = new Schema<SchemaType>(
-  {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User', // MongoDB reference to the User model
-      required: true,
+### 3. ✅ Adicionar Validações Customizadas (Prioridade: Média) - CONCLUÍDO
+- ✅ Validações robustas implementadas para todos os campos críticos.
+- ✅ Implementado:
+```typescript
+import { DATE_REGEX } from '@/lib/constants/regex/regex';
+
+value: {
+  type: Number,
+  required: [true, 'Transaction value is required'],
+  min: [0, 'Transaction value must be greater than or equal to 0'],
+  max: [999999999.99, 'Transaction value is too large'],
+  validate: {
+    validator: function(v: number) {
+      const decimalPlaces = (v.toString().split('.')[1] || '').length;
+      return decimalPlaces <= 2;
     },
-    // ... other fields
+    message: 'Transaction value cannot have more than 2 decimal places',
   },
-  {
-    timestamps: true, // Automatically add createdAt and updatedAt fields
-  }
-);
-
-// Create an index on the user and date fields for better query performance
-TransactionSchema.index({ user: 1, date: -1 });
-
-// Get the model from the models object or create a new one if it doesn't exist
-// This is useful for avoiding "OverwriteModelError" when using hot reloading in development
-const Transaction = models.Transaction || model<SchemaType>('Transaction', TransactionSchema);
-
-// Export the Transaction model
-export default Transaction;
-```
-
-### 3. Adicionar Validações Customizadas (Prioridade: Média)
-- Adicionar validações para campos críticos como `value` e `date`.
-- Código exemplo:
-```typescript
-const TransactionSchema = new Schema<SchemaType>(
-  {
-    // ... other fields
-    value: {
-      type: Number,
-      required: true,
-      min: 0,
-      validate: {
-        validator: (v: number) => v > 0,
-        message: 'Transaction value must be greater than 0',
-      },
-    },
-    date: {
-      type: String,
-      required: true,
-      validate: {
-        validator: (v: string) => /^\d{2}\/\d{2}\/\d{4}$/.test(v),
-        message: 'Date must be in format dd/mm/yyyy',
-      },
-    },
-    alias: {
-      type: String,
-      maxlength: [100, 'Alias cannot exceed 100 characters'],
-    },
+},
+date: {
+  type: String,
+  required: [true, 'Transaction date is required'],
+  validate: {
+    validator: (v: string) => DATE_REGEX.test(v),
+    message: 'Date must be in format dd/mm/yyyy',
   },
-  {
-    timestamps: true,
-  }
-);
+},
+alias: {
+  type: String,
+  maxlength: [100, 'Alias cannot exceed 100 characters'],
+  trim: true,
+},
+desc: {
+  type: String,
+  enum: {
+    values: Object.keys(TransactionDesc),
+    message: 'Invalid transaction description',
+  },
+  required: [true, 'Transaction description is required'],
+},
+type: {
+  type: String,
+  enum: {
+    values: Object.keys(TransactionType),
+    message: 'Invalid transaction type',
+  },
+  required: [true, 'Transaction type is required'],
+},
 ```
 
-### 4. Considerar Exportação Explícita (Prioridade: Baixa)
-- Avaliar se faz sentido mudar para exportação explícita, considerando que modelos Mongoose tradicionalmente usam `export default`.
-- Código exemplo:
-```typescript
-export const Transaction = models.Transaction || model<SchemaType>('Transaction', TransactionSchema);
-```
+### 4. Considerar Exportação Explícita (Prioridade: Baixa) - MANTIDO (Justificado)
+- Modelo mantém `export default` seguindo o padrão estabelecido para modelos Mongoose no projeto (consistente com `User.ts`).
+- Mudança não é necessária e manteria consistência com o restante do código.
 
-### 5. Adicionar Métodos Úteis ao Schema (Prioridade: Baixa)
-- Adicionar métodos ou virtuals que possam ser úteis para o modelo.
-- Código exemplo:
-```typescript
-// Add instance method to check if transaction is income
-TransactionSchema.methods.isIncome = function(): boolean {
-  return this.type === 'inflow';
-};
-
-// Add virtual for formatted value
-TransactionSchema.virtual('formattedValue').get(function() {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(this.value);
-});
-```
+### 5. Adicionar Métodos Úteis ao Schema (Prioridade: Baixa) - PENDENTE
+- Métodos ou virtuals podem ser adicionados conforme necessidade futura (ex: método para calcular saldo, método para verificar se é entrada ou saída).
 
 ## 📊 Mapeamento
-**Arquivo:** `src/models/Transaction.ts`  
-**Status:** ✅ Criado  
+**Arquivo:** `src/models/Transaction/Transaction.ts`  
+**Status:** ✅ Implementado  
+**Conformidade:** 98%  
 **Link:** `@docs/analysis/analysis-mapping.md`
+
+### Resumo das Melhorias Implementadas
+- ✅ Documentação JSDoc completa em inglês com exemplos de uso
+- ✅ Comentários traduzidos para inglês
+- ✅ Validação de valor monetário (mínimo 0, máximo 999,999,999.99, máximo 2 casas decimais)
+- ✅ Validação de formato de data usando `DATE_REGEX` compartilhado
+- ✅ Validação de comprimento máximo para alias (100 caracteres) com trim
+- ✅ Validação customizada para enums com mensagens de erro descritivas
+- ✅ Reutilização de constantes (`DATE_REGEX`)
+- ✅ Mensagens de erro em inglês
 
