@@ -48,6 +48,7 @@ const clearAllTimers = (timers: Array<NodeJS.Timeout | null>): void => {
  * Hook to automatically remove toasts after their duration expires
  * @param {IToast[]} toasts - Array of active toasts
  * @param {(id?: string) => void} removeToast - Function to remove a toast by its ID
+ * @returns {void}
  */
 export const useAutoRemoveToasts = (
   toasts: IToast[],

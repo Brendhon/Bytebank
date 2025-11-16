@@ -81,6 +81,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 |------|----------------|--------------|-------------|
 | `hooks/useAutoClose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (85%) - Melhorias pendentes |
 | `hooks/useToast.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - Melhorias pendentes |
+| `hooks/useAutoRemoveToasts/useAutoRemoveToasts.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (tipo de retorno explícito, documentação JSDoc aprimorada com aviso de memoização) - `removeToast` já memoizado no ToastContext |
 
 ---
 
@@ -211,6 +212,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 ---
 
 **Última atualização**: 2025-11-16
-**Total de arquivos mapeados**: 82
-**Arquivos analisados**: 81 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+**Total de arquivos mapeados**: 83
+**Arquivos analisados**: 82 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 3, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
 
