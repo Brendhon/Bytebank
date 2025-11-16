@@ -20,7 +20,7 @@ if (!MONGO_URI_REGEX.test(MONGODB_URI)) {
 }
 
 // Global variable to maintain a cached connection
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 
 // Check if the cached connection is already established
 if (!global.mongoose) global.mongoose = cached;
