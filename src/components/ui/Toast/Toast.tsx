@@ -44,7 +44,11 @@ export default function Toast({
     onClose?.();
   }, [onClose]);
 
-  useAutoClose(isVisible, duration, handleClose);
+  useAutoClose({
+    isVisible,
+    duration,
+    onClose: handleClose,
+  });
 
   const toastClassName = cn(
     styles.base,
