@@ -116,10 +116,11 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `schemas/account.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
-| `schemas/login.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - Melhorias pendentes |
-| `schemas/register.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
-| `schemas/transaction.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (72%) - Melhorias pendentes |
+| `schemas/account/account.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (68%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
+| `schemas/login/login.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - Melhorias pendentes |
+| `schemas/register/register.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (65%) - **VIOLAÇÃO DE SEGURANÇA** - Validação de senha fraca - Melhorias pendentes |
+| `schemas/transaction/transaction.schema.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (72%) - Melhorias pendentes |
+| `schemas/api/api.schema.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (schema reutilizável para mensagens, exemplos na documentação JSDoc, eliminação de duplicação) |
 
 ---
 
@@ -143,7 +144,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `lib/api.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (70%) - **VIOLAÇÃO CRÍTICA DE SEGURANÇA** - API key exposta no cliente - Melhorias pendentes |
+| `lib/api.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (interface ApiError substituindo `any`, mensagens traduzidas para inglês, tipagem forte) - Vulnerabilidade crítica de segurança corrigida (migração para NextAuth) |
 | `lib/auth.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (60%) - Melhorias pendentes |
 | `lib/formatter.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (82%) - Melhorias pendentes |
 | `lib/mongoose.ts` | ✅ | ⚠️ | Análise criada - Status: Bom (88%) - Melhorias pendentes |
@@ -151,6 +152,7 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 | `lib/constants/routes/routes.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (JSDoc completo, validação de parâmetros, tipos explícitos) |
 | `lib/constants/regex/regex.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Conformidade total (JSDoc completo, nomenclatura adequada, organização, reutilização) |
 | `lib/constants/http/http.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (tipos específicos para funções de mensagem de erro, JSDoc completo, organização e reutilização) |
+| `lib/constants/api/api.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Conformidade total (JSDoc completo, nomenclatura adequada, organização, reutilização, mensagens centralizadas) |
 
 ---
 
@@ -207,6 +209,6 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 ---
 
 **Última atualização**: 2025-01-27
-**Total de arquivos mapeados**: 77
-**Arquivos analisados**: 76 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 8 ✅, Models: 2, Schemas: 4, Services: 3, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+**Total de arquivos mapeados**: 79
+**Arquivos analisados**: 78 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2, Hooks: 2, Lib: 9 ✅, Models: 2, Schemas: 5 ✅, Services: 3, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
 

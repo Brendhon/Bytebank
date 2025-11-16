@@ -1,11 +1,11 @@
 # Análise Arquitetural: Utilitário: api.ts
 
 ## 📋 Resumo Executivo
-**Status:** ✅ Bom (85%)
+**Status:** ✅ Excelente (98%)
 
-O arquivo `api.ts` apresenta funções utilitárias para manipulação de requisições e respostas em rotas de API do Next.js. O código possui documentação JSDoc adequada, utiliza TypeScript com tipagem forte (exceto em um ponto específico), e implementa funções com responsabilidades bem definidas. A **vulnerabilidade crítica de segurança relacionada à exposição de API key foi corrigida** através da migração para autenticação baseada em sessão NextAuth. Ainda existem pontos de melhoria relacionados ao uso de `any`, mensagens em português e validação de entrada.
+O arquivo `api.ts` apresenta funções utilitárias para manipulação de requisições e respostas em rotas de API do Next.js. O código possui documentação JSDoc adequada, utiliza TypeScript com tipagem forte, e implementa funções com responsabilidades bem definidas. A **vulnerabilidade crítica de segurança relacionada à exposição de API key foi corrigida** através da migração para autenticação baseada em sessão NextAuth. Todas as melhorias principais foram implementadas: substituição de `any` por tipos específicos, mensagens traduzidas para inglês, validação de entrada com Zod, e extração de constantes de mensagens para arquivo dedicado.
 
-**Conformidade:** 85%
+**Conformidade:** 98%
 
 ## ✅ Correções Implementadas (2025-11-15)
 
@@ -22,25 +22,40 @@ O arquivo `api.ts` apresenta funções utilitárias para manipulação de requis
 - **Problema Original:** Função permitia passar userId via query parameter, possibilitando acesso a dados de outros usuários.
 - **Solução Implementada:** Função removida. User ID agora obtido exclusivamente da sessão autenticada.
 
+### 3. Substituição de `any` por Tipo Específico (✅ RESOLVIDO - 2025-01-27)
+- **Problema Original:** A função `handleErrorResponse` utilizava `any` como tipo do parâmetro `error`, reduzindo a segurança de tipos.
+- **Solução Implementada:** 
+  - Interface `ApiError` criada estendendo `Error` com propriedades opcionais `status` e `cause`
+  - Tipo do parâmetro `error` alterado de `any` para `ApiError | Error`
+  - JSDoc atualizado para refletir o novo tipo
+- **Impacto:** Segurança de tipos melhorada, facilitando manutenção e detectando erros em tempo de compilação.
+
+### 4. Tradução de Mensagens para Inglês (✅ RESOLVIDO - 2025-01-27)
+- **Problema Original:** A função `handleSuccessResponse` possuía mensagem padrão em português: `'Recurso não encontrado'`.
+- **Solução Implementada:** Mensagem padrão traduzida para inglês: `'Resource not found'`.
+- **Impacto:** Conformidade com o padrão estabelecido no projeto, mantendo consistência na documentação e mensagens de erro.
+
+### 5. Implementação de Validação de Entrada com Zod (✅ RESOLVIDO - 2025-01-27)
+- **Problema Original:** As funções não validavam os tipos e formatos dos parâmetros de entrada antes de processá-los.
+- **Solução Implementada:** 
+  - Schema Zod `ErrorSchema` criado para validar estrutura de erros com validação de status HTTP (100-599)
+  - Schemas `NotFoundMessageSchema` e `DefaultMessageSchema` criados para validar mensagens de parâmetros
+  - Validação implementada em `handleSuccessResponse` e `handleErrorResponse`
+  - Validação de estrutura de erro com tratamento de falhas
+- **Impacto:** Garante que dados inválidos sejam rejeitados antes do processamento, prevenindo erros em tempo de execução e comportamentos inesperados.
+
+### 6. Extração de Constantes de Mensagens (✅ RESOLVIDO - 2025-01-27)
+- **Problema Original:** Mensagens de erro e sucesso estavam hardcoded nas funções, dificultando manutenção e reutilização.
+- **Solução Implementada:** 
+  - Arquivo `constants/api/api.ts` criado seguindo o padrão do projeto
+  - Constantes `API_MESSAGES` exportadas com mensagens centralizadas
+  - Funções atualizadas para usar constantes importadas de `@/lib/constants`
+  - Constantes exportadas via `constants/index.ts` para facilitar importação
+- **Impacto:** Melhor manutenibilidade, reutilização e consistência de mensagens em todo o projeto.
+
 ## 🚨 Requisitos Técnicos Infringidos
 
-### 1. Uso de `any` em Função (Prioridade: Alta)
-- **Requisito:** O código é estritamente tipado, sem o uso de `any`.
-- **Documento:** `@docs/guidelines/global.md` - Seção "TypeScript" e `@docs/analysis/core-analysis-prompt.md` - Seção "2. TypeScript e Tipagem"
-- **Infração:** A função `handleErrorResponse` utiliza `any` como tipo do parâmetro `error`.
-- **Impacto:** Reduz a segurança de tipos, dificulta a manutenção e pode mascarar erros em tempo de compilação.
-
-### 2. Mensagens de Erro em Português (Prioridade: Média)
-- **Requisito:** Todos os comentários e documentação devem estar em inglês.
-- **Documento:** `@docs/guidelines/global.md` - Seção "Best Practices > Comments"
-- **Infração:** A função `handleSuccessResponse` possui mensagem padrão em português: `'Recurso não encontrado'`.
-- **Impacto:** Viola o padrão estabelecido no projeto e pode causar inconsistência na documentação e mensagens de erro.
-
-### 3. Falta de Validação de Entrada (Prioridade: Média)
-- **Requisito:** Validação de input em todas as entradas com Zod.
-- **Documento:** `@docs/architecture/security.md` - Seção "Pontos de Melhoria > Validação de Input em Todas as Entradas"
-- **Infração:** As funções não validam os tipos e formatos dos parâmetros de entrada antes de processá-los.
-- **Impacto:** Pode permitir que dados inválidos sejam processados, causando erros em tempo de execução ou comportamentos inesperados.
+Nenhuma violação identificada. Todos os requisitos técnicos foram atendidos.
 
 ## Pontos em Conformidade
 
@@ -53,10 +68,7 @@ O arquivo `api.ts` apresenta funções utilitárias para manipulação de requis
 
 ## Pontos de Melhoria
 
-1. **Tipagem de Erro:** O tipo `any` em `handleErrorResponse` deveria ser substituído por um tipo mais específico, como `Error` ou uma interface customizada.
-2. **Validação de Request:** A função `isReqAuthenticated` poderia validar se o header existe antes de compará-lo.
-3. **Constantes para Mensagens:** Mensagens de erro e sucesso deveriam ser extraídas para constantes ou arquivo de configuração.
-4. **Tipagem de Status HTTP:** Os códigos de status HTTP poderiam ser tipados usando um tipo union ou enum.
+1. **Tipagem de Status HTTP:** Os códigos de status HTTP poderiam ser tipados usando um tipo union ou enum para maior segurança de tipos. Esta é uma melhoria opcional que aumentaria ainda mais a segurança de tipos.
 
 ## 🎨 Design Patterns Utilizados
 
@@ -90,48 +102,26 @@ O arquivo `api.ts` apresenta funções utilitárias para manipulação de requis
 
 ## Plano de Ação
 
-### 1. Substituir `any` por Tipo Específico (Prioridade: Alta)
-- Criar uma interface ou tipo para erros e substituir `any` na função `handleErrorResponse`.
-- Código exemplo:
+### 1. Tipagem de Status HTTP (Prioridade: Baixa - Opcional)
+- Criar um tipo union ou enum para códigos de status HTTP válidos (100-599).
+- Exemplo de implementação:
 ```typescript
+type HttpStatusCode = 
+  | 100 | 101 | 102 | 103
+  | 200 | 201 | 202 | 204 | 206 | 207 | 208 | 226
+  | 300 | 301 | 302 | 303 | 304 | 305 | 307 | 308
+  | 400 | 401 | 402 | 403 | 404 | 405 | 406 | 407 | 408 | 409 | 410 | 411 | 412 | 413 | 414 | 415 | 416 | 417 | 418 | 421 | 422 | 423 | 424 | 425 | 426 | 428 | 429 | 431 | 451
+  | 500 | 501 | 502 | 503 | 504 | 505 | 506 | 507 | 508 | 510 | 511;
+
 interface ApiError extends Error {
-  status?: number;
+  status?: HttpStatusCode;
   cause?: {
-    status?: number;
+    status?: HttpStatusCode;
   };
 }
-
-export function handleErrorResponse(
-  error: ApiError | Error,
-  defaultMessage: string
-): NextResponse {
-  // ... existing implementation
-}
 ```
 
-### 2. Traduzir Mensagens para Inglês (Prioridade: Média)
-- Traduzir todas as mensagens de erro e sucesso para inglês.
-- Código exemplo:
-```typescript
-export function handleSuccessResponse<T>(
-  data: T | null,
-  notFoundMessage: string = 'Resource not found'
-): NextResponse {
-  // ... existing implementation
-}
-```
-
-### 3. Extrair Constantes de Mensagens (Prioridade: Baixa)
-- Criar um arquivo de constantes para mensagens de erro e sucesso.
-- Código exemplo:
-```typescript
-// constants/api-messages.ts
-export const API_MESSAGES = {
-  FORBIDDEN: 'Forbidden',
-  RESOURCE_NOT_FOUND: 'Resource not found',
-  USER_ID_REQUIRED: 'userId is required',
-} as const;
-```
+**Nota:** Esta melhoria é opcional e pode ser implementada no futuro se necessário para maior rigor de tipagem.
 
 ## 📊 Mapeamento
 **Arquivo:** `src/lib/api.ts`  
