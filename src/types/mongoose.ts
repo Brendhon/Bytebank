@@ -17,7 +17,6 @@ export interface MongooseCache {
  * Extends the global scope to include the mongoose cache without using type assertions
  */
 declare global {
-  // eslint-disable-next-line no-var
   var mongoose: MongooseCache | undefined;
 }
 

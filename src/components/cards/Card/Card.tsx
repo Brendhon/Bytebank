@@ -74,7 +74,6 @@ export const Card = ({
   return (
     <article 
       className={cn(cardVariants({ variant }), className)}
-      role="article"
       aria-label={`Financial card showing ${label}`}
     >
       <CardValue value={value} />
