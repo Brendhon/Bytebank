@@ -15,7 +15,7 @@ O componente Table é bem implementado, demonstrando uso adequado de genéricos 
 ### 1. **Nomenclatura de Componentes** (Prioridade: Alta)
 - **Requisito:** Componentes devem ter nomes explícitos para facilitar debugging e rastreamento
 - **Documento:** `@docs/guidelines/global.md` - Seção "Naming" + "Code Style"
-- **Infração:** Exportação padrão sem nome explícito na função (`export default <T,>({ ... }) => { ... }`)
+- **Infração:** Exportação padrão sem nome explícito na função (`export const Table = <T,>({ ... }) => { ... }`)
 - **Impacto:** Dificulta debugging em React DevTools e stack traces
 
 ### 2. **Nomenclatura de Tipos** (Prioridade: Alta)
@@ -143,7 +143,7 @@ O componente Table é bem implementado, demonstrando uso adequado de genéricos 
 
 - Adicionar nome explícito ao componente:
   ```typescript
-  export default function Table<T>({ data, columns, pageSize = 10 }: TableProps<T>) {
+  export const Table = <T>({ data, columns, pageSize = 10 }: TableProps<T>) => {
     // ...
   }
   ```

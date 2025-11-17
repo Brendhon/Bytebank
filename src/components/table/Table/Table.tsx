@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils/utils'
 import { TableColumn } from '@/types/ui'
 import { useMemo, useState } from 'react'
-import Paginator from '../Paginator/Paginator'
+import { Paginator } from '../Paginator/Paginator'
 
 type GenericTableProps<T> = {
   data: T[]

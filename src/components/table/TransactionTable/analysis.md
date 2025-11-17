@@ -15,7 +15,7 @@ O componente TransactionTable é bem implementado como especialização do compo
 ### 1. **Nomenclatura de Componentes** (Prioridade: Alta)
 - **Requisito:** Componentes devem ter nomes explícitos para facilitar debugging e rastreamento
 - **Documento:** `@docs/guidelines/global.md` - Seção "Naming" + "Code Style"
-- **Infração:** Exportação padrão sem nome explícito na função (`export default ({ ... }) => { ... }`)
+- **Infração:** Exportação padrão sem nome explícito na função (`export const TransactionTable = ({ ... }) => {`)
 - **Impacto:** Dificulta debugging em React DevTools e stack traces
 
 ### 2. **Nomenclatura de Interface** (Prioridade: Alta)
@@ -157,12 +157,12 @@ O componente TransactionTable é bem implementado como especialização do compo
 
 - Adicionar nome explícito ao componente:
   ```typescript
-  export default function TransactionTable({
+  export const TransactionTable = ({
     transactions,
     pageSize = 10,
     onEdit,
     onDelete,
-  }: TransactionTableProps) {
+  }: TransactionTableProps) => {
     // ...
   }
   ```

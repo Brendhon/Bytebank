@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs";
-import Paginator from "./Paginator";
+import { Paginator } from "./Paginator";
 
 const meta: Meta<typeof Paginator> = {
   component: Paginator,
