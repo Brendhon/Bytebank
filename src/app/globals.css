@@ -44,13 +44,6 @@ html {
   @apply h-full;
 }
 
-header {
-  @apply px-6 flex items-center;
-  @apply text-sm text-white;
-  @apply bg-dark;
-  @apply min-h-18;
-}
-
 nav {
   @apply bg-white w-[200px] p-4 text-dark-gray;
 }

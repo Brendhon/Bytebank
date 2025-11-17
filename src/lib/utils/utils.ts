@@ -285,3 +285,24 @@ export const createErrorToast = ({
 }: Pick<IToast, 'message' | 'duration'>): Omit<IToast, 'id'> => {
   return createVariantToast(message, 'error', duration);
 };
+
+/**
+ * Formats cardholder name to show first and last name only
+ * 
+ * @param {string} fullName - Full name of the cardholder
+ * @returns {string} Formatted name (First Last)
+ * @example
+ * ```ts
+ * formatCardholderName("João Silva Santos") // "João Santos"
+ * formatCardholderName("Maria") // "Maria"
+ * ```
+ */
+export const formatCardholderName = (fullName: string): string => {
+  const nameParts = fullName.trim().split(/\s+/);
+  
+  if (nameParts.length === 0) return '';
+  if (nameParts.length === 1) return nameParts[0];
+  
+  return `${nameParts[0]} ${nameParts[nameParts.length - 1]}`;
+};
+

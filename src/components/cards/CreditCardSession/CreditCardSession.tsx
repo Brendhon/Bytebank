@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui";
 import { ICreditCard } from "@/types/ui";
 import { ReactNode, useState } from "react";
-import CreditCard from "../CreditCard/CreditCard";
+import { CreditCard } from "../CreditCard/CreditCard";
 
 interface Props {
   physical: ICreditCard;

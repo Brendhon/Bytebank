@@ -7,10 +7,10 @@ import UserActions from "./UserActions/UserActions";
 
 export default ({ variant, userName, pathname, onLogin, onOpenAccount, onNavigate, onLogout }: HeaderProps) => {
   return (
-    <header className={cn(variant === 'guest' ? 'justify-center sm:justify-between' : 'justify-between')}>
+    <header className={cn(styles.header.base, variant === 'guest' ? styles.header.guest : styles.header.user)}>
       <div>
         {/* Logo */}
-        <Logo variant='icon' className={cn(variant === 'guest' ? 'text-green sm:flex' : 'text-orange md:flex', 'hidden')} />
+        <Logo variant='icon' className={cn(styles.logo.base, variant === 'guest' ? styles.logo.guest : styles.logo.user)} />
 
         {/* Menu Popover */}
         {variant === 'user' && pathname && <MenuPopover pathname={pathname} onNavigate={onNavigate} />}
@@ -24,3 +24,17 @@ export default ({ variant, userName, pathname, onLogin, onOpenAccount, onNavigat
     </header>
   );
 };
+
+
+const styles = {
+  header: {
+    base: 'px-6 flex items-center text-sm text-white bg-dark min-h-18',
+    guest: 'justify-center sm:justify-between',
+    user: 'justify-between',
+  },
+  logo: {
+    base: 'hidden',
+    guest: 'text-green sm:flex',
+    user: 'text-orange md:flex',
+  },
+} as const;
