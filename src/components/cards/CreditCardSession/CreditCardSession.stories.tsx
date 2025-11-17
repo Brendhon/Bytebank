@@ -4,6 +4,23 @@ import CreditCardSession from "./CreditCardSession";
 const meta: Meta<typeof CreditCardSession> = {
   component: CreditCardSession,
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Interactive session for managing physical and digital credit cards with visibility and block controls.',
+      },
+    },
+  },
+  argTypes: {
+    physical: {
+      description: 'Physical credit card data',
+      control: 'object',
+    },
+    digital: {
+      description: 'Digital credit card data',
+      control: 'object',
+    },
+  },
   args: {
     physical: {
       name: "Joana Fonseca Gomes",

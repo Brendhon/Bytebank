@@ -1,96 +1,106 @@
 "use client";
 
-import { Button } from "@/components/ui";
-import { ICreditCard } from "@/types/ui";
-import { ReactNode, useState } from "react";
-import { CreditCard } from "../CreditCard/CreditCard";
+import { ICreditCard } from '@/types/ui';
+import { useCreditCardState } from '@/hooks/useCreditCardState/useCreditCardState';
+import { CardActions } from './CardActions/CardActions';
+import { CardSection } from './CardSection/CardSection';
+import { CreditCard } from '../CreditCard/CreditCard';
+import { CARD_SESSION_TEXT } from '@/lib/constants';
 
-interface Props {
+/**
+ * Props for the CreditCardSession component
+ * 
+ * @interface CreditCardSessionProps
+ * @property {ICreditCard} physical - Physical credit card data
+ * @property {ICreditCard} digital - Digital credit card data
+ */
+export interface CreditCardSessionProps {
   physical: ICreditCard;
   digital: ICreditCard;
 }
 
-// Session Title component
-const SessionTitle = ({ text }: { text: string }) => (
-  <span className="text-14">{text}</span>
-);
+/**
+ * CreditCardSession component displays and manages physical and digital credit cards
+ * 
+ * Provides interactive controls for showing/hiding card information
+ * and blocking/unblocking cards.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <CreditCardSession 
+ *   physical={physicalCardData} 
+ *   digital={digitalCardData} 
+ * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // With card data
+ * <CreditCardSession 
+ *   physical={{
+ *     name: "John Doe",
+ *     number: "1234 5678 9012 3456",
+ *     expiration: "12/25",
+ *     cvv: "123"
+ *   }}
+ *   digital={{
+ *     name: "John Doe",
+ *     number: "5532 6475 8570 4251",
+ *     expiration: "03/25",
+ *     cvv: "514"
+ *   }}
+ * />
+ * ```
+ */
+export default function CreditCardSession({ physical, digital }: CreditCardSessionProps) {
+  const { physicalState, digitalState, toggleVisibility, toggleBlock } = useCreditCardState();
 
-// Card Session component
-const CardSession = ({ children }: { children: ReactNode }) => (
-  <div className="flex flex-col items-center gap-4 mb-4 sm:gap-16 sm:flex-row">
-    {children}
-  </div>
-);
-
-export default ({ digital, physical }: Props) => {
-  // States
-  const [showDigitalInfo, setShowDigitalInfo] = useState(false);
-  const [showPhysicalInfo, setShowPhysicalInfo] = useState(false);
-  const [physicalBlocked, setPhysicalBlocked] = useState(false);
-  const [digitalBlocked, setDigitalBlocked] = useState(false);
-
-  // Actions
-  const actions = (type: 'physical' | 'digital') => {
-    // Check if is block 
-    const isBlocked = type === "physical" ? physicalBlocked : digitalBlocked;
-
-    // Check if is show info
-    const isShowInfo = type === "physical" ? showPhysicalInfo : showDigitalInfo;
-
-    // Render actions
-    return (
-      <div className="flex flex-col gap-2">
-        <Button
-          variant={!isShowInfo ? "blue" : "orange"}
-          onClick={() => type === "physical" ? setShowPhysicalInfo(!showPhysicalInfo) : setShowDigitalInfo(!showDigitalInfo)}
-        >
-          {!isShowInfo ? "Exibir" : "Ocultar"}
-        </Button>
-        <Button
-          variant={!isBlocked ? "outlineOrange" : "outlineGreen"}
-          onClick={() => type === "physical" ? setPhysicalBlocked(!physicalBlocked) : setDigitalBlocked(!digitalBlocked)}
-        >
-          {!isBlocked ? "Bloquear" : "Desbloquear"}
-        </Button>
-
-      </div>
-    )
-  }
-
-  // Render
   return (
-    <section className="card flex flex-col gap-2">
+    <section 
+      className={styles.container}
+      aria-labelledby="card-session-title"
+    >
+      <h2 id="card-session-title" className={styles.title}>
+        {CARD_SESSION_TEXT.title}
+      </h2>
 
-      {/* Title */}
-      <h2 className="text-20-bold text-dark mb-2">Meus cartões</h2>
-
-      {/* Physical Card */}
-      <SessionTitle text="Cartão físico" />
-
-      {/* Card */}
-      <CardSession>
+      <CardSection title={CARD_SESSION_TEXT.physicalCard}>
         <CreditCard
           variant="physical"
-          showInfo={showPhysicalInfo}
-          blocked={physicalBlocked}
+          showInfo={physicalState.showInfo}
+          blocked={physicalState.blocked}
           {...physical}
         />
-        {actions("physical")}
-      </CardSession>
+        <CardActions
+          type="physical"
+          isVisible={physicalState.showInfo}
+          isBlocked={physicalState.blocked}
+          onToggleVisibility={() => toggleVisibility('physical')}
+          onToggleBlock={() => toggleBlock('physical')}
+        />
+      </CardSection>
 
-      {/* Digital Card */}
-      <SessionTitle text="Cartão digital" />
-
-      {/* Card */}
-      <CardSession>
+      <CardSection title={CARD_SESSION_TEXT.digitalCard}>
         <CreditCard
           variant="digital"
-          showInfo={showDigitalInfo}
-          blocked={digitalBlocked}
+          showInfo={digitalState.showInfo}
+          blocked={digitalState.blocked}
           {...digital}
         />
-        {actions("digital")}
-      </CardSession>
+        <CardActions
+          type="digital"
+          isVisible={digitalState.showInfo}
+          isBlocked={digitalState.blocked}
+          onToggleVisibility={() => toggleVisibility('digital')}
+          onToggleBlock={() => toggleBlock('digital')}
+        />
+      </CardSection>
     </section>
   );
-};
+}
+
+const styles = {
+  container: 'card flex flex-col gap-2',
+  title: 'text-20-bold text-dark mb-2',
+} as const;
