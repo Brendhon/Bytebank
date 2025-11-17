@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs";
-import CreditCardSession from "./CreditCardSession";
+import { CreditCardSession } from "./CreditCardSession";
 
 const meta: Meta<typeof CreditCardSession> = {
   component: CreditCardSession,

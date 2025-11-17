@@ -26,7 +26,7 @@ export interface CardSectionProps {
  * </CardSection>
  * ```
  */
-export function CardSection({ title, children }: CardSectionProps) {
+export const CardSection = ({ title, children }: CardSectionProps) => {
   return (
     <div className={styles.section}>
       <h3 className={styles.sectionTitle}>

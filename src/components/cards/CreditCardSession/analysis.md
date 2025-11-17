@@ -13,7 +13,7 @@ O componente CreditCardSession foi completamente refatorado e agora está em con
 - **Benefício:** Código mais simples e direto, sem necessidade de wrapper adicional, mantém toda a lógica em um único lugar
 
 ### 2. ✅ Exportação Nomeada (Prioridade: Crítica)
-- **Implementação:** `export default function CreditCardSession()` - Exportação nomeada explícita
+- **Implementação:** `export const CreditCardSession = () => {` - Exportação nomeada explícita
 - **Benefício:** Facilita debugging no React DevTools, melhora stack traces, segue convenções
 
 ### 3. ✅ JSDoc Completo (Prioridade: Crítica)

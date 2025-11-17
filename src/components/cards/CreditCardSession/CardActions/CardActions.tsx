@@ -37,13 +37,13 @@ export interface CardActionsProps {
  * />
  * ```
  */
-export function CardActions({
+export const CardActions = ({
   type,
   isVisible,
   isBlocked,
   onToggleVisibility,
   onToggleBlock,
-}: CardActionsProps) {
+}: CardActionsProps) => {
   const cardTypeLabel = type === 'physical' ? 'Physical' : 'Digital';
   const cardTypeLower = cardTypeLabel.toLowerCase();
 

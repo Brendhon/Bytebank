@@ -1,11 +1,11 @@
 "use client";
 
-import { ICreditCard } from '@/types/ui';
 import { useCreditCardState } from '@/hooks/useCreditCardState/useCreditCardState';
+import { CARD_SESSION_TEXT } from '@/lib/constants';
+import { ICreditCard } from '@/types/ui';
+import { CreditCard } from '../CreditCard/CreditCard';
 import { CardActions } from './CardActions/CardActions';
 import { CardSection } from './CardSection/CardSection';
-import { CreditCard } from '../CreditCard/CreditCard';
-import { CARD_SESSION_TEXT } from '@/lib/constants';
 
 /**
  * Props for the CreditCardSession component
@@ -53,11 +53,11 @@ export interface CreditCardSessionProps {
  * />
  * ```
  */
-export default function CreditCardSession({ physical, digital }: CreditCardSessionProps) {
+export const CreditCardSession = ({ physical, digital }: CreditCardSessionProps) => {
   const { physicalState, digitalState, toggleVisibility, toggleBlock } = useCreditCardState();
 
   return (
-    <section 
+    <section
       className={styles.container}
       aria-labelledby="card-session-title"
     >
