@@ -1,5 +1,5 @@
 import GuestActions from './GuestActions';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 
 const meta: Meta<typeof GuestActions> = {
   component: GuestActions

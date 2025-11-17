@@ -1,5 +1,5 @@
 import { NavItemLabel } from '@/types/nav';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 import { delay } from 'msw';
 import NavMenu from './NavMenu';
 

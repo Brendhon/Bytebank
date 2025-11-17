@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/nextjs'
 import TransactionTable from './TransactionTable'
 import { ITransaction } from '@/types/transaction'
 

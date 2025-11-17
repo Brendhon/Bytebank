@@ -1,5 +1,5 @@
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import type { Preview } from '@storybook/react';
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
+import type { Preview } from '@storybook/nextjs';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import '../src/app/globals.css';
 
@@ -11,11 +11,12 @@ import '../src/app/globals.css';
 initialize();
 
 const preview: Preview = {
-  loaders: [mswLoader], // 👈 Add the MSW loader to all stories
+  // 👈 Add the MSW loader to all stories
+  loaders: [mswLoader],
+
   parameters: {
     viewport: {
-      viewports: INITIAL_VIEWPORTS,
-      defaultViewport: 'desktop',
+      options: INITIAL_VIEWPORTS
     },
     controls: {
       matchers: {
@@ -24,6 +25,13 @@ const preview: Preview = {
       },
     },
   },
+
+  initialGlobals: {
+    viewport: {
+      value: 'desktop',
+      isRotated: false
+    }
+  }
 };
 
 export default preview;

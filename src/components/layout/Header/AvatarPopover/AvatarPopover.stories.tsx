@@ -1,5 +1,5 @@
 import AvatarPopover from './AvatarPopover';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 
 const meta: Meta<typeof AvatarPopover> = {
   component: AvatarPopover,

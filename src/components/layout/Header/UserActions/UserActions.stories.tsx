@@ -1,5 +1,5 @@
 import UserActions from './UserActions';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 
 const meta: Meta<typeof UserActions> = {
   component: UserActions,
