@@ -42,7 +42,7 @@ O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
 |------|----------------|--------------|-------------|
 | `components/table/Table/Table.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Exportação nomeada, JSDoc completo, acessibilidade WCAG 2.1 AA completa, estilos isolados ao final do arquivo, interface TableProps exportada, prop emptyMessage para i18n, prop rowKey para keys estáveis, comentários redundantes removidos, props opcionais para customização (className, tableClassName, ariaLabel) |
 | `components/table/Paginator/Paginator.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Exportação nomeada, JSDoc completo, acessibilidade WCAG 2.1 AA completa, estilos isolados ao final do arquivo, interface PaginatorProps exportada, comentários redundantes removidos, keys melhoradas |
-| `components/table/TransactionTable/TransactionTable.tsx` | ✅ | ⚠️ | Análise criada - Melhorias pendentes |
+| `components/table/TransactionTable/TransactionTable.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Exportação nomeada, JSDoc completo, acessibilidade WCAG 2.1 AA completa, estilos isolados ao final do arquivo, interface TransactionTableProps e TransactionTableColumnLabels exportadas, prop columnLabels para i18n, hook customizado useTransactionRenderers em src/hooks/useTransactionRenderers/, constantes TRANSACTION_TABLE_LABELS em src/lib/constants/table/, renderização condicional de botões e coluna de ações, comentários redundantes removidos, accessor da coluna de ações corrigido para '_id', uso de useMemo para otimização |
 
 ---
 

@@ -44,7 +44,6 @@ export default () => {
       <WelcomeCard
         name={session?.data?.user?.name || "Usuário"}
         balance={balance}
-        showBalance={true}
         date={new Date()}
       />
       <MovementsSection data={movements} />

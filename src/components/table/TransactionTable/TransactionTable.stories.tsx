@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs'
-import TransactionTable from './TransactionTable'
+import { TransactionTable } from './TransactionTable'
 import { ITransaction } from '@/types/transaction'
 
 const meta: Meta<typeof TransactionTable> = {
