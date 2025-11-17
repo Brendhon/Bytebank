@@ -7,10 +7,46 @@ import { GeneralModalProps } from '@/types/modal';
 import { Fieldset, Legend } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
+import { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../Input/Input';
 
-export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<LoginFormData>) => {
+/**
+ * LoginForm component props
+ * @interface LoginFormProps
+ * @extends {GeneralModalProps<LoginFormData>} Extends general modal props with LoginFormData
+ */
+export interface LoginFormProps extends GeneralModalProps<LoginFormData> {}
+
+/**
+ * Login form component that renders a login form inside a modal
+ * Uses React Hook Form for form state management and Zod for validation
+ * Includes fields for email and password
+ * 
+ * @param {LoginFormProps} props - LoginForm component props
+ * @param {boolean} props.isOpen - Controls the visibility of the modal
+ * @param {() => void} props.onClose - Callback function called when the modal is closed
+ * @param {(data: LoginFormData) => void | Promise<void>} props.onSubmit - Callback function called when the form is submitted with valid data
+ * @param {Partial<LoginFormData>} [props.defaultValues] - Optional default values for form fields
+ * @returns {ReactElement} A login form component wrapped in a modal
+ * 
+ * @example
+ * ```tsx
+ * <LoginForm
+ *   isOpen={isOpen}
+ *   onClose={() => setIsOpen(false)}
+ *   onSubmit={async (data) => {
+ *     await signIn(data);
+ *   }}
+ * />
+ * ```
+ */
+export const LoginForm = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  defaultValues,
+}: LoginFormProps): ReactElement => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -22,15 +58,15 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      className="md:w-[500px] w-full"
+      className={styles.modal}
       onSubmit={handleSubmit(onSubmit)}
-      btnTextSubmit='Acessar'
-      btnVariantSubmit='green'>
+      btnTextSubmit="Acessar"
+      btnVariantSubmit="green"
+    >
+      <Fieldset className={styles.fieldset}>
+        <Illustration src="login.svg" alt="Login illustration showing user authentication" />
 
-      <Fieldset className="flex flex-col gap-4">
-        <Illustration src='login.svg' />
-
-        <Legend className="text-20-bold text-dark text-center">
+        <Legend className={styles.legend}>
           Login
         </Legend>
 
@@ -54,3 +90,9 @@ export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<
     </Modal>
   );
 };
+
+const styles = {
+  modal: 'md:w-[500px] w-full',
+  fieldset: 'flex flex-col gap-4',
+  legend: 'text-20-bold text-dark text-center',
+} as const;
