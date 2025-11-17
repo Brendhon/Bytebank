@@ -1,6 +1,7 @@
-import { CARD_CONFIG } from "@/lib/constants";
 import { cn, formatCardholderName } from "@/lib/utils/utils";
 import { ICreditCard } from "@/types/ui";
+import { CreditCardHeader } from "./CreditCardHeader/CreditCardHeader";
+import { CreditCardDetails } from "./CreditCardDetails/CreditCardDetails";
 
 /**
  * Props for the CreditCard component
@@ -19,85 +20,6 @@ export interface CreditCardProps extends ICreditCard {
   showInfo: boolean;
   blocked: boolean;
 }
-
-interface CreditCardDetailsProps {
-  cardName: string;
-  showInfo: boolean;
-  expiration?: string;
-  number?: string;
-  cvv?: string;
-}
-
-interface CreditCardHeaderProps {
-  blocked: boolean;
-}
-
-/**
- * CreditCardHeader component displays the card brand and blocked status
- * 
- * @component
- * @param {CreditCardHeaderProps} props - Props for the CreditCardHeader component
- */
-const CreditCardHeader = ({ blocked }: CreditCardHeaderProps) => (
-  <header className={styles.header}>
-    <div className={styles.brandContainer}>
-      <div className={styles.brandName} aria-label={`Card brand: ${CARD_CONFIG.brand.name}`}>
-        {CARD_CONFIG.brand.name}
-      </div>
-      <div className={styles.cardTier} aria-label={`Card tier: ${CARD_CONFIG.brand.tier}`}>
-        {CARD_CONFIG.brand.tier}
-      </div>
-    </div>
-    {blocked && (
-      <span 
-        className={styles.blockedBadge}
-        role="status"
-        aria-live="polite"
-        aria-label="Card status: Blocked"
-      >
-        {CARD_CONFIG.labels.blocked}
-      </span>
-    )}
-  </header>
-);
-
-/**
- * CreditCardDetails component displays cardholder name, expiration, number and CVV
- * @component
- * @param {CreditCardDetailsProps} props - Props for the CreditCardDetails component
- */
-const CreditCardDetails = ({
-  cardName,
-  showInfo,
-  expiration,
-  number,
-  cvv,
-}: CreditCardDetailsProps) => (
-  <div 
-    className={styles.detailsContainer}
-    id="card-details"
-  >
-    <div className={styles.detailsRow}>
-      <span aria-label={`Cardholder: ${cardName}`}>
-        {cardName}
-      </span>
-      <span aria-label={`Expiration: ${showInfo && expiration ? expiration : 'hidden'}`}>
-        {showInfo && expiration ? expiration : CARD_CONFIG.labels.hidden}
-      </span>
-    </div>
-
-    <div className={styles.detailsRow}>
-      <span 
-        aria-label={`Card number: ${showInfo && number ? number : 'hidden'}`}
-      >
-        {showInfo && number ? number : CARD_CONFIG.labels.hiddenNumber}
-      </span>
-      <span aria-label={`CVV: ${showInfo && cvv ? cvv : 'hidden'}`}>
-        {showInfo && cvv ? cvv : CARD_CONFIG.labels.hiddenCvv}
-      </span>
-    </div>
-  </div>
-);
 
 /**
  * CreditCard component displays a stylized credit card
@@ -167,11 +89,4 @@ const styles = {
   container: 'rounded-md text-white p-4 w-[270px] h-[150px] flex flex-col justify-between',
   physical: 'bg-blue',
   digital: 'bg-gray',
-  header: 'flex items-center justify-between',
-  brandContainer: 'flex flex-col gap-1',
-  brandName: 'italic text-24 font-semibold',
-  cardTier: 'text-sm',
-  blockedBadge: 'text-white text-14-semi bg-dark rounded-md p-2',
-  detailsContainer: 'flex flex-col gap-1',
-  detailsRow: 'flex justify-between text-center text-14',
 } as const;

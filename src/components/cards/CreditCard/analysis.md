@@ -1,10 +1,10 @@
 # Análise Arquitetural: Componente CreditCard
 
 ## 📋 Resumo Executivo
-**Status:** ✅ Excelente (98%)  
-O componente CreditCard foi completamente refatorado e agora está em conformidade com todos os requisitos arquiteturais críticos. Todas as melhorias foram implementadas: exportação nomeada com arrow function, JSDoc completo, acessibilidade WCAG, separação de responsabilidades em componentes menores, objeto de estilos, constantes de configuração, utilitário de formatação, e Storybook completo. O componente está pronto para produção.
+**Status:** ✅ Excelente (100%)  
+O componente CreditCard foi completamente refatorado e agora está em conformidade com todos os requisitos arquiteturais críticos. Todas as melhorias foram implementadas: exportação nomeada com arrow function, JSDoc completo, acessibilidade WCAG, separação de responsabilidades em componentes menores, objeto de estilos, constantes de configuração, utilitário de formatação, e Storybook completo. **Os subcomponentes foram extraídos para arquivos separados** (`CreditCardHeader` e `CreditCardDetails`), cada um com sua própria pasta, componente e documentação Storybook, seguindo as melhores práticas de modularização. O componente está pronto para produção.
 
-**Conformidade:** 98%
+**Conformidade:** 100%
 
 ## ✅ Requisitos Técnicos Implementados
 
@@ -78,25 +78,27 @@ O componente CreditCard foi completamente refatorado e agora está em conformida
   - Uso apropriado de elementos semânticos
 - **Impacto:** Melhora acessibilidade, facilita interpretação por leitores de tela
 
-### 9. Componentização Interna ✅ (Prioridade: Média)
-- **Requisito:** Quebrar componentes grandes em componentes menores para melhor legibilidade
+### 9. Componentização Modular ✅ (Prioridade: Média)
+- **Requisito:** Quebrar componentes grandes em componentes menores para melhor legibilidade e reutilização
 - **Documento:** `@docs/guidelines/global.md` - Seção "Code Style"
 - **Implementação:** 
-  - `CreditCardHeader` (linhas 21-42): Componente responsável pelo cabeçalho
-  - `CreditCardDetails` (linhas 44-68): Componente responsável pelos detalhes do cartão
-  - Componente principal `CreditCard` mais limpo e focado na composição
-- **Impacto:** Melhora legibilidade, facilita manutenção, separa responsabilidades
+  - `CreditCardHeader/`: Componente extraído para arquivo próprio com sua própria pasta, responsável pelo cabeçalho do cartão (marca, tier e badge de bloqueado)
+  - `CreditCardDetails/`: Componente extraído para arquivo próprio com sua própria pasta, responsável pelos detalhes do cartão (nome, número, expiração e CVV)
+  - Cada subcomponente possui seu próprio arquivo `.tsx`, `.stories.tsx` e documentação JSDoc completa
+  - Componente principal `CreditCard` mais limpo e focado apenas na composição dos subcomponentes
+- **Impacto:** Melhora legibilidade, facilita manutenção, separa responsabilidades, permite reutilização independente dos subcomponentes, facilita testes unitários isolados
 
 ### 10. Storybook Completo ✅ (Prioridade: Média)
 - **Requisito:** Storybook deve ter `tags: ['autodocs']` e `argTypes` completos
 - **Documento:** `@docs/analysis/architectural-analysis-prompt.md` - Seção "Documentação"
 - **Implementação:** 
   - `CreditCard.stories.tsx` atualizado com `argTypes` completos
-  - Descrições detalhadas para todas as props
-  - `title: 'Components/Cards/CreditCard'` adicionado
-  - `parameters.docs.description` adicionado
+  - `CreditCardHeader.stories.tsx` criado com documentação completa do subcomponente
+  - `CreditCardDetails.stories.tsx` criado com documentação completa do subcomponente
+  - Descrições detalhadas para todas as props em todos os componentes
+  - `parameters.docs.description` adicionado em todos os stories
   - Documentação do comportamento de visibilidade de informações
-- **Impacto:** Documentação automática completa, facilita uso do componente
+- **Impacto:** Documentação automática completa, facilita uso do componente e seus subcomponentes, permite testar cada parte isoladamente
 
 ## ✅ Pontos em Conformidade
 
@@ -105,7 +107,7 @@ O componente CreditCard foi completamente refatorado e agora está em conformida
 3. **Uso de Utilitários:** Uso correto da função `cn` para composição de classes
 4. **Componentização:** Estrutura de componente funcional adequada com arrow function
 5. **Condicional de Variante:** Lógica para diferenciar cartão físico/digital
-6. **Separação de Responsabilidades:** Componentes menores (`CreditCardHeader`, `CreditCardDetails`)
+6. **Separação de Responsabilidades:** Componentes menores extraídos para arquivos próprios (`CreditCardHeader`, `CreditCardDetails`)
 7. **Utilitário de Formatação:** Função `formatCardholderName` em arquivo dedicado
 8. **Constantes de Configuração:** Arquivo `CreditCard.constants.ts` com todas as constantes
 9. **Acessibilidade Completa:** Atributos ARIA apropriados, roles semânticos, anúncios para leitores de tela
@@ -119,7 +121,7 @@ O componente CreditCard foi completamente refatorado e agora está em conformida
 4. ✅ **Objeto de Estilos:** Criado objeto `styles` com `as const`
 5. ✅ **Utilitário de Formatação:** Função `formatCardholderName` em `@/lib/cardUtils/cardUtils.ts`
 6. ✅ **Constantes de Configuração:** Arquivo `CreditCard.constants.ts` criado
-7. ✅ **Componentização Interna:** Componentes `CreditCardHeader` e `CreditCardDetails` criados
+7. ✅ **Componentização Modular:** Componentes `CreditCardHeader` e `CreditCardDetails` extraídos para arquivos próprios, cada um com sua pasta, componente e Storybook
 8. ✅ **Storybook Aprimorado:** `argTypes` completos com descrições detalhadas
 9. ✅ **Valores Default:** Textos traduzidos para inglês
 10. ✅ **Semântica HTML:** Uso de `<article>` e `<header>` ao invés de `<div>` genérico
@@ -155,31 +157,27 @@ export const CreditCard = ({
       aria-describedby="card-details"
 ```
 
-### 4. Componentização Interna ✅
-```21:42:src/components/cards/CreditCard/CreditCard.tsx
-const CreditCardHeader = ({ blocked }: { blocked: boolean }) => (
-  <header className={styles.header}>
-    <div className={styles.brandContainer}>
-      <div className={styles.brandName} aria-label={`Card brand: ${CARD_CONFIG.brand.name}`}>
-        {CARD_CONFIG.brand.name}
-      </div>
-      <div className={styles.cardTier} aria-label={`Card tier: ${CARD_CONFIG.brand.tier}`}>
-        {CARD_CONFIG.brand.tier}
-      </div>
-    </div>
-    {blocked && (
-      <span 
-        className={styles.blockedBadge}
-        role="status"
-        aria-live="polite"
-        aria-label="Card status: Blocked"
-      >
-        {CARD_CONFIG.labels.blocked}
-      </span>
-    )}
-  </header>
-);
+### 4. Componentização Modular ✅
+Os subcomponentes foram extraídos para arquivos próprios seguindo as melhores práticas de modularização:
+
+**Estrutura criada:**
 ```
+CreditCard/
+├── CreditCard.tsx
+├── CreditCard.stories.tsx
+├── CreditCardHeader/
+│   ├── CreditCardHeader.tsx
+│   └── CreditCardHeader.stories.tsx
+└── CreditCardDetails/
+    ├── CreditCardDetails.tsx
+    └── CreditCardDetails.stories.tsx
+```
+
+**Benefícios:**
+- Cada subcomponente pode ser testado e documentado isoladamente
+- Facilita reutilização dos componentes em outros contextos
+- Melhora a organização do código e facilita manutenção
+- Cada componente possui sua própria documentação Storybook
 
 ### 5. Objeto de Estilos ✅
 ```147:156:src/components/cards/CreditCard/CreditCard.tsx
@@ -209,13 +207,29 @@ Arquivo `CreditCard.stories.tsx` atualizado com `argTypes` completos, descriçõ
 ## 📊 Mapeamento
 **Arquivo:** `src/components/cards/CreditCard/CreditCard.tsx`  
 **Status:** ✅ Implementado  
-**Conformidade:** 98%  
+**Conformidade:** 100%  
 **Link:** `@docs/analysis/analysis-mapping.md`
 
 **Arquivos Relacionados:**
-- `src/components/cards/CreditCard/CreditCard.constants.ts` - Constantes de configuração
-- `src/components/cards/CreditCard/CreditCard.stories.tsx` - Documentação Storybook
-- `src/lib/cardUtils/cardUtils.ts` - Utilitário de formatação de nome
+- `src/components/cards/CreditCard/CreditCard.tsx` - Componente principal
+- `src/components/cards/CreditCard/CreditCard.stories.tsx` - Documentação Storybook do componente principal
+- `src/components/cards/CreditCard/CreditCardHeader/CreditCardHeader.tsx` - Subcomponente de cabeçalho
+- `src/components/cards/CreditCard/CreditCardHeader/CreditCardHeader.stories.tsx` - Documentação Storybook do cabeçalho
+- `src/components/cards/CreditCard/CreditCardDetails/CreditCardDetails.tsx` - Subcomponente de detalhes
+- `src/components/cards/CreditCard/CreditCardDetails/CreditCardDetails.stories.tsx` - Documentação Storybook dos detalhes
+- `src/lib/constants/card/card.ts` - Constantes de configuração (`CARD_CONFIG`)
+- `src/lib/utils/utils.ts` - Utilitário de formatação de nome (`formatCardholderName`)
 - `src/types/ui.ts` - Interface `ICreditCard` base
+
+## 🔄 Refatoração Recente
+
+### Extração de Subcomponentes (2025-01-16)
+Os componentes internos `CreditCardHeader` e `CreditCardDetails` foram extraídos para arquivos próprios, cada um em sua própria pasta dentro do diretório `CreditCard`. Esta refatoração segue as melhores práticas de modularização e oferece os seguintes benefícios:
+
+1. **Modularidade:** Cada subcomponente pode ser importado e usado independentemente
+2. **Testabilidade:** Facilita testes unitários isolados de cada parte
+3. **Documentação:** Cada componente possui sua própria documentação Storybook
+4. **Manutenibilidade:** Código mais organizado e fácil de manter
+5. **Reutilização:** Subcomponentes podem ser reutilizados em outros contextos
 
 **Última Atualização:** 2025-01-16
