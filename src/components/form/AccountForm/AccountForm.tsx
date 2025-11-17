@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '../Input/Input';
+import { Input } from '../Input/Input';
 
 interface AccountFormProps extends FormProps<AccountFormData> {
   onDelete: (password: string) => Promise<void>;

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 import { Mail } from 'lucide-react';
-import Input from './Input';
+import { Input } from './Input';
 
 const meta: Meta<typeof Input> = {
   component: Input,

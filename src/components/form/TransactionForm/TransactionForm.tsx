@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CalendarIcon, PiggyBank } from 'lucide-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import Input from '../Input/Input'
+import { Input } from '../Input/Input'
 import { Select } from '../Select/Select'
 
 const defaultTransaction: ITransaction = {

@@ -8,7 +8,7 @@ import { Fieldset, Legend } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import Input from '../Input/Input';
+import { Input } from '../Input/Input';
 
 export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<LoginFormData>) => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
