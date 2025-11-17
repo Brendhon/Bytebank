@@ -8,7 +8,7 @@ import { Fieldset, Legend } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
-import Checkbox from '../Checkbox/Checkbox';
+import { Checkbox } from '../Checkbox/Checkbox';
 import Input from '../Input/Input';
 
 export default ({ isOpen, onClose, onSubmit, defaultValues }: GeneralModalProps<RegisterFormData>) => {
