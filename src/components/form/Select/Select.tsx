@@ -9,6 +9,7 @@ import {
   SelectProps as HeadlessSelectProps,
 } from '@headlessui/react';
 import { ChevronDownIcon } from 'lucide-react';
+import { ReactElement } from 'react';
 
 /**
  * Option type for Select component
@@ -41,7 +42,7 @@ export interface SelectProps extends HeadlessSelectProps {
  * Built on top of Headless UI for accessibility
  * 
  * @param {SelectProps} props - Component props
- * @returns {JSX.Element} Rendered select component
+ * @returns {ReactElement} Rendered select component
  * 
  * @example
  * ```tsx
@@ -63,7 +64,7 @@ export const Select = ({
   options,
   placeholder,
   ...props
-}: SelectProps) => {
+}: SelectProps): ReactElement => {
   const id = useId();
   const errorId = `${id}-error`;
 

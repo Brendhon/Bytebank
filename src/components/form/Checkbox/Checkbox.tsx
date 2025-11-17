@@ -8,6 +8,7 @@ import {
   Label
 } from '@headlessui/react';
 import { Check } from 'lucide-react';
+import { ReactElement } from 'react';
 
 /**
  * Props for the Checkbox component
@@ -28,7 +29,7 @@ export interface CheckboxProps extends HeadlessCheckboxProps {
  * Built on top of Headless UI for accessibility
  * 
  * @param {CheckboxProps} props - Component props
- * @returns {JSX.Element} Rendered checkbox component
+ * @returns {ReactElement} Rendered checkbox component
  * 
  * @example
  * ```tsx
@@ -40,7 +41,7 @@ export interface CheckboxProps extends HeadlessCheckboxProps {
  * />
  * ```
  */
-export const Checkbox = ({ label, error, className, checked, ...props }: CheckboxProps) => {
+export const Checkbox = ({ label, error, className, checked, ...props }: CheckboxProps): ReactElement => {
   const checkboxClass = cn(
     styles.checkbox,
     error && styles.checkboxError,

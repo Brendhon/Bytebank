@@ -35,9 +35,6 @@ export async function GET(req: Request) {
  */
 export async function POST(req: Request) {
   try {
-    // Check if the request is authenticated using NextAuth session
-    await isAuthenticated();
-
     // Check if the request method is POST
     await connectToDatabase();
 

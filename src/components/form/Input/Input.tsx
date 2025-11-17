@@ -43,7 +43,7 @@ export interface InputProps extends HeadlessInputProps {
  * - Error state handling
  * 
  * @param {InputProps} props - Component props
- * @returns {JSX.Element} Rendered input component
+ * @returns {ReactElement} Rendered input component
  * 
  * @example
  * ```tsx
@@ -81,7 +81,7 @@ export const Input = ({
   type,
   onIconClick,
   ...props
-}: InputProps) => {
+}: InputProps): ReactElement => {
   const id = useId();
   const errorId = `${id}-error`;
 
