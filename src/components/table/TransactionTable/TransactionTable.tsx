@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils/utils'
 import { ITransaction, TransactionDesc, TransactionDescKey } from '@/types/transaction'
 import { TableColumn } from '@/types/ui'
 import { Pencil, Trash } from 'lucide-react'
-import Table from '../Table/Table'
+import { Table } from '../Table/Table'
 
 interface TransactionTableProps {
   transactions: ITransaction[]
