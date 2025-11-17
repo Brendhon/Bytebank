@@ -11,7 +11,7 @@ import { CalendarIcon, PiggyBank } from 'lucide-react'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import Input from '../Input/Input'
-import Select from '../Select/Select'
+import { Select } from '../Select/Select'
 
 const defaultTransaction: ITransaction = {
   desc: 'deposit',

@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs'
-import Select from './Select'
+import { Select } from './Select'
 
 const meta: Meta<typeof Select> = {
   component: Select,
