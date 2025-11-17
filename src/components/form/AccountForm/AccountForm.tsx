@@ -7,7 +7,7 @@ import { FormProps } from '@/types/form';
 import { Fieldset } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../Input/Input';
 
@@ -35,7 +35,7 @@ export interface AccountFormProps extends FormProps<AccountFormData> {
  * @param {(data: AccountFormData) => void | Promise<void>} props.onSubmit - Callback function called when the form is submitted with valid data
  * @param {(password: string) => Promise<void>} props.onDelete - Callback function called when account deletion is confirmed
  * @param {Partial<AccountFormData>} [props.defaultValues] - Optional default values for form fields
- * @returns {JSX.Element} A form component for account management
+ * @returns {ReactElement} A form component for account management
  * 
  * @example
  * ```tsx
@@ -50,7 +50,7 @@ export const AccountForm = ({
   onDelete,
   onSubmit,
   defaultValues,
-}: AccountFormProps) => {
+}: AccountFormProps): ReactElement => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
