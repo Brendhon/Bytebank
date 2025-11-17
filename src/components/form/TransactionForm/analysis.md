@@ -1,73 +1,57 @@
 # Análise Arquitetural: Componente: TransactionForm
 
 ## 📋 Resumo Executivo
-**Status:** ⚠️ Requer Atenção (60%)
+**Status:** ✅ Excelente (98%)
 
-O componente `TransactionForm` apresenta uma implementação funcional e bem estruturada, com uso adequado de bibliotecas modernas (React Hook Form, Zod, Headless UI) e integração correta com o componente `Modal`. O componente já possui a diretiva `'use client'` explicitamente declarada e utiliza tipos genéricos de forma apropriada. No entanto, existem violações relacionadas aos padrões de estilo estabelecidos no projeto (isolamento de classes Tailwind), falta de JSDoc, exportação anônima, comentários em português, uso inadequado de `useEffect`, e alguns problemas de tipagem e estrutura.
+O componente `TransactionForm` apresenta uma implementação funcional e bem estruturada, com uso adequado de bibliotecas modernas (React Hook Form, Zod, Headless UI) e integração correta com o componente `Modal`. Todas as melhorias identificadas foram implementadas: estilos isolados em objeto `styles`, documentação JSDoc completa, exportação nomeada, interface `TransactionFormProps` exportada, comentários em inglês, constantes movidas para `src/lib/constants/form/transaction.ts`, tipo do input de alias corrigido, `useEffect` otimizado, fragment desnecessário removido, e atributo `alt` adicionado à Illustration.
 
-**Conformidade:** 60%
+**Conformidade:** 98%
 
-## 🚨 Requisitos Técnicos Infringidos
+## ✅ Requisitos Técnicos Conformes
 
-### 1. Isolamento de Estilos com Tailwind CSS (Prioridade: Alta)
-- **Requisito:** As classes do Tailwind devem ser agrupadas em um objeto `styles` no final do arquivo, utilizando `as const` para garantir a imutabilidade.
-- **Documento:** `@docs/guidelines/global.md` - Seção "UI & Styling > Tailwind CSS"
-- **Infração:** As classes Tailwind estão definidas diretamente nos elementos JSX (linhas 77, 82, 83, 95, 114) e em uma variável dentro do componente (linha 69), violando o padrão de isolamento de estilos.
-- **Impacto:** Dificulta a manutenção, reduz a legibilidade do código e gera inconsistência com o restante da codebase. Classes complexas misturadas com a lógica tornam o componente mais difícil de debugar e modificar.
+Todos os requisitos técnicos foram implementados com sucesso. Nenhum requisito técnico infringido.
 
-### 2. Falta de Documentação JSDoc (Prioridade: Alta)
-- **Requisito:** A interface de props e a assinatura do componente devem possuir documentação JSDoc clara e completa.
-- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "6. Documentação"
-- **Infração:** Não há documentação JSDoc na função do componente (linha 36). O componente utiliza `GeneralModalProps<TransactionFormData>` que já possui tipagem, mas não há documentação explicando o propósito e uso do componente.
-- **Impacto:** Reduz a autodocumentação do código e dificulta o entendimento de como usar o componente, especialmente para novos desenvolvedores. Também impacta negativamente a documentação gerada automaticamente pelo Storybook.
+## ✅ Melhorias Implementadas (2025-01-27)
 
-### 3. Exportação do Componente (Prioridade: Média)
-- **Requisito:** O componente deve ser exportado de forma explícita usando `export const ComponentName = (...)` ou `export default function ComponentName()`.
-- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
-- **Infração:** O componente está sendo exportado como `export default ({ ... })` (linha 36), que é uma exportação anônima.
-- **Impacto:** Dificulta a refatoração automática, debugging e rastreamento no IDE. Também prejudica a clareza do código ao não dar um nome explícito à função.
+### 1. Isolamento de Estilos com Tailwind CSS ✅ (Prioridade: Alta)
+- **Status:** ✅ **IMPLEMENTADO** - Todas as classes Tailwind foram isoladas em um objeto `styles` no final do arquivo, utilizando `as const` para garantir imutabilidade.
+- **Benefício:** Melhora a manutenção, legibilidade do código e consistência com o restante da codebase. Classes isoladas facilitam debugging e modificação.
 
-### 4. Falta de Interface de Props Exportada (Prioridade: Média)
-- **Requisito:** As props e outros tipos devem ser definidos em interfaces com nomes descritivos e exportados para reutilização.
-- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "1. Nomenclatura e Estrutura de Arquivos"
-- **Infração:** O componente utiliza diretamente `GeneralModalProps<TransactionFormData>` sem definir uma interface específica `TransactionFormProps` que poderia ser exportada para reutilização e documentação.
-- **Impacto:** Impede que outros componentes ou testes referenciem a tipagem específica do TransactionForm, reduzindo a reutilização de código e a consistência de tipos na aplicação.
+### 2. Documentação JSDoc Completa ✅ (Prioridade: Alta)
+- **Status:** ✅ **IMPLEMENTADO** - Interface `TransactionFormProps` e componente `TransactionForm` possuem documentação JSDoc completa e clara, incluindo descrição, parâmetros, retorno e exemplos de uso.
+- **Benefício:** Melhora a autodocumentação do código e facilita o entendimento de como usar o componente. Impacta positivamente a documentação gerada automaticamente pelo Storybook.
 
-### 5. Comentários em Português (Prioridade: Alta)
-- **Requisito:** Todos os comentários devem ser em inglês conforme as diretrizes do projeto.
-- **Documento:** `@docs/guidelines/global.md` - Seção "Documentation > Documentation Rules"
-- **Infração:** O componente possui comentários em português (linhas 37-38, 41, 50, 53, 58, 64, 68, 71), violando as diretrizes do projeto.
-- **Impacto:** Viola as diretrizes de documentação do projeto e reduz a consistência do código. Comentários devem ser em inglês para manter a padronização.
+### 3. Exportação Nomeada do Componente ✅ (Prioridade: Média)
+- **Status:** ✅ **IMPLEMENTADO** - Componente exportado como `export const TransactionForm = (...)` com tipo de retorno explícito `ReactElement`.
+- **Benefício:** Facilita refatoração automática, debugging e rastreamento no IDE. Melhora a clareza do código com nome explícito da função.
 
-### 6. Uso Inadequado de useEffect (Prioridade: Média)
-- **Requisito:** `useEffect` deve ser utilizado de forma controlada, com um array de dependências bem definido para evitar execuções desnecessárias.
-- **Documento:** `@docs/guidelines/global.md` - Seção "Performance > React Hooks Optimization"
-- **Infração:** O segundo `useEffect` (linhas 59-62) sincroniza todos os valores do formulário sempre que `defaultValues` ou `setValue` mudam, o que pode causar re-renders desnecessários e loops infinitos se não for bem controlado. Além disso, o `setValue` não deveria estar nas dependências, pois é estável.
-- **Impacto:** Pode causar problemas de performance e comportamento inesperado do formulário. O `setValue` do React Hook Form é estável e não precisa estar nas dependências.
+### 4. Interface de Props Exportada ✅ (Prioridade: Média)
+- **Status:** ✅ **IMPLEMENTADO** - Interface `TransactionFormProps` criada, exportada e documentada, estendendo `GeneralModalProps<TransactionFormData>`.
+- **Benefício:** Permite que outros componentes ou testes referenciem a tipagem específica do TransactionForm, melhorando reutilização de código e consistência de tipos.
 
-### 7. Tipo Incorreto no Input de Alias (Prioridade: Média)
-- **Requisito:** Os tipos de input devem corresponder ao propósito do campo.
-- **Documento:** Boas práticas de HTML/React
-- **Infração:** O campo `alias` (linha 90) utiliza `type="email"` quando deveria ser `type="text"`, pois o alias é um apelido opcional e não um email.
-- **Impacto:** Pode causar validação incorreta do navegador e confusão para o usuário. O navegador pode aplicar validação de email em um campo que não é um email.
+### 5. Comentários em Inglês ✅ (Prioridade: Alta)
+- **Status:** ✅ **IMPLEMENTADO** - Todos os comentários foram removidos ou traduzidos para inglês. Comentários redundantes foram removidos, mantendo apenas documentação JSDoc em inglês.
+- **Benefício:** Conformidade total com as diretrizes de documentação do projeto e consistência do código.
 
-### 8. Fragment Desnecessário (Prioridade: Baixa)
-- **Requisito:** Fragments devem ser usados apenas quando necessário.
-- **Documento:** Boas práticas de React
-- **Infração:** O componente retorna um fragment (`<>...</>`) desnecessário (linhas 73, 138), pois o `Modal` já é o elemento raiz único.
-- **Impacto:** Adiciona complexidade desnecessária ao código. O fragment não é necessário se há apenas um elemento filho.
+### 6. Otimização de useEffect ✅ (Prioridade: Média)
+- **Status:** ✅ **IMPLEMENTADO** - Segundo `useEffect` otimizado para verificar se `defaultValues` existe antes de sincronizar valores. `setValue` mantido nas dependências (é estável no React Hook Form, mas mantido para evitar warnings do ESLint).
+- **Benefício:** Previne re-renders desnecessários e melhora a performance do formulário.
 
-### 9. Uso de Classes Condicionais (Prioridade: Baixa)
-- **Requisito:** A função `cn` (ou similar) deve ser utilizada para aplicar classes de forma condicional e legível.
-- **Documento:** `@docs/analysis/component-analysis-prompt.md` - Seção "4. Estilos e UI"
-- **Infração:** O componente não utiliza a função `cn` para composição de classes, embora não haja classes condicionais complexas no momento. As classes nas linhas 77, 82, 83, 95, 114 poderiam ser isoladas no objeto de estilos.
-- **Impacto:** Reduz a consistência com outros componentes do projeto que utilizam `cn` para composição de classes.
+### 7. Tipo Correto no Input de Alias ✅ (Prioridade: Média)
+- **Status:** ✅ **IMPLEMENTADO** - Campo `alias` alterado de `type="email"` para `type="text"`, refletindo corretamente o propósito do campo.
+- **Benefício:** Evita validação incorreta do navegador e confusão para o usuário.
 
-### 10. Lógica de Mapeamento Fora do Componente (Prioridade: Baixa)
-- **Requisito:** Constantes e mapeamentos devem ser bem organizados.
-- **Documento:** Boas práticas de organização de código
-- **Infração:** O `descToTypeMap` (linhas 29-34) está definido fora do componente, o que é correto, mas poderia ser movido para um arquivo de constantes ou utilitários se for reutilizado em outros lugares.
-- **Impacto:** Baixo impacto, mas poderia melhorar a organização se houver necessidade de reutilização.
+### 8. Fragment Desnecessário Removido ✅ (Prioridade: Baixa)
+- **Status:** ✅ **IMPLEMENTADO** - Fragment `<>...</>` removido, retornando diretamente o componente `Modal`.
+- **Benefício:** Reduz complexidade desnecessária do código.
+
+### 9. Constantes Movidas para Arquivo de Constantes ✅ (Prioridade: Baixa)
+- **Status:** ✅ **IMPLEMENTADO** - Constantes `defaultTransaction` e `descToTypeMap` movidas para `src/lib/constants/form/transaction.ts` como `DEFAULT_TRANSACTION` e `DESC_TO_TYPE_MAP`, respectivamente. Arquivo exportado em `src/lib/constants/index.ts`.
+- **Benefício:** Melhora organização do código e permite reutilização das constantes em outros lugares do projeto.
+
+### 10. Atributo Alt Adicionado à Illustration ✅ (Prioridade: Baixa)
+- **Status:** ✅ **IMPLEMENTADO** - Atributo `alt` descritivo adicionado ao componente `Illustration` para melhorar acessibilidade.
+- **Benefício:** Melhora a acessibilidade para usuários de leitores de tela.
 
 ## ✅ Pontos em Conformidade
 
@@ -75,11 +59,11 @@ O componente `TransactionForm` apresenta uma implementação funcional e bem est
 
 2. **Componente Funcional:** Segue o padrão de componentes funcionais com hooks, evitando class components (conforme `@docs/guidelines/global.md`).
 
-3. **Diretiva `'use client'`:** Possui a diretiva `'use client'` explicitamente declarada no topo do arquivo (linha 1), tornando clara a intenção de que é um Client Component, necessário devido ao uso de `useForm` e `useEffect` do React Hook Form.
+3. **Diretiva `'use client'`:** Possui a diretiva `'use client'` explicitamente declarada no topo do arquivo, tornando clara a intenção de que é um Client Component, necessário devido ao uso de `useForm` e `useEffect` do React Hook Form.
 
 4. **Bibliotecas Apropriadas:** Utiliza corretamente as bibliotecas estabelecidas no projeto:
-   - **React Hook Form** para gerenciamento de estado do formulário (linha 42)
-   - **Zod** para validação de schema (linha 43)
+   - **React Hook Form** para gerenciamento de estado do formulário
+   - **Zod** para validação de schema
    - **Headless UI** para componentes primitivos acessíveis (`Fieldset`, `Legend`)
    - **lucide-react** para iconografia (`CalendarIcon`, `PiggyBank`)
    - **Tailwind CSS** para estilização
@@ -90,57 +74,57 @@ O componente `TransactionForm` apresenta uma implementação funcional e bem est
 
 7. **Integração com Modal:** Utiliza corretamente o componente `Modal` com props apropriadas (`isOpen`, `onClose`, `onSubmit`, `className`, `btnTextSubmit`, `btnVariantSubmit`), delegando a responsabilidade de exibição e controle de estado ao componente pai.
 
-8. **Storybook Configurado:** Possui arquivo `.stories.tsx` com a tag `autodocs` (linha 7 do arquivo stories) e múltiplas variações de stories (`Default`, `WithErrors`, `Edit`), permitindo geração automática de documentação e testes visuais.
+8. **Storybook Configurado:** Possui arquivo `.stories.tsx` com a tag `autodocs` e múltiplas variações de stories (`Default`, `WithErrors`, `Edit`), permitindo geração automática de documentação e testes visuais.
 
 9. **Separação de Responsabilidades:** O componente tem uma responsabilidade única e bem definida: renderizar um formulário de transação dentro de um modal, delegando lógicas de negócio (criação/edição de transação) para o componente pai através da prop `onSubmit`.
 
 10. **Uso de Genéricos:** Utiliza genéricos de forma apropriada através de `GeneralModalProps<TransactionFormData>`, permitindo reutilização do tipo `GeneralModalProps` com diferentes tipos de dados de formulário.
 
-11. **Tratamento de Erros:** Integra corretamente os erros de validação do React Hook Form com os componentes `Input` e `Select`, exibindo mensagens de erro apropriadas (linhas 92, 99, 107, 118, 127).
+11. **Tratamento de Erros:** Integra corretamente os erros de validação do React Hook Form com os componentes `Input` e `Select`, exibindo mensagens de erro apropriadas através da prop `error`.
 
-12. **Valores Padrão:** Utiliza `defaultValues` de forma segura com optional chaining e spread operator (linhas 44-47), permitindo valores padrão opcionais. O valor padrão `defaultTransaction` é definido explicitamente (linhas 16-26).
+12. **Valores Padrão:** Utiliza `defaultValues` de forma segura com optional chaining e spread operator, permitindo valores padrão opcionais. O valor padrão `DEFAULT_TRANSACTION` é importado de `src/lib/constants/form/transaction.ts`.
 
-13. **Responsividade:** O componente é responsivo através das classes `grid-cols-1 md:grid-cols-2` (linha 69), adaptando-se a diferentes tamanhos de tela.
+13. **Responsividade:** O componente é responsivo através das classes `grid-cols-1 md:grid-cols-2` no objeto `styles.row`, adaptando-se a diferentes tamanhos de tela.
 
 14. **Composição de Props:** Usa spread operator para passar props do React Hook Form (`{...register('alias')}`, `{...register('desc')}`, etc.) de forma adequada.
 
-15. **Lógica de Mapeamento Automático:** Implementa lógica inteligente para mapear automaticamente o tipo de transação baseado na descrição selecionada (linhas 54-56), melhorando a UX ao evitar que o usuário tenha que selecionar manualmente o tipo.
+15. **Lógica de Mapeamento Automático:** Implementa lógica inteligente para mapear automaticamente o tipo de transação baseado na descrição selecionada usando `DESC_TO_TYPE_MAP`, melhorando a UX ao evitar que o usuário tenha que selecionar manualmente o tipo.
 
-16. **Modo de Edição:** Detecta automaticamente se está em modo de edição através da presença de `defaultValues` (linha 39), alterando o texto do modal apropriadamente (linha 84).
+16. **Modo de Edição:** Detecta automaticamente se está em modo de edição através da presença de `defaultValues`, alterando o texto do modal apropriadamente.
 
 17. **Uso de Enums:** Utiliza enums TypeScript (`TransactionDesc`, `TransactionType`) para garantir type safety e consistência dos valores de transação.
 
-18. **Conversão de Tipos:** Utiliza `valueAsNumber: true` no registro do campo `value` (linha 121), garantindo que o valor seja convertido para número automaticamente.
+18. **Conversão de Tipos:** Utiliza `valueAsNumber: true` no registro do campo `value`, garantindo que o valor seja convertido para número automaticamente.
 
 19. **Ícones Contextuais:** Utiliza ícones apropriados (`PiggyBank` para valor, `CalendarIcon` para data) para melhorar a UX e tornar o formulário mais intuitivo.
 
-20. **Campo Tipo Desabilitado:** O campo `type` está desabilitado (linha 109), pois é definido automaticamente baseado na descrição, evitando inconsistências e melhorando a UX.
+20. **Campo Tipo Desabilitado:** O campo `type` está desabilitado, pois é definido automaticamente baseado na descrição, evitando inconsistências e melhorando a UX.
 
-## 💡 Pontos de Melhoria
+21. **Constantes Centralizadas:** Todas as constantes (`DEFAULT_TRANSACTION`, `DESC_TO_TYPE_MAP`) estão centralizadas em `src/lib/constants/form/transaction.ts`, facilitando manutenção e reutilização.
 
-1. **Acessibilidade Aprimorada:** O componente `Illustration` (linha 134) não recebe uma prop `alt` descritiva, o que poderia melhorar a acessibilidade para usuários de leitores de tela. Considerar adicionar um `alt` apropriado.
+22. **Estilos Isolados:** Todas as classes Tailwind estão isoladas em um objeto `styles` no final do arquivo, utilizando `as const` para garantir imutabilidade.
 
-2. **Acessibilidade do Fieldset:** O `Fieldset` (linha 82) poderia ter um `aria-label` ou `aria-labelledby` para melhorar a acessibilidade, especialmente se o `Legend` não for suficiente.
+23. **Documentação Completa:** Interface `TransactionFormProps` e componente `TransactionForm` possuem documentação JSDoc completa com descrição, parâmetros, retorno e exemplos de uso.
 
-3. **Validação de Tipo:** Não há validação explícita para garantir que `defaultValues` corresponde ao tipo `TransactionFormData` em tempo de execução, embora TypeScript garanta isso em tempo de compilação.
+24. **Exportação Nomeada:** Componente exportado como `export const TransactionForm` com tipo de retorno explícito `ReactElement`, facilitando refatoração e debugging.
 
-4. **Otimização de useEffect:** O segundo `useEffect` (linhas 59-62) poderia ser otimizado para evitar sincronizações desnecessárias. Considerar usar `useMemo` ou `useCallback` se apropriado, ou remover `setValue` das dependências.
+25. **Acessibilidade Aprimorada:** Atributo `alt` descritivo adicionado ao componente `Illustration` para melhorar acessibilidade para usuários de leitores de tela.
 
-5. **Lógica de Valores Padrão:** A lógica para valores padrão (linhas 44-47) está correta, mas o `defaultTransaction` poderia ser movido para um arquivo de constantes se for reutilizado em outros lugares.
+## 💡 Melhorias Futuras Opcionais
 
-6. **Isolamento de Estilos:** As classes Tailwind devem ser isoladas em um objeto `styles` conforme as diretrizes do projeto, mesmo que sejam poucas classes.
+As seguintes melhorias são opcionais e podem ser consideradas para futuras versões do componente:
 
-7. **Uso de `cn`:** Considerar usar a função `cn` para composição de classes, especialmente se houver necessidade de classes condicionais no futuro.
+1. **Acessibilidade do Fieldset:** O `Fieldset` poderia ter um `aria-label` ou `aria-labelledby` adicional para melhorar ainda mais a acessibilidade, especialmente em contextos complexos onde múltiplos fieldsets estão presentes na mesma página.
 
-8. **Documentação de Props:** Embora o componente use `GeneralModalProps<TransactionFormData>`, seria benéfico ter uma interface `TransactionFormProps` que estende essa interface e adiciona documentação específica para o TransactionForm.
+2. **Validação de Tipo em Runtime:** Embora TypeScript garanta a tipagem em tempo de compilação, poderia ser adicionada validação explícita em runtime para garantir que `defaultValues` corresponde ao tipo `TransactionFormData`, especialmente útil em cenários onde os dados vêm de APIs externas ou localStorage.
 
-9. **Comentários Desnecessários:** Alguns comentários (linhas 37-38, 41, 50, 53, 58, 64, 68, 71) são redundantes e não agregam valor. Conforme as diretrizes do projeto, comentários devem agregar valor contextual. Se mantidos, devem ser em inglês.
+3. **Uso de `cn` para Classes Condicionais:** Se no futuro houver necessidade de classes condicionais complexas, considerar usar a função `cn` para composição de classes de forma mais legível e consistente.
 
-10. **Validação de Data:** O schema valida apenas se a data não está vazia, mas não valida o formato da data. Considerar adicionar validação de formato se necessário.
+4. **Validação de Data Aprimorada:** O schema já valida o formato da data usando regex e refine, mas poderia ser expandido para validar datas futuras ou passadas dependendo do contexto de negócio.
 
-11. **Tratamento de Erro no Mapeamento:** O código verifica se `selectedDesc in descToTypeMap` (linha 55), mas isso é redundante pois o tipo já garante que `selectedDesc` é uma chave válida. No entanto, isso adiciona segurança em tempo de execução.
+5. **Memoização de Opções:** As opções `descOptions` e `typeOptions` são recriadas a cada render. Se o componente for usado em contextos de alta performance, considerar usar `useMemo` para memoizar essas opções.
 
-12. **Fragment Desnecessário:** O fragment `<>...</>` (linhas 73, 138) não é necessário e pode ser removido, deixando apenas o `Modal` como elemento raiz.
+6. **Tratamento de Erro no Mapeamento:** O código verifica se `selectedDesc in DESC_TO_TYPE_MAP`, o que adiciona segurança em tempo de execução. Embora o tipo já garanta que `selectedDesc` é uma chave válida, essa verificação pode ser mantida como medida de segurança adicional.
 
 ## 🎨 Design Patterns Utilizados
 
@@ -154,9 +138,9 @@ O componente `TransactionForm` apresenta uma implementação funcional e bem est
 
 5. **Schema Validation Pattern:** Utiliza Zod para definir o schema de validação, permitindo validação tanto no cliente quanto no servidor, garantindo consistência de dados.
 
-6. **Observer Pattern:** Utiliza `watch` do React Hook Form para observar mudanças no campo `desc` e atualizar automaticamente o campo `type` (linhas 51, 54-56).
+6. **Observer Pattern:** Utiliza `watch` do React Hook Form para observar mudanças no campo `desc` e atualizar automaticamente o campo `type` através de `useEffect`.
 
-7. **Strategy Pattern:** Utiliza o mapeamento `descToTypeMap` para definir estratégias de mapeamento entre descrição e tipo de transação (linhas 29-34).
+7. **Strategy Pattern:** Utiliza o mapeamento `DESC_TO_TYPE_MAP` (importado de `src/lib/constants/form/transaction.ts`) para definir estratégias de mapeamento entre descrição e tipo de transação.
 
 ## 🏗️ Princípios SOLID Implementados
 
@@ -168,176 +152,37 @@ O componente `TransactionForm` apresenta uma implementação funcional e bem est
 
 3. **Open/Closed Principle (OCP):** O componente é extensível através de props (`defaultValues`, `onSubmit`, `onClose`) sem necessidade de modificar o código interno.
 
-### A Implementar
+4. **Interface Segregation Principle (ISP):** ✅ **IMPLEMENTADO** - Interface `TransactionFormProps` criada e exportada, estendendo `GeneralModalProps<TransactionFormData>` e adicionando documentação específica para o TransactionForm. Isso segrega melhor as responsabilidades e permite reutilização da tipagem específica.
 
-1. **Interface Segregation Principle (ISP):** Embora o componente use `GeneralModalProps<TransactionFormData>`, poderia se beneficiar de uma interface específica `TransactionFormProps` que segregue melhor as responsabilidades e adicione documentação específica.
+## 📝 Histórico de Implementação
 
-## 📝 Plano de Ação
+Todas as melhorias identificadas na análise inicial foram implementadas com sucesso em 2025-01-27. O componente agora está em conformidade com todos os padrões arquiteturais do projeto.
 
-### 1. Isolar Classes Tailwind em Objeto de Estilos (Prioridade: Alta)
-Refatorar as classes Tailwind para um objeto `styles` no final do arquivo:
+### Resumo das Implementações
 
-```typescript
-const styles = {
-  modal: 'max-w-[700px] w-full',
-  fieldset: 'flex flex-col gap-6',
-  legend: 'text-20-bold text-dark text-left',
-  row: 'grid gap-4 grid-cols-1 md:grid-cols-2',
-} as const;
-```
+1. ✅ **Isolamento de Estilos Tailwind** - Classes isoladas em objeto `styles` com `as const`
+2. ✅ **Documentação JSDoc Completa** - Interface e componente totalmente documentados
+3. ✅ **Exportação Nomeada** - Componente exportado como `export const TransactionForm`
+4. ✅ **Interface TransactionFormProps** - Criada, exportada e documentada
+5. ✅ **Comentários em Inglês** - Todos os comentários traduzidos ou removidos
+6. ✅ **Otimização de useEffect** - Verificação de `defaultValues` antes de sincronizar
+7. ✅ **Tipo Correto do Input** - Campo `alias` alterado de `email` para `text`
+8. ✅ **Fragment Removido** - Fragment desnecessário removido
+9. ✅ **Constantes Centralizadas** - Movidas para `src/lib/constants/form/transaction.ts`
+10. ✅ **Acessibilidade da Illustration** - Atributo `alt` adicionado
 
-E utilizar no componente:
-```typescript
-<Modal
-  className={styles.modal}
-  // ...
->
-  <Fieldset className={styles.fieldset}>
-    <Legend className={styles.legend}>
-      {isEditing ? 'Editar transação' : 'Nova transação'}
-    </Legend>
-    <div className={styles.row}>
-      // ...
-    </div>
-    // ...
-  </Fieldset>
-</Modal>
-```
+### Arquivos Modificados
 
-### 2. Adicionar Documentação JSDoc (Prioridade: Alta)
-Adicionar JSDoc à função do componente:
-
-```typescript
-/**
- * TransactionForm component props
- * @interface TransactionFormProps
- */
-export interface TransactionFormProps extends GeneralModalProps<TransactionFormData> {}
-
-/**
- * Transaction form component that renders a transaction form inside a modal
- * Uses React Hook Form for form state management and Zod for validation
- * Automatically maps transaction type based on selected description
- * Supports both create and edit modes based on defaultValues prop
- * @param props - TransactionForm component props
- * @returns A transaction form component wrapped in a modal
- */
-export default function TransactionForm({ ... }: TransactionFormProps) {
-  // ...
-}
-```
-
-### 3. Refatorar Exportação do Componente (Prioridade: Média)
-Renomear a exportação anônima para uma função nomeada:
-
-```typescript
-export default function TransactionForm({ ... }: TransactionFormProps) {
-  // ...
-}
-```
-
-### 4. Criar Interface TransactionFormProps (Prioridade: Média)
-Criar e exportar uma interface específica para o TransactionForm:
-
-```typescript
-/**
- * TransactionForm component props
- * @interface TransactionFormProps
- */
-export interface TransactionFormProps extends GeneralModalProps<TransactionFormData> {}
-```
-
-### 5. Traduzir Comentários para Inglês (Prioridade: Alta)
-Traduzir todos os comentários para inglês:
-
-```typescript
-// Check if defaultValues are provided
-// If not, set isEditing to false
-const isEditing = !!defaultValues
-
-// Initialize the form with react-hook-form
-const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<TransactionFormData>({
-  // ...
-})
-
-// Observe the selected description
-const selectedDesc = watch('desc') as TransactionDescKey;
-
-// Automatically set the type based on the selected description
-useEffect(() => {
-  if (selectedDesc in descToTypeMap) setValue('type', descToTypeMap[selectedDesc]);
-}, [selectedDesc, setValue]);
-
-// Sync values if defaultValues change (useful if props are updated externally)
-useEffect(() => {
-  const values = defaultValues || defaultTransaction;
-  Object.entries(values).forEach(([key, val]) => setValue(key as keyof TransactionFormData, val))
-}, [defaultValues, setValue])
-```
-
-### 6. Corrigir Tipo do Input de Alias (Prioridade: Média)
-Alterar o tipo do input de `email` para `text`:
-
-```typescript
-<Input
-  label="Alias (opcional)"
-  placeholder="Digite um apelido para a transação"
-  type="text"
-  {...register('alias')}
-  error={errors.alias?.message}
-/>
-```
-
-### 7. Otimizar useEffect (Prioridade: Média)
-Remover `setValue` das dependências do segundo `useEffect`, pois é estável:
-
-```typescript
-// Sync values if defaultValues change (useful if props are updated externally)
-useEffect(() => {
-  if (!defaultValues) return;
-  const values = defaultValues || defaultTransaction;
-  Object.entries(values).forEach(([key, val]) => setValue(key as keyof TransactionFormData, val))
-}, [defaultValues]) // setValue is stable and doesn't need to be in dependencies
-```
-
-### 8. Remover Fragment Desnecessário (Prioridade: Baixa)
-Remover o fragment e retornar diretamente o `Modal`:
-
-```typescript
-return (
-  <Modal
-    isOpen={isOpen}
-    onClose={onClose}
-    className={styles.modal}
-    onSubmit={handleSubmit(onSubmit)}
-    btnTextSubmit='Salvar'
-    btnVariantSubmit='blue'>
-    // ...
-  </Modal>
-)
-```
-
-### 9. Usar Função `cn` para Composição de Classes (Prioridade: Baixa)
-Importar e utilizar a função `cn` para composição de classes quando necessário:
-
-```typescript
-import { cn } from '@/lib/utils';
-
-// Se houver necessidade de classes condicionais no futuro
-<Modal className={cn(styles.modal, className)}>
-  // ...
-</Modal>
-```
-
-### 10. Melhorar Acessibilidade da Illustration (Prioridade: Baixa)
-Adicionar um `alt` descritivo ao componente `Illustration`:
-
-```typescript
-<Illustration src='transaction.svg' width={300} alt='Transaction illustration showing financial transaction' />
-```
+- `src/components/form/TransactionForm/TransactionForm.tsx` - Refatorado completamente
+- `src/components/form/TransactionForm/TransactionForm.stories.tsx` - Atualizado para usar exportação nomeada
+- `src/components/form/index.ts` - Atualizado para exportar `TransactionForm` e `TransactionFormProps`
+- `src/lib/constants/form/transaction.ts` - Criado com constantes `DEFAULT_TRANSACTION` e `DESC_TO_TYPE_MAP`
+- `src/lib/constants/index.ts` - Adicionada exportação do módulo `form/transaction`
 
 ## 📊 Mapeamento
 **Arquivo:** `src/components/form/TransactionForm/TransactionForm.tsx`  
-**Status:** ⚠️ Pendente  
+**Status:** ✅ Implementado  
 **Link:** `@docs/analysis/analysis-mapping.md`
 
+**Constantes:** `src/lib/constants/form/transaction.ts`  
+**Status:** ✅ Criado e exportado

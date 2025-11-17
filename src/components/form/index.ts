@@ -4,4 +4,5 @@ export { Input } from './Input/Input';
 export { LoginForm } from './LoginForm/LoginForm';
 export { RegisterForm } from './RegisterForm/RegisterForm';
 export { Select } from './Select/Select';
-export { default as TransactionForm } from './TransactionForm/TransactionForm';
+export { TransactionForm } from './TransactionForm/TransactionForm';
+export type { TransactionFormProps } from './TransactionForm/TransactionForm';
