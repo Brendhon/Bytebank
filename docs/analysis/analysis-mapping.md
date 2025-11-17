@@ -2,6 +2,20 @@
 
 Este documento mapeia todos os arquivos do projeto que necessitam de análise arquitetural conforme o padrão definido em `@docs/analysis/architectural-analysis-prompt.md`.
 
+## ⚠️ Atualização do Next.js 16
+
+**Data da atualização**: 2025-01-XX
+
+O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
+
+- ✅ **Dependências atualizadas**: Next.js (15.2.5 → 16.0.3), React (19.0.0 → 19.2.0), React DOM (19.0.0 → 19.2.0), TypeScript types atualizados
+- ✅ **Middleware migrado para Proxy**: O arquivo `src/middleware.ts` foi removido e substituído por `src/proxy.ts` (conforme padrão Next.js 16)
+- ✅ **Turbopack como padrão**: Configuração migrada de `webpack()` para `turbopack.rules` no `next.config.ts`
+- ✅ **ESLint CLI**: Script de lint migrado de `next lint` para `eslint .` (ESLint Flat Config)
+- ✅ **Build validado**: Build de produção executado com sucesso após upgrade
+
+**Nota**: Todas as análises arquiteturais existentes permanecem válidas, mas podem precisar de revisão para garantir compatibilidade com as novas APIs assíncronas do Next.js 16 (params, searchParams, cookies, headers).
+
 ## Legenda
 
 - **Analysis Criado**: ✅ Sim | ❌ Não
@@ -159,14 +173,14 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 ---
 
-## Middleware
+## Middleware / Proxy
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
-| `middleware.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (tratamento de erros, validação de ambiente, rotas centralizadas, JSDoc) |
-| `middlewares/auth/index.ts` | ✅ | ✅ | Incluído na análise do middleware - Lógica principal (`authMiddleware`) - Melhorias implementadas |
-| `middlewares/auth/guards.ts` | ✅ | ✅ | Incluído na análise do middleware - Route guards e checks - Melhorias implementadas |
-| `middlewares/auth/handlers.ts` | ✅ | ✅ | Incluído na análise do middleware - Request handlers - Melhorias implementadas |
+| `src/proxy.ts` | ✅ | ✅ | **MIGRADO DO MIDDLEWARE** (Next.js 16) - Análise criada - Status: Excelente (95%) - Melhorias implementadas (tratamento de erros, validação de ambiente, rotas centralizadas, JSDoc) - Arquivo `src/middleware.ts` foi removido e substituído por `src/proxy.ts` conforme padrão Next.js 16 |
+| `middlewares/auth/index.ts` | ✅ | ✅ | Incluído na análise do proxy - Lógica principal (`authMiddleware`) - Melhorias implementadas |
+| `middlewares/auth/guards.ts` | ✅ | ✅ | Incluído na análise do proxy - Route guards e checks - Melhorias implementadas |
+| `middlewares/auth/handlers.ts` | ✅ | ✅ | Incluído na análise do proxy - Request handlers - Melhorias implementadas |
 
 ---
 
@@ -211,7 +225,9 @@ Este documento mapeia todos os arquivos do projeto que necessitam de análise ar
 
 ---
 
-**Última atualização**: 2025-11-16
+**Última atualização**: 2025-01-XX
 **Total de arquivos mapeados**: 83
-**Arquivos analisados**: 82 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2 ✅, Hooks: 3 ✅, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Middleware: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+**Arquivos analisados**: 82 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2 ✅, Hooks: 3 ✅, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Proxy: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+
+**Nota sobre Proxy**: O arquivo `src/middleware.ts` foi migrado para `src/proxy.ts` no upgrade do Next.js 16. A análise arquitetural permanece válida, apenas o nome do arquivo mudou.
 

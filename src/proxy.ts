@@ -7,7 +7,7 @@ import { authMiddleware } from './middlewares/auth';
  * @param request - The incoming Next.js request
  * @returns The response from the middleware handler
  */
-export const middleware = async (request: NextRequest): Promise<NextResponse> => authMiddleware(request);
+export const proxy = async (request: NextRequest): Promise<NextResponse> => authMiddleware(request);
 
 /**
  * Middleware configuration

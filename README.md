@@ -20,9 +20,10 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
 
 ## 🚀 Stack utilizada
 
-- [**Next.js (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack
+- [**Next.js 16.0.3 (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack com Turbopack como bundler padrão
+- [**React 19.2.0**](https://react.dev/) – Biblioteca UI moderna
 - [**NextAuth**](https://next-auth.js.org/) – Autenticação e autorização
-- [**TypeScript**](https://www.typescriptlang.org/) – Tipagem estática e segurança no código
+- [**TypeScript 5+**](https://www.typescriptlang.org/) – Tipagem estática e segurança no código
 - [**Tailwind CSS**](https://tailwindcss.com/) – Estilização utilitária e responsiva
 - [**Headless UI**](https://headlessui.com/) – Componentes acessíveis e sem estilo
 - [**Lucide Icons**](https://lucide.dev/) – Ícones leves e modernos
@@ -32,6 +33,16 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
 - [**Vercel**](https://vercel.com/) – Deploy automatizado
 
 > Veja o arquivo  **[package.json](https://github.com/Brendhon/Bytebank/blob/main/package.json)**
+
+### 🔄 Atualizações Recentes
+
+**Next.js 16 Upgrade (Janeiro 2025)**
+- ✅ Atualizado para **Next.js 16.0.3** (anteriormente 15.2.5)
+- ✅ **Turbopack** agora é o bundler padrão (substitui webpack)
+- ✅ **React 19.2.0** (anteriormente 19.0.0)
+- ✅ Middleware migrado para **Proxy** (`src/middleware.ts` → `src/proxy.ts`)
+- ✅ ESLint migrado para **Flat Config** (ESLint CLI)
+- ✅ APIs assíncronas: `params`, `searchParams`, `cookies()`, `headers()` agora retornam Promises
 
 ---
 
@@ -77,7 +88,9 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
 ### 💡 Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-**[Git](https://git-scm.com)** e **[Node.js](https://nodejs.org/en/)**.<br> 
+- **[Git](https://git-scm.com)**
+- **[Node.js 20.9+](https://nodejs.org/en/)** (requerido para Next.js 16)
+- **[npm](https://www.npmjs.com/)** ou outro gerenciador de pacotes 
 
 Clone o repositório do projeto
 
@@ -161,6 +174,8 @@ npm run dev
 ```
 
 Acesse o projeto em seu navegador: [http://localhost:3000](http://localhost:3000)
+
+> **Nota:** O projeto utiliza **Turbopack** como bundler padrão (Next.js 16). Para usar webpack, adicione a flag `--webpack` ao comando: `npm run dev -- --webpack`
 
 ### 📦 Executando o Storybook
 
