@@ -12,7 +12,6 @@ type Story = StoryObj<typeof Card>;
 const meta: Meta<typeof Card> = {
   component: Card,
   tags: ['autodocs'],
-  title: 'Components/Cards/Card',
   argTypes: {
     variant: {
       control: 'select',
