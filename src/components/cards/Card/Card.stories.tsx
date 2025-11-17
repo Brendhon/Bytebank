@@ -1,20 +1,50 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Card from './Card';
+import { Card } from './Card';
 
-// Setup the Storybook configuration for the Card component
 type Story = StoryObj<typeof Card>;
 
-// Meta configuration for Storybook documentation of the Card component.
+/**
+ * Meta configuration for Storybook documentation of the Card component.
+ * 
+ * Provides comprehensive documentation with argTypes for all component props,
+ * enabling interactive component exploration and automatic documentation generation.
+ */
 const meta: Meta<typeof Card> = {
   component: Card,
   tags: ['autodocs'],
+  title: 'Components/Cards/Card',
   argTypes: {
     variant: {
       control: 'select',
-      options: ['blue', 'green', 'orange', 'dark'], // Options for the variant prop
+      options: ['blue', 'green', 'orange', 'dark'],
+      description: 'Color variant of the card',
+      table: {
+        defaultValue: { summary: 'dark' },
+        type: { summary: "'blue' | 'green' | 'orange' | 'dark'" },
+      },
     },
-    value: { control: 'number' },
-    label: { control: 'text' },
+    value: { 
+      control: 'number',
+      description: 'Numeric value to display (formatted as currency). If undefined, shows loading spinner.',
+      table: {
+        type: { summary: 'number | undefined' },
+      },
+    },
+    label: { 
+      control: 'text',
+      description: 'Label text displayed below the value',
+      table: {
+        defaultValue: { summary: 'Payments' },
+        type: { summary: 'string' },
+      },
+    },
+    className: {
+      control: 'text',
+      description: 'Additional CSS classes for styling',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
   },
   args: {
     variant: 'blue',
@@ -29,21 +59,21 @@ export const Default: Story = {};
 
 // Card Variants
 export const Blue: Story = {
-  args: { variant: 'blue', label: 'Depósitos', value: 24000 },
+  args: { variant: 'blue', label: 'Deposits', value: 24000 },
 };
 
 export const Green: Story = {
-  args: { variant: 'green', label: 'Saques', value: 12000 },
+  args: { variant: 'green', label: 'Withdrawals', value: 12000 },
 };
 
 export const Orange: Story = {
-  args: { variant: 'orange', label: 'Transferências', value: 6000.45 },
+  args: { variant: 'orange', label: 'Transfers', value: 6000.45 },
 };
 
 export const Dark: Story = {
-  args: { variant: 'dark', label: 'Pagamentos', value: 24000 },
+  args: { variant: 'dark', label: 'Payments', value: 24000 },
 };
 
 export const Loading: Story = {
-  args: { variant: 'dark' },
+  args: { variant: 'dark', label: 'Payments' },
 };

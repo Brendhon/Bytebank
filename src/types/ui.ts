@@ -1,4 +1,4 @@
-import { cardVariants } from '@/components/cards/Card/Card';
+import { cardVariants } from '@/components/cards/Card/Card.variants';
 import { buttonVariants } from '@/components/ui/Button/Button.variants';
 import { VariantProps } from 'class-variance-authority';
 import { ReactNode } from 'react';
