@@ -44,3 +44,22 @@ export const CARD_SESSION_TEXT = {
   },
 } as const;
 
+/**
+ * Text constants for WelcomeCard component
+ * 
+ * Prepared for future internationalization (i18n).
+ * All user-facing text is centralized here for easy translation.
+ */
+export const WELCOME_CARD_TEXT = {
+  greeting: (name: string) => `Olá, ${name}! :)`,
+  balanceLabel: 'Saldo',
+  defaultAccountType: 'Conta Corrente',
+  hiddenBalance: '••••••',
+  ariaLabels: {
+    showBalance: 'Exibir saldo da conta',
+    hideBalance: 'Ocultar saldo da conta',
+    balanceHidden: 'Seu saldo está oculto. Clique no ícone do olho para revelar.',
+    balanceSection: 'Informação do saldo da conta',
+  },
+} as const;
+
