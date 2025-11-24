@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
-import BenefitsSection from './BenefitsSection';
+import { BenefitsSection } from './BenefitsSection';
 
 const meta: Meta<typeof BenefitsSection> = {
   component: BenefitsSection,
