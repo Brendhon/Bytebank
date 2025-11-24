@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
-import MovementsSection from './MovementsSection'
+import { MovementsSection } from './MovementsSection'
 import { CardProps } from '@/types/ui'
 
 const meta: Meta<typeof MovementsSection> = {
