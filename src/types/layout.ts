@@ -28,3 +28,19 @@ export interface HeaderProps {
   onNavigate?: (path: string) => void;
   onLogout?: () => void;
 }
+
+/**
+ * Benefit item interface
+ * Represents a single benefit item in the BenefitsSection component
+ * @interface Benefit
+ */
+export interface Benefit {
+  /** Unique identifier for the benefit */
+  id: string;
+  /** Image source filename (without path prefix) */
+  iconSrc: string;
+  /** Benefit title */
+  title: string;
+  /** Benefit description */
+  description: string;
+}
