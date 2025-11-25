@@ -1,5 +1,5 @@
 import { HeaderProps } from '@/types/layout';
-import AvatarPopover from '../AvatarPopover/AvatarPopover';
+import { AvatarPopover } from '../AvatarPopover/AvatarPopover';
 
 export default ({ userName, onNavigate, onLogout }: Pick<HeaderProps, 'userName' | 'onNavigate' | 'onLogout'>) => (
   <div className="flex items-center gap-6">
