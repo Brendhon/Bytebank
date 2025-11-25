@@ -1,4 +1,4 @@
-import Header from './Header';
+import { Header } from './Header';
 import { Meta, StoryObj } from '@storybook/nextjs';
 
 const meta: Meta<typeof Header> = {
