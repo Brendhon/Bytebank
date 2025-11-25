@@ -212,7 +212,7 @@ O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
 | `app/api/transactions/[id]/route.ts` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Vulnerabilidades críticas de segurança corrigidas (migração para NextAuth), validação Zod implementada no PUT, validação de ObjectId em todos os handlers, validação explícita de existência, mensagens de erro traduzidas para inglês, documentação JSDoc completa, validação de propriedade em todas as operações |
 | `app/api/transactions/summary/route.ts` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Vulnerabilidades críticas de segurança corrigidas (migração para NextAuth), documentação JSDoc completa implementada, mensagens de erro traduzidas para inglês, comentários desnecessários removidos, tipagem explícita melhorada com TransactionSummary |
 | `app/api/users/route.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (48%) - **VIOLAÇÕES CRÍTICAS DE SEGURANÇA** - API key exposta, GET expõe todos os usuários, falta validação Zod - Melhorias pendentes |
-| `app/api/users/[email]/route.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (50%) - **VIOLAÇÕES CRÍTICAS DE SEGURANÇA** - API key exposta, falta validação de propriedade, falta validação Zod, falta JSDoc - Melhorias pendentes |
+| `app/api/users/[email]/route.ts` | ✅ | ✅ | Melhorias implementadas - Status: Bom (92%) - Vulnerabilidades críticas de segurança corrigidas (migração para NextAuth), validação simplificada no PUT (sem Zod) para permitir atualizações parciais, validação de email usando EMAIL_REGEX em todos os handlers, mensagens de erro traduzidas para inglês, documentação JSDoc completa, validação de propriedade em todas as operações |
 
 ---
 
