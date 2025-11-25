@@ -208,7 +208,7 @@ O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
 | `app/api/auth/[...nextauth]/route.ts` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Documentação JSDoc completa adicionada ao handler e aos exports GET e POST, explicando o propósito do arquivo e como ele integra o NextAuth com o Next.js App Router |
-| `app/api/transactions/route.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (52%) - **VIOLAÇÕES CRÍTICAS DE SEGURANÇA** - API key exposta, falta validação de propriedade, falta validação Zod, falta associação ao usuário no POST - Melhorias pendentes |
+| `app/api/transactions/route.ts` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Vulnerabilidades críticas de segurança corrigidas (migração para NextAuth), validação Zod implementada no POST, mensagens de erro traduzidas para inglês, comentários desnecessários removidos, documentação JSDoc aprimorada, associação automática de transações ao usuário autenticado |
 | `app/api/transactions/[id]/route.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (58%) - **VIOLAÇÕES CRÍTICAS DE SEGURANÇA** - API key exposta, falta validação de propriedade, falta validação Zod - Melhorias pendentes |
 | `app/api/transactions/summary/route.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (55%) - **VIOLAÇÕES CRÍTICAS DE SEGURANÇA** - API key exposta, falta validação de propriedade, falta JSDoc - Melhorias pendentes |
 | `app/api/users/route.ts` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (48%) - **VIOLAÇÕES CRÍTICAS DE SEGURANÇA** - API key exposta, GET expõe todos os usuários, falta validação Zod - Melhorias pendentes |
