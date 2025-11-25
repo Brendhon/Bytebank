@@ -1,7 +1,7 @@
 import { NavItemLabel } from '@/types/nav';
 import { Meta, StoryObj } from '@storybook/nextjs';
 import { delay } from 'msw';
-import NavMenu from './NavMenu';
+import { NavMenu } from './NavMenu';
 
 const meta: Meta<typeof NavMenu> = {
   component: NavMenu,
