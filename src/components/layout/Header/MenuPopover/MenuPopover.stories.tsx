@@ -1,9 +1,10 @@
 import { NavItemLabel } from '@/types/nav';
 import { Meta, StoryObj } from '@storybook/nextjs';
-import MenuPopover from './MenuPopover';
+import { MenuPopover } from './MenuPopover';
 
 const meta: Meta<typeof MenuPopover> = {
   component: MenuPopover,
+  tags: ['autodocs'],
   parameters: {
     viewport: { defaultViewport: 'iphone6' },
   },
