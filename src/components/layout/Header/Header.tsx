@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/utils";
 import { HeaderProps } from "@/types/layout";
 import { GuestActions } from "./GuestActions/GuestActions";
 import { MenuPopover } from "./MenuPopover/MenuPopover";
-import UserActions from "./UserActions/UserActions";
+import { UserActions } from "./UserActions/UserActions";
 
 export default ({ variant, userName, pathname, onLogin, onOpenAccount, onNavigate, onLogout }: HeaderProps) => {
   return (
