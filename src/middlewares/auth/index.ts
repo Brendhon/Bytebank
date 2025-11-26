@@ -1,6 +1,6 @@
 import { getToken } from "next-auth/jwt";
-import { isAPIRoute, isAuthenticated, isAuthPage } from "./guards";
-import { handleAPIRequest, handleAuthenticatedAuthPageAccess, handleDefaultCase, handleUnauthenticatedAccess } from "./handlers";
+import { isAPIRoute, isAuthenticated, isAuthPage, isRootRoute } from "./guards";
+import { handleAPIRequest, handleAuthenticatedAuthPageAccess, handleDefaultCase, handleRootRoute, handleUnauthenticatedAccess } from "./handlers";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -35,10 +35,15 @@ export const authMiddleware = async (request: NextRequest): Promise<NextResponse
     // Check route types
     const isAPI = isAPIRoute(pathname);
     const isAuth = isAuthPage(pathname);
+    const isRoot = isRootRoute(pathname);
     const hasToken = isAuthenticated(token);
 
     // Route handling logic
     switch (true) {
+      // Handle root route - redirect based on authentication
+      case isRoot:
+        return handleRootRoute(request, hasToken);
+
       // Allow API requests to pass through
       case isAPI:
         return handleAPIRequest(request);

@@ -44,6 +44,24 @@ export const handleAuthenticatedAuthPageAccess = (request: NextRequest): NextRes
 };
 
 /**
+ * Handler for root route (/)
+ * Redirects authenticated users to dashboard, unauthenticated users to home
+ * @param request - The incoming Next.js request
+ * @param hasToken - Whether the user has a valid authentication token
+ * @returns NextResponse with redirect to appropriate route
+ */
+export const handleRootRoute = (request: NextRequest, hasToken: boolean): NextResponse => {
+  try {
+    const redirectUrl = hasToken ? PROTECTED_ROUTES.DASHBOARD : PAGE_ROUTES.HOME;
+    return NextResponse.redirect(new URL(redirectUrl, request.url));
+  } catch (error) {
+    console.error('Error creating redirect URL in handleRootRoute:', error);
+    // Fallback: redirect to home page
+    return NextResponse.redirect(new URL(PAGE_ROUTES.HOME, request.url));
+  }
+};
+
+/**
  * Default handler - allows the request to continue
  * @param request - The incoming Next.js request
  * @returns NextResponse allowing the request to continue

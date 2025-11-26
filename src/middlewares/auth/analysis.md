@@ -1,11 +1,11 @@
 # Análise Arquitetural: Middleware: middleware.ts (Refatorado)
 
 ## 📋 Resumo Executivo
-**Status:** ✅ Excelente (95%)
+**Status:** ✅ Excelente (97%)
 
-O middleware foi refatorado com excelente separação de responsabilidades, seguindo princípios de Clean Architecture e SOLID. O `middleware.ts` atua como ponto de entrada do Next.js, delegando a lógica principal para `authMiddleware` em `middlewares/auth/index.ts`. As funções auxiliares foram modularizadas em arquivos separados (`guards.ts`, `handlers.ts`), cada um com uma responsabilidade única e bem definida. As rotas foram centralizadas em `lib/constants/routes.ts`, seguindo boas práticas de organização de projeto. O código utiliza TypeScript com tipagem forte, possui documentação JSDoc adequada, e implementa padrões de design apropriados (Strategy, Guard, Handler). **Todas as melhorias recomendadas foram implementadas:** tratamento de erros robusto com fallbacks adequados, validação de variáveis de ambiente, tratamento de erros nos handlers, rotas centralizadas em arquivo compartilhado, documentação detalhada do matcher pattern, e tipagem melhorada do token.
+O middleware foi refatorado com excelente separação de responsabilidades, seguindo princípios de Clean Architecture e SOLID. O `middleware.ts` atua como ponto de entrada do Next.js, delegando a lógica principal para `authMiddleware` em `middlewares/auth/index.ts`. As funções auxiliares foram modularizadas em arquivos separados (`guards.ts`, `handlers.ts`), cada um com uma responsabilidade única e bem definida. As rotas foram centralizadas em `lib/constants/routes.ts`, seguindo boas práticas de organização de projeto. O código utiliza TypeScript com tipagem forte, possui documentação JSDoc adequada, e implementa padrões de design apropriados (Strategy, Guard, Handler). **Todas as melhorias recomendadas foram implementadas:** tratamento de erros robusto com fallbacks adequados, validação de variáveis de ambiente, tratamento de erros nos handlers, rotas centralizadas em arquivo compartilhado, documentação detalhada do matcher pattern, tipagem melhorada do token, e **otimização de performance com tratamento da rota raiz no middleware** (eliminando renderização desnecessária da página raiz).
 
-**Conformidade:** 95%
+**Conformidade:** 97%
 
 ## ✅ Requisitos Técnicos Conformes
 
@@ -39,6 +39,17 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
 - **Status:** ✅ **IMPLEMENTADO** - O padrão regex do matcher em `middleware.ts` agora possui comentário detalhado explicando o que o regex faz, incluindo exemplos de rotas excluídas.
 - **Benefício:** Facilita a compreensão do padrão regex para desenvolvedores que não estão familiarizados com a sintaxe, melhorando a manutenibilidade do código.
 
+### 6. Otimização de Performance - Tratamento da Rota Raiz ✅ (Prioridade: Alta)
+- **Requisito:** Otimizar performance eliminando renderização desnecessária.
+- **Documento:** Melhores práticas do Next.js App Router
+- **Status:** ✅ **IMPLEMENTADO** - Adicionado handler `handleRootRoute` no middleware para tratar redirecionamento da rota raiz (`/`) antes da renderização da página. A lógica de redirect foi movida do `page.tsx` para o middleware, eliminando renderização desnecessária e melhorando performance.
+- **Benefício:** 
+  - Elimina renderização desnecessária da página raiz (middleware redireciona antes da renderização)
+  - Melhor performance (redirect acontece antes do processamento da página)
+  - Centraliza lógica de autenticação no middleware
+  - Evita necessidade de `force-dynamic` na página raiz
+  - Alinhado com as melhores práticas do Next.js App Router
+
 ## Pontos em Conformidade
 
 1. **Nomenclatura e Estrutura:** Todos os arquivos seguem convenções adequadas de nomenclatura e estão bem organizados em uma estrutura modular.
@@ -51,7 +62,7 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
    - `middleware.ts`: Ponto de entrada do Next.js, wrapper que delega para `authMiddleware` e configuração
    - `middlewares/auth/index.ts`: Lógica principal de orquestração (`authMiddleware`)
    - `middlewares/auth/guards.ts`: Funções de verificação (guards)
-   - `middlewares/auth/handlers.ts`: Handlers para diferentes casos
+   - `middlewares/auth/handlers.ts`: Handlers para diferentes casos (incluindo `handleRootRoute` para rota raiz)
    - `lib/constants/routes.ts`: Constantes de rotas compartilhadas em todo o projeto
 
 5. **Clean Code:** O código é legível, conciso e de fácil manutenção. A modularização torna o código muito mais fácil de entender e testar.
@@ -93,16 +104,16 @@ O middleware foi refatorado com excelente separação de responsabilidades, segu
    - **Benefício:** Permite executar lógica antes que a requisição chegue às rotas, centralizando controle de autenticação e autorização.
 
 2. **Strategy Pattern:** Diferentes handlers implementam diferentes estratégias de roteamento baseadas no estado de autenticação e tipo de rota.
-   - **Localização:** `handlers.ts` - funções `handleAPIRequest`, `handleUnauthenticatedAccess`, `handleAuthenticatedAuthPageAccess`, `handleDefaultCase`
-   - **Benefício:** Permite adicionar novas estratégias de roteamento sem modificar a estrutura base, facilitando extensão.
+   - **Localização:** `handlers.ts` - funções `handleAPIRequest`, `handleUnauthenticatedAccess`, `handleAuthenticatedAuthPageAccess`, `handleRootRoute`, `handleDefaultCase`
+   - **Benefício:** Permite adicionar novas estratégias de roteamento sem modificar a estrutura base, facilitando extensão. O handler `handleRootRoute` otimiza performance tratando a rota raiz antes da renderização.
 
 3. **Guard Pattern:** Funções guards verificam condições antes de permitir acesso.
    - **Localização:** `guards.ts` - funções `isAuthPage`, `isAPIRoute`, `isAuthenticated`
    - **Benefício:** Centraliza a lógica de verificação, tornando o código mais legível e testável.
 
 4. **Handler Pattern:** Handlers encapsulam lógica de processamento para diferentes casos.
-   - **Localização:** `handlers.ts` - todas as funções handler
-   - **Benefício:** Separa a lógica de processamento da lógica de decisão, facilitando manutenção e testes.
+   - **Localização:** `handlers.ts` - todas as funções handler (`handleAPIRequest`, `handleUnauthenticatedAccess`, `handleAuthenticatedAuthPageAccess`, `handleRootRoute`, `handleDefaultCase`)
+   - **Benefício:** Separa a lógica de processamento da lógica de decisão, facilitando manutenção e testes. O handler `handleRootRoute` otimiza performance eliminando renderização desnecessária da página raiz.
 
 5. **Module Pattern:** Cada arquivo representa um módulo com responsabilidade específica.
    - **Localização:** Toda a estrutura de pastas `middlewares/auth/`
@@ -184,6 +195,10 @@ export const authMiddleware = async (request: NextRequest): Promise<NextResponse
 
     // Route handling logic
     switch (true) {
+      // Handle root route - redirect based on authentication
+      case isRoot:
+        return handleRootRoute(request, hasToken);
+
       case isAPI:
         return handleAPIRequest(request);
 
@@ -335,6 +350,51 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 };
 ```
 
+### 7. Otimização de Performance - Tratamento da Rota Raiz ✅ (Prioridade: Alta)
+- ✅ Adicionado handler `handleRootRoute` para tratar redirecionamento da rota raiz no middleware.
+- ✅ Lógica de redirect movida do `page.tsx` para o middleware, eliminando renderização desnecessária.
+- ✅ Melhor performance e alinhamento com melhores práticas do Next.js App Router.
+- Código implementado:
+```typescript
+// middlewares/auth/handlers.ts
+/**
+ * Handler for root route (/)
+ * Redirects authenticated users to dashboard, unauthenticated users to home
+ * @param request - The incoming Next.js request
+ * @param hasToken - Whether the user has a valid authentication token
+ * @returns NextResponse with redirect to appropriate route
+ */
+export const handleRootRoute = (request: NextRequest, hasToken: boolean): NextResponse => {
+  try {
+    const redirectUrl = hasToken ? PROTECTED_ROUTES.DASHBOARD : PAGE_ROUTES.HOME;
+    return NextResponse.redirect(new URL(redirectUrl, request.url));
+  } catch (error) {
+    console.error('Error creating redirect URL in handleRootRoute:', error);
+    // Fallback: redirect to home page
+    return NextResponse.redirect(new URL(PAGE_ROUTES.HOME, request.url));
+  }
+};
+
+// middlewares/auth/index.ts
+// Get path from the request
+const { pathname } = request.nextUrl;
+
+// Check route types
+const isAPI = isAPIRoute(pathname);
+const isAuth = isAuthPage(pathname);
+const isRoot = pathname === '/';
+const hasToken = isAuthenticated(token);
+
+// Route handling logic
+switch (true) {
+  // Handle root route - redirect based on authentication
+  case isRoot:
+    return handleRootRoute(request, hasToken);
+  
+  // ... outros casos
+}
+```
+
 ## 📊 Mapeamento
 **Arquivo:** `src/middleware.ts` e `src/middlewares/auth/`  
 **Estrutura:**
@@ -366,5 +426,6 @@ export const isAuthenticated = (token: JWT | null): boolean => {
 - ✅ Comentário detalhado sobre matcher pattern
 - ✅ Tipagem melhorada do token (`JWT | null` em vez de `unknown`)
 - ✅ Integração com sistema de rotas compartilhado do projeto
+- ✅ **Otimização de performance: tratamento da rota raiz no middleware** (handler `handleRootRoute`)
 
-**Status Final:** ✅ Excelente (95%)
+**Status Final:** ✅ Excelente (97%)

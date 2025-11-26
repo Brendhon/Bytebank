@@ -16,6 +16,15 @@ export const isAuthPage = (pathname: string): boolean => {
 };
 
 /**
+ * Is it the root route
+ * @param pathname - The current request pathname
+ * @returns true if the pathname is the root route
+ */
+export const isRootRoute = (pathname: string): boolean => {
+  return pathname === '/';
+};
+
+/**
  * Check if the pathname is an API route
  * @param pathname - The current request pathname
  * @returns true if the pathname is an API route
