@@ -58,6 +58,6 @@ export const MovementsSection = ({ data, className, title }: MovementsSectionPro
 const styles = {
   section: 'card',
   title: 'text-20-bold text-dark-gray mb-6',
-  grid: 'grid grid-cols-1 sm:grid-cols-2 gap-4',
+  grid: 'sm:grid sm:grid-cols-2 gap-4 flex flex-col items-center',
   emptyState: 'text-gray-500 text-center py-8',
 } as const;
