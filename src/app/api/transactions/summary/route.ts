@@ -1,19 +1,12 @@
 import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from "@/lib/api/api";
-import { connectToDatabase } from "@/lib/mongoose/mongoose";
-import Transaction from "@/models/Transaction/Transaction";
-import { TransactionDescKey, TransactionSummary } from "@/types/transaction";
-import { Types } from "mongoose";
+import { getTransactionSummaryServer } from "@/services/transaction/transaction.service.server";
 
 /**
  * Handles GET requests to retrieve a transaction summary for the authenticated user.
  * 
- * This endpoint requires authentication via NextAuth session. It aggregates all transactions
- * for the authenticated user and calculates:
- * - Balance: Total balance (inflow - outflow)
- * - Breakdown: Sum of values by transaction description category (deposit, payment, transfer, withdrawal)
- * 
- * The aggregation is performed efficiently using MongoDB's aggregation pipeline, grouping
- * transactions by description and summing their values in a single database query.
+ * This endpoint requires authentication via NextAuth session. It uses the server-side
+ * service `getTransactionSummaryServer` to calculate the summary, which can also be
+ * called directly from Server Components for better performance.
  * 
  * @param {Request} req - The incoming HTTP request.
  * @returns {Promise<NextResponse>} A response object containing the transaction summary in JSON format
@@ -36,57 +29,8 @@ import { Types } from "mongoose";
 export async function GET(req: Request) {
   try {
     const session = await isAuthenticated();
-    await connectToDatabase();
-
-    const userId = session.user.id;
-
-    // Aggregate transactions by description category
-    const agg = await Transaction.aggregate([
-      { $match: { user: new Types.ObjectId(userId) } },
-      {
-        $group: {
-          _id: "$desc",
-          total: { $sum: "$value" },
-        }
-      }
-    ]);
-
-    // Create default summary object with all transaction types initialized to 0
-    const defaultSummary: Record<TransactionDescKey, number> = {
-      deposit: 0,
-      transfer: 0,
-      withdrawal: 0,
-      payment: 0,
-    };
-
-    // Process aggregation result - convert to summary object
-    const summary = agg.reduce<Record<TransactionDescKey, number>>((acc, cur) => {
-      acc[cur._id as TransactionDescKey] = cur.total;
-      return acc;
-    }, defaultSummary);
-
-    // Extract values from summary
-    const deposit = summary.deposit ?? 0;
-    const payment = summary.payment ?? 0;
-    const transfer = summary.transfer ?? 0;
-    const withdrawal = summary.withdrawal ?? 0;
-
-    // Calculate balance: inflow (deposit) - outflow (payment + transfer + withdrawal)
-    const inflow = deposit;
-    const outflow = payment + transfer + withdrawal;
-    const balance = inflow - outflow;
-
-    const response: TransactionSummary = {
-      balance,
-      breakdown: {
-        deposit,
-        payment,
-        transfer,
-        withdrawal,
-      },
-    };
-
-    return handleSuccessResponse<TransactionSummary>(response);
+    const summary = await getTransactionSummaryServer(session.user.id);
+    return handleSuccessResponse(summary);
   } catch (error) {
     return handleErrorResponse(error, 'Error fetching transaction summary');
   }

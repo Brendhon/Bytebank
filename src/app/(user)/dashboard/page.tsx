@@ -1,52 +1,76 @@
-'use client';
-
 import { WelcomeCard } from "@/components/cards";
 import { MovementsSection } from "@/components/layout";
-import { getTransactionSummary } from "@/services/transaction/transaction.service";
-import { TransactionSummary } from "@/types/transaction";
+import { auth } from "@/lib/auth/auth";
+import { getTransactionSummaryServer } from "@/services/transaction/transaction.service.server";
 import { CardProps } from "@/types/ui";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import { ReactElement } from "react";
 
-export default () => {
-  // Get session data
-  const session = useSession();
+/**
+ * Dashboard page component for authenticated users.
+ * 
+ * Displays user's financial information including:
+ * - Welcome card with user name and balance
+ * - Movements section with transaction breakdown (payments, deposits, transfers, withdrawals)
+ * 
+ * This is a Server Component that fetches data server-side,
+ * following Next.js App Router best practices. Data is fetched
+ * directly from the database using server-side services (not HTTP requests),
+ * which is the recommended approach for Server Components.
+ * 
+ * @returns {Promise<ReactElement>} Dashboard page content
+ * @throws {Error} May redirect to login if session is invalid
+ */
+export default async function DashboardPage(): Promise<ReactElement> {
+  // Get session data server-side
+  const session = await auth();
 
-  // If session is not available, return
-  const userId = session?.data?.user?.id || "";
+  // Validate session and redirect if not authenticated
+  if (!session?.user?.id) redirect('/login');
 
-  // State for the balance
-  const [balance, setBalance] = useState(0);
-
-  // State for the movements
-  const [movements, setMovements] = useState<CardProps[]>([
+  // Initialize movements structure
+  const movements: CardProps[] = [
     { key: 'payment', label: "Pagamentos", variant: "dark" },
     { key: 'deposit', label: "Depósitos", variant: "blue" },
     { key: 'transfer', label: "Transferências", variant: "orange" },
     { key: 'withdrawal', label: "Saque", variant: "green" },
-  ]);
+  ];
 
-  // Use effect to fetch the balance and movements data
-  useEffect(() => {
-    if (userId) getTransactionSummary(userId)
-      .then(handleSummaryData)
-      .catch(console.error);
-  }, [userId]);
+  // Fetch transaction summary server-side using direct service call
+  // This avoids HTTP requests and works seamlessly in Server Components
+  let balance = 0;
+  let movementsWithValues = movements;
 
-  // Handle summary data
-  const handleSummaryData = (data: TransactionSummary) => {
-    setMovements((prev) => prev.map((m) => ({ ...m, value: data.breakdown[m.key] }))); // Set the movements data   
-    setBalance(data.balance); // Set the balance
+  try {
+    const summary = await getTransactionSummaryServer(session.user.id);
+    balance = summary.balance;
+    movementsWithValues = movements.map((m) => ({ ...m, value: summary.breakdown[m.key] }));
+  } catch (error) {
+    // Log error for debugging
+    console.error('Error fetching transaction summary:', error);
   }
 
+  // Get fist name from user name
+  const fistName = session.user.name?.split(' ')[0] || "Usuário";
+
   return (
-    <section className="flex flex-col gap-4">
+    <section className={styles.container}>
       <WelcomeCard
-        name={session?.data?.user?.name || "Usuário"}
+        name={fistName}
         balance={balance}
         date={new Date()}
       />
-      <MovementsSection data={movements} />
+      <MovementsSection data={movementsWithValues} />
     </section>
   );
-};
+}
+
+/**
+ * Styles for DashboardPage component
+ * 
+ * All Tailwind classes are centralized here for better maintainability
+ * and separation of concerns.
+ */
+const styles = {
+  container: 'flex flex-col gap-4',
+} as const;
