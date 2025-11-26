@@ -44,17 +44,13 @@ export default function GuestLayout({ children }: GuestLayoutProps): ReactElemen
   // Handle login submission
   const onLoginSubmit = useCallback(async (data: LoginFormData) => {
     const success = await login(data);
-    if (success) {
-      setIsLoginOpen(false);
-    }
+    if (success) setIsLoginOpen(false);
   }, [login]);
 
   // Handle account registration
   const onRegisterSubmit = useCallback(async (formData: RegisterFormData) => {
     const success = await register(formData);
-    if (success) {
-      setIsRegisterOpen(false);
-    }
+    if (success) setIsRegisterOpen(false);
   }, [register]);
 
   return (

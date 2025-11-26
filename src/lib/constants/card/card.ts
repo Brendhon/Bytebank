@@ -63,3 +63,34 @@ export const WELCOME_CARD_TEXT = {
   },
 } as const;
 
+/**
+ * Mock credit card data for demonstration purposes
+ * 
+ * ⚠️ WARNING: MOCK DATA FOR DEMONSTRATION ONLY
+ * 
+ * This data is used for demonstration and testing purposes only.
+ * In production, credit card data should be fetched from a secure API endpoint.
+ * 
+ * DO NOT commit real credit card data to the repository.
+ * 
+ * Note: These are test/demonstration values and do not represent real credit card information.
+ */
+export const MOCK_CREDIT_CARDS = {
+  /**
+   * Mock data for digital credit card
+   */
+  digital: {
+    number: '1234 5678 9012 3456',
+    expiration: '12/25',
+    cvv: '123',
+  },
+  /**
+   * Mock data for physical credit card
+   */
+  physical: {
+    number: '5532 6475 8570 4251',
+    expiration: '03/25',
+    cvv: '514',
+  },
+} as const;
+
