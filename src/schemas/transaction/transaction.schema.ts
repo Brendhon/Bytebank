@@ -23,32 +23,32 @@ const TransactionTypeKeys =  Object.keys(TransactionType) as [TransactionTypeKey
  */
 export const transactionSchema = z.object({
   desc: z.enum(TransactionDescKeys, {
-    errorMap: () => ({ message: 'Please select a description' }),
+    errorMap: () => ({ message: 'Por favor, selecione uma descrição' }),
   }),
   type: z.enum(TransactionTypeKeys, {
-    errorMap: () => ({ message: 'Please select a type' }),
+    errorMap: () => ({ message: 'Por favor, selecione um tipo' }),
   }),
-  alias: z.string().max(100, 'Alias cannot exceed 100 characters').optional(),
+  alias: z.string().max(100, 'O alias não pode ter mais de 100 caracteres').optional(),
   value: z
     .number()
-    .min(0, 'Value must be greater than or equal to 0')
-    .max(999999999.99, 'Value is too large')
+    .min(0, 'O valor deve ser maior ou igual a 0')
+    .max(999999999.99, 'O valor é muito grande')
     .refine((val) => {
       const decimalPlaces = (val.toString().split('.')[1] || '').length;
       return decimalPlaces <= 2;
     }, {
-      message: 'Value cannot have more than 2 decimal places',
+      message: 'O valor não pode ter mais de 2 casas decimais',
     }),
   date: z
     .string()
-    .min(1, 'Please provide a date')
-    .regex(DATE_REGEX, 'Date must be in format dd/mm/yyyy')
+    .min(1, 'Por favor, forneça uma data')
+    .regex(DATE_REGEX, 'A data deve estar no formato dd/mm/yyyy')
     .refine((val) => {
       const [day, month, year] = val.split('/').map(Number);
       const date = new Date(year, month - 1, day);
       return date.getDate() === day && date.getMonth() === month - 1 && date.getFullYear() === year;
     }, {
-      message: 'Please provide a valid date',
+      message: 'Por favor, forneça uma data válida',
     }),
 })
 

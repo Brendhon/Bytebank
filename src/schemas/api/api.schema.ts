@@ -32,7 +32,7 @@ export const errorSchema = z.object({
  *
  * Ensures the message is a non-empty string.
  */
-const messageSchema = z.string().min(1, 'Message must not be empty');
+const messageSchema = z.string().min(1, 'A mensagem não pode ser vazia');
 
 /**
  * Zod schema for validating not found message parameter

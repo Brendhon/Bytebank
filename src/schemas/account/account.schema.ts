@@ -28,14 +28,14 @@ export const accountSchema = z.object({
     .string()
     .optional()
     .refine((val) => !val || strongPasswordValidation.safeParse(val).success, {
-      message: 'New password must be at least 8 characters long and contain uppercase, lowercase, number, and special character (@$!%*?&)',
+      message: 'Nova senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial (@$!%*?&)',
     }),
   confirmPassword: z
     .string()
     .optional(),
 })
   .refine((data) => !data.newPassword || data.newPassword === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'As senhas não coincidem',
     path: ['confirmPassword'],
   });
 

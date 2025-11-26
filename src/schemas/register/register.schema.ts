@@ -26,11 +26,11 @@ export const registerSchema = z.object({
   acceptPrivacy: z
     .boolean()
     .refine((val) => val === true, {
-      message: 'You must accept the terms of use',
+      message: 'Você deve aceitar os termos de uso',
     }),
 })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'As senhas não coincidem',
     path: ['confirmPassword'],
   });
 

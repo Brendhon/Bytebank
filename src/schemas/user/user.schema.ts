@@ -15,9 +15,9 @@ import { z } from 'zod';
  * ```
  */
 export const emailValidation = z
-  .string({ required_error: 'Email is required' })
-  .email('Invalid email address')
-  .max(255, 'Email cannot exceed 255 characters')
+  .string({ required_error: 'Email é requerido' })
+  .email('Endereço de email inválido')
+  .max(255, 'Email não pode ter mais de 255 caracteres')
   .toLowerCase()
   .trim();
 
@@ -36,12 +36,12 @@ export const emailValidation = z
  * ```
  */
 export const nameValidation = z
-  .string({ required_error: 'Field is required' })
-  .min(1, 'Field is required')
-  .max(100, 'Name cannot exceed 100 characters')
+  .string({ required_error: 'Campo é requerido' })
+  .min(1, 'Campo é requerido')
+  .max(100, 'Nome não pode ter mais de 100 caracteres')
   .trim()
   .refine((val) => val.length > 0, {
-    message: 'Name cannot be empty',
+    message: 'Nome não pode ser vazio',
   });
 
 /**
@@ -61,13 +61,13 @@ export const nameValidation = z
  * ```
  */
 export const strongPasswordValidation = z
-  .string({ required_error: 'Password is required' })
-  .min(8, 'Password must be at least 8 characters long')
-  .max(128, 'Password cannot exceed 128 characters')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number')
-  .regex(/[@$!%*?&]/, 'Password must contain at least one special character (@$!%*?&)');
+  .string({ required_error: 'Senha é requerida' })
+  .min(8, 'Senha deve ter pelo menos 8 caracteres')
+  .max(128, 'Senha não pode ter mais de 128 caracteres')
+  .regex(/[a-z]/, 'Senha deve ter pelo menos uma letra minúscula')
+  .regex(/[A-Z]/, 'Senha deve ter pelo menos uma letra maiúscula')
+  .regex(/[0-9]/, 'Senha deve ter pelo menos um número')
+  .regex(/[@$!%*?&]/, 'Senha deve ter pelo menos um caractere especial (@$!%*?&)');
 
 /**
  * Simple password validation schema for backward compatibility
@@ -86,7 +86,7 @@ export const strongPasswordValidation = z
  * ```
  */
 export const simplePasswordValidation = z
-  .string({ required_error: 'Password is required' })
-  .min(6, 'Password must be at least 6 characters long')
-  .max(128, 'Password cannot exceed 128 characters');
+  .string({ required_error: 'Senha é requerida' })
+  .min(6, 'Senha deve ter pelo menos 6 caracteres')
+  .max(128, 'Senha não pode ter mais de 128 caracteres');
 
