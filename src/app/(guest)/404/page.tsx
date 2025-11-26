@@ -1,6 +1,7 @@
 import { Illustration } from '@/components/ui'
 import { PAGE_ROUTES } from '@/lib/constants'
 import Link from 'next/link'
+import { ReactElement } from 'react'
 
 /**
  * 404 Not Found page component for guest users.
@@ -11,9 +12,9 @@ import Link from 'next/link'
  * This is a Server Component that renders on the server side,
  * providing optimal performance and SEO benefits.
  * 
- * @returns {JSX.Element} 404 error page content with accessible structure
+ * @returns {ReactElement} 404 error page content with accessible structure
  */
-export default function NotFound404() {
+export default function NotFound404(): ReactElement {
   return (
     <main className={styles.container} role="main">
       <h1 className={styles.title}>
