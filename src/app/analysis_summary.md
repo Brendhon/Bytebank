@@ -1,7 +1,5 @@
 # Resumo Arquitetural: App Router (Root)
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Páginas do App Router na raiz da aplicação, contendo os arquivos fundamentais do Next.js: página inicial (`page.tsx`), layout raiz (`layout.tsx`) e página de erro 404 (`not-found.tsx`).
 **Status Geral:** ✅ Excelente (99%)
@@ -148,5 +146,4 @@ Todos os arquivos estão em conformidade com os requisitos técnicos do projeto 
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

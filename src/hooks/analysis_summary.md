@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Hooks
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Hooks customizados do React que encapsulam lógica reutilizável para gerenciamento de estado, autenticação, registro, renderização de transações, e sistema de notificações toast.
 **Status Geral:** ✅ Excelente (97%)
@@ -140,5 +138,4 @@ Todos os hooks estão em conformidade com os requisitos técnicos do projeto e s
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

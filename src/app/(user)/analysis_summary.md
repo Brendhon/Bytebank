@@ -1,7 +1,5 @@
 # Resumo Arquitetural: User Routes
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Rotas protegidas para usuários autenticados, incluindo layout compartilhado e páginas de dashboard, transações, configurações e cartões. Implementa estrutura completa de autenticação com Server Components, Server Actions e Client Components conforme necessário.
 **Status Geral:** ✅ Excelente (98%)
@@ -216,5 +214,4 @@ Todos os componentes estão em conformidade com os requisitos técnicos do proje
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

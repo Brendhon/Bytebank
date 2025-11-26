@@ -80,5 +80,4 @@ O diretório `src/components/layout` atingiu um alto nível de maturidade arquit
 
 ---
 **Última Atualização:** 26/11/2025
-**Gerado por:** Assistente de IA
 

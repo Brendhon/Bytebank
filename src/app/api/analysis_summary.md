@@ -1,7 +1,5 @@
 # Resumo Arquitetural: API Routes
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Rotas de API do Next.js App Router que implementam endpoints RESTful para operações CRUD em usuários, transações e autenticação via NextAuth.
 **Status Geral:** ✅ Excelente (96%)
@@ -234,5 +232,4 @@ Todas as rotas estão em conformidade com os requisitos técnicos do projeto e s
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

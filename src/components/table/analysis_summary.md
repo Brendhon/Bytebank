@@ -72,5 +72,4 @@ O diretório `src/components/table` atingiu um alto nível de maturidade arquite
 
 ---
 **Última Atualização:** 26/11/2025
-**Gerado por:** Assistente de IA
 

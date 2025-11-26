@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Types
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Definições de tipos TypeScript organizadas por domínio, fornecendo type safety e documentação para toda a aplicação.
 **Status Geral:** ✅ Excelente (98%)
@@ -153,5 +151,4 @@ Todos os arquivos de tipos estão em conformidade com os requisitos técnicos do
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

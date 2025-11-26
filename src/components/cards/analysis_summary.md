@@ -64,4 +64,3 @@ O diretório `src/components/cards` atingiu um alto nível de maturidade arquite
 
 ---
 **Última Atualização:** 26/11/2025
-**Gerado por:** Assistente de IA

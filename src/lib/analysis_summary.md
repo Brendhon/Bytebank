@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Lib
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Módulo de bibliotecas e utilitários que fornece funções auxiliares, configurações, constantes, formatação, tratamento de erros, autenticação e integração com APIs e banco de dados.
 **Status Geral:** ✅ Excelente (98%)
@@ -170,5 +168,4 @@ Todos os módulos estão em conformidade com os requisitos técnicos do projeto 
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

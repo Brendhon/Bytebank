@@ -1,7 +1,5 @@
 # Resumo Arquitetural: [Nome da Pasta]
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** [Descrição do que esta pasta contém, ex: Componentes de formulário, Hooks, etc.]
 **Status Geral:** [Status geral, ex: ✅ Excelente (98%)]
@@ -47,4 +45,3 @@ Breve resumo do trabalho realizado.
 
 ---
 **Última Atualização:** [Data]
-**Gerado por:** [Nome do Agente/Ferramenta]

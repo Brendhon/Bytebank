@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Schemas
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Schemas Zod para validação de dados de entrada em formulários e APIs, garantindo integridade e type safety em toda a aplicação.
 **Status Geral:** ✅ Excelente (98%)
@@ -172,5 +170,4 @@ Todos os schemas estão em conformidade com os requisitos técnicos do projeto e
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

@@ -72,5 +72,4 @@ O diretório `src/context` atingiu um alto nível de maturidade arquitetural. `T
 
 ---
 **Última Atualização:** 26/11/2025
-**Gerado por:** Assistente de IA
 

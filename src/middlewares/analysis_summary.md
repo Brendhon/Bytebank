@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Middlewares
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Middlewares de autenticação e roteamento no Next.js, responsáveis por interceptar requisições, aplicar regras de acesso e redirecionar usuários com base no estado de autenticação.
 **Status Geral:** ✅ Excelente (97%)
@@ -86,6 +84,5 @@ O módulo de middlewares foi refatorado para uma arquitetura modular e resilient
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 
 

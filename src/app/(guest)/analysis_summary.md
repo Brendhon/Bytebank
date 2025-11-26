@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Guest Routes
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Rotas públicas para usuários não autenticados, incluindo layout compartilhado e páginas de home e 404. Implementa estrutura de autenticação e registro com hooks customizados, modais de login e registro, e componentes Server Components para páginas estáticas.
 **Status Geral:** ✅ Excelente (98%)
@@ -188,5 +186,4 @@ Todos os componentes estão em conformidade com os requisitos técnicos do proje
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

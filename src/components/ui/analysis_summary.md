@@ -72,5 +72,4 @@ O diretório `src/components/ui` atingiu um alto nível de maturidade arquitetur
 
 ---
 **Última Atualização:** 26/11/2025
-**Gerado por:** Assistente de IA
 

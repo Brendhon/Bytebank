@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Services
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Camada de serviços que abstrai a lógica de comunicação com APIs, centralizando requisições HTTP e operações de negócio relacionadas a usuários e transações.
 **Status Geral:** ✅ Excelente (99%)
@@ -239,5 +237,4 @@ Todos os serviços estão em conformidade com os requisitos técnicos do projeto
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 

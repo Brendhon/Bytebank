@@ -72,4 +72,3 @@ O diretório `src/components/form` foi totalmente padronizado. Todos os componen
 
 ---
 **Última Atualização:** 26/11/2025
-**Gerado por:** Assistente de IA

@@ -1,7 +1,5 @@
 # Resumo Arquitetural: Models
 
-**⚠️ IMPORTANTE:** Este documento deve ser escrito inteiramente em **Português do Brasil (pt-BR)**.
-
 ## 📋 Visão Geral
 **Escopo:** Modelos Mongoose que definem a estrutura e validação de documentos no MongoDB para entidades do domínio (User e Transaction).
 **Status Geral:** ✅ Excelente (98%)
@@ -144,5 +142,4 @@ Todos os modelos estão em conformidade com os requisitos técnicos do projeto e
 
 ---
 **Última Atualização:** 2024-12-19
-**Gerado por:** Claude (Auto - Agent Router)
 
