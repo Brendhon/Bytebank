@@ -5,6 +5,7 @@ import User from '@/models/User/User';
 import { HttpError } from '@/types/http';
 import { IUser } from '@/types/user';
 import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server';
 
 /**
  * Handles GET requests to retrieve the authenticated user's own data.
@@ -17,7 +18,7 @@ import bcrypt from 'bcryptjs';
  * @throws {HttpError} Throws 401 Unauthorized if user is not authenticated
  * @throws {HttpError} Throws 404 Not Found if user does not exist
  */
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   try {
     const session = await isAuthenticated();
     await connectToDatabase();
@@ -43,7 +44,7 @@ export async function GET(req: Request) {
  * @throws {HttpError} Throws 400 Bad Request if validation fails
  * @throws {HttpError} Throws 409 Conflict if user with email already exists
  */
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<NextResponse> {
   try {
     await connectToDatabase();
 

@@ -1,9 +1,9 @@
 import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
-import { connectToDatabase } from '@/lib/mongoose/mongoose';
-import Transaction from '@/models/Transaction/Transaction';
 import { transactionSchema } from '@/schemas/transaction/transaction.schema';
 import { HttpError } from '@/types/http';
 import { ITransaction } from '@/types/transaction';
+import { getUserTransactionsServer, createTransactionServer } from '@/services/transaction/transaction.service.server';
+import { NextResponse } from 'next/server';
 
 /**
  * Handles GET requests to retrieve all transaction records for the authenticated user.
@@ -11,19 +11,17 @@ import { ITransaction } from '@/types/transaction';
  * This endpoint requires authentication via NextAuth session. It retrieves all transactions
  * associated with the authenticated user's ID from the session.
  * 
+ * This route delegates to the server-side service function for consistency with
+ * Server Components that call the service directly.
+ * 
  * @param {Request} req - The incoming HTTP request.
  * @returns {Promise<NextResponse>} A response object containing the transaction data in JSON format
  * @throws {HttpError} Throws 401 Unauthorized if user is not authenticated
  */
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   try {
     const session = await isAuthenticated();
-    const userId = session.user.id;
-
-    await connectToDatabase();
-    
-    const transactions = await Transaction.find({ user: userId });
-
+    const transactions = await getUserTransactionsServer(session.user.id);
     return handleSuccessResponse<ITransaction[]>(transactions);
   } catch (error) {
     return handleErrorResponse(error, 'Error fetching transactions');
@@ -37,16 +35,17 @@ export async function GET(req: Request) {
  * using Zod schema and automatically associates the transaction with the authenticated user.
  * Any `user` field in the request body is ignored and replaced with the authenticated user's ID.
  * 
+ * This route delegates to the server-side service function for consistency with
+ * Server Components that call the service directly.
+ * 
  * @param {Request} req - The incoming HTTP request containing transaction data in the body.
  * @returns {Promise<NextResponse>} A response object containing the created transaction data
  * @throws {HttpError} Throws 401 Unauthorized if user is not authenticated
  * @throws {HttpError} Throws 400 Bad Request if validation fails
  */
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<NextResponse> {
   try {
     const session = await isAuthenticated();
-    await connectToDatabase();
-
     const body = await req.json();
     
     // Validate request body with Zod schema
@@ -60,13 +59,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create transaction with validated data and associate with authenticated user
-    // Always use authenticated user's ID, ignoring any user field in the body
-    const transaction = await Transaction.create({
-      ...validationResult.data,
-      user: session.user.id,
-    });
-
+    // Create transaction using server-side service
+    const transaction = await createTransactionServer(validationResult.data, session.user.id);
     return handleSuccessResponse<ITransaction>(transaction);
   } catch (error) {
     return handleErrorResponse(error, 'Error creating transaction');

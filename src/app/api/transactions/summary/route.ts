@@ -1,5 +1,6 @@
 import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from "@/lib/api/api";
 import { getTransactionSummaryServer } from "@/services/transaction/transaction.service.server";
+import { NextResponse } from "next/server";
 
 /**
  * Handles GET requests to retrieve a transaction summary for the authenticated user.
@@ -26,7 +27,7 @@ import { getTransactionSummaryServer } from "@/services/transaction/transaction.
  * }
  * ```
  */
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   try {
     const session = await isAuthenticated();
     const summary = await getTransactionSummaryServer(session.user.id);

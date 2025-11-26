@@ -1,10 +1,13 @@
 import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
-import { connectToDatabase } from '@/lib/mongoose/mongoose';
-import Transaction from '@/models/Transaction/Transaction';
 import { transactionSchema } from '@/schemas/transaction/transaction.schema';
 import { HttpError } from '@/types/http';
 import { ITransaction } from '@/types/transaction';
-import { Types } from 'mongoose';
+import { 
+  getTransactionByIdServer, 
+  updateTransactionServer, 
+  deleteTransactionServer 
+} from '@/services/transaction/transaction.service.server';
+import { NextResponse } from 'next/server';
 
 interface Params { params: Promise<{ id: string }> }
 
@@ -14,6 +17,9 @@ interface Params { params: Promise<{ id: string }> }
  * This endpoint requires authentication via NextAuth session. It retrieves a specific transaction
  * by ID and verifies that the transaction belongs to the authenticated user before returning it.
  * 
+ * This route delegates to the server-side service function for consistency with
+ * Server Components that call the service directly.
+ * 
  * @param {Request} req - The incoming HTTP request.
  * @param {Params} context - The context containing route parameters with the transaction ID.
  * @returns {Promise<NextResponse>} A response object containing the transaction data in JSON format
@@ -21,29 +27,11 @@ interface Params { params: Promise<{ id: string }> }
  * @throws {HttpError} Throws 403 Forbidden if transaction does not belong to the authenticated user
  * @throws {HttpError} Throws 404 Not Found if transaction does not exist
  */
-export async function GET(req: Request, { params }: Params) {
+export async function GET(req: Request, { params }: Params): Promise<NextResponse> {
   try {
     const session = await isAuthenticated();
-    await connectToDatabase();
-
     const { id } = await params;
-
-    // Validate ObjectId format
-    if (!Types.ObjectId.isValid(id)) {
-      throw HttpError.badRequest('Invalid transaction ID format');
-    }
-
-    const transaction = await Transaction.findById(id);
-
-    if (!transaction) {
-      throw HttpError.notFound('Transaction not found');
-    }
-
-    // Verify ownership - ensure the transaction belongs to the authenticated user
-    if (transaction.user.toString() !== session.user.id) {
-      throw HttpError.forbidden('Forbidden: You can only access your own transactions');
-    }
-
+    const transaction = await getTransactionByIdServer(id, session.user.id);
     return handleSuccessResponse<ITransaction>(transaction);
   } catch (error) {
     return handleErrorResponse(error, 'Error fetching transaction');
@@ -56,6 +44,9 @@ export async function GET(req: Request, { params }: Params) {
  * This endpoint requires authentication via NextAuth session. It deletes a specific transaction
  * by ID after verifying that the transaction exists and belongs to the authenticated user.
  * 
+ * This route delegates to the server-side service function for consistency with
+ * Server Components that call the service directly.
+ * 
  * @param {Request} req - The incoming HTTP request.
  * @param {Params} context - The context containing route parameters with the transaction ID.
  * @returns {Promise<NextResponse>} A response object containing the deleted transaction data
@@ -63,31 +54,11 @@ export async function GET(req: Request, { params }: Params) {
  * @throws {HttpError} Throws 403 Forbidden if transaction does not belong to the authenticated user
  * @throws {HttpError} Throws 404 Not Found if transaction does not exist
  */
-export async function DELETE(req: Request, { params }: Params) {
+export async function DELETE(req: Request, { params }: Params): Promise<NextResponse> {
   try {
     const session = await isAuthenticated();
-    await connectToDatabase();
-
     const { id } = await params;
-
-    // Validate ObjectId format
-    if (!Types.ObjectId.isValid(id)) {
-      throw HttpError.badRequest('Invalid transaction ID format');
-    }
-
-    const transaction = await Transaction.findById(id);
-
-    if (!transaction) {
-      throw HttpError.notFound('Transaction not found');
-    }
-
-    // Verify ownership - ensure the transaction belongs to the authenticated user
-    if (transaction.user.toString() !== session.user.id) {
-      throw HttpError.forbidden('Forbidden: You can only delete your own transactions');
-    }
-
-    const deletedTransaction = await Transaction.findByIdAndDelete(id);
-
+    const deletedTransaction = await deleteTransactionServer(id, session.user.id);
     return handleSuccessResponse<ITransaction>(deletedTransaction);
   } catch (error) {
     return handleErrorResponse(error, 'Error deleting transaction');
@@ -102,6 +73,9 @@ export async function DELETE(req: Request, { params }: Params) {
  * and then updates the transaction. Any `user` field in the request body is ignored to prevent
  * unauthorized ownership changes.
  * 
+ * This route delegates to the server-side service function for consistency with
+ * Server Components that call the service directly.
+ * 
  * @param {Request} req - The incoming HTTP request containing transaction data in the body.
  * @param {Params} context - The context containing route parameters with the transaction ID.
  * @returns {Promise<NextResponse>} A response object containing the updated transaction data
@@ -110,31 +84,13 @@ export async function DELETE(req: Request, { params }: Params) {
  * @throws {HttpError} Throws 403 Forbidden if transaction does not belong to the authenticated user
  * @throws {HttpError} Throws 404 Not Found if transaction does not exist
  */
-export async function PUT(req: Request, { params }: Params) {
+export async function PUT(req: Request, { params }: Params): Promise<NextResponse> {
   try {
     const session = await isAuthenticated();
-    await connectToDatabase();
-
     const { id } = await params;
-
-    // Validate ObjectId format
-    if (!Types.ObjectId.isValid(id)) {
-      throw HttpError.badRequest('Invalid transaction ID format');
-    }
-
-    const existingTransaction = await Transaction.findById(id);
-
-    if (!existingTransaction) {
-      throw HttpError.notFound('Transaction not found');
-    }
-
-    // Verify ownership - ensure the transaction belongs to the authenticated user
-    if (existingTransaction.user.toString() !== session.user.id) {
-      throw HttpError.forbidden('Forbidden: You can only update your own transactions');
-    }
-
-    // Validate request body with Zod schema
     const body = await req.json();
+    
+    // Validate request body with Zod schema
     const validationResult = transactionSchema.safeParse(body);
     
     if (!validationResult.success) {
@@ -142,17 +98,8 @@ export async function PUT(req: Request, { params }: Params) {
       throw HttpError.badRequest(errorMessages);
     }
 
-    // Ensure user field is not modified - always use authenticated user's ID
-    const updateData = {
-      ...validationResult.data,
-      user: session.user.id,
-    };
-
-    // Update the transaction record with validated data
-    const transaction = await Transaction.findByIdAndUpdate(id, updateData, {
-      new: true,
-    });
-
+    // Update transaction using server-side service
+    const transaction = await updateTransactionServer(id, validationResult.data, session.user.id);
     return handleSuccessResponse<ITransaction>(transaction);
   } catch (error) {
     return handleErrorResponse(error, 'Error updating transaction');

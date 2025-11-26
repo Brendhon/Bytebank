@@ -197,7 +197,7 @@ O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
 | `app/(guest)/404/page.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Isolamento de estilos, JSDoc completo, função nomeada, acessibilidade WCAG 2.1 AA completa, estrutura semântica HTML, substituição de `<br />` por múltiplos parágrafos |
 | `app/(user)/layout.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Documentação JSDoc completa, interface `UserLayoutProps` exportada, estilos isolados em objeto `styles`, função nomeada `UserLayout` com tipo de retorno explícito, função `handleNavigation` memoizada com `useCallback`, validação de pathname com type guard `isValidNavItem` e `useMemo`, comentário corrigido |
 | `app/(user)/dashboard/page.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - **REFATORADO PARA SERVER COMPONENT** - Componente convertido para Server Component assíncrono, dados buscados no servidor usando `auth()` e `getTransactionSummary()`, JSDoc completo, estilos isolados em objeto `styles`, função nomeada `DashboardPage`, tratamento de erros com try-catch e fallback, validação de sessão com redirecionamento |
-| `app/(user)/transactions/page.tsx` | ✅ | ⚠️ | Análise criada - Status: Requer Atenção (52%) - **ANTI-PADRÃO CRÍTICO** - Uso de useEffect para data fetching (deveria ser Server Component + Server Actions) - Melhorias pendentes (refatorar para Server Component + Server Actions, JSDoc, useCallback, isolamento de estilos, remover non-null assertions, evitar mutação de props) |
+| `app/(user)/transactions/page.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - **REFATORADO PARA SERVER COMPONENT + SERVER ACTIONS** - Componente convertido para Server Component assíncrono (`TransactionsPage`), componente Client separado (`TransactionsClient`), Server Actions criadas (`actions.ts`) para CRUD, dados buscados no servidor usando `auth()` e `getUserTransactions()`, JSDoc completo em todos os arquivos, estilos isolados em objeto `styles`, todas as funções memoizadas com `useCallback`, tratamento de erros com toast, validação de sessão, uso de `useTransition`, eliminação de non-null assertions, imutabilidade de props, comparação estrita |
 | `app/(user)/settings/page.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Tratamento de erros com `unknown` e type guards usando `HttpError`, estilos isolados em objeto `styles`, JSDoc completo, função nomeada `SettingsPage`, todas as funções memoizadas com `useCallback`, toast corrigido (exibido antes do redirect), valores derivados diretamente da sessão, validação de dados antes de chamar serviços |
 | `app/(user)/cards/page.tsx` | ✅ | ✅ | Melhorias implementadas - Status: Excelente (98%) - Dados mockados centralizados em constantes com documentação, JSDoc completo, função nomeada, tipo de retorno explícito - **NOTA:** Dados são mockados para demonstração/teste e estão claramente documentados como tal |
 
@@ -225,9 +225,9 @@ O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
 
 ---
 
-**Última atualização**: 2025-01-XX
-**Total de arquivos mapeados**: 83
-**Arquivos analisados**: 82 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2 ✅, Hooks: 3 ✅, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Proxy: 1 ✅, Types: 8 ✅, App Routes: 11, API Routes: 6)
+**Última atualização**: 2025-11-26
+**Total de arquivos mapeados**: 85 (incluindo novos arquivos criados na refatoração de transactions)
+**Arquivos analisados**: 84 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2 ✅, Hooks: 3 ✅, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Proxy: 1 ✅, Types: 8 ✅, App Routes: 13 (incluindo TransactionsClient e actions), API Routes: 6)
 
 **Nota sobre Proxy**: O arquivo `src/middleware.ts` foi migrado para `src/proxy.ts` no upgrade do Next.js 16. A análise arquitetural permanece válida, apenas o nome do arquivo mudou.
 
