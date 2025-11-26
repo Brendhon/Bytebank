@@ -93,6 +93,7 @@ O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
 
 | Nome | Analysis Criado | Implementado | Observações |
 |------|----------------|--------------|-------------|
+| `hooks/useAuth/useAuth.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (mensagens externalizadas para constantes em inglês em `src/lib/constants/auth/auth.ts`, tratamento de erro robusto e específico com mapeamento de códigos de erro do NextAuth, validação de dados de entrada, remoção de console.error, diferenciação entre erros de rede e servidor) |
 | `hooks/useAutoClose/useAutoClose.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (JSDoc completo com exemplo de uso e nota sobre memoização, interface UseAutoCloseParams exportada, validação de parâmetros duration não-negativo, tipo de retorno explícito void, exportação como arrow function export const, assinatura refatorada para aceitar objeto, componente Toast atualizado) |
 | `hooks/useToast/useToast.ts` | ✅ | ✅ | Análise criada - Status: Excelente (98%) - Melhorias implementadas (JSDoc completo com exemplo de uso, tipo de retorno explícito ToastContextType, exportação como arrow function export const, comentários em inglês, atualização do index.ts para named export, reutilização de tipos do contexto) |
 | `hooks/useAutoRemoveToasts/useAutoRemoveToasts.ts` | ✅ | ✅ | Análise criada - Status: Excelente (95%) - Melhorias implementadas (tipo de retorno explícito, documentação JSDoc aprimorada com aviso de memoização) - `removeToast` já memoizado no ToastContext |
@@ -227,7 +228,7 @@ O projeto foi atualizado para **Next.js 16.0.3** com as seguintes mudanças:
 
 **Última atualização**: 2025-11-26
 **Total de arquivos mapeados**: 85 (incluindo novos arquivos criados na refatoração de transactions)
-**Arquivos analisados**: 84 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2 ✅, Hooks: 3 ✅, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Proxy: 1 ✅, Types: 8 ✅, App Routes: 13 (incluindo TransactionsClient e actions), API Routes: 6)
+**Arquivos analisados**: 85 (UI: 4, Table: 3, Cards: 4, Form: 7, Layout: 11, Contexts: 2 ✅, Hooks: 4 ✅, Lib: 11 ✅, Models: 2, Schemas: 6 ✅, Services: 3 ✅, Proxy: 1 ✅, Types: 8 ✅, App Routes: 13 (incluindo TransactionsClient e actions), API Routes: 6)
 
 **Nota sobre Proxy**: O arquivo `src/middleware.ts` foi migrado para `src/proxy.ts` no upgrade do Next.js 16. A análise arquitetural permanece válida, apenas o nome do arquivo mudou.
 

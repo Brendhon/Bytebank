@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks';
-import { PROTECTED_ROUTES } from '@/lib/constants';
+import { AUTH_MESSAGES, NEXTAUTH_ERROR_MESSAGES, PROTECTED_ROUTES } from '@/lib/constants';
 import { LoginFormData } from '@/schemas';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
@@ -47,21 +47,40 @@ export const useAuth = (): UseAuthReturn => {
   const { showSuccessToast, showErrorToast } = useToast();
 
   const login = useCallback(async (data: LoginFormData, hideToast = false): Promise<boolean> => {
-    const response = await signIn('credentials', {
-      redirect: false,
-      email: data.email,
-      password: data.password,
-    });
-
-    if (response?.ok) {
-      if (!hideToast) {
-        showSuccessToast({ message: 'Login realizado com sucesso!' });
+    try {
+      // Validate input data
+      if (!data?.email || !data?.password) {
+        showErrorToast({ message: AUTH_MESSAGES.INVALID_CREDENTIALS });
+        return false;
       }
-      router.push(PROTECTED_ROUTES.DASHBOARD);
-      return true;
-    } else {
-      console.error('Login failed:', response?.error);
-      showErrorToast({ message: 'Email ou senha inválidos' });
+
+      const response = await signIn('credentials', {
+        redirect: false,
+        email: data.email.trim(),
+        password: data.password,
+      });
+
+      if (response?.ok) {
+        if (!hideToast) {
+          showSuccessToast({ message: AUTH_MESSAGES.LOGIN_SUCCESS });
+        }
+        router.push(PROTECTED_ROUTES.DASHBOARD);
+        return true;
+      }
+
+      // Handle specific error cases
+      const errorCode = response?.error || 'default';
+      const errorMessage = NEXTAUTH_ERROR_MESSAGES[errorCode] || AUTH_MESSAGES.DEFAULT_ERROR;
+      
+      showErrorToast({ message: errorMessage });
+      return false;
+    } catch (error) {
+      // Handle network errors or unexpected exceptions
+      const errorMessage = error instanceof Error && error.message.includes('fetch')
+        ? AUTH_MESSAGES.NETWORK_ERROR
+        : AUTH_MESSAGES.SERVER_ERROR;
+      
+      showErrorToast({ message: errorMessage });
       return false;
     }
   }, [router, showSuccessToast, showErrorToast]);

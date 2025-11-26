@@ -1,4 +1,5 @@
 export * from './api/api';
+export * from './auth/auth';
 export * from './card/card';
 export * from './form/transaction';
 export * from './http/http';
