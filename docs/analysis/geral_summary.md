@@ -16,6 +16,8 @@ Este documento serve como a consolidação das entregas para a **Fase 4 do Tech 
 
 A seguir, cada requisito do desafio é mapeado para as melhorias concretas implementadas no código, com referências diretas para os resumos de análise de cada módulo.
 
+**Nota:** Para detalhes aprofundados sobre as melhorias e análise arquitetural de um arquivo específico, consulte o `analysis.md` presente no diretório do próprio arquivo.
+
 ### 1. Refatoração e Melhoria da Arquitetura
 
 #### **1.1. Arquitetura Modular e Clean Architecture**
@@ -47,6 +49,11 @@ O requisito de aplicar padrões de arquitetura modular e separar as camadas de a
 - **Referência:** Consulte `src/context/analysis_summary.md`, `src/hooks/analysis_summary.md` e `src/app/(user)/analysis_summary.md`.
 
 ### 2. Performance e Otimização
+
+#### **2.0. Atualização do Next.js 16 (Segurança e Performance)**
+
+- **Evidência:** O projeto foi atualizado para **Next.js 16.0.3 (App Router)**, que trouxe melhorias intrínsecas de performance e segurança. A migração para o **Turbopack** como bundler padrão acelera o tempo de build e desenvolvimento. A atualização para **React 19.2.0** e as novas APIs assíncronas do Next.js 16 otimizam a forma como os dados são buscados e renderizados.
+- **Referência:** Consulte a seção "Atualização do Next.js 16" em `@docs/analysis/analysis-mapping.md` para detalhes sobre as mudanças técnicas.
 
 #### **2.1. Otimização de Carregamento (Lazy Loading e Pré-carregamento)**
 

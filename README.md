@@ -32,6 +32,8 @@ Para uma análise detalhada de como cada requisito foi atendido, com mapeamento 
 
 ➡️ **[Análise Arquitetural Completa (Fase 4)](/docs/analysis/geral_summary.md)**
 
+**Detalhe:** Para uma análise aprofundada das melhorias e decisões arquiteturais de um arquivo específico, consulte o `analysis.md` localizado no diretório de cada arquivo.
+
 ---
 
 ## 🚀 Stack utilizada
