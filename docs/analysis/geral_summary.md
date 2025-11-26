@@ -6,6 +6,10 @@ Este documento detalha as melhorias arquiteturais, de performance e de seguranç
 
 O status geral da arquitetura é **Excelente (98%)**, refletindo um código-fonte robusto, seguro, e totalmente alinhado com as melhores práticas de desenvolvimento com Next.js, React e TypeScript.
 
+Este documento serve como a consolidação das entregas para a **Fase 4 do Tech Challenge**.
+
+📌 **[POSTECH - Front-end - Tech Challenge - Fase 4](/challenge-fase4.pdf)**
+
 ---
 
 ## 🗺️ Mapeamento dos Requisitos do Desafio
@@ -84,6 +88,14 @@ Esta foi a área de maior foco e impacto.
     3.  **Não Exposição de Dados Sensíveis:** As respostas da API foram ajustadas para nunca retornar dados sensíveis, como o hash da senha do usuário.
     4.  **Validação de Senha Forte:** O schema de registro (`register.schema.ts`) impõe uma política de senha forte (8+ caracteres, com complexidade), protegendo as contas dos usuários.
 - **Referência:** A validação de propriedade é um destaque em `src/api/analysis_summary.md`. A robustez dos schemas de validação é detalhada em `src/schemas/analysis_summary.md`.
+
+---
+
+## 🔎 Análise Detalhada por Arquivo
+
+Para uma visão granular do status de análise e implementação de cada arquivo do projeto, consulte o mapa de análise arquitetural. Este documento centraliza o progresso e fornece links diretos para cada análise individual.
+
+- **[Mapeamento de Análises Arquiteturais](./analysis-mapping.md)**
 
 ---
 **Última Atualização:** 26/11/2025

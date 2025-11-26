@@ -9,12 +9,28 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ---
 
-## 📄 Desafio Original
+## 📄 Desafios do Tech Challenge
+
+### Fase 1: Fundação e Componentização
 O documento contendo os requisitos e objetivos do desafio original da pós-tech está disponível para consulta:
 
-📌 [**POSTECH - Front-end - Tech Challenge - Fase 1**](https://bytebank-web.vercel.app/challenge.pdf)
+📌 [**POSTECH - Front-end - Tech Challenge - Fase 1**](/challenge-fase1.pdf)
 
 Esse arquivo resume o escopo funcional e visual proposto para o projeto, com base no modelo de design fornecido e funcionalidades essenciais que deveriam ser implementadas.
+
+### Fase 4: Arquitetura Avançada, Performance e Segurança
+Nesta fase, a aplicação foi evoluída para incorporar conceitos avançados de arquitetura de software, com foco em escalabilidade, segurança e otimização de performance.
+
+📌 [**POSTECH - Front-end - Tech Challenge - Fase 4**](/challenge-fase4.pdf)
+
+As principais melhorias incluem:
+- **Clean Architecture:** Separação rigorosa das camadas de apresentação (UI), domínio (hooks) e infraestrutura (serviços, API).
+- **Segurança Robusta:** Correção de uma vulnerabilidade crítica de exposição de API Key e migração para autenticação segura com **NextAuth.js**, implementando validação de propriedade de recursos em todas as operações.
+- **Otimização de Performance:** Adoção de **React Server Components** para reduzir o processamento no cliente, e uso de **Server Actions** com revalidação de cache para otimizar mutações de dados.
+
+Para uma análise detalhada de como cada requisito foi atendido, com mapeamento para as implementações no código, consulte o **Documento de Avaliação Arquitetural**:
+
+➡️ **[Análise Arquitetural Completa (Fase 4)](/docs/analysis/geral_summary.md)**
 
 ---
 
