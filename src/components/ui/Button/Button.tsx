@@ -1,58 +1,62 @@
-import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
-import { ButtonHTMLAttributes, ReactNode } from 'react';
-import { Button } from '@headlessui/react';
-import { Loader2 } from 'lucide-react';
+'use client';
+
+import { cn } from '@/lib/utils/utils';
 import { ButtonVariant } from '@/types/ui';
+import { Button as HeadlessButton } from '@headlessui/react';
+import { Loader2 } from 'lucide-react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { buttonVariants } from './Button.variants';
 
-// Button variants - Defines different styles for the button component
-// using class-variance-authority (cva) for variant management 
-// This dependence is used to create a set of variants for the button component, allowing for easy styling and customization.
-// It provides a way to define different styles based on the variant prop passed to the Button component.
-// The cva function takes a base class name and an object with variants and their corresponding styles.
-export const buttonVariants = cva(
-  'button',
-  {
-    variants: {
-      variant: {
-        dark: 'button-dark',
-        blue: 'button-blue',
-        green: 'button-green',
-        orange: 'button-orange',
-        outlineGreen: 'button-outline-green',
-        outlineOrange: 'button-outline-orange',
-      },
-    },
-    defaultVariants: {
-      variant: 'blue',
-    },
-  }
-);
-
-// Button props
+/**
+ * Button component props
+ * @interface ButtonProps
+ */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Visual style variant of the button */
   variant?: ButtonVariant;
+  /** Button content */
   children: ReactNode;
+  /** Additional CSS classes */
   className?: string;
+  /** Shows a loading spinner and disables interaction */
   loading?: boolean;
 }
 
-// Button component - A reusable button component that accepts variant and children props
-export default ({
+/**
+ * Button component with multiple variants and loading state support
+ * @param props - Button component props
+ * @returns A reusable button component
+ */
+export default function Button({
   className,
   variant,
   children,
   loading = false,
   disabled,
   ...props
-}: ButtonProps) => {
+}: ButtonProps) {
   return (
-    <Button
+    <HeadlessButton
       className={cn(buttonVariants({ variant }), className)}
       disabled={disabled || loading}
+      aria-busy={loading}
+      aria-label={loading ? `${children} - Loading` : undefined}
       {...props}>
-      <span className={cn({ 'opacity-0': loading })}>{children}</span>
-      {loading && <Loader2 className="animate-spin text-white absolute flex items-center justify-center" />}
-    </Button>
+      <span className={cn({ [styles.span]: loading })}>{children}</span>
+      {loading && (
+        <Loader2
+          className={cn(styles.loader)}
+          aria-hidden="true"
+        />
+      )}
+    </HeadlessButton>
   );
 }
+
+/**
+ * Button component styles
+ */
+const styles = {
+  span: `opacity-0`,
+  loader: `animate-spin text-white absolute flex items-center justify-center`,
+} as const;

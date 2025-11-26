@@ -1,8 +1,9 @@
-import GuestActions from './GuestActions';
-import { Meta, StoryObj } from '@storybook/react';
+import { GuestActions } from './GuestActions';
+import { Meta, StoryObj } from '@storybook/nextjs';
 
 const meta: Meta<typeof GuestActions> = {
-  component: GuestActions
+  component: GuestActions,
+  tags: ['autodocs'],
 };
 
 export default meta;

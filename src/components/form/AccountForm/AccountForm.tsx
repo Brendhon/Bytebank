@@ -7,25 +7,55 @@ import { FormProps } from '@/types/form';
 import { Fieldset } from '@headlessui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Mail } from 'lucide-react';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Input from '../Input/Input';
+import { Input } from '../Input/Input';
 
-interface AccountFormProps extends FormProps<AccountFormData> {
+/**
+ * AccountForm component props
+ * @interface AccountFormProps
+ * @extends {FormProps<AccountFormData>} Extends form props with AccountFormData
+ */
+export interface AccountFormProps extends FormProps<AccountFormData> {
+  /** Callback function triggered when user confirms account deletion. Receives the user's password for verification. */
   onDelete: (password: string) => Promise<void>;
 }
 
-export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
-  // State to delete modal
+/**
+ * AccountForm component for managing user account settings
+ * 
+ * Allows users to:
+ * - Update their name and password
+ * - Delete their account (with password confirmation)
+ * 
+ * Uses React Hook Form with Zod validation for form management
+ * Includes error handling with toast notifications
+ * 
+ * @param {AccountFormProps} props - AccountForm component props
+ * @param {(data: AccountFormData) => void | Promise<void>} props.onSubmit - Callback function called when the form is submitted with valid data
+ * @param {(password: string) => Promise<void>} props.onDelete - Callback function called when account deletion is confirmed
+ * @param {Partial<AccountFormData>} [props.defaultValues] - Optional default values for form fields
+ * @returns {ReactElement} A form component for account management
+ * 
+ * @example
+ * ```tsx
+ * <AccountForm
+ *   defaultValues={{ name: 'John Doe', email: 'john@example.com' }}
+ *   onSubmit={handleAccountUpdate}
+ *   onDelete={handleAccountDelete}
+ * />
+ * ```
+ */
+export const AccountForm = ({
+  onDelete,
+  onSubmit,
+  defaultValues,
+}: AccountFormProps): ReactElement => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-  // State loadings
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-
-  // State for password input in modal
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const [password, setPassword] = useState('');
 
-  // State to form
   const { register, handleSubmit, formState: { errors } } = useForm<AccountFormData>({
     resolver: zodResolver(accountSchema),
     defaultValues: {
@@ -33,38 +63,42 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
     },
   });
 
-  // Handle delete account
   const handleDelete = async () => {
-    // Show loading
-    setIsDeleteOpen(false);
-
-    // Call onDelete function
-    await onDelete(password);
+    try {
+      setLoadingDelete(true);
+      setIsDeleteOpen(false);
+      await onDelete(password);
+      setPassword('');
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      setIsDeleteOpen(true);
+    } finally {
+      setLoadingDelete(false);
+    }
   };
 
-  // Handle submit
   const handleFormSubmit = async (data: AccountFormData) => {
-    // Show loading
-    setLoadingSubmit(true);
-
-    // Call onSubmit function
-    await onSubmit(data);
-
-    // Hide loading
-    setLoadingSubmit(false);
+    try {
+      setLoadingSubmit(true);
+      await onSubmit(data);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+      setLoadingSubmit(false);
+    }
   };
 
   return (
-    <section className="card gap-4 flex flex-col sm:flex-row">
-      <div className="flex flex-col gap-4 mb-4">
-        <h2 className="text-20-bold text-dark-gray">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.container}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>
           Minha conta
         </h2>
 
-        <Illustration width={400} src='settings.svg' />
+        <Illustration width={400} src="settings.svg" alt="Account settings illustration" priority />
       </div>
 
-      <Fieldset className="flex flex-col gap-4 w-full md:max-w-[350px]">
+      <Fieldset className={styles.fieldset}>
         <Input
           label="Nome"
           className="w-full"
@@ -107,18 +141,21 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
           {...register('confirmPassword')}
         />
 
-        <div className='flex flex-col justify-between items-center mt-4 sm:flex-row gap-4'>
+        <div className={styles.buttonContainer}>
           <Button
+            type="button"
             variant="orange"
             onClick={() => setIsDeleteOpen(true)}
+            aria-label="Excluir permanentemente minha conta do Bytebank"
           >
             Excluir conta
           </Button>
 
           <Button
+            type="submit"
             variant="blue"
-            onClick={handleSubmit(handleFormSubmit)}
             loading={loadingSubmit}
+            aria-label="Salvar alterações da minha conta"
           >
             Salvar alterações
           </Button>
@@ -128,12 +165,15 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
       <Modal
         isOpen={isDeleteOpen}
         title="Você está prestes a excluir sua conta"
-        onClose={() => setIsDeleteOpen(false)}
+        onClose={() => {
+          setIsDeleteOpen(false);
+          setPassword('');
+        }}
         onSubmit={handleDelete}
         btnVariantSubmit="outlineOrange"
         isSubmitDisabled={password.length < 6}
       >
-        <p className="text-dark max-w-[450px] text-center md:text-left">
+        <p className={styles.modalDescription}>
           Esta ação removerá permanentemente sua conta e todos os dados associados a ela. Tem certeza de que deseja continuar?
         </p>
 
@@ -146,6 +186,15 @@ export default ({ onDelete, onSubmit, defaultValues }: AccountFormProps) => {
           error={!!password && password.length < 6 ? 'Senha inválida' : undefined}
         />
       </Modal>
-    </section>
+    </form>
   );
 };
+
+const styles = {
+  container: 'card gap-4 flex flex-col sm:flex-row',
+  header: 'flex flex-col gap-4 mb-4',
+  title: 'text-20-bold text-dark-gray',
+  fieldset: 'flex flex-col gap-4 w-full md:max-w-[350px]',
+  buttonContainer: 'flex flex-col justify-between items-center mt-4 sm:flex-row gap-4',
+  modalDescription: 'text-dark max-w-[450px] text-center md:text-left',
+} as const;

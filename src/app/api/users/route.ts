@@ -1,64 +1,82 @@
-import { handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api';
-import { connectToDatabase } from '@/lib/mongoose';
-import User from '@/models/User';
+import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
+import { EMAIL_REGEX } from '@/lib/constants';
+import { connectToDatabase } from '@/lib/mongoose/mongoose';
+import User from '@/models/User/User';
+import { HttpError } from '@/types/http';
 import { IUser } from '@/types/user';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
 /**
- * Handles GET requests to retrieve all User records.
+ * Handles GET requests to retrieve the authenticated user's own data.
+ * 
+ * This endpoint requires authentication via NextAuth session. It returns only
+ * the authenticated user's data, not all users, to protect user privacy.
+ * 
  * @param {Request} req - The incoming HTTP request.
- * @returns A response object containing the User data in JSON format
+ * @returns {Promise<NextResponse>} A response object containing the authenticated user's data in JSON format
+ * @throws {HttpError} Throws 401 Unauthorized if user is not authenticated
+ * @throws {HttpError} Throws 404 Not Found if user does not exist
  */
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
-
-    // Check if the request method is GET
+    const session = await isAuthenticated();
     await connectToDatabase();
 
-    // Fetch all Users from the database
-    const users = await User.find();
+    const user = await User.findById(session.user.id);
 
-    // Check if there are no Users
-    return handleSuccessResponse<IUser[]>(users);
+    return handleSuccessResponse<IUser>(user);
   } catch (error) {
-    return handleErrorResponse(error, 'Erro ao buscar usuários');
+    return handleErrorResponse(error, 'Error fetching user');
   }
 }
 
 /**
- * Handles POST requests to create a new User record.
- * @param {Request} req - The incoming HTTP request.
- * @returns A response object indicating the success or failure of the operation
+ * Handles POST requests to create a new user record.
+ * 
+ * This endpoint performs basic validation (email format, required fields), checks for duplicate
+ * email addresses, hashes the password, and creates a new user in the database.
+ * Registration is public and does not require authentication. Full validation is assumed
+ * to be done on the frontend before submission.
+ * 
+ * @param {Request} req - The incoming HTTP request containing user registration data in the body.
+ * @returns {Promise<NextResponse>} A response object containing the created user data (without password)
+ * @throws {HttpError} Throws 400 Bad Request if validation fails
+ * @throws {HttpError} Throws 409 Conflict if user with email already exists
  */
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<NextResponse> {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
-
-    // Check if the request method is POST
     await connectToDatabase();
 
-    // Parse the request body as JSON
-    const data = await req.json();
+    const body = await req.json();
+
+    // Basic validation (full validation assumed to be done on frontend)
+    if (!body.name || !body.email || !body.password) {
+      throw HttpError.badRequest('Name, email, and password are required');
+    }
+
+    // Validate email format
+    if (!EMAIL_REGEX.test(body.email)) {
+      throw HttpError.badRequest('Invalid email format');
+    }
 
     // Check if user already exists
-    const user = await User.findOne({ email: data.email });
-
-    // If user exists, throw an error
-    if (user) throw new Error('Usuário já cadastrado na plataforma', { cause: { status: 409 } });
+    const existingUser = await User.findOne({ email: body.email });
+    if (existingUser) {
+      throw HttpError.conflict('User already registered');
+    }
 
     // Hash the password using bcrypt
-    const password = await bcrypt.hash(data.password, 10);
+    const password = await bcrypt.hash(body.password, 10);
 
-    // Create a new User record in the database
-    const result = await User.create({ ...data, password });
+    // Create user (exclude confirmPassword and acceptPrivacy from DB if present)
+    const { confirmPassword, acceptPrivacy, ...userData } = body;
+    const result = await User.create({ ...userData, password, acceptPrivacy: true });
 
-    // Return a success response with the created User
-    return handleSuccessResponse(result);
+    // Return success response (exclude password from response)
+    const { password: _, ...userResponse } = result.toObject();
+    return handleSuccessResponse<IUser>(userResponse);
   } catch (error) {
-    return handleErrorResponse(error, 'Erro ao criar usuário');
+    return handleErrorResponse(error, 'Error creating user');
   }
 }

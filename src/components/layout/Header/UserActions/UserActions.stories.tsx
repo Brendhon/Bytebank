@@ -1,8 +1,9 @@
-import UserActions from './UserActions';
-import { Meta, StoryObj } from '@storybook/react';
+import { UserActions } from './UserActions';
+import { Meta, StoryObj } from '@storybook/nextjs';
 
 const meta: Meta<typeof UserActions> = {
   component: UserActions,
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <div className='bg-dark p-4 rounded-sm flex items-center justify-end'>

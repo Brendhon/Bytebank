@@ -1,30 +1,40 @@
-import { cn } from '@/lib/utils';
-import { Popover, PopoverBackdrop, PopoverButton, PopoverPanel } from '@headlessui/react';
+import { cn } from '@/lib/utils/utils';
+import { Popover as PopoverHeadless, PopoverBackdrop, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { ReactNode } from 'react';
 
-interface Props {
+/**
+ * Popover component props
+ * @interface PopoverProps
+ */
+export interface PopoverProps {
+  /** Additional CSS classes for the panel */
   className?: string;
-  pButton: ReactNode;
+  /** Button or trigger element to open the popover */
+  button: ReactNode;
+  /** Content to display inside the popover panel */
   children: ReactNode;
 }
 
-export default ({ className, pButton, children }: Props) => {
-  const newClass = cn(
-    'w-full flex flex-col w-[200px] bg-white shadow-lg text-dark-gray rounded-sm',
-    className,
-  );
+/**
+ * Popover component that displays a popover with button and panel
+ * Uses Headless UI for accessibility and positioning
+ * Supports custom button, content, and styling
+ * @param props - Popover component props
+ * @returns A popover component
+ */
+export const Popover = ({ className, button, children }: PopoverProps) => {
+  const panelClassName = cn(styles.panel, className);
 
   return (
-    <Popover className="relative">
-      <PopoverButton className="outline-none focus:outline-none">
-        {pButton}
-      </PopoverButton>
+    <PopoverHeadless className={styles.popover}>
+      <PopoverButton className={styles.button}>{button}</PopoverButton>
 
-      {/* Backdrop to close the popover when clicking outside - https://github.com/tailwindlabs/headlessui/discussions/2731) */}
-      <PopoverBackdrop className="fixed inset-0 bg-transparent" />
+      {/* Backdrop to close the popover when clicking outside */}
+      {/* Reference: https://github.com/tailwindlabs/headlessui/discussions/2731 */}
+      <PopoverBackdrop className={styles.backdrop} />
 
-      <PopoverPanel anchor="bottom end" className={newClass}>
-        {({ close }) =>
+      <PopoverPanel anchor="bottom end" className={panelClassName}>
+        {({ close }) => (
           <div
             onClick={() => close()}
             role="button"
@@ -35,8 +45,18 @@ export default ({ className, pButton, children }: Props) => {
           >
             {children}
           </div>
-        }
+        )}
       </PopoverPanel>
-    </Popover>
+    </PopoverHeadless>
   );
 };
+
+/**
+ * Popover component styles
+ */
+const styles = {
+  popover: 'relative',
+  button: 'outline-none focus:outline-none',
+  backdrop: 'fixed inset-0 bg-transparent',
+  panel: 'flex flex-col w-[200px] bg-white shadow-lg text-dark-gray rounded-sm',
+} as const;

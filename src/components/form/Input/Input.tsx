@@ -1,21 +1,79 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { useId } from 'react';
+import { cn } from '@/lib/utils/utils';
 import { InputTypes } from '@/types/ui';
-import { Button, Field, Input, InputProps, Label, } from '@headlessui/react';
+import {
+  Button,
+  Field,
+  Input as HeadlessInput,
+  InputProps as HeadlessInputProps,
+  Label,
+} from '@headlessui/react';
 import { InputMask } from '@react-input/mask';
 import { Eye, EyeOff } from 'lucide-react';
 import { cloneElement, isValidElement, ReactElement, ReactNode, useState } from 'react';
 
-interface Props extends InputProps {
+/**
+ * Props for the Input component
+ * @interface InputProps
+ * @extends {HeadlessInputProps} Extends Headless UI Input props
+ */
+export interface InputProps extends HeadlessInputProps {
+  /** Label text displayed above the input */
   label: string;
+  /** Error message to display below the input */
   error?: string;
+  /** Custom icon to display on the right side of the input */
   icon?: ReactNode;
+  /** Input type (text, email, password, number, date) */
   type?: InputTypes;
+  /** Callback function when the icon is clicked */
   onIconClick?: () => void;
-};
+}
 
-export default ({
+/**
+ * Accessible input component with label, icon, mask, password toggle and error state support
+ * Built on top of Headless UI for accessibility
+ * 
+ * Features:
+ * - Password visibility toggle
+ * - Date mask (dd/mm/yyyy)
+ * - Custom icon support
+ * - Error state handling
+ * 
+ * @param {InputProps} props - Component props
+ * @returns {ReactElement} Rendered input component
+ * 
+ * @example
+ * ```tsx
+ * <Input 
+ *   label="Email" 
+ *   type="email"
+ *   placeholder="you@example.com"
+ *   error={errors.email}
+ * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * <Input 
+ *   label="Password" 
+ *   type="password"
+ *   placeholder="••••••••"
+ * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * <Input 
+ *   label="Birth Date" 
+ *   type="date"
+ *   placeholder="dd/mm/yyyy"
+ * />
+ * ```
+ */
+export const Input = ({
   label,
   error,
   className,
@@ -23,46 +81,33 @@ export default ({
   type,
   onIconClick,
   ...props
-}: Props) => {
-  // Check if the input is a password
+}: InputProps): ReactElement => {
+  const id = useId();
+  const errorId = `${id}-error`;
+
   const isPassword = type === 'password';
-
-  // Check if the input is a date
   const isDate = type === 'date';
-
-  // State to show/hide password
   const [showPassword, setShowPassword] = useState(false);
-
-  // Set input type
   const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
-  // Default icon class
   const iconClass = cn(
-    'size-5 text-blue',
-    (onIconClick || isPassword) && 'cursor-pointer hover:text-dark'
+    styles.icon,
+    (onIconClick || isPassword) && styles.iconInteractive
   );
 
-  // Input class
   const inputClass = cn(
-    'rounded-sm w-full bg-white border border-gray px-4 py-2 text-dark outline-none transition-all focus:border-green focus:ring-1 focus:ring-green text-14',
-    error && 'border-red focus:ring-red focus:border-red',
-    'disabled:cursor-not-allowed disabled:opacity-70',
-    (icon || isPassword) && 'pr-10',
+    styles.input,
+    error && styles.inputError,
+    (icon || isPassword) && styles.inputWithIcon,
     className
   );
 
-  // Render the input component
   return (
-    <div className="flex flex-col gap-1">
-      <Field className="flex flex-col">
+    <div className={styles.container}>
+      <Field className={styles.field}>
+        <Label className={styles.label}>{label}</Label>
 
-        {/* Label */}
-        <Label className="text-16-semi text-dark-gray mb-3">{label}</Label>
-
-        {/* Input - Container */}
-        <div className='relative flex items-center w-full'>
-
-          {/* Input */}
+        <div className={styles.inputWrapper}>
           {isDate ? (
             <InputMask
               mask="dd/mm/yyyy"
@@ -71,42 +116,64 @@ export default ({
               showMask={false}
               separate={true}
               component="input"
+              aria-invalid={!!error}
+              aria-describedby={error ? errorId : undefined}
               {...props}
             />
           ) : (
-            <Input
+            <HeadlessInput
               type={inputType}
               className={inputClass}
+              aria-invalid={!!error}
+              aria-describedby={error ? errorId : undefined}
               {...props}
             />
           )}
 
-          {/* Custom Icon */}
           {icon && !isPassword && (
-            <Button className="absolute right-2" onClick={onIconClick}>
-              {
-                // Add default icon class
-                isValidElement(icon)
-                  ? cloneElement(icon as ReactElement<{ className?: string }>, { className: iconClass })
-                  : icon
-              }
+            <Button
+              className={styles.iconButton}
+              onClick={onIconClick}
+              type="button"
+            >
+              {isValidElement(icon)
+                ? cloneElement(icon as ReactElement<{ className?: string }>, { className: iconClass })
+                : icon}
             </Button>
           )}
 
-          {/* Password eye toggle */}
           {isPassword && (
             <Button
-              className="absolute right-2"
-              onClick={() => setShowPassword((prev) => !prev)}>
+              className={styles.iconButton}
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              type="button"
+            >
               {showPassword ? <EyeOff className={iconClass} /> : <Eye className={iconClass} />}
             </Button>
           )}
         </div>
       </Field>
 
-      {/* Error */}
-      {error && <span className="text-14 text-red">{error}</span>}
+      {error && (
+        <span id={errorId} className={styles.error} role="alert">
+          {error}
+        </span>
+      )}
     </div>
-
   );
 };
+
+const styles = {
+  container: 'flex flex-col gap-1',
+  field: 'flex flex-col',
+  label: 'text-16-semi text-dark-gray mb-3',
+  inputWrapper: 'relative flex items-center w-full',
+  input: 'rounded-sm w-full bg-white border border-gray px-4 py-2 text-dark outline-none transition-all focus:border-green focus:ring-1 focus:ring-green text-14 disabled:cursor-not-allowed disabled:opacity-70',
+  inputError: 'border-red focus:ring-red focus:border-red',
+  inputWithIcon: 'pr-10',
+  iconButton: 'absolute right-2',
+  icon: 'size-5 text-blue',
+  iconInteractive: 'cursor-pointer hover:text-dark',
+  error: 'text-14 text-red',
+} as const;

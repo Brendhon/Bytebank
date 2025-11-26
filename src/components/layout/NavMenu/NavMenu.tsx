@@ -1,27 +1,53 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { NavItemLabel } from '@/types/nav';
+import { PROTECTED_ROUTES } from '@/lib/constants';
 import { Button } from '@headlessui/react';
-import clsx from 'clsx';
 import { BadgeDollarSign, CreditCard, LayoutDashboard, Loader2, Settings } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 
-// Set interface for the props
-interface Props {
+/**
+ * Navigation menu item interface
+ * @interface NavMenuItem
+ */
+export interface NavMenuItem {
+  /** Display label for the navigation item */
+  label: string;
+  /** Route href for the navigation item */
+  href: string;
+  /** Icon component for the navigation item */
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+}
+
+/**
+ * NavMenu component props
+ * @interface NavMenuProps
+ */
+export interface NavMenuProps {
+  /** Additional CSS classes */
   className?: string;
+  /** Current active navigation item */
   current: NavItemLabel;
+  /** Callback function called when navigation item is clicked */
   onNavigate?: (href: string) => void;
 }
 
-export const navItems = [
-  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Transações', href: '/transactions', icon: BadgeDollarSign },
-  { label: 'Meus Cartões', href: '/cards', icon: CreditCard },
-  { label: 'Configurações', href: '/settings', icon: Settings },
+export const navItems: NavMenuItem[] = [
+  { label: 'Dashboard', href: PROTECTED_ROUTES.DASHBOARD, icon: LayoutDashboard },
+  { label: 'Transações', href: PROTECTED_ROUTES.TRANSACTIONS, icon: BadgeDollarSign },
+  { label: 'Meus Cartões', href: PROTECTED_ROUTES.CARDS, icon: CreditCard },
+  { label: 'Configurações', href: PROTECTED_ROUTES.SETTINGS, icon: Settings },
 ] as const;
 
-export default ({ current, onNavigate, className = '' }: Props) => {
+/**
+ * Navigation menu component that displays navigation items with active state
+ * Uses React Transitions for smooth navigation transitions
+ * Supports loading state during navigation
+ * @param props - NavMenu component props
+ * @returns A navigation menu component
+ */
+export const NavMenu = ({ current, onNavigate, className }: NavMenuProps) => {
   // State to manage the pending navigation
   const [pendingHref, setPendingHref] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -32,9 +58,9 @@ export default ({ current, onNavigate, className = '' }: Props) => {
   }, [isPending]);
 
   const handleClick = (href: string) => {
-    // mark this item as “pending”
+    // Mark this item as "pending"
     setPendingHref(href);
-    // trigger navigation within a transition
+    // Trigger navigation within a transition
     startTransition(() => onNavigate?.(href));
   };
 
@@ -42,27 +68,28 @@ export default ({ current, onNavigate, className = '' }: Props) => {
   const isActive = (value: string) => current === value;
 
   // Set the color based on the active state
-  const color = (value: string) => clsx({ 'text-orange font-bold ': isActive(value), 'text-dark-gray': !isActive(value) })
+  const getColorClass = (value: string) =>
+    cn({
+      [styles.activeText]: isActive(value),
+      [styles.inactiveText]: !isActive(value),
+    });
 
   // Render the navigation items
   return (
-    <nav className={className}>
-      <ul className="flex flex-col gap-3">
+    <nav className={cn(styles.nav, className)}>
+      <ul className={styles.list}>
         {navItems.map(({ label, href, icon: Icon }) => (
-          <li className='hover:opacity-70'
-            key={href}>
+          <li className={styles.item} key={href}>
             <Button
               type="button"
               onClick={() => handleClick(href)}
-              className={cn(
-                'flex items-center w-full gap-2 px-2 py-2 rounded-md text-left transition-colors cursor-pointer',
-                color(href),
-              )}
+              className={cn(styles.button, getColorClass(href))}
             >
-              {isPending && pendingHref === href
-                ? <Loader2 size={20} className="animate-spin" />
-                : <Icon size={20} className={color(href)} />
-              }
+              {isPending && pendingHref === href ? (
+                <Loader2 size={20} className={cn(styles.loader, getColorClass(href))} />
+              ) : (
+                <Icon size={20} className={getColorClass(href)} />
+              )}
               <span>{label}</span>
             </Button>
           </li>
@@ -70,4 +97,17 @@ export default ({ current, onNavigate, className = '' }: Props) => {
       </ul>
     </nav>
   );
-}
+};
+
+/**
+ * NavMenu component styles
+ */
+const styles = {
+  nav: '',
+  list: 'flex flex-col gap-3',
+  item: 'hover:opacity-70',
+  button: 'flex items-center w-full gap-2 px-2 py-2 rounded-md text-left transition-colors cursor-pointer',
+  activeText: 'text-orange font-bold',
+  inactiveText: 'text-dark-gray',
+  loader: 'animate-spin',
+} as const;

@@ -1,6 +1,6 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import TransactionForm from './TransactionForm';
+import { TransactionForm } from './TransactionForm';
 
 const meta: Meta<typeof TransactionForm> = {
   component: TransactionForm,

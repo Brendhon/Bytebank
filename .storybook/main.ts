@@ -10,12 +10,12 @@ const config: StorybookConfig = {
     },
   ],
   "addons": [
-    "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@chromatic-com/storybook",
-    "@storybook/experimental-addon-test",
+    "@storybook/addon-vitest",
     "@storybook/addon-a11y",
     "msw-storybook-addon",
+    "@storybook/addon-docs"
   ],
   "framework": {
     "name": "@storybook/nextjs",

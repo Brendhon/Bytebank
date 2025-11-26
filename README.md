@@ -9,20 +9,39 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 
 ---
 
-## 📄 Desafio Original
+## 📄 Desafios do Tech Challenge
+
+### Fase 1: Fundação e Componentização
 O documento contendo os requisitos e objetivos do desafio original da pós-tech está disponível para consulta:
 
-📌 [**POSTECH - Front-end - Tech Challenge - Fase 1**](https://bytebank-web.vercel.app/challenge.pdf)
+📌 [**POSTECH - Front-end - Tech Challenge - Fase 1**](/challenge-fase1.pdf)
 
 Esse arquivo resume o escopo funcional e visual proposto para o projeto, com base no modelo de design fornecido e funcionalidades essenciais que deveriam ser implementadas.
+
+### Fase 4: Arquitetura Avançada, Performance e Segurança
+Nesta fase, a aplicação foi evoluída para incorporar conceitos avançados de arquitetura de software, com foco em escalabilidade, segurança e otimização de performance.
+
+📌 [**POSTECH - Front-end - Tech Challenge - Fase 4**](/challenge-fase4.pdf)
+
+As principais melhorias incluem:
+- **Clean Architecture:** Separação rigorosa das camadas de apresentação (UI), domínio (hooks) e infraestrutura (serviços, API).
+- **Segurança Robusta:** Correção de uma vulnerabilidade crítica de exposição de API Key e migração para autenticação segura com **NextAuth.js**, implementando validação de propriedade de recursos em todas as operações.
+- **Otimização de Performance:** Adoção de **React Server Components** para reduzir o processamento no cliente, e uso de **Server Actions** com revalidação de cache para otimizar mutações de dados.
+
+Para uma análise detalhada de como cada requisito foi atendido, com mapeamento para as implementações no código, consulte o **Documento de Avaliação Arquitetural**:
+
+➡️ **[Análise Arquitetural Completa (Fase 4)](/docs/analysis/geral_summary.md)**
+
+**Detalhe:** Para uma análise aprofundada das melhorias e decisões arquiteturais de um arquivo específico, consulte o `analysis.md` localizado no diretório de cada arquivo.
 
 ---
 
 ## 🚀 Stack utilizada
 
-- [**Next.js (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack
+- [**Next.js 16.0.3 (App Router)**](https://nextjs.org/docs/app) – Framework React fullstack com Turbopack como bundler padrão
+- [**React 19.2.0**](https://react.dev/) – Biblioteca UI moderna
 - [**NextAuth**](https://next-auth.js.org/) – Autenticação e autorização
-- [**TypeScript**](https://www.typescriptlang.org/) – Tipagem estática e segurança no código
+- [**TypeScript 5+**](https://www.typescriptlang.org/) – Tipagem estática e segurança no código
 - [**Tailwind CSS**](https://tailwindcss.com/) – Estilização utilitária e responsiva
 - [**Headless UI**](https://headlessui.com/) – Componentes acessíveis e sem estilo
 - [**Lucide Icons**](https://lucide.dev/) – Ícones leves e modernos
@@ -32,6 +51,16 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
 - [**Vercel**](https://vercel.com/) – Deploy automatizado
 
 > Veja o arquivo  **[package.json](https://github.com/Brendhon/Bytebank/blob/main/package.json)**
+
+### 🔄 Atualizações Recentes
+
+**Next.js 16 Upgrade (Janeiro 2025)**
+- ✅ Atualizado para **Next.js 16.0.3** (anteriormente 15.2.5)
+- ✅ **Turbopack** agora é o bundler padrão (substitui webpack)
+- ✅ **React 19.2.0** (anteriormente 19.0.0)
+- ✅ Middleware migrado para **Proxy** (`src/middleware.ts` → `src/proxy.ts`)
+- ✅ ESLint migrado para **Flat Config** (ESLint CLI)
+- ✅ APIs assíncronas: `params`, `searchParams`, `cookies()`, `headers()` agora retornam Promises
 
 ---
 
@@ -77,7 +106,9 @@ Esse arquivo resume o escopo funcional e visual proposto para o projeto, com bas
 ### 💡 Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-**[Git](https://git-scm.com)** e **[Node.js](https://nodejs.org/en/)**.<br> 
+- **[Git](https://git-scm.com)**
+- **[Node.js 20.9+](https://nodejs.org/en/)** (requerido para Next.js 16)
+- **[npm](https://www.npmjs.com/)** ou outro gerenciador de pacotes 
 
 Clone o repositório do projeto
 
@@ -112,6 +143,9 @@ NEXTAUTH_SECRET=sua_chave_secreta
 
 # URL base do site
 NEXTAUTH_URL=http://localhost:3000
+
+# URL base da API
+NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
 
 3. Para habilitar links diretos para o Storybook, Figma e Github no menu de perfil do usuário, adicione também as seguintes variáveis de ambiente:
@@ -129,27 +163,21 @@ NEXT_PUBLIC_GITHUB_URL=https://github.com/Brendhon/Bytebank
 
 4. Segurança das APIs:
 
-Uma chave de autenticação é utilizada para proteger os endpoints da API contra acessos não autorizados. Essa chave é automaticamente incluída nas requisições realizadas pelo front-end, garantindo que apenas chamadas legítimas da aplicação possam acessar os endpoints protegidos. Isso impede que ferramentas externas, como Postman ou bots, realizem requisições diretamente à API.
+Os endpoints da API são protegidos através de autenticação baseada em sessão, utilizando **NextAuth.js** com estratégia JWT. Quando um usuário faz login, uma sessão segura é criada e mantida através de cookies HTTP-only, que são automaticamente enviados em cada requisição.
 
-Para configurar a chave de autenticação, adicione a seguinte variável de ambiente no arquivo `.env.local`:
+**Como funciona:**
+- O usuário realiza login através da interface da aplicação
+- O NextAuth cria uma sessão JWT armazenada em cookies seguros
+- Todas as requisições do front-end para as rotas `/api/*` incluem automaticamente os cookies de sessão
+- As rotas de API validam a sessão antes de processar qualquer operação
+- Apenas usuários autenticados podem acessar dados e realizar operações
 
-```bash
-NEXT_PUBLIC_API_KEY=sua_chave_api
-```
-
-> **🔐 Dica de segurança:**  
-> Gere uma chave segura usando o comando abaixo no terminal:  
-> ```bash
-> openssl rand -hex 32
-> ```  
-> Copie o valor gerado e use como `NEXT_PUBLIC_API_KEY`.
-
-> **⚠️ Aviso Importante:**
-> Esta abordagem de segurança (utilizar uma API_KEY pública no front-end para autenticar chamadas internas) não é recomendada para aplicações em produção, pois o valor da variável pode ser exposto e facilmente acessado.
-> 
-> Em um ambiente de produção, recomenda-se implementar uma autenticação mais robusta, como OAuth ou JWT (JSON Web Tokens), para proteger os endpoints da API e garantir a segurança dos dados do usuário.
-> 
-> No entanto, por se tratar de um projeto de estudo, optou-se por esta solução simplificada para fins didáticos.
+**Benefícios desta abordagem:**
+- ✅ Cookies HTTP-only não são acessíveis via JavaScript (proteção contra XSS)
+- ✅ Tokens JWT não são expostos no código do cliente
+- ✅ Proteção CSRF nativa do NextAuth
+- ✅ Expiração automática de sessões após 24 horas
+- ✅ Validação de propriedade de recursos (usuários só podem acessar seus próprios dados)
 
 > **Nota:** Substitua as URLs acima caso esteja utilizando endereços personalizados ou ambientes de produção.
 
@@ -164,6 +192,8 @@ npm run dev
 ```
 
 Acesse o projeto em seu navegador: [http://localhost:3000](http://localhost:3000)
+
+> **Nota:** O projeto utiliza **Turbopack** como bundler padrão (Next.js 16). Para usar webpack, adicione a flag `--webpack` ao comando: `npm run dev -- --webpack`
 
 ### 📦 Executando o Storybook
 

@@ -1,22 +1,19 @@
 'use client';
 
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
-import Modal from './Modal';
+import { Modal } from './Modal';
 import { Button } from '@/components/ui';
 
-// Setup the Storybook configuration for the Modal component
 const meta: Meta<typeof Modal> = {
   component: Modal,
+  tags: ['autodocs'],
 };
 
-// Export the meta configuration for the Modal component
 export default meta;
 
-// This is the type definition for the Storybook story of the Modal component.
 type Story = StoryObj<typeof Modal>;
 
-// This story demonstrates the Modal component with a title and a confirmation message.
 export const Default: Story = {
   render: () => {
     const DefaultComponent = () => {

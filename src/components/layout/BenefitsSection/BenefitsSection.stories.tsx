@@ -1,8 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
-import BenefitsSection from './BenefitsSection';
+import { Meta, StoryObj } from '@storybook/nextjs';
+import { BenefitsSection } from './BenefitsSection';
 
 const meta: Meta<typeof BenefitsSection> = {
   component: BenefitsSection,
+  tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },

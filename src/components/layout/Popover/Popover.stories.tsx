@@ -1,11 +1,11 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 import { Button } from '@/components/ui';
-import Popover from './Popover';
+import { Popover } from './Popover';
 
-// Definindo o tipo de story
+// Define story type
 type Story = StoryObj<typeof Popover>;
 
-// Configuração base do componente no Storybook
+// Base component configuration in Storybook
 const meta: Meta<typeof Popover> = {
   component: Popover,
   tags: ['autodocs'],
@@ -16,14 +16,14 @@ const meta: Meta<typeof Popover> = {
 
 export default meta;
 
-// Template base
+// Base template
 const Template = (args: any) => <Popover {...args} />;
 
-// História padrão
+// Default story
 export const Default: Story = {
   render: Template,
   args: {
-    pButton: <Button variant="green">Abrir Popover</Button>,
+    button: <Button variant="green">Abrir Popover</Button>,
     children: (
       <ul className="flex flex-col gap-4">
         <li className="hover:text-green cursor-pointer">Item 1</li>

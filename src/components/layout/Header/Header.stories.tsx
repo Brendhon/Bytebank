@@ -1,5 +1,5 @@
-import Header from './Header';
-import { Meta, StoryObj } from '@storybook/react';
+import { Header } from './Header';
+import { Meta, StoryObj } from '@storybook/nextjs';
 
 const meta: Meta<typeof Header> = {
   component: Header,

@@ -1,56 +1,68 @@
-import { getUserIdFromQuery, handleErrorResponse, handleSuccessResponse, isReqAuthenticated } from '@/lib/api';
-import { connectToDatabase } from '@/lib/mongoose';
-import Transaction from '@/models/Transaction';
+import { handleErrorResponse, handleSuccessResponse, isAuthenticated } from '@/lib/api/api';
+import { transactionSchema } from '@/schemas/transaction/transaction.schema';
+import { HttpError } from '@/types/http';
 import { ITransaction } from '@/types/transaction';
+import { getUserTransactionsServer, createTransactionServer } from '@/services/transaction/transaction.service.server';
+import { NextResponse } from 'next/server';
 
 /**
- * Handles GET requests to retrieve all transaction records.
+ * Handles GET requests to retrieve all transaction records for the authenticated user.
+ * 
+ * This endpoint requires authentication via NextAuth session. It retrieves all transactions
+ * associated with the authenticated user's ID from the session.
+ * 
+ * This route delegates to the server-side service function for consistency with
+ * Server Components that call the service directly.
+ * 
  * @param {Request} req - The incoming HTTP request.
- * @returns A response object containing the transaction data in JSON format
+ * @returns {Promise<NextResponse>} A response object containing the transaction data in JSON format
+ * @throws {HttpError} Throws 401 Unauthorized if user is not authenticated
  */
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
-
-    // Get query parameters from the request
-    const userId = getUserIdFromQuery(req);
-
-    // Check if the request method is GET
-    await connectToDatabase();
-    
-    // Fetch all transactions for the user from the database
-    const transactions = await Transaction.find({ user: userId })
-
-    // Check if there are no transactions
+    const session = await isAuthenticated();
+    const transactions = await getUserTransactionsServer(session.user.id);
     return handleSuccessResponse<ITransaction[]>(transactions);
   } catch (error) {
-    return handleErrorResponse(error, 'Erro ao buscar transações');
+    return handleErrorResponse(error, 'Error fetching transactions');
   }
 }
 
 /**
- * Handles POST requests to create a new transaction record.
- * @param {Request} req - The incoming HTTP request.
- * @returns A response object indicating the success or failure of the operation
+ * Handles POST requests to create a new transaction record for the authenticated user.
+ * 
+ * This endpoint requires authentication via NextAuth session. It validates the request body
+ * using Zod schema and automatically associates the transaction with the authenticated user.
+ * Any `user` field in the request body is ignored and replaced with the authenticated user's ID.
+ * 
+ * This route delegates to the server-side service function for consistency with
+ * Server Components that call the service directly.
+ * 
+ * @param {Request} req - The incoming HTTP request containing transaction data in the body.
+ * @returns {Promise<NextResponse>} A response object containing the created transaction data
+ * @throws {HttpError} Throws 401 Unauthorized if user is not authenticated
+ * @throws {HttpError} Throws 400 Bad Request if validation fails
  */
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<NextResponse> {
   try {
-    // Check if the request is authenticated
-    isReqAuthenticated(req);
+    const session = await isAuthenticated();
+    const body = await req.json();
+    
+    // Validate request body with Zod schema
+    const validationResult = transactionSchema.safeParse(body);
+    
+    if (!validationResult.success) {
+      const errorMessages = validationResult.error.errors.map(e => e.message).join(', ');
+      return handleErrorResponse(
+        HttpError.badRequest(errorMessages),
+        errorMessages
+      );
+    }
 
-    // Check if the request method is POST
-    await connectToDatabase();
-
-    // Parse the request body as JSON
-    const data = await req.json();
-
-    // Create a new transaction record in the database
-    const transaction = await Transaction.create(data);
-
-    // Return a success response with the created transaction
+    // Create transaction using server-side service
+    const transaction = await createTransactionServer(validationResult.data, session.user.id);
     return handleSuccessResponse<ITransaction>(transaction);
   } catch (error) {
-    return handleErrorResponse(error, 'Erro ao buscar transação');
+    return handleErrorResponse(error, 'Error creating transaction');
   }
 }

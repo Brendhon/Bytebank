@@ -1,47 +1,89 @@
-import { formatCurrency } from '@/lib/formatter';
-import { cn, isNumber } from '@/lib/utils';
+import { formatCurrency } from '@/lib/formatter/formatter';
+import { cn, isNumber } from '@/lib/utils/utils';
 import { CardProps } from '@/types/ui';
-import { cva } from 'class-variance-authority';
+import { cardVariants } from './Card.variants';
 import { Loader2 } from 'lucide-react';
 
-// Button variants - Defines different styles for the button component
-// using class-variance-authority (cva) for variant management 
-// This dependence is used to create a set of variants for the button component, allowing for easy styling and customization.
-// It provides a way to define different styles based on the variant prop passed to the Button component.
-// The cva function takes a base class name and an object with variants and their corresponding styles.
-export const cardVariants = cva(
-  'w-[200px] h-[160px] rounded-sm text-white transition-colors flex flex-col gap-7 items-center justify-center shadow-sm',
-  {
-    variants: {
-      variant: {
-        dark: 'bg-dark',
-        blue: 'bg-blue',
-        green: 'bg-green',
-        orange: 'bg-orange',
-      },
-    },
-    defaultVariants: {
-      variant: 'dark',
-    },
-  }
-);
+/**
+ * CardValue component displays the formatted currency value or a loading spinner
+ * 
+ * @component
+ * @param {number | undefined} value - Numeric value to display (formatted as currency)
+ */
+function CardValue({ value }: { value?: number }) {
+  return (
+    <div 
+      className={styles.value}
+      aria-live="polite"
+      aria-atomic="true"
+      role="status"
+    >
+      {isNumber(value) ? (
+        <span aria-label={`Amount: ${formatCurrency(value)}`}>
+          {formatCurrency(value)}
+        </span>
+      ) : (
+        <>
+          <Loader2 className={styles.loader} size={40} />
+          <span className="sr-only">Loading amount...</span>
+        </>
+      )}
+    </div>
+  );
+}
 
-// Button component - A reusable button component that accepts variant and children props
-export default ({
+/**
+ * CardLabel component displays the label text below the value
+ * 
+ * @component
+ * @param {string} label - Label text to display
+ */
+function CardLabel({ label }: { label: string }) {
+  return (
+    <span className={styles.label} id={`card-label-${label}`}>
+      {label}
+    </span>
+  );
+}
+
+/**
+ * Card component displays financial information with different color variants
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <Card 
+ *   variant="blue" 
+ *   value={24000} 
+ *   label="Deposits" 
+ * />
+ * ```
+ * 
+ * @example
+ * ```tsx
+ * // Loading state
+ * <Card variant="dark" label="Pagamentos" />
+ * ```
+ */
+export const Card = ({
   variant,
   className,
   value,
   label = 'Pagamentos',
 }: CardProps) => {
   return (
-    <div className={cn(cardVariants({ variant }), className)}>
-      {
-        // Check if value is a number and format it, otherwise show a loader
-        isNumber(value)
-          ? <span className="text-20-bold">{formatCurrency(value)}</span>
-          : <Loader2 className="animate-spin text-white" size={40} />
-      }
-      <span className="text-14">{label}</span>
-    </div>
+    <article 
+      className={cn(cardVariants({ variant }), className)}
+      aria-label={`Financial card showing ${label}`}
+    >
+      <CardValue value={value} />
+      <CardLabel label={label} />
+    </article>
   );
 }
+
+const styles = {
+  value: 'text-20-bold',
+  label: 'text-14',
+  loader: 'animate-spin text-white',
+} as const;

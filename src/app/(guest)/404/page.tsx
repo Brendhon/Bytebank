@@ -1,24 +1,53 @@
 import { Illustration } from '@/components/ui'
+import { PAGE_ROUTES } from '@/lib/constants'
+import Link from 'next/link'
+import { ReactElement } from 'react'
 
-export default () => {
+/**
+ * 404 Not Found page component for guest users.
+ * 
+ * Displays a user-friendly error message when a route is not found,
+ * along with an illustration and a link to return to the home page.
+ * 
+ * This is a Server Component that renders on the server side,
+ * providing optimal performance and SEO benefits.
+ * 
+ * @returns {ReactElement} 404 error page content with accessible structure
+ */
+export default function NotFound404(): ReactElement {
   return (
-    <div className="w-full text-center p-8 gap-6 flex flex-col items-center justify-center">
-      <h1 className="text-24-bold text-dark">
+    <main className={styles.container} role="main">
+      <h1 className={styles.title}>
         Ops! Não encontramos a página…
       </h1>
-      <p className="text-dark text-16 mt-2">
-        E olha que exploramos o universo procurando por ela!
-        <br />
-        Que tal voltar e tentar novamente?
-      </p>
-
-      <a href='/home' className="button button-orange">
-        Voltar ao início
-      </a>
-
-      <div className="mt-6">
-        <Illustration src="404.svg" className='flex' />
+      <div className={styles.description}>
+        <p>E olha que exploramos o universo procurando por ela!</p>
+        <p>Que tal voltar e tentar novamente?</p>
       </div>
-    </div>
+
+      <Link 
+        href={PAGE_ROUTES.HOME} 
+        className={styles.button}
+        aria-label="Voltar para a página inicial"
+      >
+        Voltar ao início
+      </Link>
+
+      <div className={styles.illustration} aria-hidden="true">
+        <Illustration src="404.svg" className={styles.illustrationImage} alt="" />
+      </div>
+    </main>
   )
 }
+
+/**
+ * Component styles isolated at the end of the file
+ */
+const styles = {
+  container: 'w-full text-center p-8 gap-6 flex flex-col items-center justify-center',
+  title: 'text-24-bold text-dark',
+  description: 'text-dark text-16 mt-2',
+  button: 'button button-orange w-full mt-6',
+  illustration: 'mt-6',
+  illustrationImage: 'flex',
+} as const;

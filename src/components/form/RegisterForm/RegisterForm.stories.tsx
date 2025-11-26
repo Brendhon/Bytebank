@@ -1,8 +1,8 @@
 import { ToastProvider } from '@/context';
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/nextjs';
 import { delay, http, HttpResponse } from 'msw';
 import { useState } from 'react';
-import RegisterForm from './RegisterForm';
+import { RegisterForm } from './RegisterForm';
 
 const meta: Meta<typeof RegisterForm> = {
   component: RegisterForm,

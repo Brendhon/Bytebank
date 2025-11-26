@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from '@storybook/react';
-import Table from './Table';
+import { Meta, StoryObj } from '@storybook/nextjs';
+import { Table } from './Table';
 import { TableColumn } from '@/types/ui';
 
 const meta: Meta<typeof Table> = {

@@ -1,0 +1,38 @@
+{
+  "tailwindCSS.experimental.classRegex": [
+    // Specific: const styles = { key: `classes` }
+    ["styles\\s*[=:]\\s*\\{[^}]*['\"`]([^'\"`]*)['\"`]", "([^'\"`]*)"],
+    
+    // Specific: const buttonStyles/cardStyles/etc = { key: `classes` }
+    ["(?:button|card|modal|toast|input|form|loader|container|wrapper)Styles\\s*[=:]\\s*\\{[^}]*['\"`]([^'\"`]*)['\"`]", "([^'\"`]*)"],
+    
+    // Specific: export const styles = { key: `classes` }
+    ["export\\s+const\\s+\\w*[Ss]tyles\\s*[=:]\\s*\\{[^}]*['\"`]([^'\"`]*)['\"`]", "([^'\"`]*)"],
+    
+    // cva() calls (already specific)
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    
+    // className props (already specific)
+    ["className[=:]\\s*['\"`]([^'\"`]*)['\"`]", "([^'\"`]*)"],
+    
+    // clsx() and cn() utility functions
+    ["(?:clsx|cn)\\([^)]*['\"`]([^'\"`]*)['\"`]", "([^'\"`]*)"]
+  ],
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list"
+  ],
+  "editor.quickSuggestions": {
+    "strings": "on",
+    "comments": "off",
+    "other": "on"
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.validate": true
+}
