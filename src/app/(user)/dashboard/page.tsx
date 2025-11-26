@@ -58,7 +58,6 @@ export default async function DashboardPage(): Promise<ReactElement> {
       <WelcomeCard
         name={fistName}
         balance={balance}
-        date={new Date()}
       />
       <MovementsSection data={movementsWithValues} />
     </section>

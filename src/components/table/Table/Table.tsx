@@ -45,7 +45,7 @@ export interface TableProps<T> {
  *   columns={columns}
  *   pageSize={10}
  *   rowKey="id"
- *   emptyMessage="No users found"
+ *   emptyMessage="Nenhum usuário encontrado"
  * />
  * ```
  */
@@ -53,7 +53,7 @@ export const Table = <T,>({
   data,
   columns,
   pageSize,
-  emptyMessage = 'No data available',
+  emptyMessage = 'Nenhum dado disponível',
   rowKey,
   className,
   tableClassName,

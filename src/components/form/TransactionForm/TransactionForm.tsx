@@ -2,7 +2,7 @@
 
 import { Modal } from '@/components/layout'
 import { Illustration } from '@/components/ui'
-import { DESC_TO_TYPE_MAP, DEFAULT_TRANSACTION } from '@/lib/constants'
+import { DESC_TO_TYPE_MAP, DEFAULT_TRANSACTION, getCurrentDate } from '@/lib/constants'
 import { TransactionFormData, transactionSchema } from '@/schemas'
 import { GeneralModalProps } from '@/types/modal'
 import { TransactionDesc, TransactionDescKey, TransactionType } from '@/types/transaction'
@@ -63,6 +63,7 @@ export const TransactionForm = ({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       ...DEFAULT_TRANSACTION,
+      date: getCurrentDate(),
       ...defaultValues,
     },
   })
