@@ -1,10 +1,11 @@
-import { useAuth } from '@/hooks/useAuth/useAuth';
 import { useToast } from '@/hooks';
+import { useAuth } from '@/hooks/useAuth/useAuth';
+import { AUTH_MESSAGES } from '@/lib/constants';
+import { getErrorMessage } from '@/lib/errors/error-utils';
 import { RegisterFormData } from '@/schemas';
 import { registerUser } from '@/services/user/user.service';
 import { IUser } from '@/types/user';
 import { useCallback } from 'react';
-import { getErrorMessage } from '@/lib/errors/error-utils';
 
 /**
  * Return type for the useRegister hook
@@ -57,7 +58,7 @@ export const useRegister = (): UseRegisterReturn => {
 
     try {
       await registerUser(data);
-      showSuccessToast({ message: 'Conta criada com sucesso!' });
+      showSuccessToast({ message: AUTH_MESSAGES.REGISTER_SUCCESS });
       
       // Automatically log in the user after successful registration
       await login(
@@ -70,9 +71,8 @@ export const useRegister = (): UseRegisterReturn => {
       
       return true;
     } catch (error: unknown) {
-      const errorMessage = getErrorMessage(error) || 'Erro ao criar conta';
+      const errorMessage = getErrorMessage(error) || AUTH_MESSAGES.REGISTER_ERROR;
       showErrorToast({ message: errorMessage });
-      console.error('Registration failed:', error);
       return false;
     }
   }, [showSuccessToast, showErrorToast, login]);

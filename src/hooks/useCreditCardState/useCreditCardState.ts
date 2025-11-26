@@ -3,7 +3,7 @@ import { useReducer, useCallback } from 'react';
 /**
  * State for a single credit card
  */
-interface CardState {
+export interface CardState {
   showInfo: boolean;
   blocked: boolean;
 }
@@ -11,7 +11,7 @@ interface CardState {
 /**
  * Combined state for both cards
  */
-interface CreditCardSessionState {
+export interface CreditCardSessionState {
   physical: CardState;
   digital: CardState;
 }
@@ -19,9 +19,23 @@ interface CreditCardSessionState {
 /**
  * Actions for credit card state management
  */
-type CardAction =
+export type CardAction =
   | { type: 'TOGGLE_VISIBILITY'; cardType: 'physical' | 'digital' }
   | { type: 'TOGGLE_BLOCK'; cardType: 'physical' | 'digital' };
+
+/**
+ * Return type for the useCreditCardState hook
+ */
+export interface UseCreditCardStateReturn {
+  /** State for physical card */
+  physicalState: CardState;
+  /** State for digital card */
+  digitalState: CardState;
+  /** Toggle visibility for a card type */
+  toggleVisibility: (cardType: 'physical' | 'digital') => void;
+  /** Toggle block status for a card type */
+  toggleBlock: (cardType: 'physical' | 'digital') => void;
+}
 
 /**
  * Reducer for credit card state management
@@ -59,11 +73,7 @@ function cardReducer(state: CreditCardSessionState, action: CardAction): CreditC
  * Consolidates multiple useState calls into a single reducer-based state management
  * for better performance and maintainability.
  * 
- * @returns {Object} Card states and action handlers
- * @returns {CardState} physicalState - State for physical card
- * @returns {CardState} digitalState - State for digital card
- * @returns {Function} toggleVisibility - Toggle visibility for a card type
- * @returns {Function} toggleBlock - Toggle block status for a card type
+ * @returns {UseCreditCardStateReturn} Object containing card states and action handlers
  * 
  * @example
  * ```tsx
@@ -76,7 +86,7 @@ function cardReducer(state: CreditCardSessionState, action: CardAction): CreditC
  * toggleBlock('digital');
  * ```
  */
-export function useCreditCardState() {
+export const useCreditCardState = (): UseCreditCardStateReturn => {
   const [state, dispatch] = useReducer(cardReducer, {
     physical: { showInfo: false, blocked: false },
     digital: { showInfo: false, blocked: false },

@@ -13,8 +13,12 @@
 export const AUTH_MESSAGES = {
   /** Success message when login is completed successfully */
   LOGIN_SUCCESS: 'Login realizado com sucesso!',
+  /** Success message when registration is completed successfully */
+  REGISTER_SUCCESS: 'Conta criada com sucesso!',
   /** Error message when credentials are invalid */
   INVALID_CREDENTIALS: 'Email ou senha inválidos',
+  /** Error message when registration fails */
+  REGISTER_ERROR: 'Erro ao criar conta',
   /** Error message when authentication fails due to network issues */
   NETWORK_ERROR: 'Erro de rede. Por favor, verifique sua conexão e tente novamente',
   /** Error message when authentication fails due to server error */

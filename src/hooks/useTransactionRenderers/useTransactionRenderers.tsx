@@ -53,12 +53,24 @@ export interface UseTransactionRenderersParams {
 }
 
 /**
+ * Return type for the useTransactionRenderers hook
+ */
+export interface UseTransactionRenderersReturn {
+  /** Renders transaction type description from enum key */
+  renderType: (key: TransactionDescKey) => string;
+  /** Renders transaction value with color coding based on transaction type */
+  renderValue: (data: ITransaction) => ReactNode;
+  /** Renders action buttons (edit/delete) for a transaction */
+  renderActions: (data: ITransaction) => ReactNode | null;
+}
+
+/**
  * Custom hook that provides transaction rendering functions
  * 
  * Memoizes render functions to prevent unnecessary re-renders
  * 
  * @param params - Configuration object with optional edit and delete callbacks
- * @returns Object containing memoized render functions
+ * @returns {UseTransactionRenderersReturn} Object containing memoized render functions
  * 
  * @example
  * ```tsx
@@ -77,10 +89,10 @@ export interface UseTransactionRenderersParams {
  * ];
  * ```
  */
-export function useTransactionRenderers({
+export const useTransactionRenderers = ({
   onEdit,
   onDelete,
-}: UseTransactionRenderersParams = {}) {
+}: UseTransactionRenderersParams = {}): UseTransactionRenderersReturn => {
   const renderType = useCallback((key: TransactionDescKey): string => {
     return renderTransactionType(key);
   }, []);
@@ -128,5 +140,5 @@ export function useTransactionRenderers({
     }),
     [renderType, renderValue, renderActions]
   );
-}
+};
 
