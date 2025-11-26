@@ -62,14 +62,14 @@ function CardLabel({ label }: { label: string }) {
  * @example
  * ```tsx
  * // Loading state
- * <Card variant="dark" label="Payments" />
+ * <Card variant="dark" label="Pagamentos" />
  * ```
  */
 export const Card = ({
   variant,
   className,
   value,
-  label = 'Payments',
+  label = 'Pagamentos',
 }: CardProps) => {
   return (
     <article 

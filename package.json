@@ -14,7 +14,7 @@
     "@headlessui/react": "^2.2.1",
     "@hookform/resolvers": "^5.0.1",
     "@react-input/mask": "^2.0.4",
-    "@storybook/addon-a11y": "^10.0.7",
+    "@storybook/addon-a11y": "^10.0.8",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "date-fns": "^4.1.0",
@@ -29,9 +29,9 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^4.1.2",
-    "@storybook/addon-onboarding": "^10.0.7",
-    "@storybook/nextjs": "^10.0.7",
+    "@chromatic-com/storybook": "^4.1.3",
+    "@storybook/addon-onboarding": "^10.0.8",
+    "@storybook/nextjs": "^10.0.8",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -42,17 +42,17 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-storybook": "^10.0.7",
+    "eslint-plugin-storybook": "^10.0.8",
     "msw": "^2.7.4",
     "msw-storybook-addon": "^2.0.4",
     "playwright": "^1.51.1",
-    "storybook": "^10.0.7",
+    "storybook": "^10.0.8",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^3.1.1",
-    "@storybook/nextjs-vite": "^10.0.7",
-    "@storybook/addon-vitest": "10.0.7",
-    "@storybook/addon-docs": "^10.0.7"
+    "@storybook/nextjs-vite": "^10.0.8",
+    "@storybook/addon-vitest": "10.0.8",
+    "@storybook/addon-docs": "^10.0.8"
   },
   "eslintConfig": {
     "extends": [
