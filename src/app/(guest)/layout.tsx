@@ -2,85 +2,60 @@
 
 import { LoginForm, RegisterForm } from "@/components/form";
 import { Footer, Header } from "@/components/layout";
-import { useToast } from "@/hooks";
-import { PROTECTED_ROUTES } from "@/lib/constants";
+import { useAuth, useRegister } from "@/hooks";
 import { LoginFormData, RegisterFormData } from "@/schemas";
-import { registerUser } from "@/services/user/user.service";
-import { IUser } from "@/types/user";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { ReactElement, ReactNode, useCallback, useState } from "react";
 
-export default ({ children }: { children: ReactNode }) => {
+/**
+ * Props for the GuestLayout component
+ */
+export interface GuestLayoutProps {
+  /**
+   * Child components to render inside the layout
+   */
+  children: ReactNode;
+}
+
+/**
+ * Guest layout component that wraps guest pages.
+ * 
+ * Provides:
+ * - Header with guest actions (login, register)
+ * - Footer
+ * - Login and Register modals
+ * - Authentication and registration logic via custom hooks
+ * 
+ * This is a Client Component that manages modal state and delegates
+ * authentication/registration logic to custom hooks (useAuth, useRegister).
+ * 
+ * @component
+ * @param {GuestLayoutProps} props - Component props
+ * @returns {ReactElement} Guest layout structure
+ */
+export default function GuestLayout({ children }: GuestLayoutProps): ReactElement {
   // State to manage modals
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  // Router
-  const router = useRouter();
+  // Custom hooks for authentication and registration
+  const { login } = useAuth();
+  const { register } = useRegister();
 
-  // Toast
-  const { showSuccessToast, showErrorToast } = useToast();
-
-  // Function to handle login submission
-  const onLoginSubmit = async (data: LoginFormData, hideToast = false) => {
-    const response = await signIn('credentials', {
-      redirect: false, // Avoid redirecting
-      email: data.email,
-      password: data.password,
-    });
-
-    if (response?.ok) {
-      // Show success toast
-      if (!hideToast) showSuccessToast({ message: 'Login realizado com sucesso!' });
-
-      // Close the modal
+  // Handle login submission
+  const onLoginSubmit = useCallback(async (data: LoginFormData) => {
+    const success = await login(data);
+    if (success) {
       setIsLoginOpen(false);
-
-      // Redirect to the dashboard
-      router.push(PROTECTED_ROUTES.DASHBOARD);
-    } else {
-      // Log failed
-      console.error('Login failed:', response?.error);
-      // Show error toast
-      showErrorToast({ message: 'Email ou senha inválidos' });
     }
-  };
+  }, [login]);
 
-  // Function to handle account registration
-  const onRegisterSubmit = async (formData: RegisterFormData) => {
-    // Form user data
-    const data: IUser = {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      acceptPrivacy: formData.acceptPrivacy
-    }
-
-    // Register user
-    try {
-      // Call the registerUser function
-      await registerUser(data);
-
-      // Show success toast
-      showSuccessToast({ message: 'Conta criada com sucesso!' });
-
-      // Close the modal
+  // Handle account registration
+  const onRegisterSubmit = useCallback(async (formData: RegisterFormData) => {
+    const success = await register(formData);
+    if (success) {
       setIsRegisterOpen(false);
-
-      // Make the login modal open
-      await onLoginSubmit({
-        email: formData.email,
-        password: formData.password,
-      }, true);
-    } catch (error: any) {
-      // Show error toast
-      showErrorToast({ message: error.message || 'Erro ao criar conta' });
-
-      // Log the error
-      console.error(error);
     }
-  };
+  }, [register]);
 
   return (
     <>
@@ -99,7 +74,7 @@ export default ({ children }: { children: ReactNode }) => {
       {/* Footer */}
       <Footer />
 
-      {/* Modais */}
+      {/* Modals */}
       <RegisterForm
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
@@ -112,4 +87,4 @@ export default ({ children }: { children: ReactNode }) => {
       />
     </>
   );
-};
+}
