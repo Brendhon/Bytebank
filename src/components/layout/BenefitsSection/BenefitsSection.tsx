@@ -69,6 +69,7 @@ export const BenefitsSection = ({
           src="home.svg"
           width={600}
           alt="Home illustration showing financial freedom and control"
+          priority
         />
       </div>
 
@@ -83,6 +84,7 @@ export const BenefitsSection = ({
                 width={60}
                 alt={`${item.title} - ${item.description}`}
                 className={styles.benefitIcon}
+                priority
               />
               <h4 className={styles.benefitTitle}>{item.title}</h4>
               <p className={styles.benefitDescription}>{item.description}</p>

@@ -95,7 +95,7 @@ export const AccountForm = ({
           Minha conta
         </h2>
 
-        <Illustration width={400} src="settings.svg" alt="Account settings illustration" />
+        <Illustration width={400} src="settings.svg" alt="Account settings illustration" priority />
       </div>
 
       <Fieldset className={styles.fieldset}>

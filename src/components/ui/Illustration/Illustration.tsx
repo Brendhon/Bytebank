@@ -18,6 +18,10 @@ export interface IllustrationProps {
   className?: string;
   /** Hide on mobile, show on sm+ breakpoints (default: true) */
   responsive?: boolean;
+  /** Loading strategy: 'lazy' (default) or 'eager' for LCP images */
+  loading?: 'lazy' | 'eager';
+  /** Priority loading for images above the fold (automatically sets loading='eager') */
+  priority?: boolean;
 }
 
 /**
@@ -33,6 +37,8 @@ export default function Illustration({
   height,
   className,
   responsive = true,
+  loading,
+  priority = false,
 }: IllustrationProps) {
   const imageHeight = height || width;
 
@@ -44,7 +50,8 @@ export default function Illustration({
         height={imageHeight}
         src={`/illustrations/${src}`}
         className={styles.image}
-        style={{ width: `${width}px` }}
+        loading={loading}
+        priority={priority}
       />
     </div>
   );
@@ -57,5 +64,5 @@ export default function Illustration({
 const styles = {
   container: `flex flex-col items-center`,
   hiddenSmFlex: `hidden sm:flex`,
-  image: `h-auto object-contain`,
+  image: `w-auto h-auto object-contain`,
 } as const;

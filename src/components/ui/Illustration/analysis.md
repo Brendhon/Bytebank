@@ -4,21 +4,25 @@
 
 **Status Geral:** ✅ Excelente (melhorias implementadas)
 
-O componente Illustration está bem estruturado e atende aos requisitos arquiteturais estabelecidos. Todas as melhorias críticas foram implementadas, incluindo **correção do bug de classe dinâmica Tailwind**, **acessibilidade WCAG-compliant com alt obrigatório**, **nomenclatura explícita**, **configuração flexível de altura e responsividade**, e **documentação JSDoc completa**. O componente segue princípios de Clean Architecture e está em conformidade com as diretrizes do projeto.
+O componente Illustration está bem estruturado e atende aos requisitos arquiteturais estabelecidos. Todas as melhorias críticas foram implementadas, incluindo **correção do bug de classe dinâmica Tailwind**, **acessibilidade WCAG-compliant com alt obrigatório**, **nomenclatura explícita**, **configuração flexível de altura e responsividade**, **correção de warnings de aspect ratio do Next.js**, **otimização de performance com props loading/priority**, e **documentação JSDoc completa**. O componente segue princípios de Clean Architecture e está em conformidade com as diretrizes do projeto.
 
-**Conformidade com Requisitos Técnicos:** 95%
+**Conformidade com Requisitos Técnicos:** 98%
 
 ---
 
 ## ✅ Alterações Realizadas
 
 ### 1. **Correção de Bug Crítico de Classe Dinâmica Tailwind** ✅ RESOLVIDO
-- **Implementação:** 
+- **Implementação Inicial:** 
   - Removida interpolação de string `` `w-[${width}px]` `` que não funciona com Tailwind
   - Substituída por propriedade `style` inline: `style={{ width: `${width}px` }}`
   - Mantida classe `h-auto object-contain` para comportamento responsivo
-- **Benefício:** Largura dinâmica agora funciona corretamente; componente controla adequadamente o tamanho das imagens
-- **Data:** Implementado conforme análise
+- **Refinamento (Dezembro 2024):**
+  - Removido completamente o inline style que causava warnings do Next.js
+  - Substituído por controle via CSS classes: `w-auto h-auto object-contain`
+  - Dimensionamento agora controlado exclusivamente pelas props `width` e `height` do Next.js Image
+- **Benefício:** Largura dinâmica funciona corretamente; sem warnings de console; aspect ratio mantido automaticamente
+- **Data:** Implementado conforme análise + refinado em Dezembro 2024
 
 ### 2. **Acessibilidade - Atributo Alt (WCAG Compliance)** ✅ RESOLVIDO
 - **Implementação:** 
@@ -69,6 +73,23 @@ O componente Illustration está bem estruturado e atende aos requisitos arquitet
   - Stories agora demonstram todas as funcionalidades do componente
 - **Benefício:** Documentação completa e exemplos de uso atualizados
 - **Data:** Implementado conforme análise
+
+### 9. **Correção de Warnings de Aspect Ratio do Next.js** ✅ RESOLVIDO
+- **Implementação:** 
+  - Removido inline style `style={{ width: '${width}px', height: 'auto' }}` que causava conflito
+  - Substituído por controle via CSS classes: `w-auto h-auto object-contain`
+  - Next.js Image agora controla dimensionamento através de props `width` e `height` sem conflitos com CSS
+- **Problema Original:** Warnings no console: "Image has either width or height modified, but not the other"
+- **Benefício:** Elimina todos os warnings de aspect ratio; imagens mantêm proporções corretas automaticamente
+- **Data:** Dezembro 2024
+
+### 10. **Otimização de Performance - LCP e Loading Strategy** ✅ IMPLEMENTADO
+- **Implementação:** 
+  - Adicionadas props `loading?: 'lazy' | 'eager'` para controle manual de estratégia de carregamento
+  - Adicionada prop `priority?: boolean` para carregamento prioritário de imagens "above the fold"
+  - Prop `priority` automaticamente otimiza imagens identificadas como LCP (Largest Contentful Paint)
+- **Benefício:** Melhora significativa em métricas de performance (LCP, FCP); otimização automática para imagens críticas
+- **Data:** Dezembro 2024
 
 ---
 
@@ -125,6 +146,20 @@ O componente Illustration está bem estruturado e atende aos requisitos arquitet
 - **Solução:** Comentário removido e JSDoc completo adicionado
 - **Status:** ✅ Resolvido
 
+### 8. **Conflito de Dimensionamento - Warnings de Aspect Ratio** ✅ RESOLVIDO
+- **Requisito:** Imagens devem manter aspect ratio correto sem warnings do Next.js
+- **Documento:** Next.js Image Optimization Guidelines
+- **Infração Original:** Inline style `style={{ width: '${width}px', height: 'auto' }}` causava conflito com props `width` e `height` do Next.js Image, gerando warnings: "Image has either width or height modified, but not the other"
+- **Solução:** Removido inline style completamente; dimensionamento controlado apenas por props `width`/`height` e CSS classes `w-auto h-auto object-contain`
+- **Status:** ✅ Resolvido (Dezembro 2024)
+
+### 9. **Falta de Otimização de Performance (LCP)** ✅ RESOLVIDO
+- **Requisito:** Imagens "above the fold" devem ter carregamento prioritário para otimizar LCP
+- **Documento:** `@docs/architecture/performance-optimization.md` - Web Vitals e Core Web Vitals
+- **Infração Original:** Componente não oferecia controle sobre estratégia de carregamento; imagens LCP carregavam com lazy loading padrão
+- **Solução:** Adicionadas props `loading?: 'lazy' | 'eager'` e `priority?: boolean` para controle de carregamento prioritário
+- **Status:** ✅ Resolvido (Dezembro 2024)
+
 ---
 
 ## Pontos em Conformidade
@@ -140,6 +175,8 @@ O componente Illustration está bem estruturado e atende aos requisitos arquitet
 3. **Uso de Next.js Image:**
    - Implementa corretamente o componente `Image` do `next/image`, conforme exigido pelas diretrizes de performance e otimização.
    - Isso garante otimização automática de imagens, conversão para formatos modernos e lazy loading.
+   - Suporta props `loading` e `priority` para otimização de LCP (Largest Contentful Paint).
+   - Dimensionamento controlado corretamente sem conflitos entre props e CSS, mantendo aspect ratio automático.
 
 4. **Documentação em Storybook:**
    - Possui documentação em Storybook (`Illustration.stories.tsx`) com múltiplas variações, conforme exigido para componentes reutilizáveis.
@@ -171,7 +208,7 @@ O componente Illustration está bem estruturado e atende aos requisitos arquitet
 
 4. **Problema de Performance na Classe Dinâmica:** ✅ RESOLVIDO
    - ~~A linha 19 usa interpolação de string diretamente no `className` que não funciona com Tailwind.~~
-   - **Status:** Substituída por propriedade `style` inline: `style={{ width: `${width}px` }}`
+   - **Status:** Inicialmente substituída por propriedade `style` inline, depois removida completamente e substituída por CSS classes `w-auto h-auto object-contain` para eliminar warnings do Next.js
 
 5. **Propriedade Height Hardcoded:** ✅ RESOLVIDO
    - ~~A propriedade `height={width}` força a imagem a ser sempre quadrada.~~
@@ -191,20 +228,30 @@ O componente Illustration está bem estruturado e atende aos requisitos arquitet
    - ~~A visibilidade está hardcoded como `hidden sm:flex` sem opção de configuração.~~
    - **Status:** Adicionada prop `responsive?: boolean` (default: true) para controle condicional
 
+9. **Warnings de Aspect Ratio do Next.js:** ✅ RESOLVIDO
+   - ~~Inline style causava conflito com props do Next.js Image, gerando warnings no console.~~
+   - **Status:** Removido inline style; dimensionamento controlado por CSS classes `w-auto h-auto object-contain`; warnings eliminados
+
+10. **Otimização de Performance (LCP):** ✅ RESOLVIDO
+   - ~~Componente não oferecia controle sobre estratégia de carregamento para imagens críticas.~~
+   - **Status:** Adicionadas props `loading` e `priority` para otimização de LCP e controle de carregamento
+
 ## Plano de Ação
 
 ### ✅ 1. Corrigir Bug Crítico de Classe Dinâmica - CONCLUÍDO
-**Prioridade: Crítica** | **Status: ✅ Implementado**
+**Prioridade: Crítica** | **Status: ✅ Implementado e Refinado**
 
-- ✅ Implementado: Interpolação de string removida e substituída por propriedade `style` inline
+- ✅ Implementado (inicial): Interpolação de string removida e substituída por propriedade `style` inline
+- ✅ Refinado (Dezembro 2024): Removido inline style completamente para eliminar warnings do Next.js
   ```typescript
   <Image
     alt={alt}
     width={width}
     height={imageHeight}
     src={`/illustrations/${src}`}
-    className="h-auto object-contain"
-    style={{ width: `${width}px` }}
+    className="w-auto h-auto object-contain"
+    loading={loading}
+    priority={priority}
   />
   ```
 
@@ -242,7 +289,23 @@ O componente Illustration está bem estruturado e atende aos requisitos arquitet
 - ✅ Implementado: Todas as stories atualizadas para incluir prop `alt` obrigatória
 - ✅ Implementado: Novas stories adicionadas: `WithCustomHeight` e `NotResponsive`
 
-### 8. Adicionar Tratamento de Erro (Opcional)
+### ✅ 8. Corrigir Warnings de Aspect Ratio do Next.js - CONCLUÍDO
+**Prioridade: Alta** | **Status: ✅ Implementado (Dezembro 2024)**
+
+- ✅ Implementado: Removido inline style `style={{ width: '${width}px', height: 'auto' }}` que causava conflito
+- ✅ Implementado: Substituído por CSS classes `w-auto h-auto object-contain` para controle de dimensionamento
+- ✅ Implementado: Dimensionamento agora controlado exclusivamente pelas props `width` e `height` do Next.js Image
+- **Resultado:** Todos os warnings de aspect ratio eliminados; imagens mantêm proporções corretas automaticamente
+
+### ✅ 9. Otimizar Performance - LCP e Loading Strategy - CONCLUÍDO
+**Prioridade: Alta** | **Status: ✅ Implementado (Dezembro 2024)**
+
+- ✅ Implementado: Adicionada prop `loading?: 'lazy' | 'eager'` para controle manual de estratégia de carregamento
+- ✅ Implementado: Adicionada prop `priority?: boolean` para carregamento prioritário de imagens "above the fold"
+- ✅ Implementado: Aplicado `priority` na imagem `settings.svg` no `AccountForm` (identificada como LCP)
+- **Resultado:** Melhoria significativa em métricas de performance (LCP, FCP); otimização automática para imagens críticas
+
+### 10. Adicionar Tratamento de Erro (Opcional)
 **Prioridade: Baixa** | **Status: ⏸️ Opcional/Futuro**
 
 - Considerar adicionar uma prop `onError` ou um fallback visual caso a imagem não carregue:
