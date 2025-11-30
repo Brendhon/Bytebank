@@ -5,7 +5,6 @@ Aplicação desenvolvida como parte do Tech Challenge (Postech - Front-End), que
 - **Figma:** [Bytebank Figma](https://www.figma.com/design/E9UFSc9LUXlL88hIvIcuLd/Modelo-Fase-1---P%C3%93S-FIAP?node-id=503-4264)
 - **Storybook:** [Bytebank Storybook](https://bytebank-storybook.vercel.app/)
 - **Deploy:** [Bytebank Web](https://bytebank-web.vercel.app/)
-- **Vídeo de Demonstração:** [Bytebank Demo](https://bytebank-web.vercel.app/demo.mp4)
 
 ---
 
@@ -18,6 +17,8 @@ O documento contendo os requisitos e objetivos do desafio original da pós-tech 
 
 Esse arquivo resume o escopo funcional e visual proposto para o projeto, com base no modelo de design fornecido e funcionalidades essenciais que deveriam ser implementadas.
 
+- **Vídeo de Demonstração:** [Bytebank - Fase 1](https://bytebank-web.vercel.app/demo-fase1.mp4)
+  
 ### Fase 4: Arquitetura Avançada, Performance e Segurança
 Nesta fase, a aplicação foi evoluída para incorporar conceitos avançados de arquitetura de software, com foco em escalabilidade, segurança e otimização de performance.
 
@@ -33,6 +34,8 @@ Para uma análise detalhada de como cada requisito foi atendido, com mapeamento 
 ➡️ **[Análise Arquitetural Completa (Fase 4)](/docs/analysis/geral_summary.md)**
 
 **Detalhe:** Para uma análise aprofundada das melhorias e decisões arquiteturais de um arquivo específico, consulte o `analysis.md` localizado no diretório de cada arquivo.
+
+- **Vídeo de Demonstração:** [Bytebank - Fase 4](https://bytebank-web.vercel.app/demo-fase4.mp4)
 
 ---
 
